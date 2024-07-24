@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Mã Ví và Giao Dịch</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Bảng Mã Ví và Giao Dịch</h1>
+        <div class="form-container">
+            <label for="walletCode">Mã ví:</label>
+            <input type="text" id="walletCode">
+            <label for="transactionCode">Mã giao dịch:</label>
+            <input type="text" id="transactionCode">
+            <button onclick="addRow()">Thêm dòng</button>
+        </div>
+        <div class="search-container">
+            <label for="searchTransactionCode">Tìm mã giao dịch:</label>
+            <input type="text" id="searchTransactionCode" oninput="searchTransaction()">
+        </div>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Mã ví</th>
+                    <th>Mã giao dịch</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="button-container">
+            <button class="export-btn" onclick="exportTable()">Xuất ra XLS</button>
+            <button class="import-btn" onclick="importTable()">Nhập XLS</button>
+            <input type="file" id="fileInput" style="display:none" accept=".xls,.xlsx">
+        </div>
+    </div>
+    <script src="admin.js"></script>
+</body>
+</html>

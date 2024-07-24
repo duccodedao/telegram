@@ -1,0 +1,75 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: #ffffff;
+    text-align: center;
+    margin: 20px 0;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.registration-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    gap: 15px;
+}
+
+.ico-btn {
+    display: inline-block;
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ico-btn img {
+    width: 120px;
+    height: 120px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ico-btn:hover {
+    border-color: #007bff;
+    transform: scale(1.05);
+}
+
+.ico-btn img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 123, 255, 0.5);
+}
+
+.preparation,
+.steps {
+    background-color: #1e1e1e;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    max-width: 800px;
+}
+
+.steps ol {
+    padding-left: 20px;
+    list-style-type: decimal;
+}
+
+.steps ol li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.steps ol li::marker {
+    color: #007bff;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biểu đồ Giá TON (The Open Network)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="logo/bm.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Biểu đồ TON -->
+    <canvas id="tonChart" width="1000" height="500"></canvas>
+
+    <script>
+        async function fetchTONData() {
+            const response = await fetch('https://api.coingecko.com/api/v3/coins/the-open-network/market_chart?vs_currency=usd&days=1');
+            const data = await response.json();
+            return data;
+        }
+
+        async function createChart() {
+            const tonData = await fetchTONData();
+            const ctx = document.getElementById('tonChart').getContext('2d');
+            const labels = tonData.prices.map(price => {
+                const date = new Date(price[0]);
+                return `${date.getMonth()+1}/${date.getDate()}`;
+            });
+            const prices = tonData.prices.map(price => price[1]);
+
+            const maxPrice = Math.max(...prices).toFixed(2);
+            const minPrice = Math.min(...prices).toFixed(2);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Giá TON (USD)',
+                        data: prices,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Ngày'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Giá (USD)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Thêm dòng này để hiển thị giá cao nhất và thấp nhất trong tooltip
+            ctx.canvas.parentNode.querySelector('.chartjs-tooltip').insertAdjacentHTML('beforeend', `<div>Giá cao nhất: ${maxPrice} USD</div><div>Giá thấp nhất: ${minPrice} USD</div>`);
+        }
+
+        createChart();
+    </script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #ffffff;
+  background: url('https://img.freepik.com/free-vector/halftone-background-with-circles_23-2148907689.jpg') no-repeat fixed center;
+  background-size: cover;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.join-button {
+  background-color: #ff6600;
+  border: none;
+  padding: 8px 16px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.content h1 {
+  font-size: 32px;
+  margin: 20px 0;
+}
+
+.crypto-logos {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.round-logo {
+  width: 200px;
+  height: auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.contact-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.contact-icon {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.play-button {
+  background-color: #1e90ff;
+  border: none;
+  padding: 12px 24px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+
+.preparation {
+  margin-top: 30px;
+}
+
+.preparation h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.preparation-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.preparation-links a {
+  background-color: #333;
+  padding: 8px 16px;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.preparation-links a:hover {
+  background-color: #555;
+}
+
+.hot-link {
+  position: relative;
+  display: inline-block;
+}
+
+.hot-link::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 24px;
+  background: url('hot-icon.png') no-repeat center center;
+  background-size: cover;
+}
+
+.registration-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.ico-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.ico-btn img {
+  width: 40px;
+  height: 40px;
+}
+
+.ico-btn:hover {
+  transform: scale(1.1);
+}
+.visit-counter {
+  margin-top: 30px;
+  font-size: 16px;
+}
+
+
+
+
+button:hover {
+    background-color: #0073e6;
+}
+
+.button-icon {
+    width: 20px; /* Điều chỉnh kích thước của biểu tượng nếu cần */
+    height: 20px; /* Điều chỉnh kích thước của biểu tượng nếu cần */
+    margin-right: 8px; /* Khoảng cách giữa biểu tượng và văn bản */
+}
+
+.link-icon {
+  width: 30px; /* Điều chỉnh kích thước của ảnh */
+  height: 30px; /* Điều chỉnh kích thước của ảnh */
+  border-radius: 50%; /* Tạo hình tròn */
+  margin-right: 8px; /* Khoảng cách giữa ảnh và văn bản */
+}
+
+.links a {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  padding: 8px 16px;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.links a:hover {
+  background-color: #555;
+}
+
+
+
+
+.card {
+  background: rgba(255, 255, 255, 0.7); /* Màu trắng mờ */
+  color: black;
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  max-width: 250px; /* Giới hạn chiều rộng tối đa của thẻ */
+  margin: 5px auto; /* Canh giữa thẻ */
+  font-size: 10px; /* Giảm kích thước chữ tổng thể */
+}
+
+.card img {
+  width: 30px; /* Giảm kích thước hình ảnh */
+  height: 30px;
+  border-radius: 5px;
+  margin-right: 5px; /* Khoảng cách giữa hình ảnh và nội dung */
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-content h2 {
+  font-size: 12px; /* Giảm kích thước chữ */
+  margin-bottom: 3px; /* Giảm khoảng cách dưới */
+}
+
+.card-content a {
+  color: #1e90ff; 
+  text-decoration: none; 
+  font-size: 10px; /* Giảm kích thước chữ */
+}
+
+.card-content a:hover {
+  text-decoration: underline; 
+}
+
+.card-content .description {
+  font-size: 9px; /* Giảm kích thước chữ */
+  line-height: 1.2; 
+  margin-bottom: 3px; /* Giảm khoảng cách dưới */
+}
+
+.card-content .details {
+  font-size: 9px; /* Giảm kích thước chữ */
+  line-height: 1.2;
+}
+
+.card-content .details div {
+  margin-bottom: 3px; /* Giảm khoảng cách giữa các chi tiết */
+}
+
+.card-content .details .label {
+  font-weight: bold;
+  margin-right: 3px;
+  font-size: 9px; /* Giảm kích thước chữ */
+}
+
+.exchange-logo {
+  margin-top: 5px; /* Khoảng cách phía trên của logo */
+  display: flex;
+  justify-content: center;
+}
+
+.exchange-logo img {
+  width: 20px; /* Kích thước logo */
+  height: 20px;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+
+.exchange-logo img:hover {
+  transform: scale(1.1); /* Hiệu ứng phóng to khi di chuột */
+}
+
+
+.countdown-timer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#timer {
+  font-size: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Thanh tìm kiếm */
+.search-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+#searchBar {
+    width: 100%;
+    padding: 10px 20px 10px 40px;
+    border: 2px solid #ddd;
+    border-radius: 50px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+#searchBar:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #aaa;
+}
+
+/* Danh sách crypto */
+.crypto-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.crypto-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-sizing: border-box;
+}
+
+.crypto-item:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.crypto-symbol {
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.crypto-price {
+    color: #28a745;
+}
+
+
+
+.sidebar {
+  width: 200px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  position: fixed;
+  height: 100%;
+  left: -220px; /* Start hidden */
+  transition: left 0.3s;
+}
+
+.sidebar h2 {
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 20px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+  background-color: #ddd;
+}
+
+.sidebar.open {
+  left: 0; /* Show sidebar */
+}
+
+
