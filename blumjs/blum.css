@@ -59,6 +59,20 @@ a:hover {
     color: #1d72b8;
 }
 
+/* Video minh họa */
+.video-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+video {
+    width: 100%;
+    max-width: 480px; /* Thu nhỏ kích thước video */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 /* Các nút dẫn */
 .contact-info {
     margin: 30px 0;
