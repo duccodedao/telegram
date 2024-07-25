@@ -28,7 +28,7 @@ document.getElementById('orderForm').addEventListener('submit', function(event) 
 
     Swal.fire({
         title: 'Xác nhận mua',
-        html: `Bạn có chắc chắn muốn mua <strong>${quantity} TON</strong> vào ví <strong>${address}</strong>?`,
+        html: `Bạn có chắc chắn muốn mua <strong>${quantity} TON</strong> vào ví <strong>${address}</strong> <strong>- Memo ${memo}</strong>?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Xác nhận',
