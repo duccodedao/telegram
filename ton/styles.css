@@ -11,6 +11,25 @@ body {
     margin: 0;
 }
 
+header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+header .home-link {
+    color: #fff;
+    text-decoration: none;
+    background-color: #444;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+header .home-link:hover {
+    background-color: #555;
+}
+
 .container {
     background-color: #282828;
     padding: 30px;
@@ -24,6 +43,19 @@ body {
 h1 {
     margin-bottom: 25px;
     font-weight: 500;
+}
+
+.notice {
+    background-color: #444;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.notice a {
+    color: #fff;
+    text-decoration: underline;
 }
 
 .form-row {
