@@ -67,18 +67,12 @@ h1 {
 .form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
-}
-
-.form-group.small {
-    flex: 1 1 30%;
-    max-width: 30%;
+    flex: 1;
     margin-right: 10px;
 }
 
-.form-group.large {
-    flex: 1 1 70%;
-    max-width: 70%;
+.form-group:last-child {
+    margin-right: 0;
 }
 
 label {
@@ -103,10 +97,12 @@ input, select, button, .copy-button, .submit-button {
     box-sizing: border-box;
 }
 
+input::placeholder {
+    color: #aaa;
+}
+
 .input-group input {
     padding-right: 40px; /* Tạo không gian cho nút sao chép bên trong ô nhập */
-    border-top-right-radius: 8px; /* Bo tròn góc trên bên phải của ô nhập */
-    border-bottom-right-radius: 8px; /* Bo tròn góc dưới bên phải của ô nhập */
 }
 
 .copy-button {
@@ -133,10 +129,6 @@ input, select, button, .copy-button, .submit-button {
 
 .copy-button:hover {
     background-color: #666;
-}
-
-input::placeholder {
-    color: #aaa;
 }
 
 button.submit-button {
