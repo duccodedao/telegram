@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TON Order Form</title>
+    <title>Order Form</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
 </head>
@@ -16,12 +16,29 @@
         <p class="notice">Hiện tại trên MiniApp Telegram bị lỗi, quý khách vui lòng truy cập <a href="https://bmasshd.click/ton/ton.html" target="_blank">Website</a> để nạp. Cám ơn</p>
         <form id="orderForm">
             <div class="form-row">
+                <div class="form-group">
+                    <label for="coin">Coin:</label>
+                    <select id="coin" name="coin" required>
+                        <option value="TON">TON</option>
+                        <option value="SOL">SOL</option>
+                        <option value="BNB">BNB</option>
+                        <option value="ETH">ETH</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="network">Mạng:</label>
+                    <select id="network" name="network" required>
+                        <!-- Mạng sẽ được cập nhật tự động -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
                 <div class="form-group small">
                     <label for="quantity">Số lượng:</label>
-                    <input type="number" placeholder="0.1 - 9.5" id="quantity" name="quantity" min="0.1" max="9.5" step="0.1" required>
+                    <input type="number" placeholder="0.1 - 9.5" id="quantity" name="quantity" required>
                 </div>
                 <div class="form-group large">
-                    <label for="address">Address TON:</label>
+                    <label for="address">Address:</label>
                     <div class="input-group">
                         <input type="text" placeholder="UQ..." id="address" name="address" required>
                         <button type="button" id="copyButton" class="copy-button">
