@@ -86,7 +86,7 @@ label {
     width: 100%;
 }
 
-input, select, button, .copy-button, .submit-button {
+input, select, button {
     padding: 12px;
     border: none;
     border-radius: 8px;
@@ -109,32 +109,32 @@ input:focus, select:focus, button:focus {
 }
 
 .input-group input {
-    padding-right: 40px; /* Tạo không gian cho nút sao chép bên trong ô nhập */
+    padding-right: 40px; /* Create space for the paste button */
 }
 
-.copy-button {
+.paste-button {
     position: absolute;
     top: 50%;
-    right: 10px; /* Căn chỉnh nút sao chép vào bên phải của ô nhập */
+    right: 10px; /* Align button to the right of the input field */
     transform: translateY(-50%);
     border: none;
     background-color: #555;
-    width: 32px; /* Kích thước cố định của nút dán */
-    height: 32px; /* Kích thước cố định của nút dán */
+    width: 32px; /* Fixed size for the paste button */
+    height: 32px; /* Fixed size for the paste button */
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-top-left-radius: 8px; /* Bo tròn góc trên bên trái của nút sao chép */
-    border-bottom-left-radius: 8px; /* Bo tròn góc dưới bên trái của nút sao chép */
+    border-top-left-radius: 8px; /* Rounded top-left corner of the button */
+    border-bottom-left-radius: 8px; /* Rounded bottom-left corner of the button */
 }
 
-.copy-button img {
-    width: 16px; /* Kích thước hình ảnh bên trong nút */
-    height: 16px; /* Kích thước hình ảnh bên trong nút */
+.paste-button img {
+    width: 16px; /* Size of the icon inside the button */
+    height: 16px; /* Size of the icon inside the button */
 }
 
-.copy-button:hover {
+.paste-button:hover {
     background-color: #666;
 }
 
