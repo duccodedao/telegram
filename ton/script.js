@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set default values
     document.getElementById('coin').value = 'TON';
     document.getElementById('network').innerHTML = '<option value="TON">TON</option>';
+    document.getElementById('quantity').value = '0'; // Set default quantity to 0
     updateButtonText(); // Initialize button text
 
     document.getElementById('coin').addEventListener('change', function() {
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const coin = document.getElementById('coin').value;
         const quantity = document.getElementById('quantity').value;
         const purchaseButton = document.getElementById('purchaseButton');
-        if (quantity) {
+        if (quantity && quantity !== '0') {
             purchaseButton.textContent = `Mua ${quantity} ${coin}`;
         } else {
             purchaseButton.textContent = `Mua ${coin}`;
@@ -84,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const memoOption = document.getElementById('memoOption').value;
         const memo = memoOption === 'input' ? document.getElementById('memo').value : '';
 
-        const url = `https://aliniex.com/orders?items=${coin}&amounts=${quantity}&wallet_address=${address}&network=${network}&memo=${memo}&referral_code=GEmVdVbzWp&redirect_to=`;
+        const url = `https://aliniex.com/orders?items=${coin}&amounts=${quantity}&wallet_address=${address}&network=${network}&memo=${memo}&referral_code=GEmVdVbzWp&redirect_to=`; 
 
         Swal.fire({
             title: 'Xác nhận mua',
