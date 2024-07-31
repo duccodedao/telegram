@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         Swal.fire({
             title: 'Xác nhận mua',
-            html: `Bạn có chắc chắn muốn mua <strong>${quantity} ${coin}</strong> vào ví <strong>${address}</strong> trên mạng <strong>${network}</strong> <strong>- Memo ${memo}</strong>?`,
+            html: `Bạn có chắc chắn muốn mua <strong>${quantity} ${coin}</strong> vào ví <strong>${address}</strong> trên mạng <strong>${network}</strong>- Memo <strong>${memo}</strong>?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Xác nhận',
