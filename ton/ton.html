@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +10,13 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Mua crypto | BmassHD">
     <meta property="og:description" content="Đặt hàng tiền điện tử với BmassHD. Quy trình giao dịch dễ dàng và an toàn.">
-    <meta property="og:image" content="https://bmasshd.click/ton/nen.png"> <!-- Đảm bảo hình ảnh có thể truy cập từ internet -->
+    <meta property="og:image" content="https://bmasshd.click/ton/nen.png">
     <meta property="og:url" content="https://bmasshd.click/ton/ton.html">
     <meta property="og:type" content="website">
     
-   
+    <!-- Add to Home Screen -->
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+    <link rel="icon" sizes="192x192" href="logo.png">
 </head>
 <body>
     <header>
@@ -28,6 +30,7 @@
                 <div class="form-group">
                     <label for="coin">Coin:</label>
                     <select id="coin" name="coin" required>
+                        <option value="" disabled selected>Chọn coin</option>
                         <option value="TON">TON</option>
                         <option value="SOL">SOL</option>
                         <option value="BNB">BNB</option>
