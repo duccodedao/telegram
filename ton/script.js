@@ -9,36 +9,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Set default values
     coinSelect.value = '';
+    networkSelect.innerHTML = '<option value="" disabled selected>Không</option>';
     quantityInput.value = 0;
     updateButtonText(); // Initialize button text
 
     coinSelect.addEventListener('change', function() {
-        networkSelect.innerHTML = ''; // Clear current options
+        networkSelect.innerHTML = '<option value="" disabled selected>Chọn mạng</option>'; // Clear current options
         
         switch (this.value) {
             case 'TON':
-                networkSelect.innerHTML = '<option value="TON">TON</option>';
+                networkSelect.innerHTML += '<option value="TON">TON</option>';
                 quantityInput.placeholder = '0.1 - 9.5';
                 quantityInput.min = 0.1;
                 quantityInput.max = 9.5;
                 quantityInput.step = 0.1;
                 break;
             case 'SOL':
-                networkSelect.innerHTML = '<option value="spl">SOLANA</option>';
+                networkSelect.innerHTML += '<option value="spl">SOLANA</option>';
                 quantityInput.placeholder = '0.01 - 0.4';
                 quantityInput.min = 0.01;
                 quantityInput.max = 0.4;
                 quantityInput.step = 0.01;
                 break;
             case 'BNB':
-                networkSelect.innerHTML = '<option value="bep20">BSC (BEP20)</option>';
+                networkSelect.innerHTML += '<option value="bep20">BSC (BEP20)</option>';
                 quantityInput.placeholder = '0.01 - 0.12';
                 quantityInput.min = 0.01;
                 quantityInput.max = 0.12;
                 quantityInput.step = 0.01;
                 break;
             case 'ETH':
-                networkSelect.innerHTML = '<option value="arb">ARBITRUM</option><option value="ancient8">ANCIENT 8</option><option value="base">BASE</option>';
+                networkSelect.innerHTML += '<option value="arb">ARBITRUM</option><option value="ancient8">ANCIENT 8</option><option value="base">BASE</option>';
                 quantityInput.placeholder = '0.001 - 0.02';
                 quantityInput.min = 0.001;
                 quantityInput.max = 0.02;
@@ -102,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         Swal.fire({
             title: 'Xác nhận mua',
-            html: `Bạn có chắc chắn muốn mua <strong>${quantity} ${coin}</strong> vào ví <strong>${address}</strong> trên mạng <strong>${network}</strong> - Memo <strong>${memo}</strong>?`,
+            html: `Bạn có chắc chắn muốn mua <strong>${quantity} ${coin}</strong> vào ví <strong>${address}</strong> trên mạng <strong>${network}</strong>- Memo <strong>${memo}</strong>?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Xác nhận',
