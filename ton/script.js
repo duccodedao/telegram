@@ -33,10 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
             case 'NEAR':
                 networkSelect.innerHTML += '<option value="near">NEAR</option>';
-                quantityInput.placeholder = '0.01 - 0.4';
-                quantityInput.min = 0.01;
-                quantityInput.max = 0.4;
-                quantityInput.step = 0.01;
+                quantityInput.placeholder = '0.2 - 20';
+                quantityInput.min = 0.2;
+                quantityInput.max = 20;
+                quantityInput.step = 0.1;
                 break;
             case 'BNB':
                 networkSelect.innerHTML += '<option value="bep20">BSC (BEP20)</option>';
