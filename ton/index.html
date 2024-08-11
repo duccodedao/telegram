@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mua Crypto | By BmassHD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Mua crypto | BmassHD">
+    <meta property="og:description" content="Đặt hàng tiền điện tử với BmassHD. Quy trình giao dịch dễ dàng và an toàn.">
+    <meta property="og:image" content="https://bmasshd.click/ton/nen.png">
+    <meta property="og:url" content="https://bmasshd.click/ton/ton.html">
+    <meta property="og:type" content="website">
+    
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+
+</head>
+<body>
+    <header>
+        <a href="https://bmasshd.click" class="home-link">Trở về</a>
+    </header>
+    <div class="container">
+        <h1>BmassHD x Aliniex</h1>
+        <p class="notice">Click <a href="https://t.me/bmassk3_bot/BmassK3" target="_blank">MiniApp</a> để tham gia 💎</p>
+        <form id="orderForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="coin">Coin:</label>
+                    <select id="coin" name="coin" required>
+                        <option value="" disabled selected>Chọn coin</option>
+                        <option value="TON">TON</option>
+                        <option value="SOL">SOL</option>
+                        <option value="BNB">BNB</option>
+                        <option value="ETH">ETH</option>
+                        <option value="NEAR">NEAR</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="network">Mạng:</label>
+                    <select id="network" name="network" required>
+                        <option value="" disabled selected>Không</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group small">
+                    <label for="quantity">Số lượng:</label>
+                    <input type="number" placeholder="0.1 - 9.5" id="quantity" name="quantity" required value="0">
+                </div>
+                <div class="form-group large">
+                    <label for="address">Address:</label>
+                    <div class="input-group">
+                        <input type="text" placeholder="Address" id="address" name="address" required>
+                        <button type="button" id="pasteButton" class="paste-button">
+                            <img src="paste2.png" alt="Paste">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group small">
+                    <label for="memoOption">Memo:</label>
+                    <select id="memoOption" name="memoOption">
+                        <option value="none">Không</option>
+                        <option value="input">Có</option>
+                    </select>
+                </div>
+                <div class="form-group large">
+                    <label for="memo">Memo:</label>
+                    <input type="text" placeholder="Memo" id="memo" name="memo" disabled>
+                </div>
+            </div>
+            <button type="submit" id="purchaseButton" class="submit-button">Mua</button>
+        </form>
+        <div class="logos">
+            <img src="logo1.png" alt="Logo 1">
+            <img src="logo2.png" alt="Logo 2">
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+</body>
+</html>
