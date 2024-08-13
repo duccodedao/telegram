@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="vndusdt.css">
+</head>
+<body>
+    <div class="converter">
+        <h1>Quy Đổi Tiền Tệ</h1>
+        
+        <div class="currency-row" id="fromCurrencyRow">
+            <label>Từ</label>
+            <div class="currency">
+                <img id="fromCurrencyLogo" src="usdt.webp" alt="USDT Logo">
+                <input type="number" id="fromAmount" placeholder="0" oninput="convertCurrency()">
+                <span id="fromCurrencyText">USDT</span>
+            </div>
+        </div>
+
+        <div class="switch-btn" onclick="switchCurrencies()">&#x21c4;</div>
+
+        <div class="currency-row" id="toCurrencyRow">
+            <label>Đến</label>
+            <div class="currency">
+                <img id="toCurrencyLogo" src="vndc.webp" alt="VNDC Logo">
+                <input type="number" id="toAmount" placeholder="0" oninput="convertCurrency()">
+                <span id="toCurrencyText">VNDC</span>
+            </div>
+        </div>
+
+        <p id="exchangeRate">Đang tải tỷ giá...</p>
+    </div>
+
+    <script src="vndtusdt.js"></script>
+</body>
+</html>
 
