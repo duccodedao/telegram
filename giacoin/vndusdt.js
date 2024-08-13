@@ -2,13 +2,13 @@ let exchangeRate;
 
 async function fetchExchangeRate() {
     const exchangeRateElement = document.getElementById('exchangeRate');
-    exchangeRateElement.innerHTML = '<div class="loading"></div> Đang tải tỷ giá...';
+    exchangeRateElement.innerHTML = '<div class="loading"></div> Đang tải...';
 
     try {
         const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=vnd');
         const data = await response.json();
         exchangeRate = data.tether.vnd;
-        exchangeRateElement.innerHTML = `1 USDT = ${exchangeRate.toLocaleString()} VNĐ <a href="https://www.coingecko.com/en/coins/tether" target="_blank">(Coingecko)</a>`;
+        exchangeRateElement.innerHTML = `1 USDT = ${exchangeRate.toLocaleString()} VNĐ <a href="https://www.coingecko.com/en/coins/tether" target="_blank">(CGK)</a>`;
     } catch (error) {
         exchangeRateElement.innerText = 'Lỗi khi lấy tỷ giá';
         console.error('Lỗi khi lấy tỷ giá:', error);
