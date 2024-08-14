@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn rút Dogs Token</title>
+    <link rel="stylesheet" href="noti.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Hướng dẫn rút Dogs Token</h1>
+        <ol>
+            <li><a href="https://bmasshd.click/rut/ruttien.html" target="_blank">Đăng ký/đăng nhập sàn</a></li>
+            <li>
+                Tìm đến token muốn rút ở phần nạp tiền mã hoá. Ví dụ: DOGS, Mã hợp đồng là: 
+                <span class="contract-code" onclick="copyToClipboard()">EQCv.....DOGS</span>
+            </li>
+            <li>Sao chép address cá nhân và memo/comment</li>
+            <li>Dán Address và Memo/Comment vào dự án trên Telegram</li>
+            <li>Chuẩn bị một ít phí gas để rút <a href="https://bmasshd.click/ton/ton.html" target="_blank">tại đây</a></li>
+        </ol>
+        <p class="note">Lưu ý: Mã hợp đồng dùng để tìm token, không dùng để rút hoặc nạp.</p>
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            var fullContractCode = 'EQCvxJy4eG8hyHBFsZ7eePxrRsUQSFE_jpptRAYBmcG_DOGS';
+            var tempInput = document.createElement("input");
+            tempInput.value = fullContractCode;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            alert("Đã sao chép mã hợp đồng: " + fullContractCode);
+        }
+    </script>
+</body>
+</html>
