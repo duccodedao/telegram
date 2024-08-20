@@ -76,6 +76,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+
+    
+document.getElementById("openWalletButton").addEventListener("click", function() {
+            window.open("https://t.me/wallet/start?startapp", "_blank");
+        });
+
+
+
+    
     // Handle paste button click
     document.getElementById('pasteButton').addEventListener('click', function() {
         navigator.clipboard.readText().then(text => {
