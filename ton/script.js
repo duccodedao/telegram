@@ -22,28 +22,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 quantityInput.placeholder = '0.1 - 9.5';
                 quantityInput.min = 0.1;
                 quantityInput.max = 9.5;
-                quantityInput.step = 0.1;
+                quantityInput.step = 0.001;
                 break;
             case 'SOL':
                 networkSelect.innerHTML += '<option value="spl">SOLANA</option>';
                 quantityInput.placeholder = '0.01 - 0.4';
                 quantityInput.min = 0.01;
                 quantityInput.max = 0.4;
-                quantityInput.step = 0.01;
+                quantityInput.step = 0.001;
                 break;
             case 'NEAR':
                 networkSelect.innerHTML += '<option value="near">NEAR</option>';
                 quantityInput.placeholder = '0.2 - 20';
                 quantityInput.min = 0.2;
                 quantityInput.max = 20;
-                quantityInput.step = 0.1;
+                quantityInput.step = 0.001;
                 break;
             case 'BNB':
                 networkSelect.innerHTML += '<option value="bep20">BSC (BEP20)</option>';
                 quantityInput.placeholder = '0.01 - 0.12';
                 quantityInput.min = 0.01;
                 quantityInput.max = 0.12;
-                quantityInput.step = 0.01;
+                quantityInput.step = 0.001;
                 break;
             case 'ETH':
                 networkSelect.innerHTML += '<option value="arb">ARBITRUM</option><option value="ancient8">ANCIENT 8</option><option value="base">BASE</option>';
