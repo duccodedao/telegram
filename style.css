@@ -1,0 +1,80 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 0 10px; /* Thêm padding để tránh sát rìa */
+}
+
+.app-category {
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #444;
+    text-transform: uppercase;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.app {
+    text-align: center;
+}
+
+.app img {
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.app:hover img {
+    transform: scale(1.1);
+}
+
+.app span {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.app a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.heart {
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 5px;
+    color: red;
+}
+
+/* Điều chỉnh kích thước trên thiết bị di động */
+@media screen and (max-width: 768px) {
+    .menu {
+        gap: 10px;
+    }
+
+    .app img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .app span {
+        font-size: 12px;
+    }
+}
