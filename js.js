@@ -77,15 +77,15 @@ if (Telegram.WebApp.initDataUnsafe) {
 
     if (user) {
         let userName = user.first_name + " " + (user.last_name || "");
-        let avatarUrl = user.photo_url || 'default_avatar.png'; // Sử dụng ảnh mặc định nếu không có avatar
+        let avatarUrl = user.photo_url || 'logo-coin/bmlogo.jpg'; // Sử dụng ảnh mặc định nếu không có avatar
 
         // Cập nhật vào phần HTML
         document.getElementById('user-name').textContent = userName;
         document.getElementById('user-avatar').src = avatarUrl;
     } else {
         // Trường hợp không có thông tin người dùng
-        document.getElementById('user-name').textContent = "Guest";
-        document.getElementById('user-avatar').src = 'default_avatar.png';
+        document.getElementById('user-name').textContent = "Lỗi lấy tên";
+        document.getElementById('user-avatar').src = 'logo-coin/bmlogo.jpg';
     }
 } else {
     console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
