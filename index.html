@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airdrop cùng BmassHD</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
     
     <!-- Open Graph Meta Tags -->
@@ -23,228 +23,91 @@
 
 </head>
 <body>
-    <div class="menu-toggle" id="menu-toggle">
-        <span class="menu-icon">&#9776;</span>
-        <span class="close-icon">
-            <span class="rotate">&#10006;</span>
-        </span>
+    <div class="app-category">
+        <h2>Yêu Thích</h2>
+        <div id="favorite-apps" class="menu"></div> <!-- Danh sách yêu thích -->
     </div>
-    
-    <div class="sidebar" id="sidebar">
-        <h2>Menu</h2>
-        <div class="notifications" id="notifications">
-            <h3>Thông báo</h3>
-            <div class="notification">
-                <img src="logo-coin/hmstr.webp" alt="Logo 1">
-                Ra mắt token $HMSTR
-            </div>
-        </div>
-        <ul>
 
-            <li><a href="giacoin/vndusdt.html">VND/USDT</a></li>
-            <li><a href="giacoin/crypto.html">GIÁ CRYPTO</a></li>
-            <li><a href="ton/ton.html">NẠP CRYPTO</a></li>
-            <li><a href="https://t.me/bmassk3_bot">TELEGRAM</a></li>
-            <li><a href="blumjs/blum.html">BLUM AUTO CLICK</a></li>
-
-            <li class="has-submenu">
-                <a href="#" id="link-1-toggle">HƯỚNG DẪN P2P</a>
-                <ul class="submenu" id="link-1-submenu">
-                    <li><a href="nap/p2p.html">NẠP TIỀN</a></li>
-                    <li><a href="rut/ruttien.html">RÚT TIỀN</a></li>
-                </ul>
-            </li>
-
+    <div class="app-category">
+        <h2>Trending (Hot)</h2>
+        <div class="menu">
+            <!-- 15 ứng dụng trong mục Trending -->
+            <div class="app"><a href="http://t.me/seed_coin_bot/app?startapp=5387725104"><img src="logo-coin/2.jpg" alt="App 1"></a><span>SEED <i class="heart" data-app="App 1">♡</i></span></div>
+            <div class="app"><a href="https://t.me/theYescoin_bot/Yescoin?startapp=ZdaoFU"><img src="logo-coin/7.jpg" alt="App 3"></a><span>YV <i class="heart" data-app="App 3">♡</i></span></div>
+            <div class="app"><a href="http://t.me/BlumCryptoBot/app?startapp=ref_Sn8ogL25Ap"><img src="logo-coin/12.jpg" alt="App 4"></a><span>BLUM <i class="heart" data-app="App 4">♡</i></span></div>
+            <div class="app"><a href="https://t.me/notpixel/app?startapp=f5387725104"><img src="logo-coin/pixel.jpg" alt="App 7"></a><span>PIXEL <i class="heart" data-app="App 7">♡</i></span></div>
+            <div class="app"><a href="https://t.me/Binance_Moonbix_bot/start?startapp=ref_5387725104&startApp=ref_5387725104"><img src="logo-coin/bnbmb.jpg" alt="App 5"></a><span>BNB <i class="heart" data-app="App 5">♡</i></span></div>
+            <div class="app"><a href="https://t.me/OKX_official_bot/OKX_Racer?startapp=linkCode_24237303"><img src="logo-coin/race.jpg" alt="App 6"></a><span>OKX <i class="heart" data-app="App 6">♡</i></span></div>
+            <div class="app"><a href="https://t.me/xkucoinbot/kucoinminiapp?startapp=cm91dGU9JTJGdGFwLWdhbWUlM0ZpbnZpdGVyVXNlcklkJTNENTM4NzcyNTEwNCUyNnJjb2RlJTNEUUJBRVFFMUw="><img src="logo-coin/kucoinx.jpg" alt="App 7"></a><span>KC <i class="heart" data-app="App 7">♡</i></span></div>
             
-        </ul>
-    </div>
-
-    <div class="container">
-        <div class="header">
-                <div  class="logo"> </div>
-            <button  class="join-button" onclick="window.open('https://t.me/bmassk3_channel', '_blank')">Tham gia ngay</button>
-        </div>
-        <div class="content">
-            <h1>BmassK3 Airdrop</h1>
-            <div class="crypto-logos">
-                <img src="logo/bia.png" alt="logo1"   class="round-logo">
-
-            </div>
-            <div class="contact-buttons">
-                <a href="https://t.me/BmassK3" target="_blank">
-                    <img src="info/tele-icon.png" alt="Telegram" class="contact-icon">
-                </a>
-                <a href="https://x.com/BmassK3" target="_blank">
-                    <img src="info/x-icon.png" alt="X" class="contact-icon">
-                </a>
-            </div>
-            <div class="preparation">
-                <h2>TAP TO EARN</h2>
-            <div class="links">
-            <a href="https://t.me/quackquack_game_bot?start=?start=4orpdv6clD" target="_blank">
-              <img src="logo-coin/4.jpg" alt="QUACKQUACK" class="link-icon"> QUACKQUACK
-            </a>
-            <a href="https://t.me/dotcoin_bot?start=r_5387725104" target="_blank">
-              <img src="logo-coin/6.jpg" alt="DOTCOIN" class="link-icon"> DOTCOIN
-            </a>
-            <a href="https://t.me/theYescoin_bot/Yescoin?startapp=ZdaoFU" target="_blank">
-                <img src="logo-coin/7.jpg" alt="THEYESCOIN" class="link-icon"> THEYESCOIN
-            </a>
-            <a href="https://t.me/tapswap_bot?start=r_5387725104" target="_blank">
-                 <img src="logo-coin/9.jpg" alt="TAPSWAP" class="link-icon" class="hot-link"> TAPSWAP
-            </a>
-            <a href="https://t.me/hamster_kombat_bot?start=kentId5387725104" target="_blank">
-                <img src="logo-coin/10.jpg" alt="HAMSTER KOMBAT" class="link-icon" class="hot-link"> HAMSTER KOMBAT
-            </a>
-            <a href="https://t.me/onus_tap_tap_tap_bot?start=1724845989868" target="_blank">
-              <img src="logo-coin/19.jpg" alt="ONX.IO" class="link-icon"> ONX
-            </a>
-            <a href="https://t.me/cexio_tap_bot?start=1716270247286630" target="_blank">
-                <img src="logo-coin/1.jpg" alt="CEX.IO" class="link-icon"> CEX.IO
-            </a>
-            <a href="https://t.me/wcoin_tapbot?start=NTM4NzcyNTEwNA==" target="_blank">
-                <img src="logo-coin/3.jpg" alt="W-COIN" class="link-icon"> W-COIN
-            </a>
-            <a href="https://t.me/pixelversexyzbot?start=5387725104" target="_blank">
-                <img src="logo-coin/18.jpg" alt="PIXEL" class="link-icon"> PIXEL
-            </a>
-            <a href="https://t.me/HexacoinBot/wallet?startapp=5387725104" target="_blank">
-                <img src="logo-coin/token.gif" alt="HEXA" class="link-icon"> HEXA
-            </a>
-            <a href="https://t.me/yescoingame_bot?start=r_5387725104" target="_blank">
-                <img src="logo-coin/5.jpg" alt="YESCOIN" class="link-icon"> YESCOIN
-            </a>
-            <a href="https://t.me/OKX_official_bot/OKX_Racer?startapp=linkCode_24237303" target="_blank">
-                <img src="logo-coin/31.jpg" alt="OKX" class="link-icon"> OKX
-            </a>
-            <a href="https://t.me/TheWhaleAppBot?start=r_5387725104" target="_blank">
-                <img src="logo-coin/33.jpg" alt="WHALE" class="link-icon"> WHALE
-            </a>
-            <a href="https://t.me/MMproBump_bot?start=ref_5387725104" target="_blank">
-                <img src="logo-coin/34.png" alt="BUMP" class="link-icon"> BUMP
-            </a>
-            <a href="https://t.me/gold_tap_tap_bot/GoldTapTap?startapp=LZ14IQBA5387725104" target="_blank">
-                <img src="logo-coin/35.jpg" alt="GOLD" class="link-icon"> GOLD
-            </a>
-
         </div>
     </div>
 
-
-
-    <div class="preparation">
-        <h2>CLAIM THEO GIỜ</h2>
-    <div class="links">
-        <a href="http://t.me/BlumCryptoBot/app?startapp=ref_Sn8ogL25Ap" target="_blank">
-            <img src="logo-coin/12.jpg" alt="BLUM" class="link-icon"> BLUM
-        </a>
-        <a href="http://t.me/seed_coin_bot/app?startapp=5387725104" target="_blank">
-            <img src="logo-coin/2.jpg" alt="SEED" class="link-icon"> SEED
-        </a>
-        <a href="http://t.me/vertus_app_bot/app?startapp=5387725104" target="_blank">
-            <img src="logo-coin/8.jpg" alt="VERTUS" class="link-icon"> VERTUS
-        </a>
-        <a href="https://t.me/dormint_bot?start=5387725104" target="_blank">
-            <img src="logo-coin/23.jpg" alt="DOR" class="link-icon"> DORMINT
-        </a>
-        <a href="https://t.me/W3BFLIXBot?start=iv2ac3fc1201" target="_blank">
-            <img src="logo-coin/22.jpg" alt="WE" class="link-icon"> W3BFLIX
-        </a>
-        <a href="https://t.me/Mdaowalletbot?start=5387725104" target="_blank">
-            <img src="logo-coin/21.jpg" alt="MD" class="link-icon"> MDAO
-        </a>
-        <a href="https://t.me/tonstationgames_bot/app?startapp=ref_vyjqderh4emwxsssun3hza" target="_blank">
-            <img src="logo-coin/20.jpg" alt="TONSTATION" class="link-icon"> TONSTATION
-        </a>
-        <a href="http://t.me/IcebergAppBot?start=referral_5387725104" target="_blank">
-            <img src="logo-coin/17.jpg" alt="ICEBERG" class="link-icon"> ICEBERG
-        </a>
-        <a href="https://t.me/pocketfi_bot/Mining?startapp=5387725104" target="_blank">
-            <img src="logo-coin/14.jpg" alt="POCKET" class="link-icon"> POCKET
-        </a>
-        <a href="https://t.me/MatchQuestBot/start?startapp=eb6abff2544f765bf5bdb3620b612abd" target="_blank">
-            <img src="logo-coin/15.jpg" alt="HOT" class="link-icon"> HOT
-        </a>
-        <a href="https://t.me/TimeFarmCryptoBot?start=jnFA1i1f9Xms6E19" target="_blank">
-            <img src="logo-coin/16.jpg" alt="TIMEFARM" class="link-icon" class="hot-link"> TIMEFARM
-        </a>
-        <a href="https://t.me/Shuttle_ton_bot?start=r_5387725104" target="_blank">
-            <img src="logo-coin/11.jpg" alt="SHUTTLE" class="link-icon"> SHUTTLE
-        </a>
-        <a href="https://t.me/boom?start=MUnNNVPPWLQ5aYt6k6jQou" target="_blank">
-            <img src="logo-coin/28.jpg" alt="BOOM" class="link-icon"> BOOM
-        </a>
-        <a href="https://t.me/graph_dex_bot?start=5387725104" target="_blank">
-            <img src="logo-coin/27.jpg" alt="GRAPH" class="link-icon"> GRAPH
-        </a>
-        <a href="https://t.me/dogshouse_bot/join?startapp=iEsN-vpPTYOhdFh-CybxOQ" target="_blank">
-            <img src="logo-coin/26.jpg" alt="DOGSHOUSE" class="link-icon"> DOGSHOUSE
-        </a>
-        <a href="https://t.me/cryptorank_app_bot/points?startapp=ref_1229464424_" target="_blank">
-            <img src="logo-coin/25.jpg" alt="GRYPTO BANK" class="link-icon"> GRYPTO BANK
-        </a>
-        <a href="https://t.me/TheBaboon_Bot?start=r_5387725104" target="_blank">
-            <img src="logo-coin/24.jpg" alt="BABOON" class="link-icon"> BABOON
-        </a>
-        <a href="http://t.me/hexn_bot/app?startapp=74cc92cc-1c10-4044-8048-1dbabbc02a88" target="_blank">
-            <img src="logo-coin/30.jpg" alt="HEXN" class="link-icon"> HEXN
-        </a>
-        <a href="https://t.me/DejenDogBot?start=2dcfebaf" target="_blank">
-            <img src="logo-coin/32.jpg" alt="DJDOGS" class="link-icon"> DJDOGS
-        </a>
-    </div>
-</div>
-</div>
-
-
-
-
-
-
-        <div class="visit-counter">
-            <p>Số lần truy cập: <span id="visitCount">0</span></p>
+    <div class="app-category">
+        <h2>Hay Dùng</h2>
+        <div class="menu">
+            <!-- 27 ứng dụng trong mục Hay Dùng -->
+            <div class="app"><a href="https://t.me/cexio_tap_bot?start=1716270247286630"><img src="logo-coin/1.jpg" alt="App 16"></a><span>CEXP <i class="heart" data-app="App 16">♡</i></span></div>
+            <div class="app"><a href="https://t.me/wcoin_tapbot?start=NTM4NzcyNTEwNA=="><img src="logo-coin/3.jpg" alt="App 17"></a><span>W-C <i class="heart" data-app="App 17">♡</i></span></div>
+            <div class="app"><a href="https://t.me/quackquack_game_bot?start=?start=4orpdv6clD"><img src="logo-coin/4.jpg" alt="App 18"></a><span>Q <i class="heart" data-app="App 18">♡</i></span></div>
+            <div class="app"><a href="https://t.me/realyescoinbot?start=r_5387725104"><img src="logo-coin/5.jpg" alt="App 19"></a><span>YT <i class="heart" data-app="App 19">♡</i></span></div>
+            <div class="app"><a href="https://t.me/dotcoin_bot?start=r_5387725104"><img src="logo-coin/6.jpg" alt="App 20"></a><span>DTC <i class="heart" data-app="App 20">♡</i></span></div>
+            <div class="app"><a href="http://t.me/vertus_app_bot/app?startapp=5387725104"><img src="logo-coin/8.jpg" alt="App 21"></a><span>VERT <i class="heart" data-app="App 21">♡</i></span></div>
+            <div class="app"><a href="https://t.me/tapswap_mirror_bot?start=r_5387725104"><img src="logo-coin/9.jpg" alt="App 22"></a><span>TAPS <i class="heart" data-app="App 22">♡</i></span></div>
+            <div class="app"><a href="https://t.me/hamster_kombat_bot?start=kentId5387725104"><img src="logo-coin/10.jpg" alt="App 23"></a><span>HMS <i class="heart" data-app="App 23">♡</i></span></div>
+            <div class="app"><a href="https://t.me/Shuttle_ton_bot?start=r_5387725104"><img src="logo-coin/11.jpg" alt="App 24"></a><span>ST <i class="heart" data-app="App 24">♡</i></span></div>
+            <div class="app"><a href="https://t.me/HexacoinBot/wallet?startapp=5387725104"><img src="logo-coin/token.gif" alt="App 25"></a><span>HXC <i class="heart" data-app="App 25">♡</i></span></div>
+            <div class="app"><a href="https://t.me/pocketfi_bot/Mining?startapp=5387725104"><img src="logo-coin/14.jpg" alt="App 26"></a><span>PFI <i class="heart" data-app="App 26">♡</i></span></div>
+            <div class="app"><a href="https://t.me/MatchQuestBot/start?startapp=eb6abff2544f765bf5bdb3620b612abd"><img src="logo-coin/15.jpg" alt="App 27"></a><span>MAT <i class="heart" data-app="App 27">♡</i></span></div>
+            <div class="app"><a href="https://t.me/TimeFarmCryptoBot?start=jnFA1i1f9Xms6E19"><img src="logo-coin/16.jpg" alt="App 28"></a><span>TF <i class="heart" data-app="App 28">♡</i></span></div>
+            <div class="app"><a href="http://t.me/IcebergAppBot?start=referral_5387725104"><img src="logo-coin/17.jpg" alt="App 29"></a><span>ICE <i class="heart" data-app="App 29">♡</i></span></div>
+            <div class="app"><a href="https://t.me/onus_tap_tap_tap_bot?start=1724845989868"><img src="logo-coin/19.jpg" alt="App 30"></a><span>ONX <i class="heart" data-app="App 30">♡</i></span></div>
+            <div class="app"><a href="https://t.me/W3BFLIXBot?start=iv2ac3fc1201"><img src="logo-coin/22.jpg" alt="App 31"></a><span>W3B <i class="heart" data-app="App 31">♡</i></span></div>
+            <div class="app"><a href="https://t.me/tonstationgames_bot/app?startapp=ref_vyjqderh4emwxsssun3hza"><img src="logo-coin/20.jpg" alt="App 32"></a><span>TST <i class="heart" data-app="App 32">♡</i></span></div>
+            <div class="app"><a href="https://t.me/Mdaowalletbot?start=5387725104"><img src="logo-coin/21.jpg" alt="App 33"></a><span>MD <i class="heart" data-app="App 33">♡</i></span></div>
+            <div class="app"><a href="https://t.me/dormint_bot?start=5387725104"><img src="logo-coin/23.jpg" alt="App 34"></a><span>DM <i class="heart" data-app="App 34">♡</i></span></div>
+            <div class="app"><a href="https://t.me/boom?start=MUnNNVPPWLQ5aYt6k6jQou"><img src="logo-coin/28.jpg" alt="App 35"></a><span>BM <i class="heart" data-app="App 35">♡</i></span></div>
+            <div class="app"><a href="https://t.me/graph_dex_bot?start=5387725104"><img src="logo-coin/27.jpg" alt="App 8"></a><span>GR <i class="heart" data-app="App 8">♡</i></span></div>
+            <div class="app"><a href="https://t.me/cryptorank_app_bot/points?startapp=ref_5387725104_"><img src="logo-coin/25.jpg" alt="App 9"></a><span>CR <i class="heart" data-app="App 9">♡</i></span></div>
+            <div class="app"><a href="https://t.me/TheBaboon_Bot?start=r_5387725104"><img src="logo-coin/24.jpg" alt="App 10"></a><span>BB<i class="heart" data-app="App 10">♡</i></span></div>
+            <div class="app"><a href="https://fintop.io/6nBvAHD"><img src="logo-coin/hold.jpg" alt="App 11"></a><span>HOLD <i class="heart" data-app="App 11">♡</i></span></div>
+            <div class="app"><a href="http://t.me/hexn_bot/app?startapp=74cc92cc-1c10-4044-8048-1dbabbc02a88"><img src="logo-coin/30.jpg" alt="App 12"></a><span>HEXN <i class="heart" data-app="App 12">♡</i></span></div>
+            <div class="app"><a href="https://t.me/DejenDogBot?start=2dcfebaf"><img src="logo-coin/32.jpg" alt="App 13"></a><span>DjD <i class="heart" data-app="App 13">♡</i></span></div>
+            <div class="app"><a href="https://t.me/MMproBump_bot?start=ref_5387725104"><img src="logo-coin/IMG_20240929_194018_843.jpg" alt="App 14"></a><span>MMB <i class="heart" data-app="App 14">♡</i></span></div>
+            <div class="app"><a href="https://t.me/Agent301Bot/app?startapp=onetime5387725104"><img src="logo-coin/301.jpg" alt="App 15"></a><span>301 <i class="heart" data-app="App 15">♡</i></span></div>
+            <div class="app"><a href="https://t.me/tonxdao_bot?start=dao_5387725104_180853"><img src="logo-coin/txd.jpg" alt="App 8"></a><span>TxD <i class="heart" data-app="App 8">♡</i></span></div>
+            <div class="app"><a href="https://t.me/bwcwukong_bot/Play?startapp=5387725104"><img src="logo-coin/bwc.jpg" alt="App 9"></a><span>BWC <i class="heart" data-app="App 9">♡</i></span></div>
+            <div class="app"><a href="https://t.me/NotBoredPuppies_bot?start=r_5387725104"><img src="logo-coin/nbp.jpg" alt="App 10"></a><span>NBP <i class="heart" data-app="App 10">♡</i></span></div>
+            <div class="app"><a href="https://t.me/b_usersbot/join?startapp=ref-jUKQpUvcqtonEgaDDZdCbn"><img src="logo-coin/bu.jpg" alt="App 11"></a><span>BU <i class="heart" data-app="App 11">♡</i></span></div>
+            <div class="app"><a href="https://t.me/Vanilla_Finance_Bot/Vanillafinance?startapp=inviteId10141498"><img src="logo-coin/vani.jpg" alt="App 12"></a><span>VNF <i class="heart" data-app="App 12">♡</i></span></div>
+            <div class="app"><a href="https://t.me/DuckChain_bot/quack?startapp=yY9AdkK8"><img src="logo-coin/dc.jpg" alt="App 13"></a><span>DC <i class="heart" data-app="App 13">♡</i></span></div>
+            <div class="app"><a href="https://t.me/VanaDataHeroBot/VanaDataHero?startapp=5387725104"><img src="logo-coin/vana.jpg" alt="App 14"></a><span>VN <i class="heart" data-app="App 14">♡</i></span></div>
+        
         </div>
- 
+    </div>
 
-       
-        <footer>
-            <div class="footer-content">
-                <h2>ĐĂNG KÝ NGAY SÀN GIAO DỊCH</h2>
-                <div class="registration-buttons">
-                    <a href="https://www.binance.info/vi/activity/referral-entry/CPA/together-v3?ref=CPA_00N60370DE" target="_blank" class="ico-btn">
-                        <img src="logo-san/bina.png" alt="Binance ICO">
-                    </a>
-                    <a href="https://okx.com/join/94425783" target="_blank" class="ico-btn">
-                        <img src="logo-san/okx.png" alt="OKX ICO">
-                    </a>
-                    <a href="https://www.bybitglobal.com/invite?ref=4K7A14M" target="_blank" class="ico-btn">
-                        <img src="logo-san/bb.png" alt="BYBIT ICO">
-                    </a>
-                    <a href="https://www.kucoin.com/r/rf/QBAEQE1L" target="_blank" class="ico-btn">
-                        <img src="logo-san/kc2.png" alt="KUCOIN ICO">
-                    </a>
-                    <a href="https://share.bitget.com/u/Y1TJB7JX" target="_blank" class="ico-btn">
-                        <img src="logo-san/bg2.png" alt="BITGET ICO">
-                    </a>
-                    <a href="https://www.gate.io/signup/AVLMVF0O?ref_type=103" target="_blank" class="ico-btn">
-                        <img src="logo-san/gt.png" alt="GATEIO ICO">
-                    </a>
-                    <a href="sanvn/attlas/index.html" target="_blank" class="ico-btn">
-                        <img src="sanvn/attlas/al.png" alt="Binance ICO">
-                    </a>
-                    <a href="sanvn/onus/index.html" target="_blank" class="ico-btn">
-                        <img src="sanvn/onus/onus.png" alt="OKX ICO">
-                    </a>
-                </div>
-            </div>
-        </footer>
+    <div class="app-category">
+        <h2>Extension</h2>
+        <div class="menu">
+            <!-- 5 ứng dụng trong mục Khác -->
+            <div class="app"><a href="https://link-to-app36.com"><img src="logo-coin/bmlogo.jpg" alt="App 36"></a><span>Crypto<i class="heart" data-app="App 36">♡</i></span></div>
+            <div class="app"><a href="https://link-to-app37.com"><img src="logo-coin/bmlogo.jpg" alt="App 37"></a><span>Referral <i class="heart" data-app="App 37">♡</i></span></div>
+            
+        </div>
+    </div>
 
+    <div class="app-category">
+        <h2>Exchange</h2>
+        <div class="menu">
+            <!-- 5 ứng dụng trong mục Khác 2 -->
+            <div class="app"><a href="https://www.binance.info/vi/activity/referral-entry/CPA/together-v3?ref=CPA_00N60370DE"><img src="logo-coin/binancex.jpg" alt="App 41"></a><span>BNB <i class="heart" data-app="App 41">♡</i></span></div>
+            <div class="app"><a href="https://okx.com/join/94425783"><img src="logo-coin/okx.jpg" alt="App 42"></a><span>OKX <i class="heart" data-app="App 42">♡</i></span></div>
+            <div class="app"><a href="https://www.bybitglobal.com/invite?ref=4K7A14M"><img src="logo-coin/bybitx.png" alt="App 43"></a><span>BYBIT <i class="heart" data-app="App 43">♡</i></span></div>
+            <div class="app"><a href="https://share.bitget.com/u/Y1TJB7JX"><img src="logo-coin/bitget.jpg" alt="App 44"></a><span>BITGET <i class="heart" data-app="App 44">♡</i></span></div>
+            <div class="app"><a href="https://www.gate.io/signup/AVLMVF0O?ref_type=103"><img src="logo-coin/gate.jpg" alt="App 45"></a><span>GATE <i class="heart" data-app="App 45">♡</i></span></div>
+        </div>
+    </div>
 
-
-
-
-
-
-    <script src="script.js"></script>
+    <script src="js.js"></script>
 </body>
-</html>
+                                                                                         </html>
