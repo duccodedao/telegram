@@ -84,7 +84,7 @@ if (Telegram.WebApp.initDataUnsafe) {
         document.getElementById('user-avatar').src = avatarUrl;
     } else {
         // Trường hợp không có thông tin người dùng
-        document.getElementById('user-name').textContent = "Lỗi lấy tên";
+        document.getElementById('user-name').textContent = "Loading...";
         document.getElementById('user-avatar').src = 'logo-coin/bmlogo.jpg';
     }
 } else {
