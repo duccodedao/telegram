@@ -71,21 +71,35 @@ window.onload = function() {
 
 window.Telegram.WebApp.ready(); // Đảm bảo WebApp đã sẵn sàng
 
+// Tạo một danh sách các URL avatar ngẫu nhiên
+const avatars = [
+    'https://i.imgur.com/1.png',
+    'https://i.imgur.com/2.png',
+    'https://i.imgur.com/3.png',
+    'https://i.imgur.com/4.png',
+    'https://i.imgur.com/5.png'
+];
+
+// Lấy một ảnh đại diện ngẫu nhiên
+const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+
 // Lấy thông tin người dùng nếu có sẵn
 if (Telegram.WebApp.initDataUnsafe) {
     let user = Telegram.WebApp.initDataUnsafe.user;
 
     if (user) {
         let userName = user.first_name + " " + (user.last_name || "");
-        let avatarUrl = user.photo_url || 'logo-coin/bmlogo.jpg'; // Sử dụng ảnh mặc định nếu không có avatar
+        let username = user.username || "No Username"; // Thay thế nếu không có username
 
         // Cập nhật vào phần HTML
         document.getElementById('user-name').textContent = userName;
-        document.getElementById('user-avatar').src = avatarUrl;
+        document.getElementById('user-username').textContent = `@${username}`;
+        document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
     } else {
         // Trường hợp không có thông tin người dùng
         document.getElementById('user-name').textContent = "Loading...";
-        document.getElementById('user-avatar').src = 'logo-coin/bmlogo.jpg';
+        document.getElementById('user-username').textContent = "@username";
+        document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
     }
 } else {
     console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
