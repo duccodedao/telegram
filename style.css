@@ -80,23 +80,37 @@ h2 {
 }
 
 
-#header {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #ddd;
+
+
+.header {
+    background-color: #f1f1f1;
+    padding: 10px 15px; /* Giảm padding để header nhỏ lại */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#user-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
+.profile-container {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 70px; /* Giảm kích thước ảnh đại diện */
+    height: 70px; /* Giảm kích thước ảnh đại diện */
+    border-radius: 50%; /* Bo tròn hình ảnh */
+    cursor: default; /* Không cho phép thay đổi ảnh */
+    border: 2px solid #0078ff; /* Đường viền màu */
+}
+
+.user-info {
+    margin-left: 10px; /* Giảm khoảng cách giữa ảnh và tên */
 }
 
 #user-name {
-    font-size: 18px;
+    font-size: 18px; /* Giảm kích thước chữ của tên */
     font-weight: bold;
-    color: #333;
+}
+
+#user-username {
+    color: #555;
+    font-size: 14px; /* Giảm kích thước chữ của username */
 }
