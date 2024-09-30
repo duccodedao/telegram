@@ -18,7 +18,7 @@ body {
 }
 
 .header {
-    background-color: #f1f1f1;
+    background-color: linear-gradient(to right, #1c1c1c, #434343);
     padding: 10px 15px; /* Giảm padding để header nhỏ lại */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
