@@ -141,18 +141,18 @@ window.Telegram.WebApp.ready(); // Đảm bảo WebApp đã sẵn sàng
 
 // Tạo một danh sách các URL avatar ngẫu nhiên
 const avatars = [
-    'logo-coin/av1.png',
-    'logo-coin/av2.png',
-    'logo-coin/av3.png',
-    'logo-coin/av4.png',
-    'logo-coin/av5.png',
-    'logo-coin/av6.png',
-    'logo-coin/av7.png',
-    'logo-coin/av8.png',
-    'logo-coin/av9.png',
-    'logo-coin/av10.png',
-    'logo-coin/av11.png',
-    'logo-coin/av12.png',
+    'av1.png',
+    'av2.png',
+    'av3.png',
+    'av4.png',
+    'av5.png',
+    'av6.png',
+    'av7.png',
+    'av8.png',
+    'av9.png',
+    'av10.png',
+    'av11.png',
+    'av12.png',
 ];
 
 // Lấy một ảnh đại diện ngẫu nhiên
