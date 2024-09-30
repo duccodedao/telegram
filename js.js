@@ -73,11 +73,11 @@ window.Telegram.WebApp.ready(); // Đảm bảo WebApp đã sẵn sàng
 
 // Tạo một danh sách các URL avatar ngẫu nhiên
 const avatars = [
-    'https://i.imgur.com/1.png',
-    'https://i.imgur.com/2.png',
-    'https://i.imgur.com/3.png',
-    'https://i.imgur.com/4.png',
-    'https://i.imgur.com/5.png'
+    'logo-coin/av1',
+    'logo-coin/av1',
+    'logo-coin/av1',
+    'logo-coin/av1',
+    'logo-coin/av1'
 ];
 
 // Lấy một ảnh đại diện ngẫu nhiên
