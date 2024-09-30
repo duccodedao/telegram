@@ -11,11 +11,6 @@ body {
     margin: 0;
 }
 
-.header {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
 
 .header {
     background-color: linear-gradient(to right, #1c1c1c, #434343);
