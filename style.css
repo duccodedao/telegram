@@ -114,3 +114,9 @@ h2 {
     color: #555;
     font-size: 14px; /* Giảm kích thước chữ của username */
 }
+
+#active-time {
+    font-size: 12px;
+    color: #888;
+    margin-top: 5px; /* Khoảng cách phía trên */
+}
