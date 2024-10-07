@@ -115,11 +115,13 @@ h2 {
     font-size: 14px; /* Giảm kích thước chữ của username */
 }
 
-#active-time {
-    font-size: 12px;
-    color: #888;
-    margin-top: 5px; /* Khoảng cách phía trên */
+#active-timer {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #0078ff; /* Màu xanh nổi bật */
+    font-weight: bold;
 }
+
 
 
 
