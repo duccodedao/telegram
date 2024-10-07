@@ -114,7 +114,6 @@ if (Telegram.WebApp.initDataUnsafe) {
 
 
 
-
 // Biến lưu số phút và giây
 let activeMinutes = 0;
 let activeSeconds = 0;
@@ -147,36 +146,3 @@ function updateActiveTime() {
 
 // Gọi hàm cập nhật mỗi giây
 setInterval(updateActiveTime, 1000);
-
-
-
-
-
-
-// Ngày mục tiêu là 15 tháng 5, 2025
-const targetDate = new Date('2025-05-15T00:00:00').getTime();
-
-// Hàm đếm ngược
-function countdownTimer() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-
-    // Tính toán thời gian còn lại theo ngày, giờ, phút, giây
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Hiển thị thời gian đếm ngược
-    document.getElementById('countdown').textContent = `${days} ngày, ${hours} giờ, ${minutes} phút, ${seconds} giây`;
-
-    // Khi hết thời gian
-    if (distance < 0) {
-        clearInterval(countdownInterval);
-        document.getElementById('domain-name').textContent = 'Coming Soon';
-        document.getElementById('countdown').textContent = ''; // Xóa phần đếm ngược
-    }
-}
-
-// Cập nhật đếm ngược mỗi giây
-const countdownInterval = setInterval(countdownTimer, 1000);
