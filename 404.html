@@ -2,11 +2,111 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=/maintenance.html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Not Found</title>
+    <title>404 - Không tìm thấy trang</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .loading-bars {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .loading-bars div {
+            width: 10px;
+            height: 40px;
+            background-color: #fbc531;
+            animation: bounce 1.2s infinite ease-in-out;
+        }
+
+        .loading-bars div:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .loading-bars div:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .loading-bars div:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-bars div:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .loading-bars div:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: scaleY(1);
+            }
+            50% {
+                transform: scaleY(1.5);
+            }
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <p>Nếu bạn không được chuyển hướng tự động, <a href="/maintenance.html">bấm vào đây</a>.</p>
+    <div class="container">
+        <img src="logo-coin/bmlogo.jpg" alt="Logo" class="logo">
+        <h1>404 - Không tìm thấy trang</h1>
+        <div class="loading-bars">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <p>Xin lỗi, trang bạn tìm kiếm không tồn tại. <br>Vui lòng <a href="/">quay lại trang chủ</a>.</p>
+    </div>
 </body>
 </html>
