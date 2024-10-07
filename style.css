@@ -154,3 +154,34 @@ h2 {
     font-weight: bold; /* Chữ in đậm cho đếm ngược */
     color: #ffdd00; /* Màu vàng nổi bật cho đếm ngược */
 }
+
+
+
+
+
+
+.marquee-container {
+    background-color: #ffcc00; /* Màu nền cho thanh thông báo */
+    padding: 10px 0; /* Khoảng cách trên dưới */
+    overflow: hidden; /* Giấu phần thông báo vượt ra ngoài */
+    position: relative; /* Để tạo hiệu ứng chạy ngang */
+    white-space: nowrap; /* Không xuống dòng */
+    font-size: 16px; /* Kích thước chữ */
+    color: #333; /* Màu chữ */
+    border-top: 2px solid #0078ff; /* Viền trên */
+    border-bottom: 2px solid #0078ff; /* Viền dưới */
+}
+
+.marquee-content {
+    display: inline-block; /* Hiển thị ngang */
+    animation: marquee 15s linear infinite; /* Tạo hiệu ứng chạy ngang */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%); /* Bắt đầu từ ngoài bên phải */
+    }
+    100% {
+        transform: translateX(-100%); /* Kết thúc ngoài bên trái */
+    }
+}
