@@ -52,6 +52,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 quantityInput.max = 0.02;
                 quantityInput.step = 0.001;
                 break;
+             case 'SUI':
+                networkSelect.innerHTML += '<option value="sui">SUI</option>';
+                quantityInput.placeholder = '0.24 - 40';
+                quantityInput.min = 0.25;
+                quantityInput.max = 40;
+                quantityInput.step = 0.001;
+                break;
+             case 'MATIC':
+                networkSelect.innerHTML += '<option value="prc20">POLYGON</option>';
+                quantityInput.placeholder = '1 - 125';
+                quantityInput.min = 1;
+                quantityInput.max = 125;
+                quantityInput.step = 0.001;
+                break;
             default:
                 quantityInput.placeholder = '';
                 quantityInput.min = 0;
