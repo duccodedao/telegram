@@ -115,21 +115,38 @@ if (Telegram.WebApp.initDataUnsafe) {
 
 
 
-// Hàm để tính thời gian hoạt động
-function calculateActiveTime() {
-    const startTime = localStorage.getItem('startTime');
-    const currentTime = Date.now();
-    const timeSpent = Math.floor((currentTime - startTime) / 1000); // Tính theo giây
-    document.getElementById('time-spent').textContent = timeSpent + ' giây';
+// Biến lưu số phút và giây
+let activeMinutes = 0;
+let activeSeconds = 0;
+
+// Kiểm tra nếu đã có dữ liệu thời gian trong localStorage
+if (localStorage.getItem('activeMinutes')) {
+    activeMinutes = parseInt(localStorage.getItem('activeMinutes'));
 }
 
-// Khởi tạo thời gian bắt đầu nếu chưa có trong localStorage
-if (!localStorage.getItem('startTime')) {
-    localStorage.setItem('startTime', Date.now());
+if (localStorage.getItem('activeSeconds')) {
+    activeSeconds = parseInt(localStorage.getItem('activeSeconds'));
 }
 
-// Cập nhật thời gian hoạt động mỗi giây
-setInterval(calculateActiveTime, 1000);
+// Hàm cập nhật thời gian hoạt động
+function updateActiveTime() {
+    activeSeconds++;
+    if (activeSeconds === 60) {
+        activeMinutes++;
+        activeSeconds = 0;
+    }
+
+    // Cập nhật thời gian hoạt động vào localStorage
+    localStorage.setItem('activeMinutes', activeMinutes);
+    localStorage.setItem('activeSeconds', activeSeconds);
+
+    // Cập nhật hiển thị trên giao diện
+    document.getElementById('minutes').textContent = activeMinutes.toString().padStart(2, '0');
+    document.getElementById('seconds').textContent = activeSeconds.toString().padStart(2, '0');
+}
+
+// Gọi hàm cập nhật mỗi giây
+setInterval(updateActiveTime, 1000);
 
 
 
