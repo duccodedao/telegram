@@ -111,3 +111,22 @@ if (Telegram.WebApp.initDataUnsafe) {
 } else {
     console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
 }
+
+
+
+
+// Hàm để tính thời gian hoạt động
+function calculateActiveTime() {
+    const startTime = localStorage.getItem('startTime');
+    const currentTime = Date.now();
+    const timeSpent = Math.floor((currentTime - startTime) / 1000); // Tính theo giây
+    document.getElementById('time-spent').textContent = timeSpent + ' giây';
+}
+
+// Khởi tạo thời gian bắt đầu nếu chưa có trong localStorage
+if (!localStorage.getItem('startTime')) {
+    localStorage.setItem('startTime', Date.now());
+}
+
+// Cập nhật thời gian hoạt động mỗi giây
+setInterval(calculateActiveTime, 1000);
