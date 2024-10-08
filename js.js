@@ -162,7 +162,7 @@ function addVerifiedIcon() {
         const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
         
         // Cập nhật phần tử #user-name với tên người dùng và icon tick
-        userNameElement.innerHTML = `${currentName} ${verifiedIcon}`;
+        userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
     }
 }
 
