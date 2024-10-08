@@ -153,11 +153,7 @@ setInterval(updateActiveTime, 1000);
 
 
 
-
-
-
-
-  var maintenanceStartTime = new Date("2024-10-15T10:00:00").getTime();
+var maintenanceStartTime = new Date("2024-10-15T10:00:00").getTime();
   var maintenanceDuration = 30 * 60 * 1000;
 
   var countdownTimer = setInterval(function() {
@@ -182,3 +178,11 @@ setInterval(updateActiveTime, 1000);
     }
   }, 1000);
 
+
+
+
+
+
+
+
+  
