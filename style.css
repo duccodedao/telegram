@@ -205,7 +205,8 @@ h2 {
 
 .verified-icon {
     color: #1da1f2; /* Màu xanh giống Facebook */
-    margin-left: 5px;
+    margin-left: 3px;
+    margin-bottom: 1px;
     font-size: 14px;
     vertical-align: middle; /* Có thể bỏ nếu không cần thiết */
     display: inline; /* Đảm bảo icon hiển thị như inline element */
