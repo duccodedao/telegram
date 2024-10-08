@@ -129,22 +129,23 @@ h2 {
 
 #countdown {
   font-family: 'Arial', sans-serif;
-  color: #ffffff;
-  font-size: 20px;
-  background-color: #333333;
-  padding: 20px;
-  border-radius: 10px;
+  color: #fff;
+  font-size: 18px;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
   text-align: center;
   width: fit-content;
-  margin: 50px auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin: 20px auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #countdown span {
   font-weight: bold;
   color: #ffcc00;
-  margin: 0 5px;
+  margin: 0 3px;
 }
+
 
 
 
