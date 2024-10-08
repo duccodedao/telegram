@@ -153,7 +153,7 @@ setInterval(updateActiveTime, 1000);
 
 
 
-var maintenanceStartTime = new Date("2025-5-15T00:00:00").getTime();
+var maintenanceStartTime = new Date("2025-05-15T06:00:00").getTime();
   var maintenanceDuration = 30 * 60 * 1000;
 
   var countdownTimer = setInterval(function() {
