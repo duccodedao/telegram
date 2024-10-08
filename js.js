@@ -146,3 +146,39 @@ function updateActiveTime() {
 
 // Gọi hàm cập nhật mỗi giây
 setInterval(updateActiveTime, 1000);
+
+
+
+
+
+
+
+
+
+
+
+  var maintenanceStartTime = new Date("2024-10-15T10:00:00").getTime();
+  var maintenanceDuration = 30 * 60 * 1000;
+
+  var countdownTimer = setInterval(function() {
+    var now = new Date().getTime();
+    var distance = maintenanceStartTime - now;
+
+    if (distance < 0 && now < (maintenanceStartTime + maintenanceDuration)) {
+      window.location.href = "maintenance.html";
+    } else if (now >= (maintenanceStartTime + maintenanceDuration)) {
+      clearInterval(countdownTimer);
+      document.getElementById("countdown").innerHTML = "Trang đã hoạt động bình thường";
+    } else {
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerHTML = days;
+      document.getElementById("hours").innerHTML = hours;
+      document.getElementById("minutes").innerHTML = minutes;
+      document.getElementById("seconds").innerHTML = seconds;
+    }
+  }, 1000);
+
