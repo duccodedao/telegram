@@ -122,6 +122,29 @@ h2 {
     font-weight: bold;
 }
 
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+#active-timer {
+  font-size: 14px;
+  color: #555;
+}
 
 
 
