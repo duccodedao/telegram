@@ -207,5 +207,6 @@ h2 {
     color: #1da1f2; /* Màu xanh giống Facebook */
     margin-left: 5px;
     font-size: 14px;
-    vertical-align: middle;
+    vertical-align: middle; /* Có thể bỏ nếu không cần thiết */
+    display: inline; /* Đảm bảo icon hiển thị như inline element */
 }
