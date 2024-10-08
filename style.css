@@ -200,3 +200,12 @@ h2 {
         transform: translateX(-100%); /* Kết thúc ngoài bên trái */
     }
 }
+
+
+
+.verified-icon {
+    color: #1da1f2; /* Màu xanh giống Facebook */
+    margin-left: 5px;
+    font-size: 14px;
+    vertical-align: middle;
+}
