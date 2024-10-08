@@ -127,32 +127,23 @@ h2 {
 
 
 
-.footer {
-    background-color: #0078ff; /* Màu nền cho footer */
-    padding: 20px 0; /* Khoảng cách padding trên dưới */
-    text-align: center; /* Căn giữa nội dung */
-    position: fixed; /* Cố định footer ở dưới cùng */
-    bottom: 0; /* Đặt footer ở dưới cùng */
-    width: 100%; /* Độ rộng full màn hình */
-    color: white; /* Màu chữ */
-    font-family: Arial, sans-serif; /* Font chữ dễ đọc */
-    font-size: 16px; /* Kích thước chữ */
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng cho footer */
-}
-
-#countdown-container {
-    display: inline-block; /* Hiển thị dạng khối ngang */
-    margin: 0 auto; /* Căn giữa khối */
-}
-
-#domain-name {
-    font-weight: bold; /* Chữ in đậm cho tên miền */
-    color: #fff; /* Màu chữ trắng */
-}
-
 #countdown {
-    font-weight: bold; /* Chữ in đậm cho đếm ngược */
-    color: #ffdd00; /* Màu vàng nổi bật cho đếm ngược */
+  font-family: 'Arial', sans-serif;
+  color: #ffffff;
+  font-size: 24px;
+  background-color: #333333;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: fit-content;
+  margin: 50px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#countdown span {
+  font-weight: bold;
+  color: #ffcc00;
+  margin: 0 5px;
 }
 
 
