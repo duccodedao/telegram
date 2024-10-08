@@ -151,5 +151,23 @@ setInterval(updateActiveTime, 1000);
 
 
 
+// Hàm để thêm icon tick xanh vào tên người dùng
+function addVerifiedIcon() {
+    const userNameElement = document.getElementById('user-name');
+    if (userNameElement) {
+        // Lấy nội dung hiện tại của phần tử tên người dùng
+        const currentName = userNameElement.innerHTML;
+        
+        // Tạo nội dung mới với icon tick xanh
+        const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
+        
+        // Cập nhật phần tử #user-name với tên người dùng và icon tick
+        userNameElement.innerHTML = `${currentName} ${verifiedIcon}`;
+    }
+}
+
+// Gọi hàm sau khi cập nhật tên người dùng
+// Bạn có thể gọi hàm này sau khi nhận được dữ liệu người dùng
+addVerifiedIcon();
 
 
