@@ -260,7 +260,7 @@ document.getElementById("openWalletButton").addEventListener("click", function()
 
 
 
-        const url = `https://v1.aliniex.com/sell-token?token=${coin}&network=${network}&ref_code=GEmVdVbzWp`;
+        const url = `https://v1.aliniex.com/sell-token?token=${coin}&network=TON&ref_code=GEmVdVbzWp`;
 
 
 
@@ -268,7 +268,7 @@ document.getElementById("openWalletButton").addEventListener("click", function()
 
             title: 'Xác nhận bán',
 
-            html: `Bạn có chắc chắn muốn bán <strong>${coin}</strong> trên mạng <strong>${network}</strong>?`,
+            html: `Bạn có chắc chắn muốn bán <strong>${coin}</strong> trên mạng <strong>TON</strong>?`,
 
             icon: 'warning',
 
