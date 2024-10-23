@@ -171,3 +171,24 @@ function addVerifiedIcon() {
 addVerifiedIcon();
 
 
+
+
+
+// Phiên bản cập nhật hoặc thời gian cập nhật mới
+    const latestUpdate = "2024-10-23"; // Thay đổi giá trị này khi có cập nhật mới
+
+    // Kiểm tra xem thông báo đã hiển thị cho phiên bản này chưa
+    const lastNotifiedUpdate = localStorage.getItem("lastNotifiedUpdate");
+
+    if (lastNotifiedUpdate !== latestUpdate) {
+        // Nếu chưa hiện thông báo hoặc có bản cập nhật mới
+        Swal.fire({
+            title: 'Thông báo',
+            text: 'Ứng dụng đã được cập nhật ngày ' + latestUpdate,
+            icon: 'info',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            // Lưu phiên bản cập nhật vào localStorage
+            localStorage.setItem("lastNotifiedUpdate", latestUpdate);
+        });
+    }
