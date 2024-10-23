@@ -211,3 +211,20 @@ h2 {
     vertical-align: middle; /* Có thể bỏ nếu không cần thiết */
     display: inline; /* Đảm bảo icon hiển thị như inline element */
 }
+
+
+
+/* Tùy chỉnh phong cách swal.fire */
+        .swal2-popup {
+            background-color: #f0f8ff !important; /* Màu nền xanh nhạt */
+            color: #333 !important; /* Màu chữ */
+            border: 2px solid #4caf50; /* Viền xanh lá */
+        }
+        .swal2-title {
+            color: #4caf50 !important; /* Màu tiêu đề xanh lá */
+            font-weight: bold !important;
+        }
+        .swal2-confirm {
+            background-color: #4caf50 !important; /* Nút xác nhận xanh lá */
+            color: white !important;
+        }
