@@ -200,10 +200,10 @@ addVerifiedIcon();
             Swal.fire({
                 title: 'Cập nhật mới!',
                 html: selectedLanguage === "vi" ? 
-                      '<b>Phiên bản mới:</b> 2.' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!' :
-                      '<b>Ver mới kìa:</b> 2.' + versionIndex + '<br>Cập nhật coi lẹ đi',
+                      '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!' :
+                      '<b>Ver mới kìa:</b> v2.' + versionIndex + '<br>Cập nhật lẹ đi còn chơi, ở đó đọc concac!',
                 icon: 'success',
-                confirmButtonText: selectedLanguage === "vi" ? 'Xem ngay!' : 'Check now!',
+                confirmButtonText: selectedLanguage === "vi" ? 'Xem ngay!' : 'Concac!',
                 customClass: {
                     popup: 'swal2-popup',
                     title: 'swal2-title',
