@@ -228,3 +228,12 @@ h2 {
             background-color: #4caf50 !important; /* Nút xác nhận xanh lá */
             color: white !important;
         }
+
+/* Thêm style cho phần hiển thị phiên bản */
+        .version-info {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
