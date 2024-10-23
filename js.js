@@ -187,7 +187,7 @@ addVerifiedIcon();
         // Nếu phiên bản khác với phiên bản đã lưu
         Swal.fire({
             title: 'Cập nhật mới!',
-            html: '<b>Phiên bản mới:</b> Index ' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!',
+            html: '<b>Phiên bản mới:</b> 2.' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!',
             icon: 'success',
             confirmButtonText: 'Xem ngay!',
             customClass: {
