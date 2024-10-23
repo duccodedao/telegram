@@ -175,7 +175,10 @@ addVerifiedIcon();
 
 
 // Phiên bản hoặc chỉ số index mới nhất
-    const versionIndex = 6; // Thay đổi giá trị này khi có phiên bản mới
+    const versionIndex = 5; // Thay đổi giá trị này khi có phiên bản mới
+
+    // Hiển thị phiên bản trong body
+    document.getElementById('versionText').textContent = versionIndex;
 
     // Kiểm tra xem chỉ số phiên bản đã thông báo lần cuối
     const lastVersionIndex = localStorage.getItem("lastVersionIndex");
