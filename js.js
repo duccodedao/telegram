@@ -174,21 +174,26 @@ addVerifiedIcon();
 
 
 
-// Phiên bản cập nhật hoặc thời gian cập nhật mới
-    const latestUpdate = "2024-10-23"; // Thay đổi giá trị này khi có cập nhật mới
+// Phiên bản hoặc chỉ số index mới nhất
+    const versionIndex = 5; // Thay đổi giá trị này khi có phiên bản mới
 
-    // Kiểm tra xem thông báo đã hiển thị cho phiên bản này chưa
-    const lastNotifiedUpdate = localStorage.getItem("lastNotifiedUpdate");
+    // Kiểm tra xem chỉ số phiên bản đã thông báo lần cuối
+    const lastVersionIndex = localStorage.getItem("lastVersionIndex");
 
-    if (lastNotifiedUpdate !== latestUpdate) {
-        // Nếu chưa hiện thông báo hoặc có bản cập nhật mới
+    if (parseInt(lastVersionIndex) !== versionIndex) {
+        // Nếu phiên bản khác với phiên bản đã lưu
         Swal.fire({
-            title: 'Thông báo',
-            text: 'Ứng dụng đã được cập nhật ngày ' + latestUpdate,
-            icon: 'info',
-            confirmButtonText: 'OK'
+            title: 'Cập nhật mới!',
+            html: '<b>Phiên bản mới:</b> Index ' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!',
+            icon: 'success',
+            confirmButtonText: 'Xem ngay!',
+            customClass: {
+                popup: 'swal2-popup',
+                title: 'swal2-title',
+                confirmButton: 'swal2-confirm'
+            }
         }).then(() => {
-            // Lưu phiên bản cập nhật vào localStorage
-            localStorage.setItem("lastNotifiedUpdate", latestUpdate);
+            // Lưu chỉ số phiên bản vào localStorage sau khi thông báo
+            localStorage.setItem("lastVersionIndex", versionIndex);
         });
     }
