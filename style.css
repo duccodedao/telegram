@@ -237,38 +237,33 @@ h2 {
             text-align: center;
         }
 .language-selector {
-            margin-left: 10px;
+            display: inline-block;
+            position: relative;
         }
 
-        /* Giao diện mới cho select ngôn ngữ */
         select {
-            padding: 8px 12px;
+            padding: 10px 15px;
             font-size: 16px;
             border: 2px solid #4caf50;
-            border-radius: 25px;  /* Bo tròn góc */
+            border-radius: 30px;  /* Bo tròn góc */
             background-color: #f0f8ff;  /* Màu nền nhạt */
             color: #333;
-            appearance: none;  /* Xóa đi giao diện mặc định của trình duyệt */
+            appearance: none;  /* Xóa giao diện mặc định của trình duyệt */
             cursor: pointer;
-            transition: all 0.3s ease;  /* Thêm hiệu ứng khi di chuột */
-        }
-        select:hover {
-            background-color: #e0f7fa;  /* Màu nền thay đổi khi hover */
-        }
-        select:focus {
+            transition: background-color 0.3s ease, border-color 0.3s ease;  /* Hiệu ứng mượt */
             outline: none;
-            border-color: #00796b;  /* Đổi màu viền khi select được focus */
         }
 
-        /* Tùy chỉnh mũi tên xuống trong select */
-        select::-ms-expand {
-            display: none;  /* Ẩn mũi tên của trình duyệt Internet Explorer */
+        select:hover {
+            background-color: #e0f7fa;  /* Màu nền khi hover */
         }
-        .select-wrapper {
-            position: relative;
-            display: inline-block;
+
+        select:focus {
+            border-color: #00796b;  /* Đổi màu viền khi được focus */
         }
-        .select-wrapper::after {
+
+        /* Tùy chỉnh mũi tên của select */
+        .language-selector::after {
             content: '▼';  /* Mũi tên tùy chỉnh */
             font-size: 12px;
             position: absolute;
