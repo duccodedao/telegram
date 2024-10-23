@@ -200,8 +200,8 @@ addVerifiedIcon();
             Swal.fire({
                 title: 'Cập nhật mới!',
                 html: selectedLanguage === "vi" ? 
-                      '<b>Phiên bản mới:</b> Index ' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!' :
-                      '<b>New version:</b> Index ' + versionIndex + '<br>The app has been updated, check out the new features!',
+                      '<b>Phiên bản mới:</b> 2.' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!' :
+                      '<b>Ver mới kìa:</b> 2.' + versionIndex + '<br>Cập nhật coi lẹ đi',
                 icon: 'success',
                 confirmButtonText: selectedLanguage === "vi" ? 'Xem ngay!' : 'Check now!',
                 customClass: {
