@@ -175,7 +175,7 @@ addVerifiedIcon();
 
 
 // Phiên bản hoặc chỉ số index mới nhất
-    const versionIndex = 5; // Thay đổi giá trị này khi có phiên bản mới
+    const versionIndex = 2.0.8; // Thay đổi giá trị này khi có phiên bản mới
 
     // Kiểm tra xem chỉ số phiên bản đã thông báo lần cuối
     const lastVersionIndex = localStorage.getItem("lastVersionIndex");
