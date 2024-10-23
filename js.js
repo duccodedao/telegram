@@ -153,7 +153,7 @@ setInterval(updateActiveTime, 1000);
 
 // Hàm để thêm icon tick xanh vào tên người dùng
 function addVerifiedIcon() {
-    const userNameElement = document.getElementById('user-name');
+    const userNameElement = document.getElementById('user-username');
     if (userNameElement) {
         // Lấy nội dung hiện tại của phần tử tên người dùng
         const currentName = userNameElement.innerHTML;
