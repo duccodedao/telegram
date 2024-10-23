@@ -174,29 +174,54 @@ addVerifiedIcon();
 
 
 
-// Phiên bản hoặc chỉ số index mới nhất
-    const versionIndex = 5; // Thay đổi giá trị này khi có phiên bản mới
+// Phiên bản theo từng ngôn ngữ
+    const versions = {
+        vi: 5,  // Phiên bản tiếng Việt
+        en: 8   // Phiên bản tiếng Anh
+    };
 
-    // Hiển thị phiên bản trong body
-    document.getElementById('versionText').textContent = versionIndex;
+    // Kiểm tra ngôn ngữ đã chọn trước đó
+    let selectedLanguage = localStorage.getItem("selectedLanguage") || "vi";
 
-    // Kiểm tra xem chỉ số phiên bản đã thông báo lần cuối
-    const lastVersionIndex = localStorage.getItem("lastVersionIndex");
+    // Cập nhật hiển thị phiên bản và ngôn ngữ khi trang tải
+    function updateVersionAndLanguage() {
+        // Lấy phiên bản dựa theo ngôn ngữ
+        const versionIndex = versions[selectedLanguage];
+        document.getElementById('versionText').textContent = versionIndex;
 
-    if (parseInt(lastVersionIndex) !== versionIndex) {
-        // Nếu phiên bản khác với phiên bản đã lưu
-        Swal.fire({
-            title: 'Cập nhật mới!',
-            html: '<b>Phiên bản mới:</b> 2.' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!',
-            icon: 'success',
-            confirmButtonText: 'Xem ngay!',
-            customClass: {
-                popup: 'swal2-popup',
-                title: 'swal2-title',
-                confirmButton: 'swal2-confirm'
-            }
-        }).then(() => {
-            // Lưu chỉ số phiên bản vào localStorage sau khi thông báo
-            localStorage.setItem("lastVersionIndex", versionIndex);
-        });
+        // Đặt ngôn ngữ đã chọn vào combobox
+        document.getElementById('languageSelect').value = selectedLanguage;
+
+        // Kiểm tra xem phiên bản đã thông báo lần cuối
+        const lastVersionIndex = localStorage.getItem("lastVersionIndex_" + selectedLanguage);
+
+        if (parseInt(lastVersionIndex) !== versionIndex) {
+            // Nếu phiên bản khác với phiên bản đã lưu
+            Swal.fire({
+                title: 'Cập nhật mới!',
+                html: selectedLanguage === "vi" ? 
+                      '<b>Phiên bản mới:</b> Index ' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!' :
+                      '<b>New version:</b> Index ' + versionIndex + '<br>The app has been updated, check out the new features!',
+                icon: 'success',
+                confirmButtonText: selectedLanguage === "vi" ? 'Xem ngay!' : 'Check now!',
+                customClass: {
+                    popup: 'swal2-popup',
+                    title: 'swal2-title',
+                    confirmButton: 'swal2-confirm'
+                }
+            }).then(() => {
+                // Lưu phiên bản vào localStorage cho ngôn ngữ hiện tại
+                localStorage.setItem("lastVersionIndex_" + selectedLanguage, versionIndex);
+            });
+        }
     }
+
+    // Gọi hàm để cập nhật ngôn ngữ và phiên bản ngay khi tải trang
+    updateVersionAndLanguage();
+
+    // Xử lý khi thay đổi ngôn ngữ
+    document.getElementById('languageSelect').addEventListener('change', function() {
+        selectedLanguage = this.value;
+        localStorage.setItem("selectedLanguage", selectedLanguage);
+        updateVersionAndLanguage();
+    });
