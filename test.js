@@ -151,24 +151,43 @@ setInterval(updateActiveTime, 1000);
 
 
 
-// Hàm để thêm icon tick xanh vào tên người dùng
+// Danh sách tên người dùng được xác minh (verified)
+const verifiedUsers = ['username1', 'username2', 'username3']; // Thay bằng danh sách thực tế
+
+// Đường dẫn xác minh người dùng
+const verifyLink = "https://example.com/verify"; // Thay bằng đường dẫn thực tế
+
 function addVerifiedIcon() {
     const userNameElement = document.getElementById('user-username');
+    
     if (userNameElement) {
-        // Lấy nội dung hiện tại của phần tử tên người dùng
-        const currentName = userNameElement.innerHTML;
-        
-        // Tạo nội dung mới với icon tick xanh
-        const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
-        
-        // Cập nhật phần tử #user-name với tên người dùng và icon tick
-        userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
+        // Lấy nội dung hiện tại của tên người dùng
+        const currentName = userNameElement.textContent.trim();
+        const username = currentName.startsWith('@') ? currentName.slice(1) : currentName;
+
+        // Kiểm tra xem tên người dùng có trong danh sách verified không
+        if (verifiedUsers.includes(username)) {
+            // Nếu đã được xác minh, thêm icon tick xanh
+            if (!userNameElement.querySelector('.verified-icon')) {
+                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
+                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
+            }
+        } else {
+            // Nếu không được xác minh, thêm nút "Xác minh ngay"
+            const verifyButton = `<button id="verify-button" class="verify-btn">Xác minh ngay</button>`;
+            userNameElement.innerHTML = `${currentName}${verifyButton}`;
+            
+            // Thêm sự kiện click cho nút xác minh
+            document.getElementById('verify-button').addEventListener('click', function() {
+                window.location.href = verifyLink;
+            });
+        }
     }
 }
 
 // Gọi hàm sau khi cập nhật tên người dùng
-// Bạn có thể gọi hàm này sau khi nhận được dữ liệu người dùng
 addVerifiedIcon();
+
 
 
 
