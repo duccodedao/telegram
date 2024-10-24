@@ -151,6 +151,14 @@ setInterval(updateActiveTime, 1000);
 
 
 
+
+
+
+
+
+
+
+
 const verifiedUsers = ['username1', 'username2', 'username3']; // Thay bằng danh sách thực tế
 
 // Hàm thêm icon xác minh và nút "Xác minh ngay"
@@ -171,29 +179,71 @@ function addVerifiedIcon() {
             }
         } else {
             // Nếu không được xác minh, thêm nút "Xác minh ngay"
-            const verifyButton = `<button id="verify-button" class="verify-btn">Xác minh ngay</button>`;
-            userNameElement.innerHTML = `${currentName}${verifyButton}`;
-            
+            const verifyButton = document.createElement('button');
+            verifyButton.id = 'verify-button';
+            verifyButton.classList.add('verify-btn');
+            verifyButton.textContent = 'Xác minh ngay';
+            userNameElement.appendChild(verifyButton); // Thêm nút vào DOM
+
             // Thêm sự kiện click cho nút xác minh
-            document.getElementById('verify-button').addEventListener('click', function() {
+            verifyButton.addEventListener('click', function() {
                 // Thêm icon tick xanh ngay lập tức
                 const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
                 userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
 
-                // Lưu trạng thái xác minh (giả sử bạn có một hàm để lưu trạng thái)
+                // Lưu trạng thái xác minh (có thể lưu vào localStorage)
                 saveVerificationStatus(username);
             });
         }
     }
 }
 
-// Hàm lưu trạng thái xác minh (có thể thay đổi theo cách bạn muốn lưu trữ)
+// Hàm lưu trạng thái xác minh (lưu vào localStorage)
 function saveVerificationStatus(username) {
-    // Cách lưu trạng thái xác minh: ví dụ, có thể lưu vào localStorage hoặc gửi đến server
     let verifiedUsers = JSON.parse(localStorage.getItem('verifiedUsers')) || [];
-    verifiedUsers.push(username);
-    localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
+    if (!verifiedUsers.includes(username)) {
+        verifiedUsers.push(username);
+        localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
+    }
 }
+
+// Hàm lấy tên người dùng từ Telegram
+function loadTelegramUser() {
+    if (Telegram.WebApp.initDataUnsafe) {
+        let user = Telegram.WebApp.initDataUnsafe.user;
+
+        if (user) {
+            let userName = user.first_name + " " + (user.last_name || "");
+            let username = user.username || "No Username"; // Thay thế nếu không có username
+
+            // Cập nhật vào phần HTML
+            document.getElementById('user-name').textContent = userName;
+            document.getElementById('user-username').textContent = `@${username}`;
+            
+            // Gọi hàm thêm icon xác minh sau khi có tên người dùng
+            addVerifiedIcon();
+        } else {
+            // Trường hợp không có thông tin người dùng
+            document.getElementById('user-name').textContent = "Loading...";
+            document.getElementById('user-username').textContent = "@username";
+        }
+    } else {
+        console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
+    }
+}
+
+// Gọi hàm lấy thông tin người dùng
+loadTelegramUser();
+
+
+
+
+
+
+
+
+
+
 
 
 
