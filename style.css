@@ -290,3 +290,48 @@ h2 {
     background-color: #218838;
 }
 
+
+
+
+
+
+
+
+
+.verified-icon {
+    color: #28a745;
+    margin-left: 5px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.verifying {
+    font-size: 0.9rem;
+    color: #ffc107;
+    margin-left: 5px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.verify-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.verify-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Hiệu ứng fade-in cho chuyển đổi mượt mà */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
