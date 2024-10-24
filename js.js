@@ -231,7 +231,7 @@ loadTelegramUser();
 // Phiên bản theo từng ngôn ngữ
     const versions = {
         vi: 5,  // Phiên bản tiếng Việt
-        en: 8   // Phiên bản tiếng Anh
+        en: 6   // Phiên bản tiếng Anh
     };
 
     // Kiểm tra ngôn ngữ đã chọn trước đó
