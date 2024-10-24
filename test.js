@@ -163,7 +163,7 @@ function addVerifiedIcon() {
         const currentName = userNameElement.textContent.trim();
         const username = currentName.startsWith('@') ? currentName.slice(1) : currentName;
 
-        // Kiểm tra xem tên người dùng có trong danh sách verified không
+        // Kiểm tra xem tên người dùng có trong danh sách đã xác minh không
         if (verifiedUsers.includes(username)) {
             // Nếu đã được xác minh, thêm icon tick xanh
             if (!userNameElement.querySelector('.verified-icon')) {
@@ -177,16 +177,24 @@ function addVerifiedIcon() {
             
             // Thêm sự kiện click cho nút xác minh
             document.getElementById('verify-button').addEventListener('click', function() {
-                // Tạo đường dẫn xác minh động
-                const verifyLink = `https://t.me/bmassk3?text=/verify @${username}`;
-                window.location.href = verifyLink;
+                // Thêm icon tick xanh ngay lập tức
+                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
+                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
+
+                // Lưu trạng thái xác minh (giả sử bạn có một hàm để lưu trạng thái)
+                saveVerificationStatus(username);
             });
         }
     }
 }
 
-// Gọi hàm sau khi cập nhật tên người dùng
-addVerifiedIcon();
+// Hàm lưu trạng thái xác minh (có thể thay đổi theo cách bạn muốn lưu trữ)
+function saveVerificationStatus(username) {
+    // Cách lưu trạng thái xác minh: ví dụ, có thể lưu vào localStorage hoặc gửi đến server
+    let verifiedUsers = JSON.parse(localStorage.getItem('verifiedUsers')) || [];
+    verifiedUsers.push(username);
+    localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
+}
 
 
 
