@@ -299,9 +299,9 @@ h2 {
 
 
 .verified-icon {
-    color: #28a745;
+    color: #1da1f2;
     margin-left: 5px;
-    animation: fadeIn 1.5s ease-in-out;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .verifying {
