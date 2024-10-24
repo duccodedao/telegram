@@ -152,7 +152,7 @@ setInterval(updateActiveTime, 1000);
 
 
 // Danh sách tên người dùng được xác minh (verified)
-const verifiedUsers = ['username1', 'username2', 'username3']; // Thay bằng danh sách thực tế
+const verifiedUsers = ['BmassK3', 'username2', 'username3']; // Thay bằng danh sách thực tế
 
 // Đường dẫn xác minh người dùng
 const verifyLink = "https://example.com/verify"; // Thay bằng đường dẫn thực tế
