@@ -312,11 +312,11 @@ h2 {
 }
 
 .verify-btn {
-    background-color: #007bff;
+    background-color: #1da1f2;
     color: white;
     border: none;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
     animation: fadeIn 1.5s ease-in-out;
 }
