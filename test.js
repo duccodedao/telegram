@@ -151,8 +151,7 @@ setInterval(updateActiveTime, 1000);
 
 
 
-// Danh sách tên người dùng được xác minh (verified)
-const verifiedUsers = ['BmassK3', 'username2', 'username3']; // Thay bằng danh sách thực tế
+const verifiedUsers = ['username1', 'username2', 'username3']; // Thay bằng danh sách thực tế
 
 // Hàm thêm icon xác minh và nút "Xác minh ngay"
 function addVerifiedIcon() {
@@ -195,7 +194,6 @@ function saveVerificationStatus(username) {
     verifiedUsers.push(username);
     localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
 }
-
 
 
 
