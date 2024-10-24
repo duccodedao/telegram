@@ -151,24 +151,78 @@ setInterval(updateActiveTime, 1000);
 
 
 
-// Hàm để thêm icon tick xanh vào tên người dùng
+// Danh sách các tên người dùng đã xác minh (có thể thêm sẵn hoặc lấy từ localStorage)
+let verifiedUsers = JSON.parse(localStorage.getItem('verifiedUsers')) || [];
+
+// Hàm thêm icon xác minh và nút "Xác minh ngay"
 function addVerifiedIcon() {
     const userNameElement = document.getElementById('user-username');
+    
     if (userNameElement) {
-        // Lấy nội dung hiện tại của phần tử tên người dùng
-        const currentName = userNameElement.innerHTML;
-        
-        // Tạo nội dung mới với icon tick xanh
-        const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
-        
-        // Cập nhật phần tử #user-name với tên người dùng và icon tick
-        userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
+        // Lấy nội dung hiện tại của tên người dùng
+        const currentName = userNameElement.textContent.trim();
+        const username = currentName.startsWith('@') ? currentName.slice(1) : currentName;
+
+        // Kiểm tra xem tên người dùng đã được xác minh hay chưa
+        if (verifiedUsers.includes(username)) {
+            // Nếu đã được xác minh, thêm icon tick xanh
+            if (!userNameElement.querySelector('.verified-icon')) {
+                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
+                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
+            }
+        } else {
+            // Nếu chưa được xác minh, thêm nút "Xác minh ngay"
+            const verifyButton = `<button id="verify-button" class="verify-btn">Xác minh ngay</button>`;
+            userNameElement.innerHTML = `${currentName}${verifyButton}`;
+            
+            // Thêm sự kiện click cho nút xác minh
+            document.getElementById('verify-button').addEventListener('click', function() {
+                // Thêm icon tick xanh ngay lập tức
+                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
+                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
+
+                // Lưu trạng thái xác minh (giả sử bạn có một hàm để lưu trạng thái)
+                saveVerificationStatus(username);
+            });
+        }
     }
 }
 
-// Gọi hàm sau khi cập nhật tên người dùng
-// Bạn có thể gọi hàm này sau khi nhận được dữ liệu người dùng
-addVerifiedIcon();
+// Hàm lưu trạng thái xác minh vào localStorage
+function saveVerificationStatus(username) {
+    // Lưu tên người dùng vào danh sách đã xác minh
+    verifiedUsers.push(username);
+    localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
+}
+
+// Hàm lấy tên người dùng từ Telegram
+function loadTelegramUser() {
+    if (Telegram.WebApp.initDataUnsafe) {
+        let user = Telegram.WebApp.initDataUnsafe.user;
+
+        if (user) {
+            let userName = user.first_name + " " + (user.last_name || "");
+            let username = user.username || "No Username"; // Thay thế nếu không có username
+
+            // Cập nhật vào phần HTML
+            document.getElementById('user-name').textContent = userName;
+            document.getElementById('user-username').textContent = `@${username}`;
+            
+            // Gọi hàm thêm icon xác minh sau khi có tên người dùng
+            addVerifiedIcon();
+        } else {
+            // Trường hợp không có thông tin người dùng
+            document.getElementById('user-name').textContent = "Loading...";
+            document.getElementById('user-username').textContent = "@username";
+        }
+    } else {
+        console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
+    }
+}
+
+// Gọi hàm lấy thông tin người dùng
+loadTelegramUser();
+
 
 
 
