@@ -164,47 +164,67 @@ const verifiedUsers = ['username1', 'username2', 'username3']; // Thay bằng da
 // Hàm thêm icon xác minh và nút "Xác minh ngay"
 function addVerifiedIcon() {
     const userNameElement = document.getElementById('user-username');
-    
+const verifiedUsers = JSON.parse(localStorage.getItem('verifiedUsers')) || {}; // Lưu trạng thái người dùng
+
+// Hàm thêm icon xác minh và nút "Xác minh ngay"
+function addVerifiedIcon() {
+    const userNameElement = document.getElementById('user-username');
+
     if (userNameElement) {
         // Lấy nội dung hiện tại của tên người dùng
         const currentName = userNameElement.textContent.trim();
         const username = currentName.startsWith('@') ? currentName.slice(1) : currentName;
 
-        // Kiểm tra xem tên người dùng có trong danh sách đã xác minh không
-        if (verifiedUsers.includes(username)) {
+        // Kiểm tra trạng thái xác minh từ localStorage
+        const verificationStatus = verifiedUsers[username];
+
+        if (verificationStatus === 'verified') {
             // Nếu đã được xác minh, thêm icon tick xanh
-            if (!userNameElement.querySelector('.verified-icon')) {
-                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
-                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
-            }
+            showVerifiedStatus(userNameElement, currentName);
+        } else if (verificationStatus === 'verifying') {
+            // Nếu đang xác minh, hiển thị trạng thái "Đang xác minh"
+            showVerifyingStatus(userNameElement, currentName);
         } else {
-            // Nếu không được xác minh, thêm nút "Xác minh ngay"
-            const verifyButton = document.createElement('button');
-            verifyButton.id = 'verify-button';
-            verifyButton.classList.add('verify-btn');
-            verifyButton.textContent = 'Xác minh ngay';
-            userNameElement.appendChild(verifyButton); // Thêm nút vào DOM
-
-            // Thêm sự kiện click cho nút xác minh
-            verifyButton.addEventListener('click', function() {
-                // Thêm icon tick xanh ngay lập tức
-                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
-                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
-
-                // Lưu trạng thái xác minh (có thể lưu vào localStorage)
-                saveVerificationStatus(username);
-            });
+            // Nếu chưa xác minh, hiển thị nút "Xác minh ngay"
+            showVerifyButton(userNameElement, currentName, username);
         }
     }
 }
 
-// Hàm lưu trạng thái xác minh (lưu vào localStorage)
-function saveVerificationStatus(username) {
-    let verifiedUsers = JSON.parse(localStorage.getItem('verifiedUsers')) || [];
-    if (!verifiedUsers.includes(username)) {
-        verifiedUsers.push(username);
-        localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
-    }
+// Hiển thị trạng thái đã xác minh (tick xanh)
+function showVerifiedStatus(userNameElement, currentName) {
+    const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
+    userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
+}
+
+// Hiển thị trạng thái đang xác minh
+function showVerifyingStatus(userNameElement, currentName) {
+    userNameElement.innerHTML = `${currentName} <span class="verifying">Đang xác minh...</span>`;
+}
+
+// Hiển thị nút "Xác minh ngay" cho người dùng chưa được xác minh
+function showVerifyButton(userNameElement, currentName, username) {
+    const verifyButton = `<button id="verify-button" class="verify-btn">Xác minh ngay</button>`;
+    userNameElement.innerHTML = `${currentName}${verifyButton}`;
+
+    // Thêm sự kiện click cho nút xác minh
+    document.getElementById('verify-button').addEventListener('click', function () {
+        // Chuyển trạng thái sang "Đang xác minh"
+        userNameElement.innerHTML = `${currentName} <span class="verifying">Đang xác minh...</span>`;
+        saveVerificationStatus(username, 'verifying');
+
+        // Sau 1-2 giây chuyển sang trạng thái "Đã xác minh" (tick xanh)
+        setTimeout(function () {
+            showVerifiedStatus(userNameElement, currentName);
+            saveVerificationStatus(username, 'verified');
+        }, 2000); // Thời gian 2 giây cho chuyển động mượt mà
+    });
+}
+
+// Hàm lưu trạng thái xác minh vào localStorage
+function saveVerificationStatus(username, status) {
+    verifiedUsers[username] = status;
+    localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
 }
 
 // Hàm lấy tên người dùng từ Telegram
