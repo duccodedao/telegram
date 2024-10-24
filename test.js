@@ -152,11 +152,9 @@ setInterval(updateActiveTime, 1000);
 
 
 // Danh sách tên người dùng được xác minh (verified)
-const verifiedUsers = ['username1', 'username2', 'username3']; // Thay bằng danh sách thực tế
+const verifiedUsers = ['BmassK3', 'username2', 'username3']; // Thay bằng danh sách thực tế
 
-// Đường dẫn xác minh người dùng
-const verifyLink = "https://t.me/bmassk3?text=/verify @${user-username}"; // Thay bằng đường dẫn thực tế
-
+// Hàm thêm icon xác minh và nút "Xác minh ngay"
 function addVerifiedIcon() {
     const userNameElement = document.getElementById('user-username');
     
@@ -179,6 +177,8 @@ function addVerifiedIcon() {
             
             // Thêm sự kiện click cho nút xác minh
             document.getElementById('verify-button').addEventListener('click', function() {
+                // Tạo đường dẫn xác minh động
+                const verifyLink = `https://t.me/bmassk3?text=/verify @${username}`;
                 window.location.href = verifyLink;
             });
         }
@@ -187,6 +187,7 @@ function addVerifiedIcon() {
 
 // Gọi hàm sau khi cập nhật tên người dùng
 addVerifiedIcon();
+
 
 
 
