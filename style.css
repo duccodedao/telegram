@@ -273,3 +273,20 @@ h2 {
             pointer-events: none;  /* Đảm bảo mũi tên không làm cản chọn */
             color: #333;
         }
+
+
+
+.verify-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.verify-btn:hover {
+    background-color: #218838;
+}
+
