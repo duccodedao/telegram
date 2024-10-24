@@ -172,7 +172,7 @@ function addVerifiedIcon() {
             }
         } else {
             // Nếu chưa được xác minh, thêm nút "Xác minh ngay"
-            const verifyButton = `<button id="verify-button" class="verify-btn">Xác minh ngay</button>`;
+            const verifyButton = `<button id="verify-button" class="verify-btn">Verify</button>`;
             userNameElement.innerHTML = `${currentName}${verifyButton}`;
             
             // Thêm sự kiện click cho nút xác minh
