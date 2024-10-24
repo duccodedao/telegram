@@ -158,7 +158,7 @@ const verifiedUsers = ['BmassK3', 'username2', 'username3']; // Thay bằng danh
 const channelLink = "https://t.me/bmassk3_channel"; // Thay bằng kênh thực tế
 
 // Token của bot để kiểm tra trạng thái tham gia kênh
-const botToken = 'your-bot-token'; // Thay bằng token bot của bạn
+const botToken = '7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk'; // Thay bằng token bot của bạn
 const chatId = '@bmassk3_channel'; // Thay bằng chat ID của kênh của bạn
 
 function addVerifiedIcon() {
