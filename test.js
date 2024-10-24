@@ -154,8 +154,12 @@ setInterval(updateActiveTime, 1000);
 // Danh sách tên người dùng được xác minh (verified)
 const verifiedUsers = ['BmassK3', 'username2', 'username3']; // Thay bằng danh sách thực tế
 
-// Đường dẫn xác minh người dùng
-const verifyLink = "https://example.com/verify"; // Thay bằng đường dẫn thực tế
+// Đường dẫn kênh Telegram
+const channelLink = "https://t.me/bmassk3_channel"; // Thay bằng kênh thực tế
+
+// Token của bot để kiểm tra trạng thái tham gia kênh
+const botToken = 'your-bot-token'; // Thay bằng token bot của bạn
+const chatId = '@bmassk3_channel'; // Thay bằng chat ID của kênh của bạn
 
 function addVerifiedIcon() {
     const userNameElement = document.getElementById('user-username');
@@ -179,14 +183,36 @@ function addVerifiedIcon() {
             
             // Thêm sự kiện click cho nút xác minh
             document.getElementById('verify-button').addEventListener('click', function() {
-                window.location.href = verifyLink;
+                // Chuyển người dùng đến kênh Telegram
+                window.open(channelLink, '_blank');
+                
+                // Sau khi mở kênh, kiểm tra xem người dùng đã tham gia hay chưa
+                checkUserInChannel(username);
             });
         }
     }
 }
 
+// Kiểm tra trạng thái người dùng trong kênh
+function checkUserInChannel(username) {
+    const url = `https://api.telegram.org/bot${botToken}/getChatMember?chat_id=${chatId}&user_id=${username}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.result && ['member', 'administrator', 'creator'].includes(data.result.status)) {
+                // Người dùng đã tham gia kênh, cập nhật dấu tick xanh
+                addVerifiedIcon();
+            } else {
+                alert("Bạn chưa theo dõi kênh. Vui lòng theo dõi để xác minh.");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
 // Gọi hàm sau khi cập nhật tên người dùng
 addVerifiedIcon();
+
 
 
 
