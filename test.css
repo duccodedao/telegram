@@ -205,29 +205,21 @@ h2 {
 
 .verified-icon {
     color: #1da1f2; /* Màu xanh giống Facebook */
-    margin-left: 3px;
-    margin-bottom: 1px;
-    font-size: 14px;
-    vertical-align: middle; /* Có thể bỏ nếu không cần thiết */
-    display: inline; /* Đảm bảo icon hiển thị như inline element */
-}
-
-
-
-/* Tùy chỉnh phong cách swal.fire */
+    margin-/* Tùy chỉnh phong cách swal.fire */
         .swal2-popup {
-            background-color: #f0f8ff !important; /* Màu nền xanh nhạt */
-            color: #333 !important; /* Màu chữ */
-            border: 2px solid #4caf50; /* Viền xanh lá */
+            background-color: #f0f8ff !important;
+            color: #333 !important;
+            border: 2px solid #4caf50;
         }
         .swal2-title {
-            color: #4caf50 !important; /* Màu tiêu đề xanh lá */
+            color: #4caf50 !important;
             font-weight: bold !important;
         }
         .swal2-confirm {
-            background-color: #4caf50 !important; /* Nút xác nhận xanh lá */
+            background-color: #4caf50 !important;
             color: white !important;
         }
+
         /* Style cho phần phiên bản và chọn ngôn ngữ */
         .version-info {
             margin-top: 20px;
@@ -236,7 +228,9 @@ h2 {
             color: #333;
             text-align: center;
         }
-.language-selector {
+
+        /* Giao diện mới cho select ngôn ngữ */
+        .language-selector {
             display: inline-block;
             position: relative;
         }
@@ -273,6 +267,31 @@ h2 {
             pointer-events: none;  /* Đảm bảo mũi tên không làm cản chọn */
             color: #333;
         }
+
+        /* Style cho nút Connect Wallet */
+        .connect-button {
+            padding: 10px 15px;
+            margin-left: 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .connect-button:hover {
+            background-color: #388e3c;
+        }left: 3px;
+    margin-bottom: 1px;
+    font-size: 14px;
+    vertical-align: middle; /* Có thể bỏ nếu không cần thiết */
+    display: inline; /* Đảm bảo icon hiển thị như inline element */
+}
+
+
+
 
 
 
