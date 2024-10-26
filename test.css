@@ -1,0 +1,337 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 0 10px; /* Thêm padding để tránh sát rìa */
+}
+
+.app-category {
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #444;
+    text-transform: uppercase;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.app {
+    text-align: center;
+}
+
+.app img {
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.app:hover img {
+    transform: scale(1.1);
+}
+
+.app span {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.app a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.heart {
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 5px;
+    color: red;
+}
+
+/* Điều chỉnh kích thước trên thiết bị di động */
+@media screen and (max-width: 768px) {
+    .menu {
+        gap: 10px;
+    }
+
+    .app img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .app span {
+        font-size: 12px;
+    }
+}
+
+
+
+
+.header {
+    background-color: #f1f1f1;
+    padding: 10px 15px; /* Giảm padding để header nhỏ lại */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 70px; /* Giảm kích thước ảnh đại diện */
+    height: 70px; /* Giảm kích thước ảnh đại diện */
+    border-radius: 50%; /* Bo tròn hình ảnh */
+    cursor: default; /* Không cho phép thay đổi ảnh */
+    border: 2px solid #0078ff; /* Đường viền màu */
+}
+
+.user-info {
+    margin-left: 10px; /* Giảm khoảng cách giữa ảnh và tên */
+}
+
+#user-name {
+    font-size: 18px; /* Giảm kích thước chữ của tên */
+    font-weight: bold;
+}
+
+#user-username {
+    color: #555;
+    font-size: 14px; /* Giảm kích thước chữ của username */
+}
+
+#active-timer {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #0078ff; /* Màu xanh nổi bật */
+    font-weight: bold;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+#active-timer {
+  font-size: 14px;
+  color: #555;
+}
+
+
+
+
+
+#countdown {
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+  font-size: 18px;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  width: fit-content;
+  margin: 20px auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#countdown span {
+  font-weight: bold;
+  color: #ffcc00;
+  margin: 0 3px;
+}
+
+
+
+
+
+
+
+.marquee-container {
+    background-color: #ffcc00; /* Màu nền cho thanh thông báo */
+    padding: 10px 0; /* Khoảng cách trên dưới */
+    overflow: hidden; /* Giấu phần thông báo vượt ra ngoài */
+    position: relative; /* Để tạo hiệu ứng chạy ngang */
+    white-space: nowrap; /* Không xuống dòng */
+    font-size: 16px; /* Kích thước chữ */
+    color: #333; /* Màu chữ */
+    border-top: 2px solid #0078ff; /* Viền trên */
+    border-bottom: 2px solid #0078ff; /* Viền dưới */
+}
+
+.marquee-content {
+    display: inline-block; /* Hiển thị ngang */
+    animation: marquee 15s linear infinite; /* Tạo hiệu ứng chạy ngang */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%); /* Bắt đầu từ ngoài bên phải */
+    }
+    100% {
+        transform: translateX(-100%); /* Kết thúc ngoài bên trái */
+    }
+}
+
+
+
+.verified-icon {
+    color: #1da1f2; /* Màu xanh giống Facebook */
+    margin-left: 3px;
+    margin-bottom: 1px;
+    font-size: 14px;
+    vertical-align: middle; /* Có thể bỏ nếu không cần thiết */
+    display: inline; /* Đảm bảo icon hiển thị như inline element */
+}
+
+
+
+/* Tùy chỉnh phong cách swal.fire */
+        .swal2-popup {
+            background-color: #f0f8ff !important; /* Màu nền xanh nhạt */
+            color: #333 !important; /* Màu chữ */
+            border: 2px solid #4caf50; /* Viền xanh lá */
+        }
+        .swal2-title {
+            color: #4caf50 !important; /* Màu tiêu đề xanh lá */
+            font-weight: bold !important;
+        }
+        .swal2-confirm {
+            background-color: #4caf50 !important; /* Nút xác nhận xanh lá */
+            color: white !important;
+        }
+        /* Style cho phần phiên bản và chọn ngôn ngữ */
+        .version-info {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+.language-selector {
+            display: inline-block;
+            position: relative;
+        }
+
+        select {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 2px solid #4caf50;
+            border-radius: 30px;  /* Bo tròn góc */
+            background-color: #f0f8ff;  /* Màu nền nhạt */
+            color: #333;
+            appearance: none;  /* Xóa giao diện mặc định của trình duyệt */
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;  /* Hiệu ứng mượt */
+            outline: none;
+        }
+
+        select:hover {
+            background-color: #e0f7fa;  /* Màu nền khi hover */
+        }
+
+        select:focus {
+            border-color: #00796b;  /* Đổi màu viền khi được focus */
+        }
+
+        /* Tùy chỉnh mũi tên của select */
+        .language-selector::after {
+            content: '▼';  /* Mũi tên tùy chỉnh */
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            pointer-events: none;  /* Đảm bảo mũi tên không làm cản chọn */
+            color: #333;
+        }
+
+
+
+.verify-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.verify-btn:hover {
+    background-color: #218838;
+}
+
+
+
+
+
+
+
+
+
+.verified-icon {
+    color: #1da1f2;
+    margin-left: 5px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.verifying {
+    font-size: 0.9rem;
+    color: #ffc107;
+    margin-left: 5px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.verify-btn {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.verify-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Hiệu ứng fade-in cho chuyển đổi mượt mà */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+  }
+              
