@@ -293,25 +293,35 @@ document.addEventListener('DOMContentLoaded', function () {
   const copyBtn = document.getElementById('copyBtn');
   const disconnectBtn = document.getElementById('disconnectBtn');
 
-  const storedWalletAddress = localStorage.getItem('walletAddress');
-
-  // Hiển thị ví đã lưu
-  function displayWallet() {
+  // Kiểm tra xem ví đã được lưu trong localStorage hay chưa
+  function checkWalletStatus() {
+    const storedWalletAddress = localStorage.getItem('walletAddress');
     if (storedWalletAddress) {
       connectText.textContent = `${storedWalletAddress.slice(0, 5)}...${storedWalletAddress.slice(-4)}`;
       walletInput.style.display = 'none';
       confirmBtn.style.display = 'none';
-      actionButtons.style.display = 'block';
+      actionButtons.style.display = 'flex';
+    } else {
+      resetConnect();
     }
   }
-  displayWallet();
+
+  // Hàm reset nút Connect
+  function resetConnect() {
+    connectText.textContent = 'Connect';
+    connectText.style.display = 'block';
+    walletInput.style.display = 'none';
+    confirmBtn.style.display = 'none';
+    actionButtons.style.display = 'none';
+  }
 
   // Khi nhấn Connect
   connectText.addEventListener('click', function () {
+    const storedWalletAddress = localStorage.getItem('walletAddress');
     if (!storedWalletAddress) {
       connectText.style.display = 'none';
-      walletInput.style.display = 'block';
-      confirmBtn.style.display = 'block';
+      walletInput.style.display = 'inline';
+      confirmBtn.style.display = 'inline';
     }
   });
 
@@ -323,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function () {
       connectText.textContent = `${walletAddress.slice(0, 5)}...${walletAddress.slice(-4)}`;
       walletInput.style.display = 'none';
       confirmBtn.style.display = 'none';
-      actionButtons.style.display = 'block';
+      actionButtons.style.display = 'flex';
     } else {
       alert('Vui lòng nhập mã ví hợp lệ!');
     }
@@ -341,10 +351,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // Ngắt kết nối
   disconnectBtn.addEventListener('click', function () {
     localStorage.removeItem('walletAddress');
-    connectText.textContent = 'Connect';
-    connectText.style.display = 'block';
-    walletInput.style.display = 'none';
-    confirmBtn.style.display = 'none';
-    actionButtons.style.display = 'none';
+    resetConnect();
   });
+
+  // Kiểm tra trạng thái khi tải trang
+  checkWalletStatus();
 });
