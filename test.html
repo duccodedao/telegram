@@ -3,30 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ton-connect SDK Example</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-
-        .container {
-            text-align: center;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gửi TON</title>
     <style>
         body {
@@ -93,59 +69,6 @@
         };
 
         ReactDOM.render(<Settings />, document.getElementById('app'));
-    </script>
-</body>
-</html>
-
-
-        #userInfo {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-    </style>
-    <script src="https://unpkg.com/@tonconnect/sdk"></script>
-</head>
-<body>
-    <div class="container">
-        <h1>Ton-connect SDK Example</h1>
-        <button id="connectButton">Kết nối Ví</button>
-        <div id="userInfo"></div>
-    </div>
-
-    <script>
-        const connectButton = document.getElementById('connectButton');
-        const userInfo = document.getElementById('userInfo');
-
-        // Khởi tạo Ton-connect SDK
-        const tonConnect = new TonConnect({
-            name: 'My Ton App',
-            wallets: {
-                'tonkeeper': {
-                    name: 'Tonkeeper',
-                    logo: 'https://tonkeeper.com/logo.svg' // Đường dẫn đến logo ví Tonkeeper
-                },
-                'tonhub': {
-                    name: 'Tonhub',
-                    logo: 'https://tonhub.com/logo.svg' // Đường dẫn đến logo ví Tonhub
-                },
-                // Bạn có thể thêm các ví khác nếu cần
-            },
-        });
-
-        // Xử lý sự kiện khi nhấn nút kết nối
-        connectButton.addEventListener('click', async () => {
-            try {
-                const session = await tonConnect.connect();
-                const address = session.address;
-                userInfo.innerHTML = `
-                    <p>Địa chỉ ví của bạn: ${address}</p>
-                    <p>Ví đã kết nối: ${session.wallet}</p>
-                `;
-            } catch (error) {
-                console.error('Kết nối không thành công:', error);
-                userInfo.innerHTML = 'Kết nối không thành công.';
-            }
-        });
     </script>
 </body>
 </html>
