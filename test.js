@@ -286,35 +286,65 @@ loadTelegramUser();
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  const connectBtn = document.getElementById('connectBtn');
-  const walletInputContainer = document.getElementById('walletInputContainer');
-  const walletAddressInput = document.getElementById('walletAddressInput');
+  const connectText = document.getElementById('connectText');
+  const walletInput = document.getElementById('walletInput');
   const confirmBtn = document.getElementById('confirmBtn');
-  const buttonText = document.getElementById('buttonText');
+  const actionButtons = document.getElementById('actionButtons');
+  const copyBtn = document.getElementById('copyBtn');
+  const disconnectBtn = document.getElementById('disconnectBtn');
 
   const storedWalletAddress = localStorage.getItem('walletAddress');
 
-  if (storedWalletAddress) {
-    buttonText.textContent = 'Disconnect';
-  }
-
-  connectBtn.addEventListener('click', function () {
+  // Hiển thị ví đã lưu
+  function displayWallet() {
     if (storedWalletAddress) {
-      localStorage.removeItem('walletAddress');
-      buttonText.textContent = 'Connect';
-    } else {
-      walletInputContainer.style.display = 'flex';
+      connectText.textContent = `${storedWalletAddress.slice(0, 5)}...${storedWalletAddress.slice(-4)}`;
+      walletInput.style.display = 'none';
+      confirmBtn.style.display = 'none';
+      actionButtons.style.display = 'block';
+    }
+  }
+  displayWallet();
+
+  // Khi nhấn Connect
+  connectText.addEventListener('click', function () {
+    if (!storedWalletAddress) {
+      connectText.style.display = 'none';
+      walletInput.style.display = 'block';
+      confirmBtn.style.display = 'block';
     }
   });
 
+  // Khi xác nhận mã ví
   confirmBtn.addEventListener('click', function () {
-    const walletAddress = walletAddressInput.value.trim();
+    const walletAddress = walletInput.value.trim();
     if (walletAddress) {
       localStorage.setItem('walletAddress', walletAddress);
-      walletInputContainer.style.display = 'none';
-      buttonText.textContent = 'Disconnect';
+      connectText.textContent = `${walletAddress.slice(0, 5)}...${walletAddress.slice(-4)}`;
+      walletInput.style.display = 'none';
+      confirmBtn.style.display = 'none';
+      actionButtons.style.display = 'block';
     } else {
       alert('Vui lòng nhập mã ví hợp lệ!');
     }
+  });
+
+  // Sao chép mã ví
+  copyBtn.addEventListener('click', function () {
+    const walletAddress = localStorage.getItem('walletAddress');
+    if (walletAddress) {
+      navigator.clipboard.writeText(walletAddress);
+      alert('Đã sao chép mã ví!');
+    }
+  });
+
+  // Ngắt kết nối
+  disconnectBtn.addEventListener('click', function () {
+    localStorage.removeItem('walletAddress');
+    connectText.textContent = 'Connect';
+    connectText.style.display = 'block';
+    walletInput.style.display = 'none';
+    confirmBtn.style.display = 'none';
+    actionButtons.style.display = 'none';
   });
 });
