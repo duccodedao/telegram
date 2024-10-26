@@ -271,36 +271,47 @@ setInterval(updateActiveTime, 1000);
 
 
 
-// Phiên bản theo từng ngôn ngữ
-    const versions = {
-        vi: 5,  // Phiên bản tiếng Việt
-        en: 8   // Phiên bản tiếng Anh
+    // Nội dung trang theo từng ngôn ngữ
+    const contentByLanguage = {
+        vi: {
+            version: 5,
+            title: "Tiêu đề trang",
+            description: "Mô tả về trang web này.",
+            alertTitle: "Cập nhật mới!",
+            alertText: "Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!",
+            confirmText: "Xem ngay!"
+        },
+        en: {
+            version: 8,
+            title: "Page Title",
+            description: "Description about this website.",
+            alertTitle: "New Update!",
+            alertText: "The app has been updated, check out the new features!",
+            confirmText: "Check now!"
+        }
     };
 
     // Kiểm tra ngôn ngữ đã chọn trước đó
     let selectedLanguage = localStorage.getItem("selectedLanguage") || "vi";
 
-    // Cập nhật hiển thị phiên bản và ngôn ngữ khi trang tải
-    function updateVersionAndLanguage() {
-        // Lấy phiên bản dựa theo ngôn ngữ
-        const versionIndex = versions[selectedLanguage];
-        document.getElementById('versionText').textContent = versionIndex;
+    // Cập nhật hiển thị phiên bản, ngôn ngữ, và nội dung
+    function updateContent() {
+        const content = contentByLanguage[selectedLanguage];
 
-        // Đặt ngôn ngữ đã chọn vào combobox
-        document.getElementById('languageSelect').value = selectedLanguage;
+        // Cập nhật nội dung thẻ
+        document.getElementById('versionText').textContent = content.version;
+        document.getElementById('pageTitle').textContent = content.title;
+        document.getElementById('pageDescription').textContent = content.description;
 
         // Kiểm tra xem phiên bản đã thông báo lần cuối
         const lastVersionIndex = localStorage.getItem("lastVersionIndex_" + selectedLanguage);
 
-        if (parseInt(lastVersionIndex) !== versionIndex) {
-            // Nếu phiên bản khác với phiên bản đã lưu
+        if (parseInt(lastVersionIndex) !== content.version) {
             Swal.fire({
-                title: 'Cập nhật mới!',
-                html: selectedLanguage === "vi" ? 
-                      '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!' :
-                      '<b>Ver mới kìa:</b> v2.' + versionIndex + '<br>Cập nhật lẹ đi còn chơi, ở đó đọc concac!',
+                title: content.alertTitle,
+                html: '<b>Phiên bản mới:</b> Index ' + content.version + '<br>' + content.alertText,
                 icon: 'success',
-                confirmButtonText: selectedLanguage === "vi" ? 'Xem ngay!' : 'Concac!',
+                confirmButtonText: content.confirmText,
                 customClass: {
                     popup: 'swal2-popup',
                     title: 'swal2-title',
@@ -308,17 +319,46 @@ setInterval(updateActiveTime, 1000);
                 }
             }).then(() => {
                 // Lưu phiên bản vào localStorage cho ngôn ngữ hiện tại
-                localStorage.setItem("lastVersionIndex_" + selectedLanguage, versionIndex);
+                localStorage.setItem("lastVersionIndex_" + selectedLanguage, content.version);
             });
         }
     }
 
-    // Gọi hàm để cập nhật ngôn ngữ và phiên bản ngay khi tải trang
-    updateVersionAndLanguage();
+    // Gọi hàm để cập nhật nội dung và ngôn ngữ ngay khi tải trang
+    updateContent();
 
     // Xử lý khi thay đổi ngôn ngữ
     document.getElementById('languageSelect').addEventListener('change', function() {
         selectedLanguage = this.value;
         localStorage.setItem("selectedLanguage", selectedLanguage);
-        updateVersionAndLanguage();
+        updateContent();
     });
+
+    // Xử lý khi nhấn nút Connect Wallet
+    document.getElementById('connectWallet').addEventListener('click', function() {
+        Swal.fire({
+            title: "Connect Wallet",
+            input: "text",
+            inputPlaceholder: "Nhập mã ví của bạn",
+            showCancelButton: true,
+            confirmButtonText: "Lưu",
+            preConfirm: (walletAddress) => {
+                if (walletAddress) {
+                    localStorage.setItem("walletAddress", walletAddress);
+                    displayWalletAddress();
+                }
+            }
+        });
+    });
+
+    // Hàm hiển thị mã ví theo định dạng abcd...xyzt
+    function displayWalletAddress() {
+        const walletAddress = localStorage.getItem("walletAddress");
+        if (walletAddress) {
+            const formattedAddress = walletAddress.slice(0, 4) + "..." + walletAddress.slice(-4);
+            document.getElementById("connectWallet").textContent = formattedAddress;
+        }
+    }
+
+    // Hiển thị mã ví đã lưu khi tải trang
+    displayWalletAddress();
