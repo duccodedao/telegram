@@ -135,103 +135,7 @@ function updateActiveTime() {
         activeSeconds = 0;
     }
 
-    /// Danh sách các tên người dùng đã xác minh
-let verifiedUsers = JSON.parse(localStorage.getItem('verifiedUsers')) || [];
-
-// Hàm thêm icon xác minh và nút "Xác minh ngay"
-function addVerifiedIcon() {
-    const userNameElement = document.getElementById('user-username');
-    
-    if (userNameElement) {
-        const currentName = userNameElement.textContent.trim();
-        const username = currentName.startsWith('@') ? currentName.slice(1) : currentName;
-
-        // Kiểm tra xem tên người dùng đã được xác minh hay chưa
-        if (verifiedUsers.includes(username)) {
-            if (!userNameElement.querySelector('.verified-icon')) {
-                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
-                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
-            }
-        } else {
-            const verifyButton = `<button id="verify-button" class="verify-btn">Xác minh ngay</button>`;
-            userNameElement.innerHTML = `${currentName}${verifyButton}`;
-            
-            // Sự kiện click cho nút xác minh
-            document.getElementById('verify-button').addEventListener('click', function() {
-                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
-                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
-                saveVerificationStatus(username);
-            });
-        }
-    }
-}
-
-// Hàm lưu trạng thái xác minh vào localStorage và gửi thông báo về nhóm Telegram
-function saveVerificationStatus(username) {
-    verifiedUsers.push(username);
-    localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
-
-    // Gửi thông báo về nhóm Telegram
-    sendVerificationMessage(username);
-}
-
-// Hàm gửi tin nhắn về nhóm Telegram khi người dùng xác minh thành công
-function sendVerificationMessage(username) {
-    const botToken = '7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk';  // Thay bằng bot token của bạn
-    const chatId = '@traodoiref_link';  // Thay bằng ID của nhóm chat bạn muốn gửi tin nhắn
-
-    const message = `User: @${username} đã xác minh thành công`;
-
-    const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
-    fetch(telegramApiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            chat_id: chatId,
-            text: message
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.ok) {
-            console.log('Thông báo xác minh thành công đã được gửi.');
-        } else {
-            console.error('Lỗi khi gửi thông báo:', data);
-        }
-    })
-    .catch(error => {
-        console.error('Lỗi kết nối tới Telegram API:', error);
-    });
-}
-
-// Hàm lấy tên người dùng từ Telegram
-function loadTelegramUser() {
-    if (Telegram.WebApp.initDataUnsafe) {
-        let user = Telegram.WebApp.initDataUnsafe.user;
-
-        if (user) {
-            let userName = user.first_name + " " + (user.last_name || "");
-            let username = user.username || "No Username";
-
-            document.getElementById('user-name').textContent = userName;
-            document.getElementById('user-username').textContent = `@${username}`;
-            
-            addVerifiedIcon();
-        } else {
-            document.getElementById('user-name').textContent = "Loading...";
-            document.getElementById('user-username').textContent = "@username";
-        }
-    } else {
-        console.error("Telegram WebApp API không khả dụng.");
-    }
-}
-
-// Gọi hàm lấy thông tin người dùng
-loadTelegramUser();
-/ Cập nhật thời gian hoạt động vào localStorage
+    // Cập nhật thời gian hoạt động vào localStorage
     localStorage.setItem('activeMinutes', activeMinutes);
     localStorage.setItem('activeSeconds', activeSeconds);
 
@@ -247,71 +151,113 @@ setInterval(updateActiveTime, 1000);
 
 
 
+// Danh sách các tên người dùng đã xác minh (có thể thêm sẵn hoặc lấy từ localStorage)
+let verifiedUsers = JSON.parse(localStorage.getItem('verifiedUsers')) || [];
 
+// Hàm thêm icon xác minh và nút "Xác minh ngay"
+function addVerifiedIcon() {
+    const userNameElement = document.getElementById('user-username');
+    
+    if (userNameElement) {
+        // Lấy nội dung hiện tại của tên người dùng
+        const currentName = userNameElement.textContent.trim();
+        const username = currentName.startsWith('@') ? currentName.slice(1) : currentName;
 
+        // Kiểm tra xem tên người dùng đã được xác minh hay chưa
+        if (verifiedUsers.includes(username)) {
+            // Nếu đã được xác minh, thêm icon tick xanh
+            if (!userNameElement.querySelector('.verified-icon')) {
+                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
+                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
+            }
+        } else {
+            // Nếu chưa được xác minh, thêm nút "Xác minh ngay"
+            const verifyButton = `<button id="verify-button" class="verify-btn">Verify</button>`;
+            userNameElement.innerHTML = `${currentName}${verifyButton}`;
+            
+            // Thêm sự kiện click cho nút xác minh
+            document.getElementById('verify-button').addEventListener('click', function() {
+                // Thêm icon tick xanh ngay lập tức
+                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
+                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
 
-
-
-
-
-
-// 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Nội dung trang theo từng ngôn ngữ
-    const contentByLanguage = {
-        vi: {
-            version: 5,
-            title: "Tiêu đề trang",
-            description: "Mô tả về trang web này.",
-            alertTitle: "Cập nhật mới!",
-            alertText: "Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!",
-            confirmText: "Xem ngay!"
-        },
-        en: {
-            version: 8,
-            title: "Page Title",
-            description: "Description about this website.",
-            alertTitle: "New Update!",
-            alertText: "The app has been updated, check out the new features!",
-            confirmText: "Check now!"
+                // Lưu trạng thái xác minh (giả sử bạn có một hàm để lưu trạng thái)
+                saveVerificationStatus(username);
+            });
         }
+    }
+}
+
+// Hàm lưu trạng thái xác minh vào localStorage
+function saveVerificationStatus(username) {
+    // Lưu tên người dùng vào danh sách đã xác minh
+    verifiedUsers.push(username);
+    localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
+}
+
+// Hàm lấy tên người dùng từ Telegram
+function loadTelegramUser() {
+    if (Telegram.WebApp.initDataUnsafe) {
+        let user = Telegram.WebApp.initDataUnsafe.user;
+
+        if (user) {
+            let userName = user.first_name + " " + (user.last_name || "");
+            let username = user.username || "No Username"; // Thay thế nếu không có username
+
+            // Cập nhật vào phần HTML
+            document.getElementById('user-name').textContent = userName;
+            document.getElementById('user-username').textContent = `@${username}`;
+            
+            // Gọi hàm thêm icon xác minh sau khi có tên người dùng
+            addVerifiedIcon();
+        } else {
+            // Trường hợp không có thông tin người dùng
+            document.getElementById('user-name').textContent = "Loading...";
+            document.getElementById('user-username').textContent = "@username";
+        }
+    } else {
+        console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
+    }
+}
+
+// Gọi hàm lấy thông tin người dùng
+loadTelegramUser();
+
+
+
+
+
+
+// Phiên bản theo từng ngôn ngữ
+    const versions = {
+        vi: 5,  // Phiên bản tiếng Việt
+        en: 6   // Phiên bản tiếng Anh
     };
 
     // Kiểm tra ngôn ngữ đã chọn trước đó
     let selectedLanguage = localStorage.getItem("selectedLanguage") || "vi";
 
-    // Cập nhật hiển thị phiên bản, ngôn ngữ, và nội dung
-    function updateContent() {
-        const content = contentByLanguage[selectedLanguage];
+    // Cập nhật hiển thị phiên bản và ngôn ngữ khi trang tải
+    function updateVersionAndLanguage() {
+        // Lấy phiên bản dựa theo ngôn ngữ
+        const versionIndex = versions[selectedLanguage];
+        document.getElementById('versionText').textContent = versionIndex;
 
-        // Cập nhật nội dung thẻ
-        document.getElementById('versionText').textContent = content.version;
-        document.getElementById('pageTitle').textContent = content.title;
-        document.getElementById('pageDescription').textContent = content.description;
+        // Đặt ngôn ngữ đã chọn vào combobox
+        document.getElementById('languageSelect').value = selectedLanguage;
 
         // Kiểm tra xem phiên bản đã thông báo lần cuối
         const lastVersionIndex = localStorage.getItem("lastVersionIndex_" + selectedLanguage);
 
-        if (parseInt(lastVersionIndex) !== content.version) {
+        if (parseInt(lastVersionIndex) !== versionIndex) {
+            // Nếu phiên bản khác với phiên bản đã lưu
             Swal.fire({
-                title: content.alertTitle,
-                html: '<b>Phiên bản mới:</b> Index ' + content.version + '<br>' + content.alertText,
+                title: 'Cập nhật mới!',
+                html: selectedLanguage === "vi" ? 
+                      '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng đã được cập nhật, hãy kiểm tra các tính năng mới!' :
+                      '<b>Ver mới kìa:</b> v2.' + versionIndex + '<br>Cập nhật lẹ đi còn chơi, ở đó đọc concac!',
                 icon: 'success',
-                confirmButtonText: content.confirmText,
+                confirmButtonText: selectedLanguage === "vi" ? 'Xem ngay!' : 'Concac!',
                 customClass: {
                     popup: 'swal2-popup',
                     title: 'swal2-title',
@@ -319,46 +265,17 @@ setInterval(updateActiveTime, 1000);
                 }
             }).then(() => {
                 // Lưu phiên bản vào localStorage cho ngôn ngữ hiện tại
-                localStorage.setItem("lastVersionIndex_" + selectedLanguage, content.version);
+                localStorage.setItem("lastVersionIndex_" + selectedLanguage, versionIndex);
             });
         }
     }
 
-    // Gọi hàm để cập nhật nội dung và ngôn ngữ ngay khi tải trang
-    updateContent();
+    // Gọi hàm để cập nhật ngôn ngữ và phiên bản ngay khi tải trang
+    updateVersionAndLanguage();
 
     // Xử lý khi thay đổi ngôn ngữ
     document.getElementById('languageSelect').addEventListener('change', function() {
         selectedLanguage = this.value;
         localStorage.setItem("selectedLanguage", selectedLanguage);
-        updateContent();
+        updateVersionAndLanguage();
     });
-
-    // Xử lý khi nhấn nút Connect Wallet
-    document.getElementById('connectWallet').addEventListener('click', function() {
-        Swal.fire({
-            title: "Connect Wallet",
-            input: "text",
-            inputPlaceholder: "Nhập mã ví của bạn",
-            showCancelButton: true,
-            confirmButtonText: "Lưu",
-            preConfirm: (walletAddress) => {
-                if (walletAddress) {
-                    localStorage.setItem("walletAddress", walletAddress);
-                    displayWalletAddress();
-                }
-            }
-        });
-    });
-
-    // Hàm hiển thị mã ví theo định dạng abcd...xyzt
-    function displayWalletAddress() {
-        const walletAddress = localStorage.getItem("walletAddress");
-        if (walletAddress) {
-            const formattedAddress = walletAddress.slice(0, 4) + "..." + walletAddress.slice(-4);
-            document.getElementById("connectWallet").textContent = formattedAddress;
-        }
-    }
-
-    // Hiển thị mã ví đã lưu khi tải trang
-    displayWalletAddress();
