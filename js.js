@@ -229,8 +229,8 @@ loadTelegramUser();
 
 
 const versions = {
-    vi: 10,  // Phiên bản tiếng Việt
-    en: 7   // Phiên bản tiếng Anh
+    vi: 1,  // Phiên bản tiếng Việt
+    en: 2  // Phiên bản tiếng Anh
 };
 
 // Kiểm tra ngôn ngữ đã chọn trước đó
@@ -251,11 +251,11 @@ function updateVersionAndLanguage() {
     if (parseInt(lastVersionIndex) !== versionIndex) {
         // Nếu phiên bản khác với phiên bản đã lưu
         Swal.fire({
-            title: '🎉 Cập nhật mới!',
+          
             html: selectedLanguage === "vi" ? 
                   '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng vừa update thêm dự án <strong style="color: #FF5733;">$PAWS</strong> (PAWS), chơi ngay 🔥' :
                   '<b>Ver mới kìa:</b> v2.' + versionIndex + '<br>Cập nhật lẹ đi còn chơi, ở đó đọc concac!',
-            icon: 'success',
+            
             imageUrl: 'logo-coin/paws.jpg', // Đường dẫn ảnh thông báo
             imageAlt: 'Cập nhật mới',           // Văn bản thay thế cho ảnh
             confirmButtonText: selectedLanguage === "vi" ? 'Xem ngay!' : 'Concac!',
