@@ -230,7 +230,7 @@ loadTelegramUser();
 
 // Phiên bản theo từng ngôn ngữ
     const versions = {
-        vi: 6,  // Phiên bản tiếng Việt
+        vi: 8,  // Phiên bản tiếng Việt
         en: 7   // Phiên bản tiếng Anh
     };
 
@@ -254,7 +254,7 @@ loadTelegramUser();
             Swal.fire({
                 title: 'Cập nhật mới!',
                 html: selectedLanguage === "vi" ? 
-                      '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng vừa update thêm dự án $WTON (WONTON), chơi ngay 🔥' :
+                      '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng vừa update thêm dự án $PAWS (PAWS), chơi ngay 🔥' :
                       '<b>Ver mới kìa:</b> v2.' + versionIndex + '<br>Cập nhật lẹ đi còn chơi, ở đó đọc concac!',
                 icon: 'success',
                 confirmButtonText: selectedLanguage === "vi" ? 'Xem ngay!' : 'Concac!',
