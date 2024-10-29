@@ -229,7 +229,7 @@ loadTelegramUser();
 
 
 const versions = {
-    vi: 9,  // Phiên bản tiếng Việt
+    vi: 10,  // Phiên bản tiếng Việt
     en: 7   // Phiên bản tiếng Anh
 };
 
