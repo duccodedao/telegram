@@ -288,5 +288,5 @@ document.getElementById('languageSelect').addEventListener('change', function() 
 document.addEventListener("DOMContentLoaded", function() {
       const progressBar = document.getElementById("progress-bar");
       const progressPercentage = 59; // Giá trị phần trăm hoàn thành
-      progressBar.style.width = progressPercentage + "%";
+      progressBar.style.width = progressPercentage + "App";
     });
