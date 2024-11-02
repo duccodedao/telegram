@@ -1,76 +1,82 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bán Crypto | By BmassHD</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Bán crypto | BmassHD">
-    <meta property="og:description" content="Bán tiền điện tử với BmassHD. Quy trình giao dịch dễ dàng và an toàn.">
-    <meta property="og:image" content="https://bmasshd.click/ton/nen.png">
-    <meta property="og:url" content="https://bmasshd.click/ton/sell.html">
-    <meta property="og:type" content="website">
-    
-    <link rel="shortcut icon" href="logo1.png" type="image/png">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Footer Navigation</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            height: 100vh; /* Đảm bảo footer không che khuất nội dung */
+        }
+        .footer {
+            position: fixed;
+            bottom: 20px; /* Cách dưới */
+            right: 20px; /* Cách bên phải */
+            background-color: #000;
+            border-radius: 10px; /* Bo góc footer */
+            display: flex;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #ccc;
+            font-size: 14px;
+            margin: 0 10px; /* Khoảng cách giữa các mục */
+            transition: color 0.3s;
+        }
+        .footer-item img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+        }
+        .footer-item:hover {
+            color: #fff;
+        }
+        .active {
+            color: #ff0; /* Màu sắc khi mục được chọn */
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header class="header">
-        <div class="profile-container">
-            <img id="user-avatar" class="avatar" src="" alt="Avatar">
-            <div class="user-info">
-                <div id="user-name">
-                    Loading...<i class="fas fa-check-circle verified-icon"></i>
-                </div>
-                <div id="user-username">
-                    @username<i class="fas fa-check-circle verified-icon"></i>
-                </div>
-                <div id="active-timer">
-                    <span class="dot"></span> 
-                    <span id="minutes">00</span> phút 
-                    <span id="seconds">00</span> giây
-                </div>
-            </div>
-        </div>
-    </header>
-    
+<!-- Footer Section -->
+<div class="footer">
+    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
+        <img src="home.svg" alt="Home">
+        <span>Home</span>
+    </a>
+    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
+        <img src="buycoin.svg" alt="Deposit">
+        <span>MuaCoin</span>
+    </a>
+    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
+        <img src="sellcoin.svg" alt="Withdraw">
+        <span>BánCoin</span>
+    </a>
+    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
+        <img src="/logo-coin/buyref.svg" alt="Buy Referral">
+        <span>MuaRef</span>
+    </a>
+</div>
 
+<script>
+    function setActive(element) {
+        // Xóa lớp 'active' khỏi tất cả các mục
+        const items = document.querySelectorAll('.footer-item');
+        items.forEach(item => item.classList.remove('active'));
 
+        // Thêm lớp 'active' cho mục đang được nhấn
+        element.classList.add('active');
+    }
+</script>
 
-
-
-
-
-
-
-    
-    <!-- Footer Section -->
-    <div class="footer">
-        <a href="/tg-app.html" class="footer-item">
-            <img src="home.svg" alt="Home">
-            <span>Home</span>
-        </a>
-        <a href="/ton/ton.html" class="footer-item">
-            <img src="buycoin.svg" alt="Deposit">
-            <span>MuaCoin</span>
-        </a>
-        <a href="/ton/sell.html" class="footer-item">
-            <img src="sellcoin.svg" alt="Withdraw">
-            <span>BánCoin</span>
-        </a>
-        <a href="https://buffviewx.com/ref/bmasshd" class="footer-item">
-            <img src="/logo-coin/buyref.svg" alt="Buy Referral">
-            <span>MuaRef</span>
-        </a>
-    </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sell.js"></script>
-    <script src="/js.js"></script>
 </body>
 </html>
