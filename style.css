@@ -87,6 +87,7 @@ h2 {
     background-color: #f1f1f1;
     padding: 10px 15px; /* Giảm padding để header nhỏ lại */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
 }
 
 .profile-container {
