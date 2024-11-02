@@ -323,3 +323,20 @@ select option {
 .active {
             color: #ff0; /* Màu sắc khi mục được chọn */
 }
+
+
+
+
+
+.new-badge {
+            position: absolute;
+            top: 5px; /* Điều chỉnh vị trí nhãn "New" lệch trên */
+            right: 5px; /* Điều chỉnh vị trí nhãn "New" lệch trái */
+            background-color: red;
+            color: white;
+            padding: 1.5px 3.25px;
+            border-radius: 3px;
+            font-size: 7px;
+            font-weight: bold;
+            z-index: 1; /* Đảm bảo nhãn luôn nằm trên ảnh */
+}
