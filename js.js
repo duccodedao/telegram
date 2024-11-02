@@ -290,5 +290,12 @@ document.getElementById('languageSelect').addEventListener('change', function() 
 
 
 
+function setActive(element) {
+        // Xóa lớp 'active' khỏi tất cả các mục
+        const items = document.querySelectorAll('.footer-item');
+        items.forEach(item => item.classList.remove('active'));
 
+        // Thêm lớp 'active' cho mục đang được nhấn
+        element.classList.add('active');
+}
 
