@@ -1,58 +1,248 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Progress Bar</title>
-  <style>
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f5f7fa;
-      font-family: Arial, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet | By BmassHD</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
 
-    .progress-container {
-      width: 80%;
-      max-width: 600px;
-      background-color: #e0e0e0;
-      border-radius: 30px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
+    <meta property="og:title" content="Wallet | BmassHD">
+    <meta property="og:description" content="Ví 2">
+    <meta property="og:image" content="/ton/nen.png">
+    <meta property="og:url" content="/ton/ton.html">
+    <meta property="og:type" content="website">
 
-    .progress-bar {
-      height: 20px;
-      background: linear-gradient(to right, #4a90e2, #50c9c3);
-      width: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: bold;
-      font-size: 14px;
-      border-radius: 30px;
-      box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.3);
-      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-  </style>
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #2a2a2a;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #1e1e1e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .connect-button, .join-button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+        .connect-button img, .join-button img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        .connect-button:hover, .join-button:hover {
+            background: #ff6a00;
+            color: #fff;
+        }
+        .wallet-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background: #333333;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        .remove-button {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #ff6a00;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+        .remove-button:hover {
+            color: #ff0000;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="progress-container">
-    <div class="progress-bar" id="progress-bar">59%</div>
-  </div>
+<div class="container">
+    <div class="logo">BmassHD</div>
+    <div class="connect-text">Kết nối ví của bạn để mở khóa thêm nhiều tính năng</div>
 
-  <script>
+    <!-- Nút Connect Wallet -->
+    <div id="wallet-section">
+        <div class="connect-button" id="connectWalletBtn" onclick="connectWallet()">
+            <img src="/ton/wallet.png" alt="Wallet Icon">
+            <span>Connect Wallet</span>
+        </div>
+    </div>
+
+    <!-- Nút Tham gia nhóm -->
+    <div class="join-button" id="joinGroupBtn" onclick="joinGroup()">
+        <img src="/logo-coin/buyref.svg" alt="Group Icon">
+        <span>Tham gia nhóm</span>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function connectWallet() {
+        const walletSection = document.getElementById('wallet-section');
+        
+        walletSection.innerHTML = `
+            <input type="text" id="walletInput" class="wallet-input" placeholder="Nhập mã ví của bạn">
+            <div class="connect-button" onclick="saveWallet()">
+                <img src="/ton/wallet.png" alt="Wallet Icon">
+                <span>Lưu Mã Ví</span>
+            </div>
+        `;
+    }
+
+    function saveWallet() {
+        const walletInput = document.getElementById('walletInput');
+        const walletAddress = walletInput.value.trim();
+
+        if (walletAddress) {
+            localStorage.setItem('walletAddress', walletAddress);
+
+            const shortWallet = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
+
+            document.getElementById('wallet-section').innerHTML = `
+                <div class="connect-text wallet-address">
+                    Mã ví của bạn: ${shortWallet}
+                    <button class="remove-button" onclick="removeWallet()">♻️</button>
+                </div>
+            `;
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Mã ví đã được lưu!',
+                background: '#1e1e1e',
+                color: '#ffffff',
+                showConfirmButton: false,
+                position: 'top',
+                toast: true,
+                timer: 2000
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Vui lòng nhập mã ví hợp lệ',
+                background: '#1e1e1e',
+                color: '#ffffff',
+                showConfirmButton: false,
+                position: 'top',
+                toast: true,
+                timer: 2000
+            });
+        }
+    }
+
+    function removeWallet() {
+        localStorage.removeItem('walletAddress');
+        
+        document.getElementById('wallet-section').innerHTML = `
+            <div class="connect-button" id="connectWalletBtn" onclick="connectWallet()">
+                <img src="/ton/wallet.png" alt="Wallet Icon">
+                <span>Connect Wallet</span>
+            </div>
+        `;
+
+        Swal.fire({
+            icon: 'info',
+            title: 'Mã ví đã được xóa!',
+            background: '#1e1e1e',
+            color: '#ffffff',
+            showConfirmButton: false,
+            position: 'top',
+            toast: true,
+            timer: 2000
+        });
+    }
+
+    function joinGroup() {
+        localStorage.setItem('joinedGroup', 'true');
+
+        const joinGroupBtn = document.getElementById('joinGroupBtn');
+        const connectWalletBtn = document.getElementById('connectWalletBtn');
+        
+        if (joinGroupBtn) {
+            joinGroupBtn.innerHTML = `
+                <img src="/logo-coin/7518748.png" alt="New Group Icon">
+                <span>Đã tham gia nhóm</span>
+            `;
+        }
+
+        if (connectWalletBtn) {
+            connectWalletBtn.querySelector("img").src = "/logo-coin/7518748.png";
+        }
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
-      const progressBar = document.getElementById("progress-bar");
-      const progressPercentage = 59; // Giá trị phần trăm hoàn thành
-      progressBar.style.width = progressPercentage + "%";
+        const storedWallet = localStorage.getItem('walletAddress');
+        const joinedGroup = localStorage.getItem('joinedGroup');
+
+        if (storedWallet) {
+            const shortWallet = `${storedWallet.slice(0, 6)}...${storedWallet.slice(-4)}`;
+            document.getElementById('wallet-section').innerHTML = `
+                <div class="connect-text wallet-address">
+                    Mã ví của bạn: ${shortWallet}
+                    <button class="remove-button" onclick="removeWallet()">♻️</button>
+                </div>
+            `;
+        }
+
+        if (joinedGroup === 'true') {
+            const joinGroupBtn = document.getElementById('joinGroupBtn');
+            const connectWalletBtn = document.getElementById('connectWalletBtn');
+
+            if (joinGroupBtn) {
+                joinGroupBtn.innerHTML = `
+                    <img src="/logo-coin/7518748.png" alt="New Group Icon">
+                    <span>Đã tham gia nhóm</span>
+                `;
+            }
+
+            if (connectWalletBtn) {
+                connectWalletBtn.querySelector("img").src = "/logo-coin/7518748.png";
+            }
+        }
     });
-  </script>
+</script>
 
 </body>
 </html>
