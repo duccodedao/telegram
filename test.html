@@ -37,7 +37,8 @@
             cursor: pointer;
             transition: background 0.3s ease;
             margin-top: 10px;
-            justify-content: center;
+            text-align: left;
+            justify-content: flex-start;
         }
         .button img {
             width: 25px;
@@ -97,28 +98,34 @@
 
     // Tham gia nhóm
     function joinGroup() {
-        Swal.fire({
-            title: 'Xác nhận tham gia nhóm?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Tham gia',
-            cancelButtonText: 'Hủy',
-            background: '#1e1e1e',
-            color: '#ffffff'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                localStorage.setItem('joinedGroup', 'true');
-                updateButtonStates();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Đã tham gia nhóm!',
-                    background: '#1e1e1e',
-                    color: '#ffffff',
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-            }
-        });
+        if (joinedGroup) {
+            // Chuyển hướng đến nhóm Telegram nếu đã tham gia
+            window.location.href = "https://t.me/bmassk3_channel";
+        } else {
+            // Hiển thị xác nhận tham gia nhóm
+            Swal.fire({
+                title: 'Xác nhận tham gia nhóm?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Tham gia',
+                cancelButtonText: 'Hủy',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.setItem('joinedGroup', 'true');
+                    updateButtonStates();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã tham gia nhóm!',
+                        background: '#1e1e1e',
+                        color: '#ffffff',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
     }
 
     // Kết nối ví
