@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallet | BmassHD</title>
+    <title>Wallet | By BmassHD</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
     <style>
+        /* CSS đã cập nhật cho các phần tử */
         body {
             display: flex;
             justify-content: center;
@@ -31,15 +34,11 @@
             margin-bottom: 20px;
             color: #ff6a00;
         }
-        .connect-text {
-            font-size: 16px;
-            color: #cccccc;
-            margin-bottom: 20px;
-        }
-        .connect-button, .join-button, .withdraw-button {
-            display: block;
-            width: calc(100% - 20px);
-            padding: 10px;
+        .connect-button, .join-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
             background: #333333;
             border: 1px solid #ff6a00;
             color: #ff6a00;
@@ -47,41 +46,17 @@
             border-radius: 30px;
             cursor: pointer;
             transition: background 0.3s ease;
-            margin: 10px 0;
+            margin-top: 10px;
         }
-        .connect-button img, .join-button img, .withdraw-button img {
+        .connect-button img, .join-button img {
             width: 25px;
             height: 25px;
             margin-right: 10px;
             border-radius: 10px;
         }
-        .connect-button:hover, .join-button:hover, .withdraw-button:hover {
+        .connect-button:hover, .join-button:hover {
             background: #ff6a00;
             color: #fff;
-        }
-        .wallet-input {
-            width: calc(100% - 20px);
-            padding: 10px;
-            font-size: 16px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            background: #333333;
-            color: #fff;
-            box-sizing: border-box;
-        }
-        .remove-button {
-            color: #ff6a00;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            margin-left: 10px;
-        }
-        .task-status {
-            margin-top: 10px;
-            color: #ff6a00;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -89,132 +64,104 @@
 
 <div class="container">
     <div class="logo">BmassHD</div>
-    <div id="wallet-section" class="connect-text">
-        Kết nối ví của bạn để mở khóa thêm nhiều tính năng
-        <button class="connect-button" onclick="connectWallet()">
-            <img src="/ton/wallet.png" alt="Wallet Icon"> Connect Wallet
-        </button>
+    <div id="wallet-section">
+        <div class="connect-button" onclick="connectWallet()">
+            <img src="/ton/wallet.png" alt="Wallet Icon">
+            Connect Wallet
+        </div>
     </div>
-    <div class="join-button" onclick="joinGroup()">
-        <img src="/logo-coin/buyref.svg" alt="Group Icon"> Tham gia nhóm
+
+    <div id="join-group-section">
+        <div class="join-button" onclick="joinGroup()">
+            <img src="/logo-coin/buyref.svg" alt="Group Icon">
+            Tham gia nhóm
+        </div>
     </div>
-    <button class="withdraw-button" onclick="withdrawFunds()">
-        <img src="/logo-coin/icon-wallet.svg" alt="Withdraw Icon"> Rút tiền
-        <div id="balance" style="display: inline; margin-left: 10px;">: 0 TON</div>
-    </button>
-    <div class="task-status" id="task-status"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    let balance = parseFloat(localStorage.getItem('balance')) || 0;
-    let walletConnected = false;
-    let groupJoined = false;
-
-    function updateBalance(amount) {
-        balance += amount;
-        localStorage.setItem('balance', balance.toFixed(2));
-        document.getElementById('balance').textContent = `Số dư: ${balance.toFixed(2)} TON`;
-    }
-
     function connectWallet() {
-        if (walletConnected) {
-            Swal.fire({
-                icon: 'info',
-                title: 'Bạn đã kết nối ví',
-                text: 'Ví của bạn đã được kết nối rồi!',
-                background: '#1e1e1e',
-                color: '#ffffff'
-            });
-            return;
-        }
-
-        Swal.fire({
-            title: 'Nhập mã ví của bạn',
-            input: 'text',
-            inputPlaceholder: 'Nhập mã ví...',
-            showCancelButton: true,
-            confirmButtonText: 'Lưu',
-            background: '#1e1e1e',
-            color: '#ffffff'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const walletAddress = result.value;
-                if (walletAddress) {
-                    localStorage.setItem('walletAddress', walletAddress);
-                    const shortWallet = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
-                    document.getElementById('wallet-section').innerHTML = `
-                        <div class="connect-text wallet-address">
-                            Mã ví của bạn: ${shortWallet}
-                            <button class="remove-button" onclick="removeWallet()">X</button>
-                        </div>
-                    `;
-                    walletConnected = true;
-                    updateBalance(0.05); // Thêm 0,05 TON khi hoàn thành nhiệm vụ kết nối ví
-                    checkMaxBalance();
-                }
-            }
-        });
+        const walletSection = document.getElementById('wallet-section');
+        
+        // Hiển thị ô nhập mã ví
+        walletSection.innerHTML = `
+            <input type="text" id="walletInput" placeholder="Nhập mã ví của bạn" class="wallet-input">
+            <div class="connect-button" onclick="saveWallet()">
+                <img src="/ton/wallet.png" alt="Wallet Icon">
+                Lưu Mã Ví
+            </div>
+        `;
     }
 
-    function joinGroup() {
-        if (groupJoined) {
+    function saveWallet() {
+        const walletInput = document.getElementById('walletInput');
+        const walletAddress = walletInput.value.trim();
+
+        if (walletAddress) {
+            localStorage.setItem('walletAddress', walletAddress);
+            const shortWallet = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
+            document.getElementById('wallet-section').innerHTML = `
+                <div class="connect-text wallet-address">
+                    Mã ví của bạn: ${shortWallet}
+                    <button class="remove-button" onclick="removeWallet()">♻️</button>
+                </div>
+            `;
             Swal.fire({
-                icon: 'info',
-                title: 'Bạn đã tham gia nhóm',
-                text: 'Bạn đã tham gia nhóm rồi!',
-                background: '#1e1e1e',
-                color: '#ffffff'
+                icon: 'success',
+                title: 'Mã ví đã được lưu!',
+                position: 'top',
+                toast: true,
+                timer: 2000
             });
-            return;
         }
-
-        window.open("https://t.me/bmassk3_channel", "_blank");
-        groupJoined = true; // Đánh dấu là đã tham gia
-        updateBalance(0.05); // Thêm 0,05 TON cho lần tham gia nhóm đầu tiên
-        localStorage.setItem('joinedGroup', true);
-        checkMaxBalance();
-    }
-
-    function withdrawFunds() {
-        Swal.fire({
-            icon: 'info',
-            title: 'Sắp ra mắt',
-            text: 'Chức năng rút tiền sẽ được phát hành trong thời gian tới!',
-            background: '#1e1e1e',
-            color: '#ffffff'
-        });
     }
 
     function removeWallet() {
         localStorage.removeItem('walletAddress');
         document.getElementById('wallet-section').innerHTML = `
-            Kết nối ví của bạn để mở khóa thêm nhiều tính năng
-            <button class="connect-button" onclick="connectWallet()">
-                <img src="/ton/wallet.png" alt="Wallet Icon"> Connect Wallet
-            </button>
+            <div class="connect-button" onclick="connectWallet()">
+                <img src="/ton/wallet.png" alt="Wallet Icon">
+                Connect Wallet
+            </div>
         `;
-        walletConnected = false;
+        Swal.fire({
+            icon: 'info',
+            title: 'Mã ví đã được xóa!',
+            position: 'top',
+            toast: true,
+            timer: 2000
+        });
     }
 
-    function checkMaxBalance() {
-        if (balance > 0.1) {
-            document.getElementById('task-status').textContent = "Bạn đã hoàn thành tối đa 0.1 TON! Tài khoản của bạn đã bị ban.";
-            document.querySelector('.withdraw-button').disabled = true; // Disable withdraw button
-            document.querySelector('.connect-button').disabled = true; // Disable connect button
-            document.querySelector('.join-button').disabled = true; // Disable join button
-        } else {
-            document.getElementById('task-status').textContent = "";
-            document.querySelector('.withdraw-button').disabled = false; // Enable withdraw button
-            document.querySelector('.connect-button').disabled = false; // Enable connect button
-            document.querySelector('.join-button').disabled = false; // Enable join button
+    function joinGroup() {
+        // Chuyển hướng người dùng tới nhóm Telegram
+        window.location.href = "https://t.me/bmassk3_channel";
+
+        // Lưu trạng thái đã tham gia vào localStorage
+        localStorage.setItem('joinedGroup', 'true');
+
+        // Cập nhật nút thành biểu tượng thành công
+        updateJoinButton();
+    }
+
+    function updateJoinButton() {
+        const joinGroupSection = document.getElementById('join-group-section');
+        const joinedGroup = localStorage.getItem('joinedGroup');
+        
+        if (joinedGroup === 'true') {
+            joinGroupSection.innerHTML = `
+                <div class="join-button">
+                    <img src="/logo-coin/success-icon.svg" alt="Success Icon">
+                    Đã Tham gia nhóm
+                </div>
+            `;
         }
     }
 
-    // Cập nhật số dư khi trang được tải
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('balance').textContent = `Số dư: ${balance.toFixed(2)} TON`;
-        checkMaxBalance();
+    // Kiểm tra trạng thái đã lưu khi tải trang
+    document.addEventListener("DOMContentLoaded", function() {
+        updateJoinButton();
     });
 </script>
 
