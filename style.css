@@ -4,6 +4,7 @@ body {
     color: #333;
     margin: 0;
     padding: 0 10px; /* Thêm padding để tránh sát rìa */
+    padding-bottom: 60px;
 }
 
 .app-category {
@@ -347,16 +348,19 @@ h2 {
 
 
 .footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #000;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 10px 0;
-            border-top: 1px solid #333;
-        }
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: space-evenly; /* Căn đều các mục */
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #333;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+}
+
         .footer-item {
             display: flex;
             flex-direction: column;
