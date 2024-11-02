@@ -36,7 +36,7 @@
             color: #cccccc;
             margin-bottom: 20px;
         }
-        .connect-button, .join-button {
+        .connect-button, .join-button, .withdraw-button {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -50,13 +50,13 @@
             transition: background 0.3s ease;
             margin-top: 10px;
         }
-        .connect-button img, .join-button img {
+        .connect-button img, .join-button img, .withdraw-button img {
             width: 25px;
             height: 25px;
             margin-right: 10px;
             border-radius: 10px;
         }
-        .connect-button:hover, .join-button:hover {
+        .connect-button:hover, .join-button:hover, .withdraw-button:hover {
             background: #ff6a00;
             color: #fff;
         }
@@ -79,6 +79,11 @@
             font-size: 14px;
             margin-left: 10px;
         }
+        .task-status {
+            margin-top: 10px;
+            color: #ff6a00;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -94,12 +99,18 @@
     <div class="join-button" onclick="joinGroup()">
         <img src="/ton/group.png" alt="Group Icon"> Tham gia nhóm
     </div>
+    <button class="withdraw-button" onclick="withdrawFunds()">
+        <img src="/ton/withdraw.png" alt="Withdraw Icon"> Rút tiền
+    </button>
     <div id="balance" class="connect-text">Số dư: 0 TON</div>
+    <div class="task-status" id="task-status"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     let balance = parseFloat(localStorage.getItem('balance')) || 0;
+    let walletConnected = false;
+    let groupJoined = false;
 
     function updateBalance(amount) {
         balance += amount;
@@ -108,6 +119,17 @@
     }
 
     function connectWallet() {
+        if (walletConnected) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Bạn đã kết nối ví',
+                text: 'Ví của bạn đã được kết nối rồi!',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            });
+            return;
+        }
+
         Swal.fire({
             title: 'Nhập mã ví của bạn',
             input: 'text',
@@ -128,18 +150,41 @@
                             <button class="remove-button" onclick="removeWallet()">X</button>
                         </div>
                     `;
+                    walletConnected = true;
                     updateBalance(0.05); // Thêm 0,05 TON khi hoàn thành nhiệm vụ kết nối ví
+                    checkMaxBalance();
                 }
             }
         });
     }
 
     function joinGroup() {
-        window.open("https://t.me/bmassk3_channel", "_blank");
-        if (!localStorage.getItem('joinedGroup')) {
-            updateBalance(0.05); // Thêm 0,05 TON khi hoàn thành nhiệm vụ tham gia nhóm
-            localStorage.setItem('joinedGroup', true);
+        if (groupJoined) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Bạn đã tham gia nhóm',
+                text: 'Bạn đã tham gia nhóm rồi!',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            });
+            return;
         }
+
+        window.open("https://t.me/bmassk3_channel", "_blank");
+        updateBalance(0.05); // Thêm 0,05 TON khi hoàn thành nhiệm vụ tham gia nhóm
+        localStorage.setItem('joinedGroup', true);
+        groupJoined = true;
+        checkMaxBalance();
+    }
+
+    function withdrawFunds() {
+        Swal.fire({
+            icon: 'info',
+            title: 'Sắp ra mắt',
+            text: 'Chức năng rút tiền sẽ được phát hành trong thời gian tới!',
+            background: '#1e1e1e',
+            color: '#ffffff'
+        });
     }
 
     function removeWallet() {
@@ -150,6 +195,16 @@
                 <img src="/ton/wallet.png" alt="Wallet Icon"> Connect Wallet
             </button>
         `;
+        walletConnected = false;
+    }
+
+    function checkMaxBalance() {
+        if (balance >= 0.1) {
+            document.getElementById('task-status').textContent = "Bạn đã hoàn thành tối đa 0.1 TON!";
+            document.querySelector('.connect-button').disabled = true; // Disable button after max is reached
+        } else {
+            document.getElementById('task-status').textContent = "";
+        }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -162,6 +217,7 @@
                     <button class="remove-button" onclick="removeWallet()">X</button>
                 </div>
             `;
+            walletConnected = true;
         }
         document.getElementById('balance').textContent = `Số dư: ${balance.toFixed(2)} TON`;
     });
