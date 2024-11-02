@@ -118,7 +118,6 @@
     }
 
     function connectWallet() {
-        // Chỉ thưởng 0,05 TON một lần khi kết nối ví lần đầu
         if (walletConnected) {
             Swal.fire({
                 icon: 'info',
@@ -201,26 +200,21 @@
     function checkMaxBalance() {
         if (balance > 0.1) {
             document.getElementById('task-status').textContent = "Bạn đã hoàn thành tối đa 0.1 TON! Tài khoản của bạn đã bị ban.";
-            document.querySelector('.connect-button').disabled = true; // Disable button after max is reached
-            document.querySelector('.join-button').disabled = true;
+            document.querySelector('.withdraw-button').disabled = true; // Disable withdraw button
+            document.querySelector('.connect-button').disabled = true; // Disable connect button
+            document.querySelector('.join-button').disabled = true; // Disable join button
         } else {
             document.getElementById('task-status').textContent = "";
+            document.querySelector('.withdraw-button').disabled = false; // Enable withdraw button
+            document.querySelector('.connect-button').disabled = false; // Enable connect button
+            document.querySelector('.join-button').disabled = false; // Enable join button
         }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const storedWallet = localStorage.getItem('walletAddress');
-        if (storedWallet) {
-            const shortWallet = `${storedWallet.slice(0, 6)}...${storedWallet.slice(-4)}`;
-            document.getElementById('wallet-section').innerHTML = `
-                <div class="connect-text wallet-address">
-                    Mã ví của bạn: ${shortWallet}
-                    <button class="remove-button" onclick="removeWallet()">X</button>
-                </div>
-            `;
-            walletConnected = true;
-        }
+    // Cập nhật số dư khi trang được tải
+    document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('balance').textContent = `Số dư: ${balance.toFixed(2)} TON`;
+        checkMaxBalance();
     });
 </script>
 
