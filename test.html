@@ -3,99 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallet | By BmassHD</title>
+    <title>Wallet | BmassHD</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Wallet | BmassHD">
-    <meta property="og:description" content="Ví 2">
-    <meta property="og:image" content="/ton/nen.png">
-    <meta property="og:url" content="/ton/ton.html">
-    <meta property="og:type" content="website">
-    
-    <link rel="shortcut icon" href="logo1.png" type="image/png">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://static.okx.com/cdn/web3/web3-wallet-sdk.min.js"></script> <!-- Thêm SDK OKX -->
-    
     <style>
-        /* CSS của bạn không thay đổi */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #2a2a2a;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #1e1e1e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        .connect-button, .join-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+        .connect-button img, .join-button img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        .connect-button:hover, .join-button:hover {
+            background: #ff6a00;
+            color: #fff;
+        }
+        .wallet-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background: #333333;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        .remove-button {
+            color: #ff6a00;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="logo">BmassHD</div>
-    <div class="connect-text">Kết nối ví của bạn để mở khóa thêm nhiều tính năng</div>
-    <div class="connect-button" onclick="connectWallet()">
-        <img src="/ton/wallet.png" alt="Wallet Icon">
-        Connect Wallet
+    <div id="wallet-section" class="connect-text">
+        Kết nối ví của bạn để mở khóa thêm nhiều tính năng
+        <button class="connect-button" onclick="connectWallet()">
+            <img src="/ton/wallet.png" alt="Wallet Icon"> Connect Wallet
+        </button>
     </div>
-</div>
-
-<div class="footer">
-    <!-- Nội dung footer của bạn không thay đổi -->
+    <div class="join-button" onclick="joinGroup()">
+        <img src="/ton/group.png" alt="Group Icon"> Tham gia nhóm
+    </div>
+    <div id="balance" class="connect-text">Số dư: 0 TON</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    async function connectWallet() {
-        try {
-            // Kiểm tra nếu ví OKX có sẵn
-            if (window.okxwallet) {
-                const okxWallet = window.okxwallet;
+    let balance = parseFloat(localStorage.getItem('balance')) || 0;
 
-                // Kết nối với ví
-                await okxWallet.enable();
+    function updateBalance(amount) {
+        balance += amount;
+        localStorage.setItem('balance', balance.toFixed(2));
+        document.getElementById('balance').textContent = `Số dư: ${balance.toFixed(2)} TON`;
+    }
 
-                // Lấy địa chỉ ví
-                const accounts = await okxWallet.request({ method: 'eth_accounts' });
-                
-                // Kiểm tra nếu có tài khoản
-                if (accounts.length > 0) {
-                    const account = accounts[0];
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Đã kết nối thành công!',
-                        text: `Tài khoản của bạn: ${account}`,
-                        background: '#1e1e1e',
-                        color: '#ffffff',
-                        showConfirmButton: true,
-                        confirmButtonText: 'Đóng'
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Kết nối thất bại',
-                        text: 'Không tìm thấy tài khoản nào',
-                        background: '#1e1e1e',
-                        color: '#ffffff',
-                        showConfirmButton: true,
-                        confirmButtonText: 'Đóng'
-                    });
+    function connectWallet() {
+        Swal.fire({
+            title: 'Nhập mã ví của bạn',
+            input: 'text',
+            inputPlaceholder: 'Nhập mã ví...',
+            showCancelButton: true,
+            confirmButtonText: 'Lưu',
+            background: '#1e1e1e',
+            color: '#ffffff'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const walletAddress = result.value;
+                if (walletAddress) {
+                    localStorage.setItem('walletAddress', walletAddress);
+                    const shortWallet = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
+                    document.getElementById('wallet-section').innerHTML = `
+                        <div class="connect-text wallet-address">
+                            Mã ví của bạn: ${shortWallet}
+                            <button class="remove-button" onclick="removeWallet()">X</button>
+                        </div>
+                    `;
+                    updateBalance(0.05); // Thêm 0,05 TON khi hoàn thành nhiệm vụ kết nối ví
                 }
-            } else {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Không tìm thấy ví OKX',
-                    text: 'Vui lòng cài đặt ví OKX để sử dụng tính năng này.',
-                    background: '#1e1e1e',
-                    color: '#ffffff',
-                    showConfirmButton: true,
-                    confirmButtonText: 'Đóng'
-                });
             }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Đã xảy ra lỗi!',
-                text: error.message,
-                background: '#1e1e1e',
-                color: '#ffffff',
-                showConfirmButton: true,
-                confirmButtonText: 'Đóng'
-            });
+        });
+    }
+
+    function joinGroup() {
+        window.open("https://t.me/bmassk3_channel", "_blank");
+        if (!localStorage.getItem('joinedGroup')) {
+            updateBalance(0.05); // Thêm 0,05 TON khi hoàn thành nhiệm vụ tham gia nhóm
+            localStorage.setItem('joinedGroup', true);
         }
     }
+
+    function removeWallet() {
+        localStorage.removeItem('walletAddress');
+        document.getElementById('wallet-section').innerHTML = `
+            Kết nối ví của bạn để mở khóa thêm nhiều tính năng
+            <button class="connect-button" onclick="connectWallet()">
+                <img src="/ton/wallet.png" alt="Wallet Icon"> Connect Wallet
+            </button>
+        `;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const storedWallet = localStorage.getItem('walletAddress');
+        if (storedWallet) {
+            const shortWallet = `${storedWallet.slice(0, 6)}...${storedWallet.slice(-4)}`;
+            document.getElementById('wallet-section').innerHTML = `
+                <div class="connect-text wallet-address">
+                    Mã ví của bạn: ${shortWallet}
+                    <button class="remove-button" onclick="removeWallet()">X</button>
+                </div>
+            `;
+        }
+        document.getElementById('balance').textContent = `Số dư: ${balance.toFixed(2)} TON`;
+    });
 </script>
 
 </body>
