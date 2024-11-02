@@ -318,3 +318,6 @@ select option {
         .footer-item:hover {
             color: #fff;
         }
+.active {
+            color: #ff0; /* Màu sắc khi mục được chọn */
+}
