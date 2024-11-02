@@ -384,8 +384,8 @@ h2 {
 
 .new-badge {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: -5px; /* Đặt vị trí để nhãn "New" không đè lên ảnh */
+            right: -5px;
             background-color: red;
             color: white;
             padding: 2px 5px;
