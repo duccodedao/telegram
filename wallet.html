@@ -17,37 +17,76 @@
     <link rel="shortcut icon" href="logo1.png" type="image/png">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
+<style>
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .wallet-image {
+            width: 100%;
+            max-width: 200px;
+            margin: 20px 0;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        .connect-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .connect-button:hover {
+            background: #ff6a00;
+            color: #fff;
+        }
+        .footer {
+            margin-top: 20px;
+            background: #3a3a3a;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .footer-text {
+            font-size: 14px;
+            color: #cccccc;
+        }
+        .highlight {
+            color: #ff6a00;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
+<div class="container">
+    <div class="logo">BMASSHD</div>
+    <img src="https://via.placeholder.com/150x150" alt="Wallet" class="wallet-image">
+    <div class="connect-text">Connect Your Wallet To Unlock More Features</div>
+    <div class="connect-button" onclick="connectWallet()">Connect Wallet</div>
     
-    
+</div>
 
-
-
-
-    <div class="footer">
-    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
-        <img src="/logo-coin/home.svg" alt="Home">
-        <span>Home</span>
-    </a>
-    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
-        <img src="/logo-coin/buycoin.svg" alt="Deposit">
-        <span>MuaCoin</span>
-    </a>
-    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
-        <img src="/logo-coin/sellcoin.svg" alt="Withdraw">
-        <span>BánCoin</span>
-    </a>
-    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
-        <img src="/logo-coin/buyref.svg" alt="Buy Referral">
-        <span>MuaRef</span>
-    </a>
-    <a href="/wallet.html" class="footer-item">
-        <img src="/logo-coin/icon-wallet.svg" alt="Wallet">
-    <span>Wallet</span>
-    </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function connectWallet() {
+        Swal.fire({
+            icon: 'info',
+            title: 'Coming Soon',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+</script>
 
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
