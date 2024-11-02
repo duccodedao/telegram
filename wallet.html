@@ -80,15 +80,17 @@
             color: #fff;
         }
         .wallet-input {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            background: #333333;
-            color: #fff;
-        }
+    width: calc(100% - 20px); /* Căn chỉnh chiều rộng để không bị tràn */
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: #333333;
+    color: #fff;
+    box-sizing: border-box; /* Đảm bảo padding không làm tràn kích thước */
+}
+
         .remove-button {
             margin-left: 10px;
             font-size: 14px;
