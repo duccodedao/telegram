@@ -382,3 +382,14 @@ h2 {
         }
 
 
+.new-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: red;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
+}
