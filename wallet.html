@@ -18,7 +18,72 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
 </head>
+
+
+    <style>
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .wallet-image {
+            width: 100%;
+            max-width: 200px;
+            margin: 20px 0;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        .connect-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .connect-button:hover {
+            background: #ff6a00;
+            color: #fff;
+        }
+
+    </style>
+</head>
 <body>
+
+<div class="container">
+    <div class="logo">MATCHAIN</div>
+    <img src="https://via.placeholder.com/150x150" alt="Wallet" class="wallet-image">
+    <div class="connect-text">Connect Your Wallet To Unlock More Features</div>
+    <div class="connect-button" onclick="connectWallet()">Connect Wallet</div>
+    <div class="footer">
+        <p class="footer-text">Earn On-Chain Rewards, NFTs and more in <span class="highlight">MegaDrop</span></p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function connectWallet() {
+        Swal.fire({
+            icon: 'info',
+            title: 'Coming Soon',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+</script>
+
+
+
+
+
 
     
     
