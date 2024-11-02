@@ -50,6 +50,8 @@
         
     </div>
 
+    
+<div class="progress-bar" id="progressBar"></div>
 
 <div class="footer">
     <a href="/tg-app.html" class="footer-item">
@@ -69,7 +71,28 @@
         <span>MuaRef</span>
     </a>
 </div>
-    
+    <script>
+    // Hàm chạy thanh tiến trình nhỏ mỗi khi tải trang
+    function loadProgress() {
+        const progressBar = document.getElementById('progressBar');
+        progressBar.style.width = '0%'; // Reset thanh về 0
+
+        // Mô phỏng thanh chạy từ 0% đến 100%
+        let width = 0;
+        const interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+                setTimeout(() => { progressBar.style.width = '0%'; }, 500); // Ẩn thanh sau khi hoàn tất
+            } else {
+                width += 1; // Tăng chiều rộng lên 1% mỗi lần
+                progressBar.style.width = width + '%';
+            }
+        }, 10); // Tốc độ tăng, có thể điều chỉnh để nhanh hoặc chậm hơn
+    }
+
+    // Gọi hàm loadProgress khi tải trang
+    window.onload = loadProgress;
+    </script>
 
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
