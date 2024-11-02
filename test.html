@@ -3,58 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Token Tăng Giảm</title>
+    <title>Wallet | By BmassHD</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Wallet | BmassHD">
+    <meta property="og:description" content="Ví 2">
+    <meta property="og:image" content="/ton/nen.png">
+    <meta property="og:url" content="/ton/ton.html">
+    <meta property="og:type" content="website">
+    
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://static.okx.com/cdn/web3/web3-wallet-sdk.min.js"></script> <!-- Thêm SDK OKX -->
+    
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        .marquee {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            background-color: #000;
-            color: #fff;
-            font-size: 1.2rem;
-            padding: 10px 0;
-        }
-        .marquee-content {
-            display: inline-block;
-            animation: scroll-left 20s linear infinite;
-        }
-        .token {
-            display: inline-block;
-            margin: 0 20px;
-        }
-        .green {
-            color: #4caf50; /* màu xanh cho giá tăng */
-        }
-        .red {
-            color: #e74c3c; /* màu đỏ cho giá giảm */
-        }
-        @keyframes scroll-left {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
+        /* CSS của bạn không thay đổi */
     </style>
 </head>
 <body>
 
-<div class="marquee">
-    <div class="marquee-content" id="marqueeContent"></div>
+<div class="container">
+    <div class="logo">BmassHD</div>
+    <div class="connect-text">Kết nối ví của bạn để mở khóa thêm nhiều tính năng</div>
+    <div class="connect-button" onclick="connectWallet()">
+        <img src="/ton/wallet.png" alt="Wallet Icon">
+        Connect Wallet
+    </div>
 </div>
 
-<script src="test.js"></script>
+<div class="footer">
+    <!-- Nội dung footer của bạn không thay đổi -->
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    async function connectWallet() {
+        try {
+            // Kiểm tra nếu ví OKX có sẵn
+            if (window.okxwallet) {
+                const okxWallet = window.okxwallet;
+
+                // Kết nối với ví
+                await okxWallet.enable();
+
+                // Lấy địa chỉ ví
+                const accounts = await okxWallet.request({ method: 'eth_accounts' });
+                
+                // Kiểm tra nếu có tài khoản
+                if (accounts.length > 0) {
+                    const account = accounts[0];
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã kết nối thành công!',
+                        text: `Tài khoản của bạn: ${account}`,
+                        background: '#1e1e1e',
+                        color: '#ffffff',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Đóng'
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Kết nối thất bại',
+                        text: 'Không tìm thấy tài khoản nào',
+                        background: '#1e1e1e',
+                        color: '#ffffff',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Đóng'
+                    });
+                }
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Không tìm thấy ví OKX',
+                    text: 'Vui lòng cài đặt ví OKX để sử dụng tính năng này.',
+                    background: '#1e1e1e',
+                    color: '#ffffff',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Đóng'
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Đã xảy ra lỗi!',
+                text: error.message,
+                background: '#1e1e1e',
+                color: '#ffffff',
+                showConfirmButton: true,
+                confirmButtonText: 'Đóng'
+            });
+        }
+    }
+</script>
+
 </body>
 </html>
