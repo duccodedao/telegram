@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -17,8 +17,6 @@
     <link rel="shortcut icon" href="logo1.png" type="image/png">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <style>
-        /* Các kiểu CSS đã cập nhật cho nút X và các phần khác */
         body {
             display: flex;
             justify-content: center;
@@ -37,28 +35,9 @@
             background: #1e1e1e;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #ff6a00;
-        }
-        .connect-text {
-            font-size: 16px;
-            color: #cccccc;
-            margin-bottom: 20px;
+        .button {
             display: flex;
             align-items: center;
-            justify-content: center;
-        }
-        .wallet-address {
-            display: flex;
-            align-items: center;
-        }
-        .connect-button, .join-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 10px 20px;
             background: #333333;
             border: 1px solid #ff6a00;
@@ -68,63 +47,39 @@
             cursor: pointer;
             transition: background 0.3s ease;
             margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
         }
-        .connect-button img, .join-button img {
+        .button img {
             width: 25px;
             height: 25px;
             margin-right: 10px;
             border-radius: 10px;
         }
-        .connect-button:hover, .join-button:hover {
+        .button:hover {
             background: #ff6a00;
             color: #fff;
         }
-        .wallet-input {
-    width: calc(100% - 20px); /* Căn chỉnh chiều rộng để không bị tràn */
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background: #333333;
-    color: #fff;
-    box-sizing: border-box; /* Đảm bảo padding không làm tràn kích thước */
-}
-
-        .remove-button {
-            margin-left: 10px;
-            font-size: 14px;
-            color: #ff6a00;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-        }
-        .remove-button:hover {
-            color: #ff0000;
-        }
-
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="logo">BmassHD</div>
-    <div class="connect-text">Kết nối ví của bạn để mở khóa thêm nhiều tính năng</div>
-
     <!-- Nút Connect Wallet -->
-    <div id="wallet-section">
-        <div class="connect-button" onclick="connectWallet()">
-            <img src="/ton/wallet.png" alt="Wallet Icon">
-            Connect Wallet
-        </div>
+    <div id="walletButton" class="button" onclick="connectWallet()">
+        <img id="walletIcon" src="/ton/wallet.png" alt="Wallet Icon">
+        <span id="walletText">Connect Wallet</span>
     </div>
 
     <!-- Nút Tham gia nhóm -->
-    <div class="join-button" onclick="joinGroup()">
-        <img src="/logo-coin/buyref.svg" alt="Group Icon">
-        Tham gia nhóm
+    <div id="joinButton" class="button" onclick="joinGroup()">
+        <img id="joinIcon" src="/logo-coin/buyref.svg" alt="Group Icon">
+        <span id="joinText">Tham gia nhóm</span>
     </div>
 </div>
+
+
+
 
 <div class="footer">
     <a href="/tg-app.html" class="footer-item">
@@ -153,105 +108,124 @@
     </a>
 </div>
 
+
+
+    
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function connectWallet() {
-        const walletSection = document.getElementById('wallet-section');
-        
-        // Thay thế nút bằng ô nhập mã ví
-        walletSection.innerHTML = `
-            <input type="text" id="walletInput" class="wallet-input" placeholder="Nhập mã ví của bạn">
-            <div class="connect-button" onclick="saveWallet()">
-                <img src="/ton/wallet.png" alt="Wallet Icon">
-                Lưu Mã Ví
-            </div>
-        `;
+    // Khởi tạo trạng thái từ localStorage
+    const joinedGroup = localStorage.getItem('joinedGroup') === 'true';
+    const storedWalletAddress = localStorage.getItem('walletAddress');
+
+    // Cập nhật giao diện theo trạng thái đã lưu
+    function updateButtonStates() {
+        // Cập nhật nút tham gia nhóm
+        const joinIcon = document.getElementById('joinIcon');
+        if (joinedGroup) {
+            joinIcon.src = "/logo-coin/7518748.png";
+        } else {
+            joinIcon.src = "/logo-coin/buyref.svg";
+        }
+
+        // Cập nhật nút kết nối ví
+        const walletText = document.getElementById('walletText');
+        const walletIcon = document.getElementById('walletIcon');
+        if (storedWalletAddress) {
+            walletText.textContent = `${storedWalletAddress.slice(0, 6)}...${storedWalletAddress.slice(-4)}`;
+            walletIcon.src = "/logo-coin/7518748.png";
+        } else {
+            walletText.textContent = "Connect Wallet";
+            walletIcon.src = "/ton/wallet.png";
+        }
     }
 
-    function saveWallet() {
-        const walletInput = document.getElementById('walletInput');
-        const walletAddress = walletInput.value.trim();
-
-        if (walletAddress) {
-            // Lưu mã ví vào localStorage
-            localStorage.setItem('walletAddress', walletAddress);
-
-            // Viết tắt mã ví (lấy 6 ký tự đầu và 4 ký tự cuối)
-            const shortWallet = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
-
-            // Hiển thị mã ví viết tắt và nút X
-            document.getElementById('wallet-section').innerHTML = `
-                <div class="connect-text wallet-address">
-                    Mã ví của bạn: ${shortWallet}
-                    <button class="remove-button" onclick="removeWallet()">♻️</button>
-                </div>
-            `;
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Mã ví đã được lưu!',
-                background: '#1e1e1e',
-                color: '#ffffff',
-                showConfirmButton: false,
-                position: 'top',
-                toast: true,
-                timer: 2000
-            });
+    // Tham gia nhóm
+    function joinGroup() {
+        if (joinedGroup) {
+            // Chuyển hướng đến nhóm Telegram nếu đã tham gia
+            window.location.href = "https://t.me/bmassk3_channel";
         } else {
+            // Hiển thị xác nhận tham gia nhóm
             Swal.fire({
-                icon: 'error',
-                title: 'Vui lòng nhập mã ví hợp lệ',
+                title: 'Xác nhận tham gia nhóm?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Tham gia',
+                cancelButtonText: 'Hủy',
                 background: '#1e1e1e',
-                color: '#ffffff',
-                showConfirmButton: false,
-                position: 'top',
-                toast: true,
-                timer: 2000
+                color: '#ffffff'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.setItem('joinedGroup', 'true');
+                    updateButtonStates();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã tham gia nhóm!',
+                        background: '#1e1e1e',
+                        color: '#ffffff',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
             });
         }
     }
 
-    function removeWallet() {
-        // Xóa mã ví khỏi localStorage
-        localStorage.removeItem('walletAddress');
+    // Kết nối ví
+    function connectWallet() {
+        if (storedWalletAddress) {
+            // Hỏi xác nhận nếu đã có mã ví
+            Swal.fire({
+                title: 'Bạn có muốn thay đổi mã ví?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Có',
+                cancelButtonText: 'Không',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    promptForWallet();
+                }
+            });
+        } else {
+            promptForWallet();
+        }
+    }
 
-        // Hiển thị lại nút Connect Wallet
-        document.getElementById('wallet-section').innerHTML = `
-            <div class="connect-button" onclick="connectWallet()">
-                <img src="/ton/wallet.png" alt="Wallet Icon">
-                Connect Wallet
-            </div>
-        `;
-
+    // Nhập mã ví
+    function promptForWallet() {
         Swal.fire({
-            icon: 'info',
-            title: 'Mã ví đã được xóa!',
+            title: 'Nhập mã ví của bạn',
+            input: 'text',
+            inputPlaceholder: 'Nhập mã ví',
             background: '#1e1e1e',
             color: '#ffffff',
-            showConfirmButton: false,
-            position: 'top',
-            toast: true,
-            timer: 2000
+            showCancelButton: true,
+            confirmButtonText: 'Lưu',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                const walletAddress = result.value.trim();
+                localStorage.setItem('walletAddress', walletAddress);
+
+                // Cập nhật nút với mã ví và hình ảnh mới
+                updateButtonStates();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Mã ví đã được lưu!',
+                    background: '#1e1e1e',
+                    color: '#ffffff',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
         });
     }
 
-    function joinGroup() {
-        window.location.href = "https://t.me/bmassk3_channel";
-    }
-
-    // Kiểm tra và hiển thị mã ví nếu đã lưu
-    document.addEventListener("DOMContentLoaded", function() {
-        const storedWallet = localStorage.getItem('walletAddress');
-        if (storedWallet) {
-            const shortWallet = `${storedWallet.slice(0, 6)}...${storedWallet.slice(-4)}`;
-            document.getElementById('wallet-section').innerHTML = `
-                <div class="connect-text wallet-address">
-                    Mã ví của bạn: ${shortWallet}
-                    <button class="remove-button" onclick="removeWallet()">♻️</button>
-                </div>
-            `;
-        }
-    });
+    // Khởi tạo giao diện khi load trang
+    updateButtonStates();
 </script>
 
 </body>
