@@ -6,18 +6,18 @@
     <title>Wallet | By BmassHD</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Wallet | BmassHD">
     <meta property="og:description" content="Ví 2">
     <meta property="og:image" content="/ton/nen.png">
     <meta property="og:url" content="/ton/ton.html">
     <meta property="og:type" content="website">
-    
+
     <link rel="shortcut icon" href="logo1.png" type="image/png">
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
-<style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
         body {
             display: flex;
             justify-content: center;
@@ -47,7 +47,7 @@
             color: #cccccc;
             margin-bottom: 20px;
         }
-        .connect-button {
+        .connect-button, .join-button {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -59,17 +59,19 @@
             border-radius: 30px;
             cursor: pointer;
             transition: background 0.3s ease;
+            margin-top: 10px;
         }
-        .connect-button img {
+        .connect-button img, .join-button img {
             width: 25px;
             height: 25px;
             margin-right: 10px;
             border-radius: 10px;
         }
-        .connect-button:hover {
+        .connect-button:hover, .join-button:hover {
             background: #ff6a00;
             color: #fff;
         }
+        
     </style>
 </head>
 <body>
@@ -77,15 +79,21 @@
 <div class="container">
     <div class="logo">BmassHD</div>
     <div class="connect-text">Kết nối ví của bạn để mở khóa thêm nhiều tính năng</div>
+
+    <!-- Nút Connect Wallet -->
     <div class="connect-button" onclick="connectWallet()">
         <img src="/ton/wallet.png" alt="Wallet Icon">
         Connect Wallet
     </div>
+
+    <!-- Nút Tham gia nhóm -->
+    <div class="join-button" onclick="joinGroup()">
+        <img src="/logo-coin/icon-group.png" alt="Group Icon">
+        Tham gia nhóm
+    </div>
 </div>
 
-
-
-    <div class="footer">
+<div class="footer">
     <a href="/tg-app.html" class="footer-item">
         <img src="/logo-coin/home.svg" alt="Home">
         <span>Home</span>
@@ -105,18 +113,12 @@
         <span class="new-badge">New</span>
         <span>MuaRef</span>
     </a>
-     <a href="/wallet.html" class="footer-item">
+    <a href="/wallet.html" class="footer-item">
         <img src="/logo-coin/icon-wallet.svg" alt="Wallet">
         <span class="new-badge">New</span>
         <span>Wallet</span>
-      </a>
-    </div>
-
-
-
-
-
-    
+    </a>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
@@ -136,10 +138,12 @@
             }
         });
     }
+
+    function joinGroup() {
+        window.location.href = "https://t.me/bmassk3_channel";
+    }
 </script>
 
-    
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
