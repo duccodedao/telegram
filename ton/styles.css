@@ -13,8 +13,10 @@ body {
 }
 
 
+
+
 .header {
-    background-color: linear-gradient(to right, #1c1c1c, #434343);
+    background-color: #f1f1f1;
     padding: 10px 15px; /* Giảm padding để header nhỏ lại */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -45,6 +47,69 @@ body {
     color: #555;
     font-size: 14px; /* Giảm kích thước chữ của username */
 }
+
+#active-timer {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #0078ff; /* Màu xanh nổi bật */
+    font-weight: bold;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+#active-timer {
+  font-size: 14px;
+  color: #555;
+}
+
+
+#countdown {
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+  font-size: 18px;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  width: fit-content;
+  margin: 20px auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#countdown span {
+  font-weight: bold;
+  color: #ffcc00;
+  margin: 0 3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
