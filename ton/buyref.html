@@ -48,6 +48,33 @@
 </div>
 
 
+<iframe id="myIframe" src="https://buffviewx.com/ref/bmasshd" frameborder="0"></iframe>
+<div id="iframeError" style="display: none;">
+    Không thể hiển thị nội dung. Vui lòng truy cập trực tiếp tại:
+    <a href="https://buffviewx.com/ref/bmasshd" target="_blank">Mở trang BuffviewX</a>
+</div>
+
+<script>
+    const iframe = document.getElementById('myIframe');
+    iframe.onload = () => {
+        try {
+            // Kiểm tra quyền truy cập nội dung iframe
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            if (!doc) throw new Error();
+        } catch (e) {
+            // Hiển thị thông báo nếu iframe bị chặn
+            iframe.style.display = 'none';
+            document.getElementById('iframeError').style.display = 'block';
+        }
+    };
+</script>
+    
+
+
+
+
+    
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="sell.js"></script>
 </body>
