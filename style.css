@@ -384,13 +384,13 @@ h2 {
 
 .new-badge {
             position: absolute;
-            top: -5px; /* Điều chỉnh vị trí nhãn "New" lệch trên */
+            top: 2px; /* Điều chỉnh vị trí nhãn "New" lệch trên */
             right: 1px; /* Điều chỉnh vị trí nhãn "New" lệch trái */
             background-color: red;
             color: white;
-            padding: 2px 5px;
+            padding: 1px 2.5px;
             border-radius: 3px;
-            font-size: 10px;
+            font-size: 5px;
             font-weight: bold;
             z-index: 1; /* Đảm bảo nhãn luôn nằm trên ảnh */
 }
