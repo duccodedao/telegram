@@ -229,7 +229,7 @@ loadTelegramUser();
 
 
 const versions = {
-    vi: 1,  // Phiên bản tiếng Việt
+    vi: 0,  // Phiên bản tiếng Việt
     en: 2  // Phiên bản tiếng Anh
 };
 
@@ -251,23 +251,30 @@ function updateVersionAndLanguage() {
     if (parseInt(lastVersionIndex) !== versionIndex) {
         // Nếu phiên bản khác với phiên bản đã lưu
         Swal.fire({
-          
-            html: selectedLanguage === "vi" ? 
-                  '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng vừa update thêm dự án <strong style="color: #FF5733;">$PAWS</strong> (PAWS), chơi ngay 🔥' :
-                  '<b>Ver mới kìa:</b> v2.' + versionIndex + '<br>Cập nhật lẹ đi còn chơi, ở đó đọc concac!',
-            
-            imageUrl: 'logo-coin/paws.jpg', // Đường dẫn ảnh thông báo
-            imageAlt: 'Cập nhật mới',           // Văn bản thay thế cho ảnh
-            confirmButtonText: selectedLanguage === "vi" ? 'Xem ngay!' : 'Concac!',
-            customClass: {
-                popup: 'swal2-popup',
-                title: 'swal2-title',
-                confirmButton: 'swal2-confirm'
-            }
-        }).then(() => {
-            // Lưu phiên bản vào localStorage cho ngôn ngữ hiện tại
-            localStorage.setItem("lastVersionIndex_" + selectedLanguage, versionIndex);
-        });
+    
+    html: selectedLanguage === "vi" ? 
+          '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng vừa update thêm dự án $PAWS (PAWS), chơi ngay 🔥' :
+          '<b>Ver mới kìa:</b> v2.' + versionIndex + '<br>Cập nhật lẹ đi còn chơi, ở đó đọc concac!',
+    
+    imageUrl: 'logo-coin/paws.jpg',  // Đường dẫn ảnh
+    imageAlt: 'Thông báo cập nhật',      // Chú thích ảnh
+    imageWidth: 'auto',                   // Kích thước tự động theo ảnh
+    confirmButtonText: 'Chơi ngay',
+    cancelButtonText: 'Đóng',
+    showCancelButton: true,               // Hiển thị nút Đóng
+    customClass: {
+        popup: 'swal2-popup',
+        title: 'swal2-title',
+        confirmButton: 'swal2-confirm',
+        cancelButton: 'swal2-cancel'
+    }
+}).then((result) => {
+    if (result.isConfirmed) {
+        // Khi người dùng bấm nút "Chơi ngay", chuyển hướng đến liên kết mong muốn
+        window.location.href = 'https://t.me/PAWSOG_bot/PAWS?startapp=PVH9wfSq';
+    }
+});
+
     }
 }
 
