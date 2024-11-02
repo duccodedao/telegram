@@ -384,8 +384,8 @@ h2 {
 
 .new-badge {
             position: absolute;
-            top: 2px; /* Điều chỉnh vị trí nhãn "New" lệch trên */
-            right: 1px; /* Điều chỉnh vị trí nhãn "New" lệch trái */
+            top: 5px; /* Điều chỉnh vị trí nhãn "New" lệch trên */
+            right: 2px; /* Điều chỉnh vị trí nhãn "New" lệch trái */
             background-color: red;
             color: white;
             padding: 1px 2.5px;
