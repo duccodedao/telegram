@@ -178,16 +178,16 @@ h2 {
 
 
 .marquee-container {
-    background-color: #ffcc00; /* Màu nền cho thanh thông báo */
+    background-color: #fff; /* Màu nền cho thanh thông báo */
     padding: 10px 0; /* Khoảng cách trên dưới */
     overflow: hidden; /* Giấu phần thông báo vượt ra ngoài */
     position: relative; /* Để tạo hiệu ứng chạy ngang */
     white-space: nowrap; /* Không xuống dòng */
     font-size: 16px; /* Kích thước chữ */
     color: #333; /* Màu chữ */
-    border-top: 2px solid #0078ff; /* Viền trên */
-    border-bottom: 2px solid #0078ff; /* Viền dưới */
-    padding: 3px;
+    border-top: 2px solid #000000; /* Viền trên */
+    border-bottom: 2px solid #000000; /* Viền dưới */
+    
 }
 
 .marquee-content {
@@ -283,6 +283,7 @@ h2 {
             transform: translateY(-50%);
             pointer-events: none;  /* Đảm bảo mũi tên không làm cản chọn */
             color: #333;
+            padding-bottom: 8px;
         }
 
 
