@@ -15,12 +15,31 @@
     <meta property="og:type" content="website">
     
     <link rel="shortcut icon" href="logo1.png" type="image/png">
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 
+    <!-- Header Section -->
+    <header class="header">
+        <div class="profile-container">
+            <img id="user-avatar" class="avatar" src="" alt="Avatar">
+            <div class="user-info">
+                <div id="user-name">
+                    Loading...<i class="fas fa-check-circle verified-icon"></i>
+                </div>
+                <div id="user-username">
+                    @username<i class="fas fa-check-circle verified-icon"></i>
+                </div>
+                <div id="active-timer">
+                    <span class="dot"></span> 
+                    <span id="minutes">00</span> phút 
+                    <span id="seconds">00</span> giây
+                </div>
+            </div>
+        </div>
+    </header>
     
+    <!-- Main Content -->
     <div class="container">
         <h1>BmassHD</h1>
         <p class="notice">Hỗ trợ <a href="https://chatting.page/mupkccfp2hxw92zuqwnu3bkpytm4hb58" target="_blank">@buycoinvn</a> 24/24</p>
@@ -36,44 +55,38 @@
                         <option value="CATI">CATI</option>
                         <option value="NOT">NOT</option>
                         <option value="HMSTR">HMSTR</option>
-                        
                     </select>
                 </div>
             </div>
-            
-            
             <button type="submit" id="purchaseButton" class="submit-button">Bán</button>
             <button type="button" id="openWalletButton" class="submit-button">    
                 Wallet
             </button>
         </form>
-        
     </div>
 
-    
-
-
-<div class="footer">
-    <a href="/tg-app.html" class="footer-item">
-        <img src="home.svg" alt="Home">
-        <span>Home</span>
-    </a>
-    <a href="/ton/ton.html" class="footer-item">
-        <img src="buycoin.svg" alt="Deposit">
-        <span>MuaCoin</span>
-    </a>
-    <a href="/ton/sell.html" class="footer-item">
-        <img src="sellcoin.svg" alt="Withdraw">
-        <span>BánCoin</span>
-    </a>
-    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item">
-        <img src="/logo-coin/buyref.svg" alt="Buy Referral">
-        <span>MuaRef</span>
-    </a>
-</div>
-    
+    <!-- Footer Section -->
+    <div class="footer">
+        <a href="/tg-app.html" class="footer-item">
+            <img src="home.svg" alt="Home">
+            <span>Home</span>
+        </a>
+        <a href="/ton/ton.html" class="footer-item">
+            <img src="buycoin.svg" alt="Deposit">
+            <span>MuaCoin</span>
+        </a>
+        <a href="/ton/sell.html" class="footer-item">
+            <img src="sellcoin.svg" alt="Withdraw">
+            <span>BánCoin</span>
+        </a>
+        <a href="https://buffviewx.com/ref/bmasshd" class="footer-item">
+            <img src="/logo-coin/buyref.svg" alt="Buy Referral">
+            <span>MuaRef</span>
+        </a>
+    </div>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sell.js"></script>
+    <script src="/js.js"></script>
 </body>
-                                     </html>
+</html>
