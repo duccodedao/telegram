@@ -214,20 +214,29 @@ select option {
 
 
 
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000;
-    display: flex;
-    justify-content: space-evenly; /* Căn đều các mục */
-    align-items: center;
-    padding: 10px 0;
-    border-top: 1px solid #333;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
-}
-
+/* Thanh tiến trình nhỏ */
+        .progress-bar {
+            position: fixed;
+            bottom: 60px; /* Đặt thanh tiến trình ngay trên footer */
+            left: 0;
+            width: 0;
+            height: 3px; /* Thanh nhỏ */
+            background-color: #4caf50;
+            transition: width 0.2s ease; /* Tốc độ mượt */
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: space-evenly; /* Căn đều các mục */
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid #333;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+        }
         .footer-item {
             display: flex;
             flex-direction: column;
@@ -244,5 +253,3 @@ select option {
         .footer-item:hover {
             color: #fff;
         }
-
-
