@@ -1,121 +1,165 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footer Navigation</title>
+    <title>Wallet | BmassHD</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #2a2a2a;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #111;
-            color: #fff;
-            height: 100vh;
-        }
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #000;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            padding: 10px 0;
-            border-top: 1px solid #333;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-        .footer-item {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #ccc;
-            font-size: 14px;
-            padding: 5px 10px;
-            transition: background-color 0.3s, color 0.3s;
-            border-radius: 5px; /* Bo góc cho mục */
-        }
-        .footer-item img {
-            width: 24px;
-            height: 24px;
-            margin-bottom: 4px;
-        }
-        .footer-item:hover {
             color: #fff;
         }
-        .footer-item.active {
-            background-color: #333; /* Màu nền khi mục được chọn */
-            color: #ff0; /* Màu chữ khi mục được chọn */
+        .container {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #1e1e1e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .new-badge {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: red;
-            color: white;
-            padding: 1.5px 3.25px;
-            border-radius: 3px;
-            font-size: 7px;
-            font-weight: bold;
-            z-index: 1;
+        .button, .balance-display {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            text-align: left;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+        .button img, .balance-display img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        .button:hover {
+            background: #ff6a00;
+            color: #fff;
+        }
+        .balance-display {
+            cursor: default;
         }
     </style>
 </head>
 <body>
+<div class="container">
+    <div class="logo">BmassHD</div>
+    <div class="connect-text">Kết nối ví của bạn để mở khóa thêm nhiều tính năng</div>
+    
+    <!-- Nút Connect Wallet -->
+    <div id="walletButton" class="button" onclick="connectWallet()">
+        <img id="walletIcon" src="/ton/wallet.png" alt="Wallet Icon">
+        <span id="walletText">Connect Wallet</span>
+    </div>
 
-<!-- Footer Section -->
-<div class="footer">
-    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/home.svg" alt="Home">
-            <span class="new-badge">New</span>
-        </div>
-        <span>Home</span>
-    </a>
-    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/buycoin.svg" alt="MuaCoin">
-            <span class="new-badge">New</span>
-        </div>
-        <span>MuaCoin</span>
-    </a>
-    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/sellcoin.svg" alt="BánCoin">
-            <span class="new-badge">New</span>
-        </div>
-        <span>BánCoin</span>
-    </a>
-    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/buyref.svg" alt="MuaRef">
-            <span class="new-badge">New</span>
-        </div>
-        <span>MuaRef</span>
-    </a>
-    <a href="https://walletbot.me/scw/assets/" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/icon-wallet.svg" alt="Wallet">
-            <span class="new-badge">New</span>
-        </div>
-        <span>Wallet</span>
-    </a>
+    <!-- Nút Tham gia nhóm -->
+    <div id="joinButton" class="button" onclick="joinGroup()">
+        <img id="joinIcon" src="/logo-coin/buyref.svg" alt="Group Icon">
+        <span id="joinText">Tham gia nhóm</span>
+    </div>
+
+    <!-- Hiển thị số dư TON -->
+    <div class="balance-display">
+        <img src="/logo-coin/ton-balance.svg" alt="TON Balance Icon">
+        <span id="balanceText">Số dư TON: 0</span>
+    </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function setActive(element) {
-        // Xóa lớp active khỏi tất cả các mục
-        const items = document.querySelectorAll('.footer-item');
-        items.forEach(item => item.classList.remove('active'));
+    const joinedGroup = localStorage.getItem('joinedGroup') === 'true';
+    const storedWalletAddress = localStorage.getItem('walletAddress');
 
-        // Thêm lớp active vào mục được nhấp vào
-        element.classList.add('active');
+    function updateButtonStates() {
+        const joinIcon = document.getElementById('joinIcon');
+        joinIcon.src = joinedGroup ? "/logo-coin/7518748.png" : "/logo-coin/buyref.svg";
+
+        const walletText = document.getElementById('walletText');
+        const walletIcon = document.getElementById('walletIcon');
+        if (storedWalletAddress) {
+            walletText.textContent = `${storedWalletAddress.slice(0, 6)}...${storedWalletAddress.slice(-4)}`;
+            walletIcon.src = "/logo-coin/7518748.png";
+        } else {
+            walletText.textContent = "Connect Wallet";
+            walletIcon.src = "/ton/wallet.png";
+        }
     }
-</script>
 
+    function joinGroup() {
+        if (joinedGroup) {
+            window.location.href = "https://t.me/bmassk3_channel";
+        } else {
+            Swal.fire({
+                title: 'Xác nhận tham gia nhóm?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Tham gia',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.setItem('joinedGroup', 'true');
+                    updateButtonStates();
+                    Swal.fire({ icon: 'success', title: 'Đã tham gia nhóm!', background: '#1e1e1e', color: '#ffffff', timer: 1500, showConfirmButton: false });
+                }
+            });
+        }
+    }
+
+    function connectWallet() {
+        if (storedWalletAddress) {
+            Swal.fire({
+                title: 'Bạn có muốn thay đổi mã ví?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Có',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            }).then((result) => {
+                if (result.isConfirmed) promptForWallet();
+            });
+        } else {
+            promptForWallet();
+        }
+    }
+
+    function promptForWallet() {
+        Swal.fire({
+            title: 'Nhập mã ví của bạn',
+            input: 'text',
+            background: '#1e1e1e',
+            color: '#ffffff',
+            confirmButtonText: 'Lưu'
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                const walletAddress = result.value.trim();
+                localStorage.setItem('walletAddress', walletAddress);
+                updateButtonStates();
+                Swal.fire({ icon: 'success', title: 'Mã ví đã được lưu!', background: '#1e1e1e', color: '#ffffff', timer: 1500, showConfirmButton: false });
+            }
+        });
+    }
+
+    function updateTonBalance(balance) {
+        document.getElementById('balanceText').textContent = `Số dư TON: ${balance}`;
+    }
+    
+    updateButtonStates();
+    updateTonBalance(0.123);
+</script>
 </body>
 </html>
