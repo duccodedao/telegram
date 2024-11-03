@@ -161,7 +161,7 @@
             cancelButtonText: 'Hủy'
         }).then((result) => {
             if (result.isConfirmed && result.value) {
-                const address = result.value;    https://tonscan.org/address
+                const address = result.value;    
                 document.getElementById('viewer-frame').src = `https://tonscan.org/address/${address}`;
                 document.getElementById('viewer-container').style.display = 'block';
                 document.getElementById('connect-btn').style.display = 'none';
@@ -186,7 +186,7 @@
         const connected = localStorage.getItem('walletConnected');
         const address = localStorage.getItem('walletAddress');
         if (connected === 'true' && address) {
-            document.getElementById('viewer-frame').src = `https://tonviewer.com/${address}`;
+            document.getElementById('viewer-frame').src = `https://tonscan.org/address/${address}`;
             document.getElementById('viewer-container').style.display = 'block';
             document.getElementById('connect-btn').style.display = 'none';
             document.getElementById('cancel-btn').style.display = 'inline';
