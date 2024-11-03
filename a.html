@@ -40,8 +40,8 @@
 
     <script>
         async function getBalance() {
-            const walletAddress = "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD"; // Địa chỉ ví TON của bạn
-            const url = `https://tonviewer.com/api/v1/getAddress?address=${walletAddress}`;
+            const walletAddress = "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD"; // Địa chỉ ví TON
+            const url = `https://tonscan.org/api/v1/getAddress?address=${walletAddress}`;
 
             try {
                 const response = await fetch(url);
