@@ -3,60 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lấy Số Dư TON và USDT</title>
+    <title>Kiểm Tra Số Dư Ví TON</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             padding: 20px;
+            text-align: center;
         }
-        #balanceInfo {
+        h1 {
+            color: #333;
+        }
+        #balance {
+            font-size: 24px;
             margin-top: 20px;
+            color: #007BFF;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1>Kết Nối Ví TON</h1>
-    <input type="text" id="walletAddress" placeholder="Nhập địa chỉ ví TON" />
-    <button id="connectButton">Kết Nối Ví</button>
-    <div id="balanceInfo"></div>
+    <h1>Kiểm Tra Số Dư Ví TON</h1>
+    <button onclick="getBalance()">Lấy Số Dư</button>
+    <div id="balance"></div>
 
     <script>
-        document.getElementById('connectButton').addEventListener('click', () => {
-            const address = document.getElementById('walletAddress').value;
-            fetchBalance(address);
-        });
+        async function getBalance() {
+            const walletAddress = "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD";
+            const url = `https://toncenter.com/api/v2/getAddressInformation?address=${walletAddress}`;
 
-        async function fetchBalance(address) {
             try {
-                // API để lấy số dư TON từ TonViewer
-                const apiUrlTON = `https://tonviewer.com/api/v1/address/${address}/balance`;
-                const apiUrlUSDT = `https://tonviewer.com/api/v1/address/${address}/usdt_balance`;
-                
-                // Lấy số dư TON
-                const responseTON = await fetch(apiUrlTON);
-                const dataTON = await responseTON.json();
-                
-                // Kiểm tra xem có dữ liệu không
-                if (!dataTON || !dataTON.balance) {
-                    throw new Error("Không thể lấy số dư TON.");
-                }
-                const tonBalance = dataTON.balance; // Số dư TON
-                
-                // Lấy số dư USDT
-                const responseUSDT = await fetch(apiUrlUSDT);
-                const dataUSDT = await responseUSDT.json();
-                
-                // Kiểm tra xem có dữ liệu không
-                if (!dataUSDT || !dataUSDT.balance) {
-                    throw new Error("Không thể lấy số dư USDT.");
-                }
-                const usdtBalance = dataUSDT.balance; // Số dư USDT
+                const response = await fetch(url);
+                const data = await response.json();
 
-                // Cập nhật giao diện với số dư
-                document.getElementById('balanceInfo').textContent = `Số dư: ${tonBalance} TON | ${usdtBalance} USDT`;
+                if (data.balance) {
+                    document.getElementById("balance").innerText = `Số dư ví TON: ${data.balance / 1e9} TON`;
+                } else {
+                    document.getElementById("balance").innerText = 'Không thể lấy số dư, vui lòng kiểm tra lại địa chỉ.';
+                }
             } catch (error) {
-                console.error("Lỗi khi lấy dữ liệu từ API:", error);
-                document.getElementById('balanceInfo').textContent = `Lỗi: ${error.message}`;
+                document.getElementById("balance").innerText = 'Đã xảy ra lỗi khi lấy số dư.';
+                console.error('Error fetching balance:', error);
             }
         }
     </script>
