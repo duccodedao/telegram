@@ -77,7 +77,7 @@
         #viewer-container {
             display: none;
             position: fixed;
-            top: 60px; /* Chiều cao của header nút */
+            top: 0px; /* Chiều cao của header nút */
             bottom: 60px; /* Để lại khoảng trống cho footer */
             left: 0;
             width: 100%;
@@ -89,26 +89,8 @@
             border: none;
         }
 
-        /* Footer styling */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            background-color: #333;
-            padding: 10px 0;
-            color: #fff;
-            z-index: 999;
-        }
-
-        .footer-item {
-            color: white;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+       
+        
     </style>
 </head>
 <body>
@@ -179,8 +161,8 @@
             cancelButtonText: 'Hủy'
         }).then((result) => {
             if (result.isConfirmed && result.value) {
-                const address = result.value;
-                document.getElementById('viewer-frame').src = `https://tonviewer.com/${address}`;
+                const address = result.value;    https://tonscan.org/address
+                document.getElementById('viewer-frame').src = `https://tonscan.org/address/${address}`;
                 document.getElementById('viewer-container').style.display = 'block';
                 document.getElementById('connect-btn').style.display = 'none';
                 document.getElementById('cancel-btn').style.display = 'inline';
