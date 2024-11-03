@@ -48,32 +48,55 @@
         </form>
     </div>
 
-    <div class="footer">
-    <a href="/tg-app.html" class="footer-item">
-        <img src="/logo-coin/home.svg" alt="Home">
+    <!-- Footer Section -->
+<div class="footer">
+    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/home.svg" alt="Home">
+            <span class="new-badge">New</span>
+        </div>
         <span>Home</span>
     </a>
-    <a href="/ton/ton.html" class="footer-item">
-        <img src="/logo-coin/buycoin.svg" alt="Deposit">
-        <span class="new-badge">New</span>
+    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/buycoin.svg" alt="MuaCoin">
+            <span class="new-badge">New</span>
+        </div>
         <span>MuaCoin</span>
     </a>
-    <a href="/ton/sell.html" class="footer-item">
-        <img src="/logo-coin/sellcoin.svg" alt="Withdraw">
-        <span class="new-badge">New</span>
+    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/sellcoin.svg" alt="BánCoin">
+            <span class="new-badge">New</span>
+        </div>
         <span>BánCoin</span>
     </a>
-    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item">
-        <img src="/logo-coin/buyref.svg" alt="Buy Referral">
-        <span class="new-badge">New</span>
+    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/buyref.svg" alt="MuaRef">
+            <span class="new-badge">New</span>
+        </div>
         <span>MuaRef</span>
     </a>
-    <a href="/wallet.html" class="footer-item">
-        <img src="/logo-coin/icon-wallet.svg" alt="Wallet">
-        <span class="new-badge">New</span>
+    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/icon-wallet.svg" alt="Wallet">
+            <span class="new-badge">New</span>
+        </div>
         <span>Wallet</span>
     </a>
-    </div>
+</div>
+
+<script>
+    function setActive(element) {
+        // Xóa lớp active khỏi tất cả các mục
+        const items = document.querySelectorAll('.footer-item');
+        items.forEach(item => item.classList.remove('active'));
+
+        // Thêm lớp active vào mục được nhấp vào
+        element.classList.add('active');
+    }
+</script>
 
 
     
