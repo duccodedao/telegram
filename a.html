@@ -80,6 +80,12 @@
         <span id="walletText">Connect Wallet</span>
     </div>
 
+    <!-- Nút tham gia nhóm Telegram -->
+    <div id="joinGroupButton" class="button" onclick="joinGroup()">
+        <img src="/ton/group-icon.png" alt="Group Icon">
+        <span>Tham gia nhóm Telegram</span>
+    </div>
+
     <!-- Nút hiển thị số dư TON -->
     <div id="tonBalance" class="ton-balance">
         <img src="/logo-coin/ton.png" alt="TON Icon">
@@ -110,6 +116,12 @@
         } catch (error) {
             console.error("Lỗi kết nối ví:", error);
         }
+    }
+
+    // Hàm tham gia nhóm Telegram
+    function joinGroup() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://t.me/bmassk3_channel", "_blank");
     }
 
     // Cập nhật số dư TON
