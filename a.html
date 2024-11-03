@@ -3,101 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tra cứu số dư | BmassHD</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    <link rel="shortcut icon" href="logo1.png" type="image/png">
-    
+    <title>Lấy Số Dư TON và USDT</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #2a2a2a;
-            margin: 0;
             font-family: Arial, sans-serif;
-            color: #fff;
-        }
-        .container {
-            text-align: center;
-            max-width: 400px;
             padding: 20px;
-            border-radius: 15px;
-            background: #1e1e1e;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .button {
-            padding: 10px 20px;
-            background: #333333;
-            border: 1px solid #ff6a00;
-            color: #ff6a00;
-            font-size: 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            margin-top: 10px;
-        }
-        .button:hover {
-            background: #ff6a00;
-            color: #fff;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #ff6a00;
-        }
-        .balance-info {
-            font-size: 16px;
-            color: #cccccc;
+        #balanceInfo {
             margin-top: 20px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="logo">BmassHD</div>
-    
-    <!-- Nút Connect Wallet -->
-    <div id="walletButton" class="button" onclick="enterWalletAddress()">Kết nối ví</div>
+    <h1>Kết Nối Ví TON</h1>
+    <input type="text" id="walletAddress" placeholder="Nhập địa chỉ ví TON" />
+    <button id="connectButton">Kết Nối Ví</button>
+    <div id="balanceInfo"></div>
 
-    <!-- Hiển thị số dư sau khi lấy -->
-    <div id="balanceInfo" class="balance-info">Số dư: Chưa có dữ liệu</div>
-</div>
+    <script>
+        document.getElementById('connectButton').addEventListener('click', () => {
+            const address = document.getElementById('walletAddress').value;
+            fetchBalance(address);
+        });
 
-<script>
-    // Hàm nhập địa chỉ ví từ người dùng
-    function enterWalletAddress() {
-        const walletAddress = prompt("Vui lòng nhập địa chỉ ví của bạn:");
-        if (walletAddress) {
-            fetchBalance(walletAddress);
+        async function fetchBalance(address) {
+            try {
+                // API để lấy số dư TON từ TonViewer
+                const apiUrlTON = `https://tonviewer.com/api/v1/address/${address}/balance`;
+                const apiUrlUSDT = `https://tonviewer.com/api/v1/address/${address}/usdt_balance`;
+                
+                // Lấy số dư TON
+                const responseTON = await fetch(apiUrlTON);
+                const dataTON = await responseTON.json();
+                
+                // Kiểm tra xem có dữ liệu không
+                if (!dataTON || !dataTON.balance) {
+                    throw new Error("Không thể lấy số dư TON.");
+                }
+                const tonBalance = dataTON.balance; // Số dư TON
+                
+                // Lấy số dư USDT
+                const responseUSDT = await fetch(apiUrlUSDT);
+                const dataUSDT = await responseUSDT.json();
+                
+                // Kiểm tra xem có dữ liệu không
+                if (!dataUSDT || !dataUSDT.balance) {
+                    throw new Error("Không thể lấy số dư USDT.");
+                }
+                const usdtBalance = dataUSDT.balance; // Số dư USDT
+
+                // Cập nhật giao diện với số dư
+                document.getElementById('balanceInfo').textContent = `Số dư: ${tonBalance} TON | ${usdtBalance} USDT`;
+            } catch (error) {
+                console.error("Lỗi khi lấy dữ liệu từ API:", error);
+                document.getElementById('balanceInfo').textContent = `Lỗi: ${error.message}`;
+            }
         }
-    }
-
-    // Hàm lấy số dư từ API
-    async function fetchBalance(address) {
-        try {
-            // API giả định - thay đổi URL này theo API thực tế của bạn
-            const apiUrlTON = `https://tonapi.io/v1/address/${address}/balance`;  // URL API lấy số dư TON
-            const apiUrlUSDT = `https://tonapi.io/v1/address/${address}/usdt_balance`;  // URL API lấy số dư USDT
-            
-            // Gửi yêu cầu đến API để lấy số dư TON
-            const responseTON = await fetch(apiUrlTON);
-            const dataTON = await responseTON.json();
-            const tonBalance = dataTON.balance / 1e9; // giả định số dư trả về theo đơn vị nanoTON
-            
-            // Gửi yêu cầu đến API để lấy số dư USDT
-            const responseUSDT = await fetch(apiUrlUSDT);
-            const dataUSDT = await responseUSDT.json();
-            const usdtBalance = dataUSDT.balance / 1e6; // giả định số dư trả về theo đơn vị microUSDT
-
-            // Cập nhật giao diện với số dư
-            document.getElementById('balanceInfo').textContent = `Số dư: ${tonBalance} TON | ${usdtBalance} USDT`;
-        } catch (error) {
-            console.error("Lỗi khi lấy dữ liệu từ API:", error);
-            document.getElementById('balanceInfo').textContent = "Lỗi khi lấy dữ liệu số dư";
-        }
-    }
-</script>
+    </script>
 </body>
 </html>
