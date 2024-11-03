@@ -4,21 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet | By BmassHD</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Wallet | BmassHD">
-    <meta property="og:description" content="Ví 2">
-    <meta property="og:image" content="/ton/nen.png">
-    <meta property="og:url" content="/ton/ton.html">
-    <meta property="og:type" content="website">
-
     <link rel="shortcut icon" href="logo1.png" type="image/png">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@okx/web3-sdk@latest/dist/web3-sdk.min.js"></script> <!-- Sử dụng SDK của OKX Web3 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    
+    <!-- SDK của OKX Wallet Web3 -->
+    <script src="https://cdn.jsdelivr.net/npm/@okx/web3@latest/dist/web3.min.js"></script>
+    
     <style>
         body {
             display: flex;
@@ -38,7 +29,7 @@
             background: #1e1e1e;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .button, .ton-balance {
+        .button {
             display: flex;
             align-items: center;
             padding: 10px 20px;
@@ -50,14 +41,7 @@
             cursor: pointer;
             transition: background 0.3s ease;
             margin-top: 10px;
-            text-align: left;
-            justify-content: flex-start;
-        }
-        .button img, .ton-balance img {
-            width: 25px;
-            height: 25px;
-            margin-right: 10px;
-            border-radius: 10px;
+            justify-content: center;
         }
         .button:hover {
             background: #ff6a00;
@@ -74,67 +58,59 @@
             color: #cccccc;
             margin-bottom: 20px;
         }
-        .ton-balance {
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="logo">BmassHD</div>
     
-    <div class="connect-text">Xin chào <span id="user-name">User</span> (<span id="user-username">@username</span>), kết nối ví của bạn để mở khóa thêm nhiều tính năng.</div>
+    <!-- Hiển thị tên người dùng và địa chỉ ví -->
+    <div class="connect-text">Xin chào, kết nối ví OKX của bạn để mở khóa thêm nhiều tính năng.</div>
 
-    <img id="user-avatar" src="default-avatar.png" alt="Avatar" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px;">
-    
     <!-- Nút Connect Wallet -->
     <div id="walletButton" class="button" onclick="connectWallet()">
-        <img id="walletIcon" src="/ton/wallet.png" alt="Wallet Icon">
         <span id="walletText">Connect Wallet</span>
     </div>
 
-    <div id="tonBalance" class="ton-balance">
-        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="OKX Icon">
-        <span id="balanceText">Số dư OKX: Đang tải...</span>
-    </div>
+    <!-- Hiển thị địa chỉ ví sau khi kết nối -->
+    <div id="walletAddress" class="connect-text" style="margin-top: 20px;">Địa chỉ ví: Chưa kết nối</div>
 </div>
 
 <script>
-    const web3 = new OKXWeb3();
-
     async function connectWallet() {
-        try {
-            const accounts = await web3.eth.requestAccounts(); // Kết nối ví OKX
-            const walletAddress = accounts[0];
+        if (window.okxwallet) {
+            try {
+                // Khởi tạo kết nối với OKX Wallet
+                await window.okxwallet.enable();
+                
+                const accounts = await window.okxwallet.request({
+                    method: 'eth_requestAccounts'
+                });
 
-            if (walletAddress) {
-                localStorage.setItem('walletAddress', walletAddress);
-                document.getElementById('walletText').textContent = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
-                document.getElementById('walletIcon').src = "/logo-coin/7518748.png";
-                updateBalance(walletAddress);
+                if (accounts.length > 0) {
+                    const walletAddress = accounts[0];
+
+                    // Hiển thị địa chỉ ví rút gọn
+                    document.getElementById('walletText').textContent = "Connected";
+                    document.getElementById('walletAddress').textContent = `Địa chỉ ví: ${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
+                    
+                    // Lưu địa chỉ ví vào localStorage
+                    localStorage.setItem('walletAddress', walletAddress);
+                }
+            } catch (error) {
+                console.error("Lỗi kết nối với OKX Wallet:", error);
             }
-        } catch (error) {
-            console.error("Lỗi kết nối ví OKX:", error);
+        } else {
+            alert("OKX Wallet chưa được cài đặt. Vui lòng cài đặt OKX Wallet để kết nối.");
         }
     }
 
-    async function updateBalance(walletAddress) {
-        try {
-            const balance = await web3.eth.getBalance(walletAddress); // Lấy số dư từ OKX
-            const balanceInEther = web3.utils.fromWei(balance, 'ether');
-            document.getElementById('balanceText').textContent = `Số dư OKX: ${balanceInEther} ETH`;
-        } catch (error) {
-            console.error("Lỗi khi lấy số dư:", error);
-            document.getElementById('balanceText').textContent = "Số dư OKX: Không tải được";
-        }
-    }
-
+    // Tự động kiểm tra kết nối khi tải trang
     (async () => {
         const storedWalletAddress = localStorage.getItem('walletAddress');
         if (storedWalletAddress) {
-            document.getElementById('walletText').textContent = `${storedWalletAddress.slice(0, 6)}...${storedWalletAddress.slice(-4)}`;
-            document.getElementById('walletIcon').src = "/logo-coin/7518748.png";
-            await updateBalance(storedWalletAddress);
+            document.getElementById('walletText').textContent = "Connected";
+            document.getElementById('walletAddress').textContent = `Địa chỉ ví: ${storedWalletAddress.slice(0, 6)}...${storedWalletAddress.slice(-4)}`;
         }
     })();
 </script>
