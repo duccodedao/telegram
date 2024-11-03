@@ -3,18 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallet | By BmassHD</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Wallet | BmassHD</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    <link rel="shortcut icon" href="logo1.png" type="image/png">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://unpkg.com/@tonconnect/sdk@latest"></script>
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+    
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #2a2a2a;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #1e1e1e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .button {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+        }
+        .button img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        .button:hover {
+            background: #ff6a00;
+            color: #fff;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
+
 <div class="container">
     <div class="logo">BmassHD</div>
-    <div class="connect-text">Kết nối ví TON của bạn để mở khóa thêm nhiều tính năng</div>
-    <!-- Nút Connect Wallet sử dụng Ton Connect -->
+    <div class="connect-text">Kết nối ví TON để hiển thị số dư</div>
+
+    <!-- Nút Connect Wallet -->
     <div id="walletButton" class="button" onclick="connectTonWallet()">
         <img id="walletIcon" src="/ton/wallet.png" alt="Wallet Icon">
         <span id="walletText">Connect TON Wallet</span>
@@ -25,22 +82,23 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     const { TonConnect } = window.tonconnect; // Khởi tạo Ton Connect
-
-    // Khởi tạo TonConnect SDK
-    const tonConnect = new TonConnect();
+    const tonConnect = new TonConnect(); // Khởi tạo instance TonConnect
 
     async function connectTonWallet() {
         try {
+            // Mở kết nối ví
             await tonConnect.connectWallet();
 
+            // Lấy thông tin ví sau khi kết nối thành công
             const wallet = await tonConnect.getWalletInfo();
             const balance = await tonConnect.getBalance(wallet.address);
 
-            // Hiển thị địa chỉ và số dư
+            // Cập nhật giao diện
             document.getElementById('walletText').textContent = `${wallet.address.slice(0, 6)}...${wallet.address.slice(-4)}`;
-            document.getElementById('walletIcon').src = "/logo-coin/7518748.png";
+            document.getElementById('walletIcon').src = "/logo-coin/7518748.png"; // Đổi biểu tượng nếu cần
             document.getElementById('balance').textContent = `Số dư: ${balance} TON`;
-            
+
+            // Lưu địa chỉ ví vào localStorage
             localStorage.setItem('tonWalletAddress', wallet.address);
         } catch (error) {
             console.error('Lỗi khi kết nối ví:', error);
@@ -54,12 +112,13 @@
         }
     }
 
-    // Khởi tạo trạng thái khi tải trang
     function updateWalletButton() {
+        // Kiểm tra nếu đã kết nối và có địa chỉ ví lưu trong localStorage
         const storedWalletAddress = localStorage.getItem('tonWalletAddress');
         if (storedWalletAddress) {
             document.getElementById('walletText').textContent = `${storedWalletAddress.slice(0, 6)}...${storedWalletAddress.slice(-4)}`;
             document.getElementById('walletIcon').src = "/logo-coin/7518748.png";
+
             // Lấy số dư và hiển thị
             tonConnect.getBalance(storedWalletAddress).then(balance => {
                 document.getElementById('balance').textContent = `Số dư: ${balance} TON`;
@@ -67,7 +126,9 @@
         }
     }
 
-    updateWalletButton(); // Cập nhật khi tải trang
+    // Gọi hàm để cập nhật nút ví khi load trang
+    updateWalletButton();
 </script>
+
 </body>
 </html>
