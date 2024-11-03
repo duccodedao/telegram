@@ -295,7 +295,14 @@ function setActive(element) {
         const items = document.querySelectorAll('.footer-item');
         items.forEach(item => item.classList.remove('active'));
 
-        // Thêm lớp 'active' cho mục đang được nhấn
+        // Thêm lớp 'active' vào mục được nhấp vào
         element.classList.add('active');
-}
+    }
 
+    // Chọn mục đầu tiên là active khi load trang
+    document.addEventListener('DOMContentLoaded', () => {
+        const firstItem = document.querySelector('.footer-item');
+        if (firstItem) {
+            setActive(firstItem);
+        }
+    });
