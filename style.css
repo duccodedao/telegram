@@ -399,3 +399,11 @@ h2 {
             font-weight: bold;
             z-index: 1; /* Đảm bảo nhãn luôn nằm trên ảnh */
 }
+
+
+
+
+.footer-item.active {
+            background-color: #333; /* Màu nền khi mục được chọn */
+            color: #ff0; /* Màu chữ khi mục được chọn */
+}
