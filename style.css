@@ -354,28 +354,31 @@ h2 {
 
 
 .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #000;
-    display: flex;
-    justify-content: space-evenly; /* Căn đều các mục */
-    align-items: center;
-    padding: 10px 0;
-    border-top: 1px solid #333;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
-    border-top-left-radius: 10px; /* Bo góc trên bên trái */
-    border-top-right-radius: 10px; /* Bo góc trên bên phải */
-}
-
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid #333;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
         .footer-item {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-decoration: none;
             color: #ccc;
             font-size: 14px;
+            padding: 5px 10px;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px; /* Bo góc cho mục */
         }
         .footer-item img {
             width: 24px;
@@ -385,25 +388,19 @@ h2 {
         .footer-item:hover {
             color: #fff;
         }
-
-
-.new-badge {
+        .footer-item.active {
+            background-color: #333; /* Màu nền khi mục được chọn */
+            color: #ff0; /* Màu chữ khi mục được chọn */
+        }
+        .new-badge {
             position: absolute;
-            top: 5px; /* Điều chỉnh vị trí nhãn "New" lệch trên */
-            right: 5px; /* Điều chỉnh vị trí nhãn "New" lệch trái */
+            top: 5px;
+            right: 5px;
             background-color: red;
             color: white;
             padding: 1.5px 3.25px;
             border-radius: 3px;
             font-size: 7px;
             font-weight: bold;
-            z-index: 1; /* Đảm bảo nhãn luôn nằm trên ảnh */
-}
-
-
-
-
-.footer-item.active {
-            background-color: #333; /* Màu nền khi mục được chọn */
-            color: #ff0; /* Màu chữ khi mục được chọn */
-}
+            z-index: 1;
+        }
