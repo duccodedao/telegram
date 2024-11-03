@@ -41,13 +41,13 @@
     <script>
         async function getBalance() {
             const walletAddress = "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD";
-            const url = `https://toncenter.com/api/v2/getAddressInformation?address=${walletAddress}`;
+            const url = `https://tonapi.io/v1/accounts/${walletAddress}/balance`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
 
-                if (data.balance) {
+                if (data && data.balance) {
                     document.getElementById("balance").innerText = `Số dư ví TON: ${data.balance / 1e9} TON`;
                 } else {
                     document.getElementById("balance").innerText = 'Không thể lấy số dư, vui lòng kiểm tra lại địa chỉ.';
