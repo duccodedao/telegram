@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallet | By BmassHD</title>
+    <title>Tra cứu số dư | BmassHD</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
     <link rel="shortcut icon" href="logo1.png" type="image/png">
-    
-    <!-- SDK của OKX Wallet Web3 -->
-    <script src="https://cdn.jsdelivr.net/npm/@okx/web3@latest/dist/web3.min.js"></script>
     
     <style>
         body {
@@ -30,8 +27,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .button {
-            display: flex;
-            align-items: center;
             padding: 10px 20px;
             background: #333333;
             border: 1px solid #ff6a00;
@@ -41,7 +36,6 @@
             cursor: pointer;
             transition: background 0.3s ease;
             margin-top: 10px;
-            justify-content: center;
         }
         .button:hover {
             background: #ff6a00;
@@ -53,10 +47,10 @@
             margin-bottom: 20px;
             color: #ff6a00;
         }
-        .connect-text {
+        .balance-info {
             font-size: 16px;
             color: #cccccc;
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -64,55 +58,46 @@
 <div class="container">
     <div class="logo">BmassHD</div>
     
-    <!-- Hiển thị tên người dùng và địa chỉ ví -->
-    <div class="connect-text">Xin chào, kết nối ví OKX của bạn để mở khóa thêm nhiều tính năng.</div>
-
     <!-- Nút Connect Wallet -->
-    <div id="walletButton" class="button" onclick="connectWallet()">
-        <span id="walletText">Connect Wallet</span>
-    </div>
+    <div id="walletButton" class="button" onclick="enterWalletAddress()">Kết nối ví</div>
 
-    <!-- Hiển thị địa chỉ ví sau khi kết nối -->
-    <div id="walletAddress" class="connect-text" style="margin-top: 20px;">Địa chỉ ví: Chưa kết nối</div>
+    <!-- Hiển thị số dư sau khi lấy -->
+    <div id="balanceInfo" class="balance-info">Số dư: Chưa có dữ liệu</div>
 </div>
 
 <script>
-    async function connectWallet() {
-        if (window.okxwallet) {
-            try {
-                // Khởi tạo kết nối với OKX Wallet
-                await window.okxwallet.enable();
-                
-                const accounts = await window.okxwallet.request({
-                    method: 'eth_requestAccounts'
-                });
-
-                if (accounts.length > 0) {
-                    const walletAddress = accounts[0];
-
-                    // Hiển thị địa chỉ ví rút gọn
-                    document.getElementById('walletText').textContent = "Connected";
-                    document.getElementById('walletAddress').textContent = `Địa chỉ ví: ${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
-                    
-                    // Lưu địa chỉ ví vào localStorage
-                    localStorage.setItem('walletAddress', walletAddress);
-                }
-            } catch (error) {
-                console.error("Lỗi kết nối với OKX Wallet:", error);
-            }
-        } else {
-            alert("OKX Wallet chưa được cài đặt. Vui lòng cài đặt OKX Wallet để kết nối.");
+    // Hàm nhập địa chỉ ví từ người dùng
+    function enterWalletAddress() {
+        const walletAddress = prompt("Vui lòng nhập địa chỉ ví của bạn:");
+        if (walletAddress) {
+            fetchBalance(walletAddress);
         }
     }
 
-    // Tự động kiểm tra kết nối khi tải trang
-    (async () => {
-        const storedWalletAddress = localStorage.getItem('walletAddress');
-        if (storedWalletAddress) {
-            document.getElementById('walletText').textContent = "Connected";
-            document.getElementById('walletAddress').textContent = `Địa chỉ ví: ${storedWalletAddress.slice(0, 6)}...${storedWalletAddress.slice(-4)}`;
+    // Hàm lấy số dư từ API
+    async function fetchBalance(address) {
+        try {
+            // API giả định - thay đổi URL này theo API thực tế của bạn
+            const apiUrlTON = `https://tonapi.io/v1/address/${address}/balance`;  // URL API lấy số dư TON
+            const apiUrlUSDT = `https://tonapi.io/v1/address/${address}/usdt_balance`;  // URL API lấy số dư USDT
+            
+            // Gửi yêu cầu đến API để lấy số dư TON
+            const responseTON = await fetch(apiUrlTON);
+            const dataTON = await responseTON.json();
+            const tonBalance = dataTON.balance / 1e9; // giả định số dư trả về theo đơn vị nanoTON
+            
+            // Gửi yêu cầu đến API để lấy số dư USDT
+            const responseUSDT = await fetch(apiUrlUSDT);
+            const dataUSDT = await responseUSDT.json();
+            const usdtBalance = dataUSDT.balance / 1e6; // giả định số dư trả về theo đơn vị microUSDT
+
+            // Cập nhật giao diện với số dư
+            document.getElementById('balanceInfo').textContent = `Số dư: ${tonBalance} TON | ${usdtBalance} USDT`;
+        } catch (error) {
+            console.error("Lỗi khi lấy dữ liệu từ API:", error);
+            document.getElementById('balanceInfo').textContent = "Lỗi khi lấy dữ liệu số dư";
         }
-    })();
+    }
 </script>
 </body>
 </html>
