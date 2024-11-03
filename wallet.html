@@ -1,4 +1,4 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,6 @@
 
     <link rel="shortcut icon" href="logo1.png" type="image/png">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-               
     <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest/dist/sdk.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -83,8 +82,13 @@
 <body>
 <div class="container">
     <div class="logo">BmassHD</div>
-    <div class="connect-text">Kết nối ví của bạn để mở khóa thêm nhiều tính năng</div>
+    
+    <!-- Hiển thị tên người dùng và username -->
+    <div class="connect-text">Xin chào, <span id="user-name">User</span> (<span id="user-username">@username</span>), kết nối ví của bạn để mở khóa thêm nhiều tính năng.</div>
 
+    <!-- Avatar người dùng -->
+    <img id="user-avatar" src="default-avatar.png" alt="Avatar" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px;">
+    
     <!-- Nút Connect Wallet -->
     <div id="walletButton" class="button" onclick="connectWallet()">
         <img id="walletIcon" src="/ton/wallet.png" alt="Wallet Icon">
@@ -103,7 +107,6 @@
         <span id="balanceText">Số dư TON: Đang tải...</span>
     </div>
 </div>
-
 
 <!-- Footer Section -->
 <div class="footer">
@@ -155,14 +158,39 @@
     }
 </script>
 
-
-
-
-
-
-
     
 <script>
+    // Danh sách ảnh đại diện ngẫu nhiên
+    const avatars = [
+        "avatar1.png",
+        "avatar2.png",
+        "avatar3.png",
+        "avatar4.png"
+    ];
+    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+
+    // Lấy thông tin người dùng từ Telegram WebApp API
+    if (Telegram.WebApp.initDataUnsafe) {
+        let user = Telegram.WebApp.initDataUnsafe.user;
+
+        if (user) {
+            let userName = user.first_name + " " + (user.last_name || "");
+            let username = user.username || "No Username"; // Thay thế nếu không có username
+
+            // Cập nhật thông tin vào HTML
+            document.getElementById('user-name').textContent = userName;
+            document.getElementById('user-username').textContent = `@${username}`;
+            document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
+        } else {
+            // Trường hợp không có thông tin người dùng
+            document.getElementById('user-name').textContent = "Loading...";
+            document.getElementById('user-username').textContent = "@username";
+            document.getElementById('user-avatar').src = randomAvatar;
+        }
+    } else {
+        console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
+    }
+
     // Khởi tạo TonConnect SDK
     const tonConnect = new TonConnect();
 
