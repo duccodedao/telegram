@@ -3,60 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiểm Tra Số Dư Ví TON</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
-            text-align: center;
-        }
-        h1 {
-            color: #333;
-        }
-        #balance {
-            font-size: 24px;
-            margin-top: 20px;
-            color: #007BFF;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Mua Crypto | By BmassHD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Mua crypto | BmassHD">
+    <meta property="og:description" content="Đặt hàng tiền điện tử với BmassHD. Quy trình giao dịch dễ dàng và an toàn.">
+    <meta property="og:image" content="https://bmasshd.click/ton/nen.png">
+    <meta property="og:url" content="https://bmasshd.click/ton/ton.html">
+    <meta property="og:type" content="website">
+    
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <h1>Kiểm Tra Số Dư Ví TON</h1>
-    <button onclick="getBalance()">Lấy Số Dư</button>
-    <div id="balance"></div>
 
-    <script>
-        async function getBalance() {
-            const walletAddress = "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD"; // Địa chỉ ví TON
-            const url = `https://tonscan.org/api/v1/getAddress?address=${walletAddress}`;
+<!-- Nút Connect Ton Wallet và Cancel Connect -->
+<div id="wallet-container">
+    <button id="connect-btn" onclick="connectWallet()">Connect Ton Wallet</button>
+    <button id="cancel-btn" onclick="cancelConnect()" style="display:none;">Cancel Connect</button>
+</div>
 
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
+<!-- Khung để nhúng trang TonViewer -->
+<div id="viewer-container" style="display:none; margin-top:20px;">
+    <iframe id="viewer-frame" src="" style="width: 100%; height: 500px; border: none;"></iframe>
+</div>
 
-                if (data && data.result && data.result.balance) {
-                    document.getElementById("balance").innerText = `Số dư ví TON: ${data.result.balance / 1e9} TON`;
-                } else {
-                    document.getElementById("balance").innerText = 'Không thể lấy số dư, vui lòng kiểm tra lại địa chỉ.';
-                }
-            } catch (error) {
-                document.getElementById("balance").innerText = 'Đã xảy ra lỗi khi lấy số dư.';
-                console.error('Error fetching balance:', error);
+<!-- Footer Section -->
+<div class="footer">
+    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/home.svg" alt="Home">
+            <span class="new-badge">New</span>
+        </div>
+        <span>Home</span>
+    </a>
+    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/buycoin.svg" alt="MuaCoin">
+        </div>
+        <span>MuaCoin</span>
+    </a>
+    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/sellcoin.svg" alt="BánCoin">
+            <span class="new-badge">New</span>
+        </div>
+        <span>BánCoin</span>
+    </a>
+    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/buyref.svg" alt="MuaRef">
+            <span class="new-badge">New</span>
+        </div>
+        <span>MuaRef</span>
+    </a>
+    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/icon-wallet.svg" alt="Wallet">
+            <span class="new-badge">New</span>
+        </div>
+        <span>Wallet</span>
+    </a>
+</div>
+
+<script>
+    function connectWallet() {
+        Swal.fire({
+            title: 'Nhập mã ví TON của bạn',
+            input: 'text',
+            inputPlaceholder: 'Nhập mã ví TON...',
+            showCancelButton: true,
+            confirmButtonText: 'Kết nối',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                const address = result.value;
+                document.getElementById('viewer-frame').src = `https://tonviewer.com/${address}`;
+                document.getElementById('viewer-container').style.display = 'block';
+                document.getElementById('connect-btn').style.display = 'none';
+                document.getElementById('cancel-btn').style.display = 'inline';
+                localStorage.setItem('walletConnected', 'true');
+                localStorage.setItem('walletAddress', address);
             }
+        });
+    }
+
+    function cancelConnect() {
+        document.getElementById('viewer-frame').src = '';
+        document.getElementById('viewer-container').style.display = 'none';
+        document.getElementById('connect-btn').style.display = 'inline';
+        document.getElementById('cancel-btn').style.display = 'none';
+        localStorage.removeItem('walletConnected');
+        localStorage.removeItem('walletAddress');
+    }
+
+    // Kiểm tra trạng thái kết nối khi tải lại trang
+    window.addEventListener('load', () => {
+        const connected = localStorage.getItem('walletConnected');
+        const address = localStorage.getItem('walletAddress');
+        if (connected === 'true' && address) {
+            document.getElementById('viewer-frame').src = `https://tonviewer.com/${address}`;
+            document.getElementById('viewer-container').style.display = 'block';
+            document.getElementById('connect-btn').style.display = 'none';
+            document.getElementById('cancel-btn').style.display = 'inline';
         }
-    </script>
+    });
+
+    function setActive(element) {
+        const items = document.querySelectorAll('.footer-item');
+        items.forEach(item => item.classList.remove('active'));
+        element.classList.add('active');
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="script.js"></script>
 </body>
 </html>
