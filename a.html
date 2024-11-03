@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet | By BmassHD</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://unpkg.com/@tonconnect/sdk@latest"></script>
+</head>
+<body>
+<div class="container">
+    <div class="logo">BmassHD</div>
+    <div class="connect-text">Kết nối ví TON của bạn để mở khóa thêm nhiều tính năng</div>
+    <!-- Nút Connect Wallet sử dụng Ton Connect -->
+    <div id="walletButton" class="button" onclick="connectTonWallet()">
+        <img id="walletIcon" src="/ton/wallet.png" alt="Wallet Icon">
+        <span id="walletText">Connect TON Wallet</span>
+    </div>
+    <div id="balance" class="connect-text"></div> <!-- Hiển thị số dư -->
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const { TonConnect } = window.tonconnect; // Khởi tạo Ton Connect
+
+    // Khởi tạo TonConnect SDK
+    const tonConnect = new TonConnect();
+
+    async function connectTonWallet() {
+        try {
+            await tonConnect.connectWallet();
+
+            const wallet = await tonConnect.getWalletInfo();
+            const balance = await tonConnect.getBalance(wallet.address);
+
+            // Hiển thị địa chỉ và số dư
+            document.getElementById('walletText').textContent = `${wallet.address.slice(0, 6)}...${wallet.address.slice(-4)}`;
+            document.getElementById('walletIcon').src = "/logo-coin/7518748.png";
+            document.getElementById('balance').textContent = `Số dư: ${balance} TON`;
+            
+            localStorage.setItem('tonWalletAddress', wallet.address);
+        } catch (error) {
+            console.error('Lỗi khi kết nối ví:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi kết nối ví!',
+                text: 'Vui lòng thử lại.',
+                background: '#1e1e1e',
+                color: '#ffffff'
+            });
+        }
+    }
+
+    // Khởi tạo trạng thái khi tải trang
+    function updateWalletButton() {
+        const storedWalletAddress = localStorage.getItem('tonWalletAddress');
+        if (storedWalletAddress) {
+            document.getElementById('walletText').textContent = `${storedWalletAddress.slice(0, 6)}...${storedWalletAddress.slice(-4)}`;
+            document.getElementById('walletIcon').src = "/logo-coin/7518748.png";
+            // Lấy số dư và hiển thị
+            tonConnect.getBalance(storedWalletAddress).then(balance => {
+                document.getElementById('balance').textContent = `Số dư: ${balance} TON`;
+            });
+        }
+    }
+
+    updateWalletButton(); // Cập nhật khi tải trang
+</script>
+</body>
+</html>
