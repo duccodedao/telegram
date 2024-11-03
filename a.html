@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mua Crypto | By BmassHD</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
     
     <!-- Open Graph Meta Tags -->
@@ -16,18 +16,86 @@
     
     <link rel="shortcut icon" href="logo1.png" type="image/png">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+        /* Styles cho nút Connect và Cancel */
+        #wallet-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        #connect-btn, #cancel-btn {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #connect-btn:hover, #cancel-btn:hover {
+            background-color: #0056b3;
+        }
+
+        #connect-btn img, #cancel-btn img {
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Styles cho iframe toàn màn hình */
+        #viewer-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        #viewer-frame {
+            width: 100%;
+            height: calc(100% - 60px);
+            border: none;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 10px 0;
+            color: #fff;
+            z-index: 999;
+        }
+    </style>
 </head>
 <body>
 
 <!-- Nút Connect Ton Wallet và Cancel Connect -->
 <div id="wallet-container">
-    <button id="connect-btn" onclick="connectWallet()">Connect Ton Wallet</button>
-    <button id="cancel-btn" onclick="cancelConnect()" style="display:none;">Cancel Connect</button>
+    <button id="connect-btn" onclick="connectWallet()">
+        <img src="https://bmasshd.click/logo-coin/ton-wallet-icon.png" alt="Ton Wallet Icon">
+        Connect Ton Wallet
+    </button>
+    <button id="cancel-btn" onclick="cancelConnect()" style="display:none;">
+        <img src="https://bmasshd.click/logo-coin/close-icon.png" alt="Cancel Icon">
+        Cancel Connect
+    </button>
 </div>
 
 <!-- Khung để nhúng trang TonViewer -->
-<div id="viewer-container" style="display:none; margin-top:20px;">
-    <iframe id="viewer-frame" src="" style="width: 100%; height: 500px; border: none;"></iframe>
+<div id="viewer-container">
+    <iframe id="viewer-frame" src=""></iframe>
 </div>
 
 <!-- Footer Section -->
@@ -121,4 +189,5 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="script.js"></script>
 </body>
-</html>
+        </html>
+        
