@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallet | BmassHD</title>
+    <title>Wallet | By BmassHD</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Wallet | BmassHD">
+    <meta property="og:description" content="Ví 2">
+    <meta property="og:image" content="/ton/nen.png">
+    <meta property="og:url" content="/ton/ton.html">
+    <meta property="og:type" content="website">
+
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest/dist/sdk.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         body {
             display: flex;
@@ -26,7 +38,7 @@
             background: #1e1e1e;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .button, .balance-display {
+        .button, .ton-balance {
             display: flex;
             align-items: center;
             padding: 10px 20px;
@@ -36,11 +48,12 @@
             font-size: 16px;
             border-radius: 30px;
             cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
             text-align: left;
             justify-content: flex-start;
-            margin-top: 10px;
         }
-        .button img, .balance-display img {
+        .button img, .ton-balance img {
             width: 25px;
             height: 25px;
             margin-right: 10px;
@@ -50,15 +63,31 @@
             background: #ff6a00;
             color: #fff;
         }
-        .balance-display {
-            cursor: default;
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        .ton-balance {
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="logo">BmassHD</div>
-    <div class="connect-text">Kết nối ví của bạn để mở khóa thêm nhiều tính năng</div>
+    
+    <!-- Hiển thị tên người dùng và username -->
+    <div class="connect-text">Xin chào, <span id="user-name">User</span> (<span id="user-username">@username</span>), kết nối ví của bạn để mở khóa thêm nhiều tính năng.</div>
+
+    <!-- Avatar người dùng -->
+    <img id="user-avatar" src="default-avatar.png" alt="Avatar" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px;">
     
     <!-- Nút Connect Wallet -->
     <div id="walletButton" class="button" onclick="connectWallet()">
@@ -66,100 +95,110 @@
         <span id="walletText">Connect Wallet</span>
     </div>
 
-    <!-- Nút Tham gia nhóm -->
-    <div id="joinButton" class="button" onclick="joinGroup()">
-        <img id="joinIcon" src="/logo-coin/buyref.svg" alt="Group Icon">
-        <span id="joinText">Tham gia nhóm</span>
+    <!-- Nút tham gia nhóm Telegram -->
+    <div id="joinGroupButton" class="button" onclick="joinGroup()">
+        <img src="/logo-coin/buyref.svg" alt="Group Icon">
+        <span>Tham gia nhóm Telegram</span>
     </div>
 
-    <!-- Hiển thị số dư TON -->
-    <div class="balance-display">
-        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Balance Icon">
-        <span id="balanceText">Balance: 0 </span>TON
+    <!-- Nút hiển thị số dư TON -->
+    <div id="tonBalance" class="ton-balance">
+        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Icon">
+        <span id="balanceText">Số dư TON: Đang tải...</span>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    const joinedGroup = localStorage.getItem('joinedGroup') === 'true';
-    const storedWalletAddress = localStorage.getItem('walletAddress');
+    // Danh sách ảnh đại diện ngẫu nhiên
+    const avatars = [
+        "avatar1.png",
+        "avatar2.png",
+        "avatar3.png",
+        "avatar4.png"
+    ];
+    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
 
-    function updateButtonStates() {
-        const joinIcon = document.getElementById('joinIcon');
-        joinIcon.src = joinedGroup ? "/logo-coin/7518748.png" : "/logo-coin/buyref.svg";
+    // Lấy thông tin người dùng từ Telegram WebApp API
+    if (Telegram.WebApp.initDataUnsafe) {
+        let user = Telegram.WebApp.initDataUnsafe.user;
 
-        const walletText = document.getElementById('walletText');
-        const walletIcon = document.getElementById('walletIcon');
-        if (storedWalletAddress) {
-            walletText.textContent = `${storedWalletAddress.slice(0, 6)}...${storedWalletAddress.slice(-4)}`;
-            walletIcon.src = "/logo-coin/7518748.png";
+        if (user) {
+            let userName = user.first_name + " " + (user.last_name || "");
+            let username = user.username || "No Username"; // Thay thế nếu không có username
+
+            // Cập nhật thông tin vào HTML
+            document.getElementById('user-name').textContent = userName;
+            document.getElementById('user-username').textContent = `@${username}`;
+            document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
         } else {
-            walletText.textContent = "Connect Wallet";
-            walletIcon.src = "/ton/wallet.png";
+            // Trường hợp không có thông tin người dùng
+            document.getElementById('user-name').textContent = "Loading...";
+            document.getElementById('user-username').textContent = "@username";
+            document.getElementById('user-avatar').src = randomAvatar;
         }
+    } else {
+        console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
     }
 
-    function joinGroup() {
-        if (joinedGroup) {
-            window.location.href = "https://t.me/bmassk3_channel";
-        } else {
-            Swal.fire({
-                title: 'Xác nhận tham gia nhóm?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Tham gia',
-                background: '#1e1e1e',
-                color: '#ffffff'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    localStorage.setItem('joinedGroup', 'true');
-                    updateButtonStates();
-                    Swal.fire({ icon: 'success', title: 'Đã tham gia nhóm!', background: '#1e1e1e', color: '#ffffff', timer: 1500, showConfirmButton: false });
-                }
-            });
-        }
-    }
+    // Khởi tạo TonConnect SDK
+    const tonConnect = new TonConnect();
 
-    function connectWallet() {
-        if (storedWalletAddress) {
-            Swal.fire({
-                title: 'Bạn có muốn thay đổi mã ví?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Có',
-                background: '#1e1e1e',
-                color: '#ffffff'
-            }).then((result) => {
-                if (result.isConfirmed) promptForWallet();
-            });
-        } else {
-            promptForWallet();
-        }
-    }
-
-    function promptForWallet() {
-        Swal.fire({
-            title: 'Nhập mã ví của bạn',
-            input: 'text',
-            background: '#1e1e1e',
-            color: '#ffffff',
-            confirmButtonText: 'Lưu'
-        }).then((result) => {
-            if (result.isConfirmed && result.value) {
-                const walletAddress = result.value.trim();
+    async function connectWallet() {
+        try {
+            // Thực hiện kết nối ví
+            await tonConnect.connect();
+            const walletAddress = tonConnect.wallet?.account?.address;
+            if (walletAddress) {
+                // Lưu địa chỉ ví vào localStorage
                 localStorage.setItem('walletAddress', walletAddress);
-                updateButtonStates();
-                Swal.fire({ icon: 'success', title: 'Mã ví đã được lưu!', background: '#1e1e1e', color: '#ffffff', timer: 1500, showConfirmButton: false });
+
+                // Hiển thị địa chỉ rút gọn trên giao diện
+                document.getElementById('walletText').textContent = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
+                document.getElementById('walletIcon').src = "/logo-coin/7518748.png";
+
+                // Cập nhật số dư
+                updateBalance();
             }
-        });
+        } catch (error) {
+            console.error("Lỗi kết nối ví:", error);
+        }
     }
 
-    function updateTonBalance(balance) {
-        document.getElementById('balanceText').textContent = `Balence: ${balance} `;
+    // Hàm tham gia nhóm Telegram
+    function joinGroup() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://t.me/bmassk3_channel", "_blank");
     }
-    
-    updateButtonStates();
-    updateTonBalance(1000000);
+
+    // Cập nhật số dư TON
+    async function updateBalance() {
+        try {
+            const walletAddress = tonConnect.wallet?.account?.address;
+            if (walletAddress) {
+                // Gọi API của TON để lấy số dư (tùy chỉnh endpoint nếu cần)
+                const response = await fetch(`https://toncenter.com/api/v2/getAddressBalance?address=${walletAddress}`);
+                const data = await response.json();
+                const balance = data.result / 1e9; // Chuyển đổi từ nanoTON sang TON
+
+                // Cập nhật số dư trên giao diện
+                document.getElementById('balanceText').textContent = `Số dư TON: ${balance.toFixed(2)} TON`;
+            }
+        } catch (error) {
+            console.error("Lỗi khi lấy số dư:", error);
+            document.getElementById('balanceText').textContent = "Số dư TON: Không tải được";
+        }
+    }
+
+    // Khởi tạo trạng thái khi load trang
+    (async () => {
+        // Kiểm tra kết nối ví đã lưu
+        const storedWalletAddress = localStorage.getItem('walletAddress');
+        if (storedWalletAddress) {
+            document.getElementById('walletText').textContent = `${storedWalletAddress.slice(0, 6)}...${storedWalletAddress.slice(-4)}`;
+            document.getElementById('walletIcon').src = "/logo-coin/7518748.png";
+            await updateBalance();
+        }
+    })();
 </script>
 </body>
 </html>
