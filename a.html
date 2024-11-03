@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet | BmassHD</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    <script src="https://unpkg.com/@tonconnect/sdk@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@2.0.0/dist/bundle.min.js"></script>
     <link rel="shortcut icon" href="logo1.png" type="image/png">
     
     <style>
@@ -81,25 +81,31 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    const { TonConnect } = window.tonconnect; // Khởi tạo Ton Connect
-    const tonConnect = new TonConnect(); // Khởi tạo instance TonConnect
+    const tonConnect = new TonConnect({
+        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json' // Đảm bảo URL này chứa thông tin cần thiết cho app của bạn
+    });
 
     async function connectTonWallet() {
         try {
-            // Mở kết nối ví
-            await tonConnect.connectWallet();
+            // Kết nối ví
+            const connection = await tonConnect.connect();
+            
+            // Kiểm tra trạng thái kết nối
+            if (connection) {
+                const account = tonConnect.account;  // Lấy thông tin tài khoản sau khi kết nối thành công
+                const address = account.address;
+                
+                // Cập nhật giao diện với địa chỉ ví
+                document.getElementById('walletText').textContent = `${address.slice(0, 6)}...${address.slice(-4)}`;
+                document.getElementById('walletIcon').src = "/logo-coin/7518748.png"; // Đổi biểu tượng nếu cần
 
-            // Lấy thông tin ví sau khi kết nối thành công
-            const wallet = await tonConnect.getWalletInfo();
-            const balance = await tonConnect.getBalance(wallet.address);
+                // Lấy số dư
+                const balance = await tonConnect.getBalance(account.address);
+                document.getElementById('balance').textContent = `Số dư: ${balance / 1e9} TON`; // Chia cho 1e9 để hiển thị số dư chính xác
 
-            // Cập nhật giao diện
-            document.getElementById('walletText').textContent = `${wallet.address.slice(0, 6)}...${wallet.address.slice(-4)}`;
-            document.getElementById('walletIcon').src = "/logo-coin/7518748.png"; // Đổi biểu tượng nếu cần
-            document.getElementById('balance').textContent = `Số dư: ${balance} TON`;
-
-            // Lưu địa chỉ ví vào localStorage
-            localStorage.setItem('tonWalletAddress', wallet.address);
+                // Lưu địa chỉ ví vào localStorage
+                localStorage.setItem('tonWalletAddress', account.address);
+            }
         } catch (error) {
             console.error('Lỗi khi kết nối ví:', error);
             Swal.fire({
@@ -121,7 +127,7 @@
 
             // Lấy số dư và hiển thị
             tonConnect.getBalance(storedWalletAddress).then(balance => {
-                document.getElementById('balance').textContent = `Số dư: ${balance} TON`;
+                document.getElementById('balance').textContent = `Số dư: ${balance / 1e9} TON`;
             });
         }
     }
