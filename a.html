@@ -40,15 +40,15 @@
 
     <script>
         async function getBalance() {
-            const walletAddress = "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD";
-            const url = `https://tonapi.io/v1/accounts/${walletAddress}/balance`;
+            const walletAddress = "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD"; // Địa chỉ ví TON của bạn
+            const url = `https://tonviewer.com/api/v1/getAddress?address=${walletAddress}`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
 
-                if (data && data.balance) {
-                    document.getElementById("balance").innerText = `Số dư ví TON: ${data.balance / 1e9} TON`;
+                if (data && data.result && data.result.balance) {
+                    document.getElementById("balance").innerText = `Số dư ví TON: ${data.result.balance / 1e9} TON`;
                 } else {
                     document.getElementById("balance").innerText = 'Không thể lấy số dư, vui lòng kiểm tra lại địa chỉ.';
                 }
