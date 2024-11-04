@@ -33,207 +33,159 @@
         }
 
         .withdraw-btn {
-            background-color: #333;
-            border: 2px solid orange;
-            color: orange;
-            padding: 10px;
+            background-color: #444;
+            color: #ffa500;
+            padding: 15px;
+            border: 2px solid #ffa500;
+            border-radius: 10px;
             font-size: 18px;
-            border-radius: 25px;
+            cursor: pointer;
+            text-align: left;
+            padding-left: 20px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            gap: 10px;
-            cursor: pointer;
         }
 
-        .withdraw-btn img.icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-        }
-
-        .withdraw-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        #input-fields {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            background: #2e2e2e;
-            padding: 15px;
-            border-radius: 10px;
+        .form-container {
             display: none;
-        }
-
-        #input-fields label {
-            display: block;
-            margin-top: 10px;
-            color: #fff;
-        }
-
-        #input-fields input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #555;
-            background-color: #333;
-            color: #fff;
-        }
-
-        #input-fields button {
-            margin-top: 10px;
-            padding: 8px 12px;
-            background-color: orange;
-            border: none;
-            color: #fff;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .reset-btn {
             margin-top: 20px;
-            padding: 8px 12px;
-            background-color: red;
-            border: none;
-            color: #fff;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: none;
         }
 
-        /* Popup styles */
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
         .popup {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #444;
+            background: #333;
             color: #fff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: none;
-            text-align: center;
-            z-index: 10;
+            z-index: 100;
         }
 
         .popup button {
             margin-top: 10px;
-            padding: 8px 12px;
-            background-color: orange;
+            padding: 8px 15px;
             border: none;
-            color: #fff;
-            font-size: 16px;
+            background-color: #ffa500;
+            color: #333;
             border-radius: 5px;
             cursor: pointer;
+        }
+
+        .reset-btn {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ffa500;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="withdraw-options">
-            <button class="withdraw-btn" onclick="selectGateway('Binance')">
-                <img src="binance.png" alt="Binance" class="icon"> Binance
-            </button>
-            <button class="withdraw-btn" onclick="selectGateway('OKX')">
-                <img src="okx.png" alt="OKX" class="icon"> OKX
-            </button>
-            <button class="withdraw-btn" onclick="selectGateway('Bybit')">
-                <img src="bybit.png" alt="Bybit" class="icon"> Bybit
-            </button>
-            <button class="withdraw-btn" onclick="selectGateway('Kucoin')">
-                <img src="kucoin.png" alt="Kucoin" class="icon"> Kucoin
-            </button>
-            <button class="withdraw-btn" onclick="selectGateway('Gate')">
-                <img src="gate.png" alt="Gate" class="icon"> Gate
-            </button>
-            <button class="withdraw-btn" onclick="selectGateway('Bitget')">
-                <img src="bitget.png" alt="Bitget" class="icon"> Bitget
-            </button>
-            <button class="withdraw-btn" onclick="selectGateway('Ton')">
-                <img src="ton.png" alt="Ton" class="icon"> Ton
-            </button>
-        </div>
+
+<div class="container">
+    <h2>Rút tiền Crypto</h2>
+    <div class="withdraw-options" id="withdraw-options">
+        <div class="withdraw-btn" onclick="selectGateway('Binance')">Binance</div>
+        <div class="withdraw-btn" onclick="selectGateway('OKX')">OKX</div>
+        <div class="withdraw-btn" onclick="selectGateway('Bybit')">Bybit</div>
+        <div class="withdraw-btn" onclick="selectGateway('Kucoin')">Kucoin</div>
+        <div class="withdraw-btn" onclick="selectGateway('Gate')">Gate</div>
+        <div class="withdraw-btn" onclick="selectGateway('Bitget')">Bitget</div>
+        <div class="withdraw-btn" onclick="selectGateway('Ton')">Ton</div>
     </div>
 
-    <div id="input-fields">
-        <label for="address">Address:</label>
-        <input type="text" id="address" placeholder="Nhập địa chỉ ví">
-        <div id="memo-field" style="display: none;">
-            <label for="memo">Memo:</label>
-            <input type="text" id="memo" placeholder="Nhập Memo">
-        </div>
+    <div class="form-container" id="form-container">
+        <input type="text" id="address" placeholder="Nhập Address">
+        <input type="text" id="memo" placeholder="Nhập Memo (nếu có)">
         <button onclick="saveData()">Lưu</button>
     </div>
 
-    <button class="reset-btn" onclick="resetGateway()">Reset</button>
+    <button class="reset-btn" id="reset-btn" onclick="resetForm()">Reset</button>
+</div>
 
-    <!-- Popup -->
-    <div class="popup" id="popup">
-        <p id="popup-message"></p>
-        <button onclick="closePopup()">Đóng</button>
-    </div>
+<div class="popup" id="popup">
+    <p>Thông tin đã được lưu thành công!</p>
+    <button onclick="closePopup()">OK</button>
+</div>
 
-    <script>
-        let selectedGateway = null;
+<script>
+    function selectGateway(gateway) {
+        // Lưu tên cổng rút
+        localStorage.setItem('selectedGateway', gateway);
 
-        function selectGateway(gateway) {
-            if (!selectedGateway) {
-                selectedGateway = gateway;
-                document.getElementById("input-fields").style.display = "block";
-                document.getElementById("memo-field").style.display = gateway === 'Ton' ? 'none' : 'block';
-                document.querySelectorAll(".withdraw-btn").forEach(btn => {
-                    btn.disabled = true;
-                });
-                showPopup(`Bạn đã chọn cổng rút: ${gateway}`);
-            }
+        // Hiển thị form nhập và ẩn các cổng khác
+        document.getElementById('withdraw-options').style.display = 'none';
+        document.getElementById('form-container').style.display = 'block';
+        document.getElementById('reset-btn').style.display = 'block';
+
+        // Tự động ẩn ô Memo nếu chọn Ton
+        if (gateway === 'Ton') {
+            document.getElementById('memo').style.display = 'none';
+        } else {
+            document.getElementById('memo').style.display = 'block';
         }
+    }
 
-        function saveData() {
-            const address = document.getElementById("address").value;
-            const memo = document.getElementById("memo").value;
+    function saveData() {
+        const address = document.getElementById('address').value;
+        const memo = document.getElementById('memo').value;
 
-            if (address && (selectedGateway === 'Ton' || memo)) {
-                localStorage.setItem("selectedGateway", selectedGateway);
-                localStorage.setItem("address", address);
-                if (selectedGateway !== 'Ton') {
-                    localStorage.setItem("memo", memo);
-                }
-                document.getElementById("input-fields").style.display = "none";
-                document.querySelector(".reset-btn").style.display = "block";
-                showPopup("Dữ liệu đã được lưu!");
-            } else {
-                showPopup("Vui lòng nhập đầy đủ thông tin.");
-            }
+        // Lưu vào localStorage
+        localStorage.setItem('address', address);
+        localStorage.setItem('memo', memo);
+
+        // Hiển thị popup thông báo
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    function resetForm() {
+        // Xóa dữ liệu localStorage
+        localStorage.removeItem('selectedGateway');
+        localStorage.removeItem('address');
+        localStorage.removeItem('memo');
+
+        // Hiển thị lại các cổng rút và ẩn form nhập
+        document.getElementById('withdraw-options').style.display = 'block';
+        document.getElementById('form-container').style.display = 'none';
+        document.getElementById('reset-btn').style.display = 'none';
+        
+        // Xóa nội dung đã nhập
+        document.getElementById('address').value = '';
+        document.getElementById('memo').value = '';
+    }
+
+    // Kiểm tra nếu đã có dữ liệu trong localStorage và khôi phục
+    window.onload = function() {
+        const selectedGateway = localStorage.getItem('selectedGateway');
+        if (selectedGateway) {
+            selectGateway(selectedGateway);
+            document.getElementById('address').value = localStorage.getItem('address') || '';
+            document.getElementById('memo').value = localStorage.getItem('memo') || '';
         }
+    };
+</script>
 
-        function resetGateway() {
-            selectedGateway = null;
-            document.getElementById("input-fields").style.display = "none";
-            document.getElementById("address").value = "";
-            document.getElementById("memo").value = "";
-            document.querySelectorAll(".withdraw-btn").forEach(btn => {
-                btn.disabled = false;
-            });
-            document.querySelector(".reset-btn").style.display = "none";
-            localStorage.clear();
-            showPopup("Cổng rút đã được reset. Bạn có thể chọn lại.");
-        }
-
-        function showPopup(message) {
-            document.getElementById("popup-message").innerText = message;
-            document.getElementById("popup").style.display = "block";
-        }
-
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-        }
-    </script>
 </body>
 </html>
