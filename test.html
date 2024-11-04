@@ -3,33 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallet | By BmassHD</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Wallet | BmassHD">
-    <meta property="og:description" content="Ví 2">
-    <meta property="og:image" content="/ton/nen.png">
-    <meta property="og:url" content="/ton/ton.html">
-    <meta property="og:type" content="website">
-
-    <link rel="shortcut icon" href="logo1.png" type="image/png">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest/dist/sdk.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <title>Rút tiền Crypto</title>
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background-color: #2a2a2a;
+            height: 100vh;
             margin: 0;
+            background-color: #333;
             font-family: Arial, sans-serif;
-            color: #fff;
         }
+
         .container {
             text-align: center;
             max-width: 400px;
@@ -38,218 +23,141 @@
             background: #1e1e1e;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .button, .ton-balance {
+
+        .withdraw-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .withdraw-btn {
+            background-color: #333;
+            border: 2px solid orange;
+            color: orange;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 25px;
             display: flex;
             align-items: center;
-            padding: 10px 20px;
-            background: #333333;
-            border: 1px solid #ff6a00;
-            color: #ff6a00;
-            font-size: 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            margin-top: 10px;
-            text-align: left;
             justify-content: flex-start;
+            gap: 10px;
+            cursor: pointer;
         }
-        .button img, .ton-balance img {
-            width: 25px;
-            height: 25px;
-            margin-right: 10px;
-            border-radius: 10px;
+
+        .withdraw-btn img.icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
         }
-        .button:hover {
-            background: #ff6a00;
+
+        .withdraw-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #input-fields {
+            margin-top: 20px;
+        }
+
+        #input-fields label {
+            color: #fff;
+            display: block;
+            margin-top: 10px;
+        }
+
+        #input-fields input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #2e2e2e;
             color: #fff;
         }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #ff6a00;
-        }
-        .connect-text {
+
+        #input-fields button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: orange;
+            border: none;
+            color: #fff;
             font-size: 16px;
-            color: #cccccc;
-            margin-bottom: 20px;
-        }
-        .ton-balance {
-            pointer-events: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="logo">BmassHD</div>
-    
-    <!-- Hiển thị tên người dùng và username -->
-    <div class="connect-text">Xin chào, <span id="user-name">User</span> (<span id="user-username">@username</span>), kết nối ví của bạn để mở khóa thêm nhiều tính năng.</div>
-
-    <!-- Avatar người dùng -->
-    <img id="user-avatar" src="default-avatar.png" alt="Avatar" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px;">
-    
-    <!-- Nút Connect Wallet -->
-    <div id="walletButton" class="button" onclick="connectWallet()">
-        <img id="walletIcon" src="/ton/wallet.png" alt="Wallet Icon">
-        <span id="walletText">Connect Wallet</span>
+    <div class="container">
+        <div class="withdraw-options">
+            <button class="withdraw-btn" onclick="selectGateway('Binance')">
+                <img src="binance.png" alt="Binance" class="icon"> Binance
+            </button>
+            <button class="withdraw-btn" onclick="selectGateway('OKX')">
+                <img src="okx.png" alt="OKX" class="icon"> OKX
+            </button>
+            <button class="withdraw-btn" onclick="selectGateway('Bybit')">
+                <img src="bybit.png" alt="Bybit" class="icon"> Bybit
+            </button>
+            <button class="withdraw-btn" onclick="selectGateway('Kucoin')">
+                <img src="kucoin.png" alt="Kucoin" class="icon"> Kucoin
+            </button>
+            <button class="withdraw-btn" onclick="selectGateway('Gate')">
+                <img src="gate.png" alt="Gate" class="icon"> Gate
+            </button>
+            <button class="withdraw-btn" onclick="selectGateway('Bitget')">
+                <img src="bitget.png" alt="Bitget" class="icon"> Bitget
+            </button>
+        </div>
+        <div id="input-fields" style="display: none;">
+            <label for="address">Address:</label>
+            <input type="text" id="address" placeholder="Nhập địa chỉ ví">
+            <label for="memo">Memo:</label>
+            <input type="text" id="memo" placeholder="Nhập Memo">
+            <button onclick="saveData()">Lưu</button>
+            <button onclick="resetGateway()">Reset</button>
+        </div>
     </div>
+    <script>
+        let selectedGateway = null;
 
-    <!-- Nút tham gia nhóm Telegram -->
-    <div id="joinGroupButton" class="button" onclick="joinGroup()">
-        <img src="/logo-coin/buyref.svg" alt="Group Icon">
-        <span>Tham gia nhóm Telegram</span>
-    </div>
-
-    <!-- Nút hiển thị số dư TON -->
-    <div id="tonBalance" class="ton-balance">
-        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Icon">
-        <span id="balanceText">Số dư TON: Đang tải...</span>
-    </div>
-</div>
-
-<!-- Footer Section -->
-<div class="footer">
-    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/home.svg" alt="Home">
-            <span class="new-badge">New</span>
-        </div>
-        <span>Home</span>
-    </a>
-    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/buycoin.svg" alt="MuaCoin">
-            <span class="new-badge">New</span>
-        </div>
-        <span>MuaCoin</span>
-    </a>
-    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/sellcoin.svg" alt="BánCoin">
-            <span class="new-badge">New</span>
-        </div>
-        <span>BánCoin</span>
-    </a>
-    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/buyref.svg" alt="MuaRef">
-            <span class="new-badge">New</span>
-        </div>
-        <span>MuaRef</span>
-    </a>
-    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/icon-wallet.svg" alt="Wallet">
-            
-        </div>
-        <span>Wallet</span>
-    </a>
-</div>
-
-<script>
-    function setActive(element) {
-        // Xóa lớp active khỏi tất cả các mục
-        const items = document.querySelectorAll('.footer-item');
-        items.forEach(item => item.classList.remove('active'));
-
-        // Thêm lớp active vào mục được nhấp vào
-        element.classList.add('active');
-    }
-</script>
-
-    
-<script>
-    // Danh sách ảnh đại diện ngẫu nhiên
-    const avatars = [
-        "avatar1.png",
-        "avatar2.png",
-        "avatar3.png",
-        "avatar4.png"
-    ];
-    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
-
-    // Lấy thông tin người dùng từ Telegram WebApp API
-    if (Telegram.WebApp.initDataUnsafe) {
-        let user = Telegram.WebApp.initDataUnsafe.user;
-
-        if (user) {
-            let userName = user.first_name + " " + (user.last_name || "");
-            let username = user.username || "No Username"; // Thay thế nếu không có username
-
-            // Cập nhật thông tin vào HTML
-            document.getElementById('user-name').textContent = userName;
-            document.getElementById('user-username').textContent = `@${username}`;
-            document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
-        } else {
-            // Trường hợp không có thông tin người dùng
-            document.getElementById('user-name').textContent = "Loading...";
-            document.getElementById('user-username').textContent = "@username";
-            document.getElementById('user-avatar').src = randomAvatar;
-        }
-    } else {
-        console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
-    }
-
-    // Khởi tạo TonConnect SDK
-    const tonConnect = new TonConnect();
-
-    async function connectWallet() {
-        try {
-            // Thực hiện kết nối ví
-            await tonConnect.connect();
-            const walletAddress = tonConnect.wallet?.account?.address;
-            if (walletAddress) {
-                // Lưu địa chỉ ví vào localStorage
-                localStorage.setItem('walletAddress', walletAddress);
-
-                // Hiển thị địa chỉ rút gọn trên giao diện
-                document.getElementById('walletText').textContent = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
-                document.getElementById('walletIcon').src = "/logo-coin/7518748.png";
-
-                // Cập nhật số dư
-                updateBalance();
+        function selectGateway(gateway) {
+            if (!selectedGateway) {
+                selectedGateway = gateway;
+                document.getElementById("input-fields").style.display = "block";
+                document.querySelectorAll(".withdraw-btn").forEach(btn => {
+                    btn.disabled = true;
+                });
+                alert(`Bạn đã chọn cổng rút: ${gateway}`);
             }
-        } catch (error) {
-            console.error("Lỗi kết nối ví:", error);
         }
-    }
 
-    // Hàm tham gia nhóm Telegram
-    function joinGroup() {
-        // Mở liên kết đến nhóm Telegram
-        window.open("https://t.me/bmassk3_channel", "_blank");
-    }
+        function saveData() {
+            const address = document.getElementById("address").value;
+            const memo = document.getElementById("memo").value;
 
-    // Cập nhật số dư TON
-    async function updateBalance() {
-        try {
-            const walletAddress = tonConnect.wallet?.account?.address;
-            if (walletAddress) {
-                // Gọi API của TON để lấy số dư (tùy chỉnh endpoint nếu cần)
-                const response = await fetch(`https://toncenter.com/api/v2/getAddressBalance?address=${walletAddress}`);
-                const data = await response.json();
-                const balance = data.result / 1e9; // Chuyển đổi từ nanoTON sang TON
-
-                // Cập nhật số dư trên giao diện
-                document.getElementById('balanceText').textContent = `Số dư TON: ${balance.toFixed(2)} TON`;
+            if (address && memo) {
+                localStorage.setItem("selectedGateway", selectedGateway);
+                localStorage.setItem("address", address);
+                localStorage.setItem("memo", memo);
+                alert("Dữ liệu đã được lưu!");
+            } else {
+                alert("Vui lòng nhập cả Address và Memo.");
             }
-        } catch (error) {
-            console.error("Lỗi khi lấy số dư:", error);
-            document.getElementById('balanceText').textContent = "Số dư TON: Không tải được";
         }
-    }
 
-    // Khởi tạo trạng thái khi load trang
-    (async () => {
-        // Kiểm tra kết nối ví đã lưu
-        const storedWalletAddress = localStorage.getItem('walletAddress');
-        if (storedWalletAddress) {
-            document.getElementById('walletText').textContent = `${storedWalletAddress.slice(0, 6)}...${storedWalletAddress.slice(-4)}`;
-            document.getElementById('walletIcon').src = "/logo-coin/7518748.png";
-            await updateBalance();
+        function resetGateway() {
+            selectedGateway = null;
+            document.getElementById("input-fields").style.display = "none";
+            document.getElementById("address").value = "";
+            document.getElementById("memo").value = "";
+
+            document.querySelectorAll(".withdraw-btn").forEach(btn => {
+                btn.disabled = false;
+            });
+            localStorage.clear();
+            alert("Cổng rút đã được reset.");
         }
-    })();
-</script>
+    </script>
 </body>
 </html>
