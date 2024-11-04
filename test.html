@@ -13,6 +13,8 @@
             margin: 0;
             background-color: #333;
             font-family: Arial, sans-serif;
+            color: #fff;
+            flex-direction: column;
         }
 
         .container {
@@ -56,13 +58,20 @@
         }
 
         #input-fields {
-            margin-top: 20px;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            background: #2e2e2e;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
         }
 
         #input-fields label {
-            color: #fff;
             display: block;
             margin-top: 10px;
+            color: #fff;
         }
 
         #input-fields input {
@@ -71,11 +80,50 @@
             margin-top: 5px;
             border-radius: 5px;
             border: 1px solid #555;
-            background-color: #2e2e2e;
+            background-color: #333;
             color: #fff;
         }
 
         #input-fields button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: orange;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reset-btn {
+            margin-top: 20px;
+            padding: 8px 12px;
+            background-color: red;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* Popup styles */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #444;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: none;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .popup button {
             margin-top: 10px;
             padding: 8px 12px;
             background-color: orange;
@@ -108,16 +156,30 @@
             <button class="withdraw-btn" onclick="selectGateway('Bitget')">
                 <img src="bitget.png" alt="Bitget" class="icon"> Bitget
             </button>
-        </div>
-        <div id="input-fields" style="display: none;">
-            <label for="address">Address:</label>
-            <input type="text" id="address" placeholder="Nhập địa chỉ ví">
-            <label for="memo">Memo:</label>
-            <input type="text" id="memo" placeholder="Nhập Memo">
-            <button onclick="saveData()">Lưu</button>
-            <button onclick="resetGateway()">Reset</button>
+            <button class="withdraw-btn" onclick="selectGateway('Ton')">
+                <img src="ton.png" alt="Ton" class="icon"> Ton
+            </button>
         </div>
     </div>
+
+    <div id="input-fields">
+        <label for="address">Address:</label>
+        <input type="text" id="address" placeholder="Nhập địa chỉ ví">
+        <div id="memo-field" style="display: none;">
+            <label for="memo">Memo:</label>
+            <input type="text" id="memo" placeholder="Nhập Memo">
+        </div>
+        <button onclick="saveData()">Lưu</button>
+    </div>
+
+    <button class="reset-btn" onclick="resetGateway()">Reset</button>
+
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <p id="popup-message"></p>
+        <button onclick="closePopup()">Đóng</button>
+    </div>
+
     <script>
         let selectedGateway = null;
 
@@ -125,10 +187,11 @@
             if (!selectedGateway) {
                 selectedGateway = gateway;
                 document.getElementById("input-fields").style.display = "block";
+                document.getElementById("memo-field").style.display = gateway === 'Ton' ? 'none' : 'block';
                 document.querySelectorAll(".withdraw-btn").forEach(btn => {
                     btn.disabled = true;
                 });
-                alert(`Bạn đã chọn cổng rút: ${gateway}`);
+                showPopup(`Bạn đã chọn cổng rút: ${gateway}`);
             }
         }
 
@@ -136,13 +199,17 @@
             const address = document.getElementById("address").value;
             const memo = document.getElementById("memo").value;
 
-            if (address && memo) {
+            if (address && (selectedGateway === 'Ton' || memo)) {
                 localStorage.setItem("selectedGateway", selectedGateway);
                 localStorage.setItem("address", address);
-                localStorage.setItem("memo", memo);
-                alert("Dữ liệu đã được lưu!");
+                if (selectedGateway !== 'Ton') {
+                    localStorage.setItem("memo", memo);
+                }
+                document.getElementById("input-fields").style.display = "none";
+                document.querySelector(".reset-btn").style.display = "block";
+                showPopup("Dữ liệu đã được lưu!");
             } else {
-                alert("Vui lòng nhập cả Address và Memo.");
+                showPopup("Vui lòng nhập đầy đủ thông tin.");
             }
         }
 
@@ -151,12 +218,21 @@
             document.getElementById("input-fields").style.display = "none";
             document.getElementById("address").value = "";
             document.getElementById("memo").value = "";
-
             document.querySelectorAll(".withdraw-btn").forEach(btn => {
                 btn.disabled = false;
             });
+            document.querySelector(".reset-btn").style.display = "none";
             localStorage.clear();
-            alert("Cổng rút đã được reset.");
+            showPopup("Cổng rút đã được reset. Bạn có thể chọn lại.");
+        }
+
+        function showPopup(message) {
+            document.getElementById("popup-message").innerText = message;
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
         }
     </script>
 </body>
