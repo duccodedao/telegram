@@ -45,11 +45,31 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            gap: 10px;
+        }
+
+        .withdraw-btn img {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
         }
 
         .form-container {
             display: none;
             margin-top: 20px;
+        }
+
+        .selected-gateway {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .selected-gateway img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
         }
 
         .form-container input {
@@ -103,16 +123,33 @@
 <div class="container">
     <h2>Rút tiền Crypto</h2>
     <div class="withdraw-options" id="withdraw-options">
-        <div class="withdraw-btn" onclick="selectGateway('Binance')">Binance</div>
-        <div class="withdraw-btn" onclick="selectGateway('OKX')">OKX</div>
-        <div class="withdraw-btn" onclick="selectGateway('Bybit')">Bybit</div>
-        <div class="withdraw-btn" onclick="selectGateway('Kucoin')">Kucoin</div>
-        <div class="withdraw-btn" onclick="selectGateway('Gate')">Gate</div>
-        <div class="withdraw-btn" onclick="selectGateway('Bitget')">Bitget</div>
-        <div class="withdraw-btn" onclick="selectGateway('Ton')">Ton</div>
+        <div class="withdraw-btn" onclick="selectGateway('Binance')">
+            <img src="binance.png" alt="Binance"> Binance
+        </div>
+        <div class="withdraw-btn" onclick="selectGateway('OKX')">
+            <img src="okx.png" alt="OKX"> OKX
+        </div>
+        <div class="withdraw-btn" onclick="selectGateway('Bybit')">
+            <img src="bybit.png" alt="Bybit"> Bybit
+        </div>
+        <div class="withdraw-btn" onclick="selectGateway('Kucoin')">
+            <img src="kucoin.png" alt="Kucoin"> Kucoin
+        </div>
+        <div class="withdraw-btn" onclick="selectGateway('Gate')">
+            <img src="gate.png" alt="Gate"> Gate
+        </div>
+        <div class="withdraw-btn" onclick="selectGateway('Bitget')">
+            <img src="bitget.png" alt="Bitget"> Bitget
+        </div>
+        <div class="withdraw-btn" onclick="selectGateway('Ton')">
+            <img src="ton.png" alt="Ton"> Ton
+        </div>
     </div>
 
     <div class="form-container" id="form-container">
+        <div class="selected-gateway" id="selected-gateway">
+            <!-- Icon and name of selected gateway will show here -->
+        </div>
         <input type="text" id="address" placeholder="Nhập Address">
         <input type="text" id="memo" placeholder="Nhập Memo (nếu có)">
         <button onclick="saveData()">Lưu</button>
@@ -127,6 +164,16 @@
 </div>
 
 <script>
+    const gatewayImages = {
+        "Binance": "binance.png",
+        "OKX": "okx.png",
+        "Bybit": "bybit.png",
+        "Kucoin": "kucoin.png",
+        "Gate": "gate.png",
+        "Bitget": "bitget.png",
+        "Ton": "ton.png"
+    };
+
     function selectGateway(gateway) {
         // Lưu tên cổng rút
         localStorage.setItem('selectedGateway', gateway);
@@ -142,6 +189,13 @@
         } else {
             document.getElementById('memo').style.display = 'block';
         }
+
+        // Hiển thị tên và ảnh của cổng đã chọn
+        const selectedGatewayDiv = document.getElementById('selected-gateway');
+        selectedGatewayDiv.innerHTML = `
+            <img src="${gatewayImages[gateway]}" alt="${gateway}">
+            <span>${gateway}</span>
+        `;
     }
 
     function saveData() {
