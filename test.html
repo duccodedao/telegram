@@ -1,281 +1,104 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rút tiền Crypto</title>
+    <title>Footer</title>
     <style>
-        /* Định dạng chung cho trang */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #121212;
-            font-family: Arial, sans-serif;
-            color: #fff;
-        }
-
-        /* Khung chính chứa các thành phần */
-        .container {
-            text-align: center;
-            max-width: 400px;
+        /* CSS cho footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            padding: 20px;
-            border-radius: 12px;
-            background: #1e1e1e;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background-color: #212121;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid #333;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
         }
-
-        /* Các nút chọn cổng rút */
-        .withdraw-options {
+        .footer-item {
+            position: relative;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-        }
-
-        .withdraw-btn {
-            background-color: #2a2a2a;
-            color: #ffa500;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
             align-items: center;
-            justify-content: flex-start;
-            gap: 15px;
-            transition: background 0.3s;
-            width: 100%;
-            box-sizing: border-box;
+            text-decoration: none;
+            color: #ccc;
+            font-size: 14px;
+            padding: 5px 10px;
+            transition: color 0.3s;
         }
-
-        .withdraw-btn:hover {
-            background-color: #3b3b3b;
-        }
-
-        .withdraw-btn img {
+        .footer-item img {
             width: 24px;
             height: 24px;
+            margin-bottom: 4px;
+        }
+        .footer-item:hover {
+            color: #fff;
+        }
+        .footer-item.active {
+            color: #ff0;
+        }
+        .logo-item {
+            position: relative;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-        }
-
-        /* Khu vực hiển thị form nhập */
-        .form-container {
-            display: none;
-            margin-top: 20px;
-        }
-
-        /* Hiển thị cổng rút đã chọn */
-        .selected-gateway {
+            background-color: #3a3a3a;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            font-size: 16px;
+            justify-content: center;
+            margin: -20px 0 0 0;
+            z-index: 1;
         }
-
-        .selected-gateway img {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-        }
-
-        /* Ô nhập dữ liệu */
-        .form-container input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid #444;
-            font-size: 16px;
-            background-color: #2a2a2a;
-            color: #ffa500;
-            outline: none;
-            box-sizing: border-box;
-        }
-
-        /* Nút lưu */
-        .form-container button {
-            width: 100%;
-            padding: 12px;
-            background-color: #ffa500;
-            color: #1e1e1e;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
-        }
-
-        .form-container button:hover {
-            background-color: #ffb732;
-        }
-
-        /* Popup thông báo */
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #333;
-            color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none;
-            z-index: 100;
-            width: 300px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .popup button {
-            margin-top: 15px;
-            padding: 8px 15px;
-            border: none;
-            background-color: #ffa500;
-            color: #333;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        /* Nút reset */
-        .reset-btn {
-            display: none;
-            margin-top: 20px;
-            padding: 12px;
-            background-color: #444;
-            color: #ffa500;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background 0.3s;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .reset-btn:hover {
-            background-color: #555;
+        .logo-item img {
+            width: 40px;
+            height: 40px;
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h2>Rút tiền Crypto</h2>
-    <div class="withdraw-options" id="withdraw-options">
-        <div class="withdraw-btn" onclick="selectGateway('Binance')">
-            <img src="binance.png" alt="Binance"> Binance
+    <!-- HTML cho footer -->
+    <div class="footer">
+        <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/icon-wallet.svg" alt="Wallet">
+            </div>
+            <span>Wallet</span>
+        </a>
+        <a href="/swap.html" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/icon-swap.svg" alt="Swap">
+            </div>
+            <span>Swap</span>
+        </a>
+        <div class="footer-item logo-item">
+            <img src="/logo-coin/main-logo.svg" alt="Logo">
         </div>
-        <div class="withdraw-btn" onclick="selectGateway('OKX')">
-            <img src="okx.png" alt="OKX"> OKX
-        </div>
-        <div class="withdraw-btn" onclick="selectGateway('Bybit')">
-            <img src="bybit.png" alt="Bybit"> Bybit
-        </div>
-        <div class="withdraw-btn" onclick="selectGateway('Kucoin')">
-            <img src="kucoin.png" alt="Kucoin"> Kucoin
-        </div>
-        <div class="withdraw-btn" onclick="selectGateway('Gate')">
-            <img src="gate.png" alt="Gate"> Gate
-        </div>
-        <div class="withdraw-btn" onclick="selectGateway('Bitget')">
-            <img src="bitget.png" alt="Bitget"> Bitget
-        </div>
-        <div class="withdraw-btn" onclick="selectGateway('Ton')">
-            <img src="ton.png" alt="Ton"> Ton
-        </div>
+        <a href="/apps.html" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/icon-apps.svg" alt="Apps">
+            </div>
+            <span>Apps</span>
+        </a>
+        <a href="/fintopio.html" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/icon-fintopio.svg" alt="Fintopio">
+            </div>
+            <span>Fintopio</span>
+        </a>
     </div>
 
-    <div class="form-container" id="form-container">
-        <div class="selected-gateway" id="selected-gateway">
-            <!-- Tên và ảnh của cổng đã chọn -->
-        </div>
-        <input type="text" id="address" placeholder="Nhập Address">
-        <input type="text" id="memo" placeholder="Nhập Memo (nếu có)">
-        <button onclick="saveData()">Lưu</button>
-    </div>
-
-    <button class="reset-btn" id="reset-btn" onclick="resetForm()">Reset</button>
-</div>
-
-<div class="popup" id="popup">
-    <p>Thông tin đã được lưu thành công!</p>
-    <button onclick="closePopup()">OK</button>
-</div>
-
-<script>
-    const gatewayImages = {
-        "Binance": "binance.png",
-        "OKX": "okx.png",
-        "Bybit": "bybit.png",
-        "Kucoin": "kucoin.png",
-        "Gate": "gate.png",
-        "Bitget": "bitget.png",
-        "Ton": "ton.png"
-    };
-
-    function selectGateway(gateway) {
-        localStorage.setItem('selectedGateway', gateway);
-        document.getElementById('withdraw-options').style.display = 'none';
-        document.getElementById('form-container').style.display = 'block';
-        document.getElementById('reset-btn').style.display = 'block';
-
-        if (gateway === 'Ton') {
-            document.getElementById('memo').style.display = 'none';
-        } else {
-            document.getElementById('memo').style.display = 'block';
+    <script>
+        // Script để set mục active
+        function setActive(element) {
+            // Xóa class active khỏi tất cả các mục footer
+            document.querySelectorAll('.footer-item').forEach(item => item.classList.remove('active'));
+            // Thêm class active vào mục được chọn
+            element.classList.add('active');
         }
-
-        const selectedGatewayDiv = document.getElementById('selected-gateway');
-        selectedGatewayDiv.innerHTML = `
-            <img src="${gatewayImages[gateway]}" alt="${gateway}">
-            <span>${gateway}</span>
-        `;
-    }
-
-    function saveData() {
-        const address = document.getElementById('address').value;
-        const memo = document.getElementById('memo').value;
-
-        localStorage.setItem('address', address);
-        localStorage.setItem('memo', memo);
-
-        document.getElementById('popup').style.display = 'block';
-    }
-
-    function closePopup() {
-        document.getElementById('popup').style.display = 'none';
-    }
-
-    function resetForm() {
-        localStorage.removeItem('selectedGateway');
-        localStorage.removeItem('address');
-        localStorage.removeItem('memo');
-
-        document.getElementById('withdraw-options').style.display = 'block';
-        document.getElementById('form-container').style.display = 'none';
-        document.getElementById('reset-btn').style.display = 'none';
-        
-        document.getElementById('address').value = '';
-        document.getElementById('memo').value = '';
-    }
-
-    window.onload = function() {
-        const selectedGateway = localStorage.getItem('selectedGateway');
-        if (selectedGateway) {
-            selectGateway(selectedGateway);
-            document.getElementById('address').value = localStorage.getItem('address') || '';
-            document.getElementById('memo').value = localStorage.getItem('memo') || '';
-        }
-    }
-</script>
-
+    </script>
 </body>
 </html>
