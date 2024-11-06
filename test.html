@@ -3,59 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kết nối và Gửi Giao Dịch TON</title>
+    <title>Kết nối và Hiển Thị Số Dư TON</title>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #333;
+        }
+        .container {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #1e1e1e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .button, .ton-balance {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+        }
+        .button img, .ton-balance img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        .button:hover {
+            background: #ff6a00;
+            color: #fff;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        .ton-balance {
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
-    <div id="ton-connect-button"></div>
-    <button id="send-transaction" onclick="sendTransaction()">Gửi Giao Dịch</button>
+    <div class="container">
+        <div class="logo">Kết nối với TON Wallet</div>
+        <div id="ton-connect-button" class="button">
+            <img src="https://ton.org/favicon.ico" alt="TON logo">
+            Kết nối ví TON
+        </div>
+        <div class="connect-text">Kết nối ví để xem số dư</div>
+        <div id="balance" class="ton-balance">
+            <img src="https://ton.org/favicon.ico" alt="TON logo">
+            Số dư: <span id="balance-value">Đang tải...</span> TON
+        </div>
+    </div>
 
     <script>
         // Khởi tạo TonConnectUI
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-            buttonRootId: 'ton-connect-button' // ID của phần tử HTML chứa nút kết nối
+            buttonRootId: 'ton-connect-button'
         });
 
-        // Hàm kết nối ví
+        // Kết nối và lấy số dư
         async function connectToWallet() {
             try {
                 const connectedWallet = await tonConnectUI.connectWallet();
-                console.log("Kết nối thành công:", connectedWallet);
+                if (connectedWallet) {
+                    console.log("Kết nối thành công:", connectedWallet);
+                    await getBalance(connectedWallet.wallet.address);
+                }
             } catch (error) {
                 console.error("Lỗi khi kết nối ví:", error);
+                document.getElementById("balance-value").innerText = "Không thể kết nối ví.";
             }
         }
 
-        // Hàm gửi giao dịch
-        async function sendTransaction() {
-            // Kiểm tra nếu ví chưa được kết nối
-            if (!tonConnectUI.isConnected) {
-                alert("Vui lòng kết nối ví trước khi gửi giao dịch.");
-                return;
-            }
-
-            // Cấu hình giao dịch
-            const transaction = {
-                messages: [
-                    {
-                        address: "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD", // Địa chỉ đích
-                        amount: "20000000" // Số tiền Toncoin trong nanotons
-                    }
-                ]
-            };
-
+        async function getBalance(address) {
             try {
-                const result = await tonConnectUI.sendTransaction(transaction);
-                console.log("Giao dịch thành công:", result);
-                alert("Giao dịch thành công!");
+                // Lấy số dư của ví từ API
+                const response = await fetch(`https://tonapi.io/v1/balance/${address}`);
+                const data = await response.json();
+                const balance = data.balance / 1e9; // Chuyển từ nanoTON sang TON
+                document.getElementById("balance-value").innerText = balance.toFixed(2);
             } catch (error) {
-                console.error("Lỗi khi gửi giao dịch:", error);
-                alert("Giao dịch thất bại.");
+                console.error("Lỗi khi lấy số dư:", error);
+                document.getElementById("balance-value").innerText = "Không thể lấy số dư.";
             }
         }
 
-        // Kết nối ví khi tải trang
+        // Gọi kết nối khi tải trang
         connectToWallet();
     </script>
 </body>
