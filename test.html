@@ -53,29 +53,11 @@
         </div>
     </div>
 
-    <div class="price-display">
-        <img src="/logo-coin/hmstrx.jpg" alt="HMSTR Logo">
-        <span id="hmstrPrice">Giá: Đang tải...</span>
-        <div class="chart-container">
-            <canvas id="hmstrChart"></canvas>
-        </div>
-    </div>
-
-    <div class="price-display">
-        <img src="/logo-coin/notx.jpg" alt="NOT Logo">
-        <span id="notPrice">Giá: Đang tải...</span>
-        <div class="chart-container">
-            <canvas id="notChart"></canvas>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Hàm fetch giá và cập nhật biểu đồ
         async function fetchTokenData(instId, priceElementId, chartElementId) {
             try {
                 const url = `https://www.okx.com/api/v5/market/ticker?instId=${instId}-USDT`;
-
                 const response = await fetch(url);
 
                 if (!response.ok) {
@@ -90,15 +72,45 @@
 
                 const tokenPrice = data.data[0].last;
                 const change24h = parseFloat(data.data[0].change24h);
-
-                // Cập nhật giá
                 document.getElementById(priceElementId).textContent = `Giá: ${tokenPrice} USDT`;
 
-                // Cập nhật màu biểu đồ (xanh nếu tăng, đỏ nếu giảm)
+                // Màu gradient cho biểu đồ (xanh nếu tăng, đỏ nếu giảm)
                 const chartColor = change24h >= 0 ? 'rgba(0, 255, 0, 0.5)' : 'rgba(255, 0, 0, 0.5)';
+                const ctx = document.getElementById(chartElementId).getContext('2d');
+                const gradient = ctx.createLinearGradient(0, 0, 0, 200);
 
-                // Cập nhật dữ liệu cho biểu đồ
-                updateChart(chartElementId, chartColor);
+                // Tạo hiệu ứng gradient
+                if (change24h >= 0) {
+                    gradient.addColorStop(0, 'rgba(0, 255, 0, 0.5)');
+                    gradient.addColorStop(1, 'rgba(0, 255, 0, 0)');
+                } else {
+                    gradient.addColorStop(0, 'rgba(255, 0, 0, 0.5)');
+                    gradient.addColorStop(1, 'rgba(255, 0, 0, 0)');
+                }
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: Array(10).fill(''),
+                        datasets: [{
+                            label: 'Biểu đồ giá',
+                            data: Array.from({length: 10}, () => Math.random() * 10 + 10),
+                            borderColor: chartColor,
+                            backgroundColor: gradient,
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: { display: false },
+                            y: { display: false }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
                 
             } catch (error) {
                 console.error('Lỗi:', error);
@@ -106,46 +118,13 @@
             }
         }
 
-        // Hàm tạo và cập nhật biểu đồ
-        function updateChart(chartId, color) {
-            const ctx = document.getElementById(chartId).getContext('2d');
-
-            // Tạo biểu đồ với đường giá mẫu
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Array(10).fill(''),
-                    datasets: [{
-                        label: 'Biểu đồ giá',
-                        data: Array.from({length: 10}, () => Math.random() * 10 + 10),
-                        borderColor: color,
-                        backgroundColor: color,
-                        fill: true,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: { display: false },
-                        y: { display: false }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
-        }
-
-        // Lấy giá và biểu đồ cho từng token
         fetchTokenData('TON', 'tonPrice', 'tonChart');
         fetchTokenData('DOGS', 'dogsPrice', 'dogsChart');
-        fetchTokenData('HMSTR', 'hmstrPrice', 'hmstrChart');
-        fetchTokenData('NOT', 'notPrice', 'notChart');
 
         // Cập nhật dữ liệu mỗi 10 giây
         setInterval(() => {
             fetchTokenData('TON', 'tonPrice', 'tonChart');
             fetchTokenData('DOGS', 'dogsPrice', 'dogsChart');
-            fetchTokenData('HMSTR', 'hmstrPrice', 'hmstrChart');
-            fetchTokenData('NOT', 'notPrice', 'notChart');
         }, 10000);
     </script>
 </body>
