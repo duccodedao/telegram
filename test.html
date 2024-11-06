@@ -254,16 +254,6 @@ const tonConnectUI = new TonConnectUI({ //connect application
     buttonRootId: '<ton-connect'
 });
 
-const transaction = {
-    messages: [
-        {
-            address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // destination address
-            amount: "20000000" //Toncoin in nanotons
-        }
-    ]
-}
-
-const result = await tonConnectUI.sendTransaction(transaction)
 
 
     // Cấu hình thêm tuỳ chọn nếu cần
