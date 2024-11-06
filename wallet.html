@@ -200,8 +200,23 @@
     <div class="connect-text">Xin chào <span id="user-name">User</span>, kết nối ví của bạn để mở khóa thêm nhiều tính năng.</div>
 
     <div class="price-display">
-    <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="Giá Coin">
-    <span id="tonPrice">Giá: Đang tải...</span>
+        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Logo">
+        <span id="tonPrice">Giá: Đang tải...</span>
+    </div>
+    
+    <div class="price-display">
+        <img src="/logo-coin/dogsx.jpg" alt="DOGS Logo">
+        <span id="dogsPrice">Giá: Đang tải...</span>
+    </div>
+
+    <div class="price-display">
+        <img src="/logo-coin/hmstrx.jpg" alt="HMSTR Logo">
+        <span id="hmstrPrice">Giá: Đang tải...</span>
+    </div>
+
+    <div class="price-display">
+        <img src="/logo-coin/notx.jpg" alt="NOT Logo">
+        <span id="notPrice">Giá: Đang tải...</span>
     </div>
     
     <div id="joinGroupButton" class="button" onclick="joinWallet()">
@@ -376,42 +391,42 @@
     }
 
 
-    async function fetchTonPrice() {
-        try {
-            // Lấy giá TON từ API OKX
-            const url = 'https://www.okx.com/api/v5/market/ticker?instId=TON-USDT'; // Đảm bảo rằng TON-USDT là cặp giao dịch đúng trên OKX
+    async function fetchTokenPrice(instId, elementId) {
+            try {
+                const url = `https://www.okx.com/api/v5/market/ticker?instId=${instId}-USDT`;
 
-            const response = await fetch(url);
+                const response = await fetch(url);
 
-            if (!response.ok) {
-                throw new Error('Lỗi khi tải dữ liệu từ API');
+                if (!response.ok) {
+                    throw new Error(`Lỗi khi tải dữ liệu từ API cho ${instId}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.data || data.data.length === 0) {
+                    throw new Error(`Không tìm thấy giá ${instId} từ API`);
+                }
+
+                const tokenPrice = data.data[0].last;
+                document.getElementById(elementId).textContent = `Giá: ${tokenPrice} USDT`;
+            } catch (error) {
+                console.error('Lỗi:', error);
+                document.getElementById(elementId).textContent = `Giá ${instId} không thể lấy được`;
             }
-
-            const data = await response.json();
-
-            // Kiểm tra nếu có dữ liệu giá
-            if (!data.data || data.data.length === 0) {
-                throw new Error('Không tìm thấy giá TON từ API');
-            }
-
-            const tonPrice = data.data[0].last; // Lấy giá cuối cùng
-
-            // Cập nhật giá vào phần tử HTML
-            document.getElementById('tonPrice').textContent = `Giá: ${tonPrice} USDT`;
-        } catch (error) {
-            console.error('Lỗi:', error);
-            // Nếu có lỗi, hiển thị thông báo lỗi
-            document.getElementById('tonPrice').textContent = 'Giá TON không thể lấy được';
         }
-    }
 
-    // Gọi hàm fetchTonPrice ngay khi trang tải
-    fetchTonPrice();
+        fetchTokenPrice('TON', 'tonPrice');
+        fetchTokenPrice('DOGS', 'dogsPrice');
+        fetchTokenPrice('HMSTR', 'hmstrPrice');
+        fetchTokenPrice('NOT', 'notPrice');
 
-    // Cập nhật giá mỗi 10 giây
-    setInterval(fetchTonPrice, 10000);
+        setInterval(() => {
+            fetchTokenPrice('TON', 'tonPrice');
+            fetchTokenPrice('DOGS', 'dogsPrice');
+            fetchTokenPrice('HMSTR', 'hmstrPrice');
+            fetchTokenPrice('NOT', 'notPrice');
+        }, 10000);
 </script>
 
 </body>
 </html>
-
