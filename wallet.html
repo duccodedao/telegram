@@ -185,7 +185,7 @@
 
 <!-- Header -->
 <header>
-    <img id="user-avatar" src="default-avatar.png" alt="Avatar">
+    <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
     <span id="user-username">@username</span>
     <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
 </header>
@@ -408,10 +408,10 @@
                 }
 
                 const tokenPrice = data.data[0].last;
-                document.getElementById(elementId).textContent = `Giá: ${tokenPrice} USDT`;
+                document.getElementById(elementId).textContent = ` ${tokenPrice} USDT`;
             } catch (error) {
                 console.error('Lỗi:', error);
-                document.getElementById(elementId).textContent = `Giá ${instId} không thể lấy được`;
+                document.getElementById(elementId).textContent = ` ${instId} không thể lấy được`;
             }
         }
 
