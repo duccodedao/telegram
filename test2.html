@@ -86,26 +86,44 @@
         }
     }
 
-    // Hàm lấy thông tin người dùng Telegram
-    function getTelegramUserInfo() {
-        // Giả định có một biến chứa thông tin Telegram của người dùng.
-        const tgUser = {
-            avatarUrl: "https://t.me/i/userpic/320/telegram.jpg",  // Đường dẫn ảnh đại diện
-            username: "username_here" // Tên người dùng
-        };
+// Danh sách ảnh đại diện ngẫu nhiên
+    const avatars = [
+    '/logo-coin/av1.png',
+    '/logo-coin/av2.png',
+    '/logo-coin/av3.png',
+    '/logo-coin/av4.png',
+    'logo-coin/av5.png',
+    '/logo-coin/av6.png',
+    '/logo-coin/av7.png',
+    '/logo-coin/av8.png',
+    '/logo-coin/av9.png',
+    '/logo-coin/av10.png',
+    '/logo-coin/av11.png',
+    '/logo-coin/av12.png',
+    ];
+    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
 
-        // Cập nhật ảnh đại diện và tên người dùng
-        const avatarElement = document.getElementById("user-avatar");
-        const usernameElement = document.getElementById("user-username");
+    // Lấy thông tin người dùng từ Telegram WebApp API
+    if (Telegram.WebApp.initDataUnsafe) {
+        let user = Telegram.WebApp.initDataUnsafe.user;
 
-        avatarElement.src = tgUser.avatarUrl;
-        usernameElement.textContent = `@${tgUser.username}`;
-    }
+        if (user) {
+            let userName = user.first_name + " " + (user.last_name || "");
+            let username = user.username || "No Username"; // Thay thế nếu không có username
 
-    // Gọi hàm khi trang được tải
-    window.onload = function() {
-        getTelegramUserInfo();
-    };
+            // Cập nhật thông tin vào HTML
+            document.getElementById('user-name').textContent = userName;
+            document.getElementById('user-username').textContent = `@${username}`;
+            document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
+        } else {
+            // Trường hợp không có thông tin người dùng
+            document.getElementById('user-name').textContent = "Loading...";
+            document.getElementById('user-username').textContent = "@username";
+            document.getElementById('user-avatar').src = randomAvatar;
+        }
+    } else {
+        console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
+                }
 </script>
 
 </body>
