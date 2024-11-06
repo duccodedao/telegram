@@ -18,8 +18,8 @@
             margin: 0;
         }
 
-        /* CSS cho nút hiển thị giá TON */
-        .button {
+        /* CSS cho div hiển thị giá TON */
+        .price-display {
             display: flex;
             align-items: center;
             padding: 10px 20px;
@@ -28,23 +28,17 @@
             color: #ff6a00;
             font-size: 16px;
             border-radius: 30px;
-            cursor: pointer;
-            transition: background 0.3s ease;
             margin-top: 10px;
             text-align: left;
             justify-content: flex-start;
+            cursor: default; /* Chỉ hiển thị, không phải nút nhấn */
         }
 
-        .button img {
+        .price-display img {
             width: 25px;
             height: 25px;
             margin-right: 10px;
             border-radius: 10px;
-        }
-
-        .button:hover {
-            background: #ff6a00;
-            color: #fff;
         }
 
         .logo {
@@ -58,7 +52,7 @@
 <body>
 
 <div class="logo">Crypto Dashboard</div>
-<div class="button">
+<div class="price-display">
     <img src="/logo-coin/TON.svg" alt="Giá Coin">
     <span id="tonPrice">Giá: TON</span>
 </div>
