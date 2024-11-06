@@ -23,7 +23,7 @@
         
 <script>
     const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-        manifestUrl: 'https://<YOUR_APP_URL>/tonconnect-manifest.json',
+        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
         buttonRootId: 'ton-connect'
     });
 
@@ -37,6 +37,34 @@
     connectToWallet().catch(error => {
         console.error("Error connecting to wallet:", error);
     });
+
+
+    tonConnectUI.uiOptions = {
+      twaReturnUrl: 'https://t.me/bmassk3_bot'
+  };
+
+    await tonConnectUI.disconnect();
+
+
+    import TonConnectUI from '@tonconnect/ui';
+
+const tonConnectUI = new TonConnectUI({ //connect application
+    manifestUrl: 'https://bmasshd.cli k/tonconnect-manifest.json',
+    buttonRootId: 'ton-connect'
+});
+
+const transaction = {
+    messages: [
+        {
+            address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // destination address
+            amount: "20000000" //Toncoin in nanotons
+        }
+    ]
+}
+
+const result = await tonConnectUI.sendTransaction(transaction)
+
+ 
 </script>
 </body>
 </html>
