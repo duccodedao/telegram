@@ -23,26 +23,7 @@
         
 
     <script>
-        // Khởi tạo TonConnectUI
-        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-            buttonRootId: 'ton-connect'
-        });
-
-        // Xử lý sự kiện khi người dùng nhấn vào nút kết nối
-        document.getElementById('ton-connect-button').addEventListener('click', async () => {
-            try {
-                const connectedWallet = await tonConnectUI.connectWallet();
-                if (connectedWallet) {
-                    console.log("Kết nối thành công:", connectedWallet);
-                    alert("Kết nối ví TON thành công!");
-                }
-            } catch (error) {
-                console.error("Lỗi khi kết nối ví:", error);
-                alert("Lỗi khi kết nối ví.");
-            }
-        });
-        await tonConnectUI.disconnect();
-    </script>
+        
+</script>
 </body>
 </html>
