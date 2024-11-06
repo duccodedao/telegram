@@ -54,20 +54,35 @@
 <div class="logo">Crypto Dashboard</div>
 <div class="price-display">
     <img src="/logo-coin/TON.svg" alt="Giá Coin">
-    <span id="tonPrice">Giá: TON</span>
+    <span id="tonPrice">Giá: Đang tải...</span>
 </div>
 
 <script>
     async function fetchTonPrice() {
         try {
+            // Lấy giá TON từ API CoinGecko
             const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=toncoin&vs_currencies=usd');
+            
+            // Kiểm tra nếu có lỗi trong việc lấy dữ liệu
+            if (!response.ok) {
+                throw new Error('Lỗi khi tải dữ liệu từ API');
+            }
+
             const data = await response.json();
+
+            // Kiểm tra nếu không có dữ liệu giá
+            if (!data.toncoin || !data.toncoin.usd) {
+                throw new Error('Không tìm thấy giá TON từ API');
+            }
+
             const tonPrice = data.toncoin.usd;
 
             // Cập nhật giá vào phần tử HTML
             document.getElementById('tonPrice').textContent = `Giá: ${tonPrice} USDT`;
         } catch (error) {
-            console.error('Lỗi khi lấy giá TON:', error);
+            console.error('Lỗi:', error);
+            // Nếu có lỗi, hiển thị thông báo lỗi
+            document.getElementById('tonPrice').textContent = 'Giá TON không thể lấy được';
         }
     }
 
