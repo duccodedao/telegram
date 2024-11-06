@@ -3,58 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giá Token từ OKX</title>
+    <title>Giá Token và Biểu Đồ</title>
     <style>
         .price-display {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: space-between;
+            cursor: default;
         }
+
         .price-display img {
-            width: 40px;
-            height: 40px;
+            width: 25px;
+            height: 25px;
             margin-right: 10px;
+            border-radius: 10px;
         }
-        .price {
-            margin-right: 10px;
-        }
-        .change-positive {
-            color: green;
-        }
-        .change-negative {
-            color: red;
+
+        .chart-container {
+            width: 100px;
+            height: 50px;
+            position: relative;
         }
     </style>
 </head>
 <body>
-    <h1>Giá Token</h1>
+    <h1>Giá Token và Biểu Đồ</h1>
 
     <div class="price-display">
         <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Logo">
-        <span id="tonPrice" class="price">Giá: Đang tải...</span>
-        <span id="tonChange">Đang tải...</span>
+        <span id="tonPrice">Giá: Đang tải...</span>
+        <div class="chart-container">
+            <canvas id="tonChart"></canvas>
+        </div>
     </div>
-    
+
     <div class="price-display">
         <img src="/logo-coin/dogsx.jpg" alt="DOGS Logo">
-        <span id="dogsPrice" class="price">Giá: Đang tải...</span>
-        <span id="dogsChange">Đang tải...</span>
+        <span id="dogsPrice">Giá: Đang tải...</span>
+        <div class="chart-container">
+            <canvas id="dogsChart"></canvas>
+        </div>
     </div>
 
     <div class="price-display">
         <img src="/logo-coin/hmstrx.jpg" alt="HMSTR Logo">
-        <span id="hmstrPrice" class="price">Giá: Đang tải...</span>
-        <span id="hmstrChange">Đang tải...</span>
+        <span id="hmstrPrice">Giá: Đang tải...</span>
+        <div class="chart-container">
+            <canvas id="hmstrChart"></canvas>
+        </div>
     </div>
 
     <div class="price-display">
         <img src="/logo-coin/notx.jpg" alt="NOT Logo">
-        <span id="notPrice" class="price">Giá: Đang tải...</span>
-        <span id="notChange">Đang tải...</span>
+        <span id="notPrice">Giá: Đang tải...</span>
+        <div class="chart-container">
+            <canvas id="notChart"></canvas>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        async function fetchTokenPrice(instId, priceElementId, changeElementId) {
+        // Hàm fetch giá và cập nhật biểu đồ
+        async function fetchTokenData(instId, priceElementId, chartElementId) {
             try {
                 const url = `https://www.okx.com/api/v5/market/ticker?instId=${instId}-USDT`;
 
@@ -71,43 +89,63 @@
                 }
 
                 const tokenPrice = data.data[0].last;
-                const change24h = data.data[0].change24h;
+                const change24h = parseFloat(data.data[0].change24h);
 
                 // Cập nhật giá
                 document.getElementById(priceElementId).textContent = `Giá: ${tokenPrice} USDT`;
 
-                // Cập nhật phần trăm thay đổi
-                const changeElement = document.getElementById(changeElementId);
-                changeElement.textContent = `(${change24h}%)`;
+                // Cập nhật màu biểu đồ (xanh nếu tăng, đỏ nếu giảm)
+                const chartColor = change24h >= 0 ? 'rgba(0, 255, 0, 0.5)' : 'rgba(255, 0, 0, 0.5)';
 
-                // Đặt màu cho phần trăm thay đổi (xanh nếu tăng, đỏ nếu giảm)
-                if (parseFloat(change24h) > 0) {
-                    changeElement.classList.add('change-positive');
-                    changeElement.classList.remove('change-negative');
-                } else {
-                    changeElement.classList.add('change-negative');
-                    changeElement.classList.remove('change-positive');
-                }
-
+                // Cập nhật dữ liệu cho biểu đồ
+                updateChart(chartElementId, chartColor);
+                
             } catch (error) {
                 console.error('Lỗi:', error);
                 document.getElementById(priceElementId).textContent = `Giá ${instId} không thể lấy được`;
-                document.getElementById(changeElementId).textContent = 'Không thể lấy dữ liệu';
             }
         }
 
-        // Gọi hàm cho từng token
-        fetchTokenPrice('TON', 'tonPrice', 'tonChange');
-        fetchTokenPrice('DOGS', 'dogsPrice', 'dogsChange');
-        fetchTokenPrice('HMSTR', 'hmstrPrice', 'hmstrChange');
-        fetchTokenPrice('NOT', 'notPrice', 'notChange');
+        // Hàm tạo và cập nhật biểu đồ
+        function updateChart(chartId, color) {
+            const ctx = document.getElementById(chartId).getContext('2d');
 
-        // Cập nhật giá mỗi 10 giây
+            // Tạo biểu đồ với đường giá mẫu
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Array(10).fill(''),
+                    datasets: [{
+                        label: 'Biểu đồ giá',
+                        data: Array.from({length: 10}, () => Math.random() * 10 + 10),
+                        borderColor: color,
+                        backgroundColor: color,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { display: false },
+                        y: { display: false }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // Lấy giá và biểu đồ cho từng token
+        fetchTokenData('TON', 'tonPrice', 'tonChart');
+        fetchTokenData('DOGS', 'dogsPrice', 'dogsChart');
+        fetchTokenData('HMSTR', 'hmstrPrice', 'hmstrChart');
+        fetchTokenData('NOT', 'notPrice', 'notChart');
+
+        // Cập nhật dữ liệu mỗi 10 giây
         setInterval(() => {
-            fetchTokenPrice('TON', 'tonPrice', 'tonChange');
-            fetchTokenPrice('DOGS', 'dogsPrice', 'dogsChange');
-            fetchTokenPrice('HMSTR', 'hmstrPrice', 'hmstrChange');
-            fetchTokenPrice('NOT', 'notPrice', 'notChange');
+            fetchTokenData('TON', 'tonPrice', 'tonChart');
+            fetchTokenData('DOGS', 'dogsPrice', 'dogsChart');
+            fetchTokenData('HMSTR', 'hmstrPrice', 'hmstrChart');
+            fetchTokenData('NOT', 'notPrice', 'notChart');
         }, 10000);
     </script>
 </body>
