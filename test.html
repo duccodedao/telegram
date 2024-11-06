@@ -1,104 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footer</title>
+    <title>Kết nối với TON Connect</title>
     <style>
-        /* CSS cho footer */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #212121;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-top: 1px solid #333;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
-        }
-        .footer-item {
-            position: relative;
+        body {
+            background-color: #212d3b;
+            color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-decoration: none;
-            color: #ccc;
-            font-size: 14px;
-            padding: 5px 10px;
-            transition: color 0.3s;
-        }
-        .footer-item img {
-            width: 24px;
-            height: 24px;
-            margin-bottom: 4px;
-        }
-        .footer-item:hover {
-            color: #fff;
-        }
-        .footer-item.active {
-            color: #ff0;
-        }
-        .logo-item {
-            position: relative;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #3a3a3a;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            margin: -20px 0 0 0;
-            z-index: 1;
+            height: 100vh;
+            font-family: Arial, sans-serif;
         }
-        .logo-item img {
-            width: 40px;
-            height: 40px;
+        button {
+            background-color: #50a8eb;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- HTML cho footer -->
-    <div class="footer">
-        <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
-            <div class="img-wrapper">
-                <img src="/logo-coin/icon-wallet.svg" alt="Wallet">
-            </div>
-            <span>Wallet</span>
-        </a>
-        <a href="/swap.html" class="footer-item" onclick="setActive(this)">
-            <div class="img-wrapper">
-                <img src="/logo-coin/icon-swap.svg" alt="Swap">
-            </div>
-            <span>Swap</span>
-        </a>
-        <div class="footer-item logo-item">
-            <img src="/logo-coin/main-logo.svg" alt="Logo">
-        </div>
-        <a href="/apps.html" class="footer-item" onclick="setActive(this)">
-            <div class="img-wrapper">
-                <img src="/logo-coin/icon-apps.svg" alt="Apps">
-            </div>
-            <span>Apps</span>
-        </a>
-        <a href="/fintopio.html" class="footer-item" onclick="setActive(this)">
-            <div class="img-wrapper">
-                <img src="/logo-coin/icon-fintopio.svg" alt="Fintopio">
-            </div>
-            <span>Fintopio</span>
-        </a>
-    </div>
 
+    <h2>Kết nối với TON Connect</h2>
+    <button onclick="connectToTon()">Kết nối TON Connect</button>
+    <div id="walletAddress"></div>
+
+    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
     <script>
-        // Script để set mục active
-        function setActive(element) {
-            // Xóa class active khỏi tất cả các mục footer
-            document.querySelectorAll('.footer-item').forEach(item => item.classList.remove('active'));
-            // Thêm class active vào mục được chọn
-            element.classList.add('active');
+        // Khởi tạo TON Connect
+        const tonConnect = new TonConnect({
+            manifestUrl: "https://app.tapswap.club/tonconnect-manifest.json" // URL của manifest cho ứng dụng của bạn
+        });
+
+        async function connectToTon() {
+            try {
+                // Kết nối với ví TON
+                const wallet = await tonConnect.connect();
+                
+                // Lấy địa chỉ ví sau khi kết nối thành công
+                const walletAddress = wallet.account.address;
+                
+                // Hiển thị địa chỉ ví
+                document.getElementById("walletAddress").innerText = `Địa chỉ ví của bạn: ${walletAddress}`;
+            } catch (error) {
+                console.error("Kết nối thất bại:", error);
+                alert("Kết nối thất bại. Vui lòng thử lại.");
+            }
         }
     </script>
+
 </body>
 </html>
