@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kết nối với TON Connect</title>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <style>
         body {
             background-color: #212d3b;
@@ -28,34 +29,36 @@
     </style>
 </head>
 <body>
-
+<div id="ton-connect">abc</div>
     <h2>Kết nối với TON Connect</h2>
     <button onclick="connectToTon()">Kết nối TON Connect</button>
     <div id="walletAddress"></div>
 
     <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+   
+       
     <script>
-        // Khởi tạo TON Connect
-        const tonConnect = new TonConnect({
-            manifestUrl: "https://app.tapswap.club/tonconnect-manifest.json" // URL của manifest cho ứng dụng của bạn
-        });
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect'
+    });
 
-        async function connectToTon() {
-            try {
-                // Kết nối với ví TON
-                const wallet = await tonConnect.connect();
-                
-                // Lấy địa chỉ ví sau khi kết nối thành công
-                const walletAddress = wallet.account.address;
-                
-                // Hiển thị địa chỉ ví
-                document.getElementById("walletAddress").innerText = `Địa chỉ ví của bạn: ${walletAddress}`;
-            } catch (error) {
-                console.error("Kết nối thất bại:", error);
-                alert("Kết nối thất bại. Vui lòng thử lại.");
-            }
-        }
+
+
+        
+    async function connectToWallet() {
+        const connectedWallet = await tonConnectUI.connectWallet();
+        // Do something with connectedWallet if needed
+        console.log(connectedWallet);
+    }
+
+    // Call the function
+    connectToWallet().catch(error => {
+        console.error("Error connecting to wallet:", error);
+    });
     </script>
+    
+    
 
 </body>
 </html>
