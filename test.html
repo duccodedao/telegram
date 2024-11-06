@@ -38,41 +38,37 @@
         <p id="balance" class="balance">Số dư: Đang tải...</p>
     </div>
 
-    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
     <script>
-        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-            buttonRootId: 'ton-connect'
-        });
+    async function connectToWallet() {
+        const connectedWallet = await tonConnectUI.connectWallet();
+        // Do something with connectedWallet if needed
+        console.log(connectedWallet);
+    }
+
+    // Call the function
+    connectToWallet().catch(error => {
+        console.error("Error connecting to wallet:", error);
+    });
+    </script>
+
+    
+    <script>
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://bmassk3.click/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect'
+    });
+
 
         tonConnectUI.uiOptions = {
-            twaReturnUrl: 'https://t.me/bmassk3_bot'
-        };
+      twaReturnUrl: 'https://t.me/bmassk3_bot'
+  };
+        await tonConnectUI.disconnect();
 
-        async function connectToWallet() {
-            try {
-                const connectedWallet = await tonConnectUI.connectWallet();
-                
-                // Hiển thị thông báo ví đã kết nối
-                document.getElementById('wallet-info').style.display = 'block';
 
-                // Lấy địa chỉ ví và hiển thị số dư
-                const address = connectedWallet.account.address;
-                console.log('Địa chỉ ví:', address);
 
-                // Gọi API hoặc SDK để lấy số dư
-                const balance = await tonConnectUI.getBalance(address);
-                
-                // Hiển thị số dư lên giao diện
-                document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
-            } catch (error) {
-                console.error("Lỗi khi kết nối ví:", error);
-            }
-        }
 
-        connectToWallet().catch(error => {
-            console.error("Error connecting to wallet:", error);
-        });
+        
     </script>
+  
 </body>
 </html>
