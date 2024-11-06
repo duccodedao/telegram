@@ -45,27 +45,27 @@
     <img src="/logo-coin/TON.svg" alt="Giá Coin">
     <span id="tonPrice">Giá: TON</span>
 </button>
+
 <script>
     async function fetchTonPrice() {
-    try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=toncoin&vs_currencies=usd');
-        const data = await response.json();
-        const tonPrice = data.toncoin.usd;
+        try {
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=toncoin&vs_currencies=usd');
+            const data = await response.json();
+            const tonPrice = data.toncoin.usd;
 
-        // Cập nhật giá vào phần tử HTML
-        document.getElementById('tonPrice').textContent = `Giá: ${tonPrice} USDT`;
-    } catch (error) {
-        console.error('Error fetching TON price:', error);
+            // Cập nhật giá vào phần tử HTML
+            document.getElementById('tonPrice').textContent = `Giá: ${tonPrice} USDT`;
+        } catch (error) {
+            console.error('Error fetching TON price:', error);
+        }
     }
-}
 
-// Gọi hàm fetchTonPrice ngay khi trang tải
-fetchTonPrice();
+    // Gọi hàm fetchTonPrice ngay khi trang tải
+    fetchTonPrice();
 
-// Cập nhật giá mỗi 10 giây
-setInterval(fetchTonPrice, 10000);
-    
+    // Cập nhật giá mỗi 10 giây
+    setInterval(fetchTonPrice, 10000);
 </script>
-<script src="script.js"></script>
+
 </body>
 </html>
