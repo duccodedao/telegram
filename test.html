@@ -403,6 +403,114 @@
 
                 const data = await response.json();
 
+                // Kiểm tra nếu có dữ liệu giá
+                if (!data.data || data.data.length === 0) {
+                    throw new Error(`Không tìm thấy giá ${instId} từ API`);
+                }
+
+                const tokenPrice = data.data[0].last; // Lấy giá cuối cùng
+
+                // Cập nhật giá vào phần tử HTML
+                document.getElementById(elementId).textContent = `Giá: ${tokenPrice} USDT`;
+            } catch (error) {
+                console.error('Lỗi:', error);
+                document.getElementById(elementId).textContent = `Giá ${instId} không thể lấy được`;
+            }
+        }
+
+        // Gọi hàm để lấy giá từng token ngay khi trang tải
+        fetchTokenPrice('TON', 'tonPrice');
+        fetchTokenPrice('DOGS', 'dogsPrice');
+        fetchTokenPrice('HMSTR', 'hmstrPrice');
+        fetchTokenPrice('NOT', 'notPrice');
+
+        // Cập nhật giá mỗi 10 giây
+        setInterval(() => {
+            fetchTokenPrice('TON', 'tonPrice');
+            fetchTokenPrice('DOGS', 'dogsPrice');
+            fetchTokenPrice('HMSTR', 'hmstrPrice');
+            fetchTokenPrice('NOT', 'notPrice');
+        }, 10000);
+    </script>
+</body>
+</html>
+Giải thích
+Hàm fetchTokenPrice(instId, elementId) nhận instId của từng token (TON, DOGS, HMSTR, NOT) và elementId của phần tử HTML để hiển thị giá.
+url được thiết lập động theo instId của từng token để lấy dữ liệu đúng từ OKX.
+Cập nhật giá của từng token mỗi 10 giây với setInterval.
+Với mã này, giá của TON, DOGS, HMSTR, và NOT sẽ được cập nhật và hiển thị trên trang mỗi 10 giây.
+
+
+
+
+
+
+Bạn đã nói:
+<div class="price-display">
+    <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="Giá Coin">
+    <span id="tonPrice">Giá: Đang tải...</span>
+    </div> code thêm div các token còn lại
+ChatGPT đã nói:
+ChatGPT
+Bạn có thể thêm các div tương tự cho các token DOGS, HMSTR, và NOT để hiển thị logo và giá của từng token. Dưới đây là mã HTML và CSS mẫu để hiển thị các token trong một bố cục đồng nhất:
+
+html
+Sao chép mã
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giá Token từ OKX</title>
+    <style>
+        .price-display {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .price-display img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Giá Token</h1>
+
+    <div class="price-display">
+        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Logo">
+        <span id="tonPrice">Giá: Đang tải...</span>
+    </div>
+    
+    <div class="price-display">
+        <img src="/logo-coin/IMG_DOGS.jpg" alt="DOGS Logo">
+        <span id="dogsPrice">Giá: Đang tải...</span>
+    </div>
+
+    <div class="price-display">
+        <img src="/logo-coin/IMG_HMSTR.jpg" alt="HMSTR Logo">
+        <span id="hmstrPrice">Giá: Đang tải...</span>
+    </div>
+
+    <div class="price-display">
+        <img src="/logo-coin/IMG_NOT.jpg" alt="NOT Logo">
+        <span id="notPrice">Giá: Đang tải...</span>
+    </div>
+
+    <script>
+        async function fetchTokenPrice(instId, elementId) {
+            try {
+                const url = `https://www.okx.com/api/v5/market/ticker?instId=${instId}-USDT`;
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`Lỗi khi tải dữ liệu từ API cho ${instId}`);
+                }
+
+                const data = await response.json();
+
                 if (!data.data || data.data.length === 0) {
                     throw new Error(`Không tìm thấy giá ${instId} từ API`);
                 }
@@ -425,6 +533,138 @@
             fetchTokenPrice('DOGS', 'dogsPrice');
             fetchTokenPrice('HMSTR', 'hmstrPrice');
             fetchTokenPrice('NOT', 'notPrice');
+        }, 10000);
+    </script>
+</body>
+</html>
+Giải thích
+Mỗi token có một div riêng trong lớp price-display để chứa logo và giá tương ứng.
+Các thẻ <img> khác nhau cho từng token được thêm để hiển thị logo riêng biệt.
+span với các id như tonPrice, dogsPrice, hmstrPrice, và notPrice giúp xác định từng giá trị giá để cập nhật qua JavaScript.
+Với đoạn mã này, mỗi token sẽ có logo và giá được hiển thị dưới dạng thẻ div đẹp mắt và giá trị sẽ tự động cập nhật sau mỗi 10 giây.
+
+
+
+
+
+
+Bạn đã nói:
+Có thể nào code thêm bên cạnh giá có thêm tăng giảm bao nhiêu % 24 giờ quá, nếu tăng (màu xanh), nếu giảm (màu đỏ)
+ChatGPT đã nói:
+ChatGPT
+Để hiển thị thêm phần trăm tăng giảm trong 24 giờ cạnh giá, chúng ta cần lấy thêm dữ liệu từ API của OKX, cụ thể là thuộc tính change24h của từng token. Dưới đây là cách cập nhật đoạn mã của bạn để hiển thị phần trăm tăng/giảm trong 24 giờ và thay đổi màu sắc (xanh cho tăng và đỏ cho giảm).
+
+HTML và JavaScript cập nhật
+html
+Sao chép mã
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giá Token từ OKX</title>
+    <style>
+        .price-display {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .price-display img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .price {
+            margin-right: 10px;
+        }
+        .change-positive {
+            color: green;
+        }
+        .change-negative {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Giá Token</h1>
+
+    <div class="price-display">
+        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Logo">
+        <span id="tonPrice" class="price">Giá: Đang tải...</span>
+        <span id="tonChange">Đang tải...</span>
+    </div>
+    
+    <div class="price-display">
+        <img src="/logo-coin/IMG_DOGS.jpg" alt="DOGS Logo">
+        <span id="dogsPrice" class="price">Giá: Đang tải...</span>
+        <span id="dogsChange">Đang tải...</span>
+    </div>
+
+    <div class="price-display">
+        <img src="/logo-coin/IMG_HMSTR.jpg" alt="HMSTR Logo">
+        <span id="hmstrPrice" class="price">Giá: Đang tải...</span>
+        <span id="hmstrChange">Đang tải...</span>
+    </div>
+
+    <div class="price-display">
+        <img src="/logo-coin/IMG_NOT.jpg" alt="NOT Logo">
+        <span id="notPrice" class="price">Giá: Đang tải...</span>
+        <span id="notChange">Đang tải...</span>
+    </div>
+
+    <script>
+        async function fetchTokenPrice(instId, priceElementId, changeElementId) {
+            try {
+                const url = `https://www.okx.com/api/v5/market/ticker?instId=${instId}-USDT`;
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`Lỗi khi tải dữ liệu từ API cho ${instId}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.data || data.data.length === 0) {
+                    throw new Error(`Không tìm thấy giá ${instId} từ API`);
+                }
+
+                const tokenPrice = data.data[0].last;
+                const change24h = data.data[0].change24h;
+
+                // Cập nhật giá
+                document.getElementById(priceElementId).textContent = `Giá: ${tokenPrice} USDT`;
+
+                // Cập nhật phần trăm thay đổi
+                const changeElement = document.getElementById(changeElementId);
+                changeElement.textContent = `(${change24h}%)`;
+
+                // Đặt màu cho phần trăm thay đổi (xanh nếu tăng, đỏ nếu giảm)
+                if (parseFloat(change24h) > 0) {
+                    changeElement.classList.add('change-positive');
+                    changeElement.classList.remove('change-negative');
+                } else {
+                    changeElement.classList.add('change-negative');
+                    changeElement.classList.remove('change-positive');
+                }
+
+            } catch (error) {
+                console.error('Lỗi:', error);
+                document.getElementById(priceElementId).textContent = `Giá ${instId} không thể lấy được`;
+                document.getElementById(changeElementId).textContent = 'Không thể lấy dữ liệu';
+            }
+        }
+
+        fetchTokenPrice('TON', 'tonPrice', 'tonChange');
+        fetchTokenPrice('DOGS', 'dogsPrice', 'dogsChange');
+        fetchTokenPrice('HMSTR', 'hmstrPrice', 'hmstrChange');
+        fetchTokenPrice('NOT', 'notPrice', 'notChange');
+
+        setInterval(() => {
+            fetchTokenPrice('TON', 'tonPrice', 'tonChange');
+            fetchTokenPrice('DOGS', 'dogsPrice', 'dogsChange');
+            fetchTokenPrice('HMSTR', 'hmstrPrice', 'hmstrChange');
+            fetchTokenPrice('NOT', 'notPrice', 'notChange');
         }, 10000);
 </script>
 
