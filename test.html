@@ -5,38 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kết nối với TON Connect</title>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-    
+    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        #ton-connect {
+            margin-top: 20px;
+        }
+        #balance {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-<div id="ton-connect"></div>
-    
-    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-   
-       
+    <h1>Kết nối với TON Wallet</h1>
+    <div id="ton-connect"></div>
+    <div id="balance">Số dư: <span id="balance-value">Đang tải...</span> TON</div>
+
     <script>
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-        buttonRootId: 'ton-connect'
-    });
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+            buttonRootId: 'ton-connect'
+        });
 
-tonConnectUI.uiOptions = {
-      twaReturnUrl: 'https://t.me/bmassk3_bot'
-  };
+        tonConnectUI.uiOptions = {
+            twaReturnUrl: 'https://t.me/bmassk3_bot'
+        };
 
-        
-    async function connectToWallet() {
-        const connectedWallet = await tonConnectUI.connectWallet();
-        // Do something with connectedWallet if needed
-        console.log(connectedWallet);
-    }
+        async function connectToWallet() {
+            try {
+                const connectedWallet = await tonConnectUI.connectWallet();
 
-    // Call the function
-    connectToWallet().catch(error => {
-        console.error("Error connecting to wallet:", error);
-    });
+                if (connectedWallet) {
+                    console.log("Connected to wallet:", connectedWallet);
+                    await getBalance(connectedWallet.wallet.address);
+                }
+            } catch (error) {
+                console.error("Error connecting to wallet:", error);
+                document.getElementById("balance-value").innerText = "Không thể kết nối ví.";
+            }
+        }
+
+        async function getBalance(address) {
+            try {
+                // Thay thế bằng URL API để lấy số dư của TON cho ví đã kết nối
+                const response = await fetch(`https://tonapi.io/v1/balance/${address}`);
+                const data = await response.json();
+
+                const balance = data.balance / 1e9; // Chuyển số dư từ nanoTON sang TON
+                document.getElementById("balance-value").innerText = balance.toFixed(2);
+            } catch (error) {
+                console.error("Error fetching balance:", error);
+                document.getElementById("balance-value").innerText = "Không thể lấy số dư.";
+            }
+        }
+
+        // Gọi hàm kết nối ví
+        connectToWallet();
     </script>
-    
-    
-
 </body>
 </html>
