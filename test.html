@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TON Price Display</title>
     <style>
-        /* CSS cho toàn bộ trang */
         body {
             font-family: Arial, sans-serif;
             background-color: #1a1a1a;
@@ -18,7 +17,6 @@
             margin: 0;
         }
 
-        /* CSS cho div hiển thị giá TON */
         .price-display {
             display: flex;
             align-items: center;
@@ -31,7 +29,7 @@
             margin-top: 10px;
             text-align: left;
             justify-content: flex-start;
-            cursor: default; /* Chỉ hiển thị, không phải nút nhấn */
+            cursor: default;
         }
 
         .price-display img {
@@ -60,22 +58,23 @@
 <script>
     async function fetchTonPrice() {
         try {
-            // Lấy giá TON từ API CoinGecko
-            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=toncoin&vs_currencies=usd');
-            
-            // Kiểm tra nếu có lỗi trong việc lấy dữ liệu
+            // Lấy giá TON từ API OKX
+            const url = 'https://www.okx.com/api/v5/market/ticker?instId=TON-USDT'; // Đảm bảo rằng TON-USDT là cặp giao dịch đúng trên OKX
+
+            const response = await fetch(url);
+
             if (!response.ok) {
                 throw new Error('Lỗi khi tải dữ liệu từ API');
             }
 
             const data = await response.json();
 
-            // Kiểm tra nếu không có dữ liệu giá
-            if (!data.toncoin || !data.toncoin.usd) {
+            // Kiểm tra nếu có dữ liệu giá
+            if (!data.data || data.data.length === 0) {
                 throw new Error('Không tìm thấy giá TON từ API');
             }
 
-            const tonPrice = data.toncoin.usd;
+            const tonPrice = data.data[0].last; // Lấy giá cuối cùng
 
             // Cập nhật giá vào phần tử HTML
             document.getElementById('tonPrice').textContent = `Giá: ${tonPrice} USDT`;
