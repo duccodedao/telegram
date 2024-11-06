@@ -96,7 +96,27 @@
         }
 
        
-        
+        .price-display {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+            cursor: default;
+        }
+
+        .price-display img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -148,7 +168,10 @@
         <img src="/logo-coin/buyref.svg" alt="Group Icon">
         <span>Tham gia nhóm Telegram</span>
     </div>
-
+<div class="price-display">
+    <img src="/logo-coin/TON.svg" alt="Giá Coin">
+    <span id="tonPrice">Giá: Đang tải...</span>
+</div>
   
 </div>
 
@@ -314,6 +337,41 @@
         // Mở liên kết đến nhóm Telegram
         window.open("https://bmasshd.click/exchange.html", "_blank");
     }
+
+    async function fetchTonPrice() {
+        try {
+            // Lấy giá TON từ API OKX
+            const url = 'https://www.okx.com/api/v5/market/ticker?instId=TON-USDT'; // Đảm bảo rằng TON-USDT là cặp giao dịch đúng trên OKX
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error('Lỗi khi tải dữ liệu từ API');
+            }
+
+            const data = await response.json();
+
+            // Kiểm tra nếu có dữ liệu giá
+            if (!data.data || data.data.length === 0) {
+                throw new Error('Không tìm thấy giá TON từ API');
+            }
+
+            const tonPrice = data.data[0].last; // Lấy giá cuối cùng
+
+            // Cập nhật giá vào phần tử HTML
+            document.getElementById('tonPrice').textContent = `Giá: ${tonPrice} USDT`;
+        } catch (error) {
+            console.error('Lỗi:', error);
+            // Nếu có lỗi, hiển thị thông báo lỗi
+            document.getElementById('tonPrice').textContent = 'Giá TON không thể lấy được';
+        }
+    }
+
+    // Gọi hàm fetchTonPrice ngay khi trang tải
+    fetchTonPrice();
+
+    // Cập nhật giá mỗi 10 giây
+    setInterval(fetchTonPrice, 10000);
 </script>
 
 
