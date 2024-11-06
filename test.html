@@ -3,82 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Transaction via TON Connect</title>
+    <title>Wallet | By BmassHD</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Wallet | BmassHD">
+    <meta property="og:description" content="Ví 2">
+    <meta property="og:image" content="/ton/nen.png">
+    <meta property="og:url" content="/ton/ton.html">
+    <meta property="og:type" content="website">
+
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #333;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
         }
-        .container {
-            text-align: center;
-            padding: 50px;
-        }
-        .button {
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #212121;
             color: #fff;
-            font-size: 16px;
-            border: none;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        #user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20%;
+            margin-right: 5px;
+        }
+        #ton-connect {
             cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+        }
+        #user-username {
+            color: #ff6a00;
+            margin-left: 1px;
+            font-size: 20px;
+            text-align: left;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #212121;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid #333;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .footer-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #ccc;
+            font-size: 14px;
+            padding: 5px 10px;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px; /* Bo góc cho mục */
+        }
+        .footer-item img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+        }
+        .footer-item:hover {
+            color: #fff;
+        }
+        .footer-item.active {
+            background-color: #333; /* Màu nền khi mục được chọn */
+            color: #ff0; /* Màu chữ khi mục được chọn */
+        }
+        .new-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: red;
+            color: white;
+            padding: 1.5px 3.25px;
+            border-radius: 3px;
+            font-size: 7px;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+
+.container {
+    text-align: center;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #1e1e1e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+
+        }
+        .button{
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+        }
+        .button img{
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
         }
         .button:hover {
-            background-color: #0056b3;
+            background: #ff6a00;
+            color: #fff;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        .ton-balance {
+            pointer-events: none;
+        }
+
+
+        .price-display {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+            cursor: default;
+        }
+
+        .price-display img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Gửi Giao Dịch qua TON Connect</h2>
-        <button class="button" id="sendTransactionBtn">Gửi Giao Dịch</button>
+
+<!-- Header -->
+<header>
+    <img id="user-avatar" src="default-avatar.png" alt="Avatar">
+    <span id="user-username">@username</span>
+    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
+</header>
+
+
+
+
+<div class="container">
+    <div class="logo">BmassHD</div>
+    
+    <!-- Hiển thị tên người dùng và username -->
+    <div class="connect-text">Xin chào <span id="user-name">User</span>, kết nối ví của bạn để mở khóa thêm nhiều tính năng.</div>
+
+    <div class="price-display">
+    <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="Giá Coin">
+    <span id="tonPrice">Giá: Đang tải...</span>
     </div>
+    
+    <div id="joinGroupButton" class="button" onclick="joinWallet()">
+        
+        <img src="/ton/wallet.png" alt="Group Icon">
+        <span>Wallet Telegram</span>
+    </div>
+    <div id="joinGroupButton" class="button" onclick="joinExchange()">
+        <img src="/logo-coin/bmlogo.jpg" alt="Group Icon">
+        <span>Sàn giao dịch</span>
+    </div>
+    <!-- Nút tham gia nhóm Telegram -->
+    <div id="joinGroupButton" class="button" onclick="joinGroup()">
+        <img src="/logo-coin/buyref.svg" alt="Group Icon">
+        <span>Tham gia nhóm Telegram</span>
+    </div>
+</div>
 
-    <script>
-        // Khởi tạo TonConnectUI
-        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-            buttonRootId: 'ton-connect'
-        });
+  
 
-        // Cấu hình thêm tùy chọn nếu cần
-        tonConnectUI.uiOptions = {
-            twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
-        };
 
-        // Hàm gửi giao dịch
-        async function sendTransaction() {
-            const transaction = {
-                validUntil: Math.floor(Date.now() / 1000) + 60, // 60 giây
-                messages: [
-                    {
-                        address: "EQBBJBB3HagsujBqVfqeDUPJ0kXjgTPLWPFFffuNXNiJL0aA",
-                        amount: "20000000", // Số tiền gửi
-                    },
-                    {
-                        address: "EQDmnxDMhId6v1Ofg_h5KR5coWlFG6e86Ro3pc7Tq4CA0-Jn",
-                        amount: "60000000", // Số tiền gửi
-                    }
-                ]
-            };
 
-            try {
-                const result = await tonConnectUI.sendTransaction(transaction);
 
-                // Sau khi giao dịch được gửi thành công, lấy dữ liệu giao dịch
-                const someTxData = await myAppExplorerService.getTransaction(result.boc);
-                alert('Giao dịch đã được gửi thành công!', JSON.stringify(someTxData));
-            } catch (e) {
-                console.error("Lỗi khi gửi giao dịch:", e);
-                alert('Có lỗi xảy ra khi gửi giao dịch!');
-            }
+<!-- Footer Section -->
+<div class="footer">
+    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/home.svg" alt="Home">
+            <span class="new-badge">New</span>
+        </div>
+        <span>Home</span>
+    </a>
+    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/buycoin.svg" alt="MuaCoin">
+            <span class="new-badge">New</span>
+        </div>
+        <span>MuaCoin</span>
+    </a>
+    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/sellcoin.svg" alt="BánCoin">
+            <span class="new-badge">New</span>
+        </div>
+        <span>BánCoin</span>
+    </a>
+    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/buyref.svg" alt="MuaRef">
+            <span class="new-badge">New</span>
+        </div>
+        <span>MuaRef</span>
+    </a>
+    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/icon-wallet.svg" alt="Wallet">
+            
+        </div>
+        <span>Wallet</span>
+    </a>
+        
+</div>
+
+
+
+
+    <!-- Footer Section -->
+
+
+
+
+
+    
+<script>
+    // Khởi tạo TonConnectUI
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
+    });
+
+    // Cấu hình thêm tuỳ chọn nếu cần
+    tonConnectUI.uiOptions = {
+        twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
+    };
+
+    // Hàm kết nối với ví
+    async function connectToWallet() {
+        try {
+            const connectedWallet = await tonConnectUI.connectWallet();
+            console.log("Connected Wallet:", connectedWallet);
+
+            // Hiển thị thông tin ví
+            document.getElementById('wallet-info').style.display = 'block';
+            document.getElementById('balance').innerText = `Số dư: Đang tải...`;
+
+            // Lấy số dư và cập nhật giao diện
+            const address = connectedWallet.account.address;
+            const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
+            document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
+        } catch (error) {
+            console.error("Lỗi khi kết nối ví:", error);
         }
+    }
 
-        // Lắng nghe sự kiện nhấn nút để gửi giao dịch
-        document.getElementById('sendTransactionBtn').addEventListener('click', sendTransaction);
-    </script>
+    // Hàm ngắt kết nối ví
+    async function disconnectWallet() {
+        try {
+            await tonConnectUI.disconnect();
+            document.getElementById('wallet-info').style.display = 'none';
+            console.log("Đã ngắt kết nối ví.");
+        } catch (error) {
+            console.error("Lỗi khi ngắt kết nối ví:", error);
+        }
+    }
+
+
+    // Danh sách ảnh đại diện ngẫu nhiên
+    const avatars = [
+        '/logo-coin/av1.png',
+        '/logo-coin/av2.png',
+        '/logo-coin/av3.png',
+        '/logo-coin/av4.png',
+        '/logo-coin/av5.png',
+        '/logo-coin/av6.png',
+        '/logo-coin/av7.png',
+        '/logo-coin/av8.png',
+        '/logo-coin/av9.png',
+        '/logo-coin/av10.png',
+        '/logo-coin/av11.png',
+        '/logo-coin/av12.png',
+    ];
+    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+
+    // Kiểm tra và lấy thông tin từ Telegram WebApp API
+    window.addEventListener('load', () => {
+        if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
+            let user = Telegram.WebApp.initDataUnsafe.user;
+
+            if (user) {
+                let userName = user.first_name + " " + (user.last_name || "");
+                let username = user.username || "No Username"; // Thay thế nếu không có username
+
+                // Cập nhật thông tin vào HTML
+                document.getElementById('user-name').textContent = userName;
+                document.getElementById('user-username').textContent = `@${username}`;
+                document.getElementById('user-avatar').src =
+ randomAvatar; // Sử dụng ảnh ngẫu nhiên
+            } else {
+                console.log("Không có thông tin người dùng.");
+            }
+        } else {
+            console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
+        }
+    });
+
+
+
+
+
+        // Hàm tham gia nhóm Telegram
+    function joinGroup() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://t.me/bmassk3_channel", "_blank");
+    }
+    function joinWallet() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://t.me/wallet/start?startapp", "_blank");
+    }
+    function joinExchange() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://bmasshd.click/exchange.html", "_blank");
+    }
+
+
+    async function fetchTonPrice() {
+        try {
+            // Lấy giá TON từ API OKX
+            const url = 'https://www.okx.com/api/v5/market/ticker?instId=TON-USDT'; // Đảm bảo rằng TON-USDT là cặp giao dịch đúng trên OKX
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error('Lỗi khi tải dữ liệu từ API');
+            }
+
+            const data = await response.json();
+
+            // Kiểm tra nếu có dữ liệu giá
+            if (!data.data || data.data.length === 0) {
+                throw new Error('Không tìm thấy giá TON từ API');
+            }
+
+            const tonPrice = data.data[0].last; // Lấy giá cuối cùng
+
+            // Cập nhật giá vào phần tử HTML
+            document.getElementById('tonPrice').textContent = `Giá: ${tonPrice} USDT`;
+        } catch (error) {
+            console.error('Lỗi:', error);
+            // Nếu có lỗi, hiển thị thông báo lỗi
+            document.getElementById('tonPrice').textContent = 'Giá TON không thể lấy được';
+        }
+    }
+
+    // Gọi hàm fetchTonPrice ngay khi trang tải
+    fetchTonPrice();
+
+    // Cập nhật giá mỗi 10 giây
+    setInterval(fetchTonPrice, 10000);
+</script>
+
 </body>
 </html>
