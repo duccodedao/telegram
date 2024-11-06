@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết nối với TON Connect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+        }
+        #user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        #ton-connect {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <div style="display: flex; align-items: center;">
+        <img id="user-avatar" src="default-avatar.png" alt="Avatar">
+        <span id="user-username">@username</span>
+    </div>
+    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
+</header>
+
+<script>
+    // Khởi tạo TonConnectUI
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
+    });
+
+    // Cấu hình thêm tuỳ chọn nếu cần
+    tonConnectUI.uiOptions = {
+        twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
+    };
+
+    // Hàm kết nối với ví
+    async function connectToWallet() {
+        try {
+            const connectedWallet = await tonConnectUI.connectWallet();
+            console.log("Connected Wallet:", connectedWallet);
+
+            // Hiển thị thông tin ví
+            document.getElementById('wallet-info').style.display = 'block';
+            document.getElementById('balance').innerText = `Số dư: Đang tải...`;
+
+            // Lấy số dư và cập nhật giao diện
+            const address = connectedWallet.account.address;
+            const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
+            document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
+        } catch (error) {
+            console.error("Lỗi khi kết nối ví:", error);
+        }
+    }
+
+    // Hàm ngắt kết nối ví
+    async function disconnectWallet() {
+        try {
+            await tonConnectUI.disconnect();
+            document.getElementById('wallet-info').style.display = 'none';
+            console.log("Đã ngắt kết nối ví.");
+        } catch (error) {
+            console.error("Lỗi khi ngắt kết nối ví:", error);
+        }
+    }
+
+    // Hàm lấy thông tin người dùng Telegram
+    function getTelegramUserInfo() {
+        // Giả định có một biến chứa thông tin Telegram của người dùng.
+        const tgUser = {
+            avatarUrl: "https://t.me/i/userpic/320/telegram.jpg",  // Đường dẫn ảnh đại diện
+            username: "username_here" // Tên người dùng
+        };
+
+        // Cập nhật ảnh đại diện và tên người dùng
+        const avatarElement = document.getElementById("user-avatar");
+        const usernameElement = document.getElementById("user-username");
+
+        avatarElement.src = tgUser.avatarUrl;
+        usernameElement.textContent = `@${tgUser.username}`;
+    }
+
+    // Gọi hàm khi trang được tải
+    window.onload = function() {
+        getTelegramUserInfo();
+    };
+</script>
+
+</body>
+</html>
+  
