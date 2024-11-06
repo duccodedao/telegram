@@ -6,7 +6,9 @@ body {
     padding: 0 10px; /* Thêm padding để tránh sát rìa */
     padding-bottom: 80px;
 }
-
+#ton-connect {
+            cursor: pointer;
+}
 .app-category {
     margin-bottom: 30px;
 }
