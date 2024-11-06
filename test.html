@@ -166,7 +166,7 @@
 </header>
 
 
-<div id="ton-connect2"></div>
+
 
 <div class="container">
     <div class="logo">BmassHD</div>
@@ -247,11 +247,7 @@
 
     
 <script>
-    // Khởi tạo TonConnectUI
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-        buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
-    });
+    
 
     // Cấu hình thêm tuỳ chọn nếu cần
     tonConnectUI.uiOptions = {
@@ -335,7 +331,7 @@ import TonConnectUI from '@tonconnect/ui';
 
 const tonConnectUI = new TonConnectUI({ //connect application
     manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-    buttonRootId: 'ton-connect2'
+    buttonRootId: 'ton-connect'
 });
 
 const transaction = {
