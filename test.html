@@ -3,8 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TON Price Button</title>
+    <title>TON Price Display</title>
     <style>
+        /* CSS cho toàn bộ trang */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* CSS cho nút hiển thị giá TON */
         .button {
             display: flex;
             align-items: center;
@@ -20,16 +34,19 @@
             text-align: left;
             justify-content: flex-start;
         }
+
         .button img {
             width: 25px;
             height: 25px;
             margin-right: 10px;
             border-radius: 10px;
         }
+
         .button:hover {
             background: #ff6a00;
             color: #fff;
         }
+
         .logo {
             font-size: 24px;
             font-weight: bold;
@@ -41,10 +58,10 @@
 <body>
 
 <div class="logo">Crypto Dashboard</div>
-<button class="button">
+<div class="button">
     <img src="/logo-coin/TON.svg" alt="Giá Coin">
     <span id="tonPrice">Giá: TON</span>
-</button>
+</div>
 
 <script>
     async function fetchTonPrice() {
@@ -56,7 +73,7 @@
             // Cập nhật giá vào phần tử HTML
             document.getElementById('tonPrice').textContent = `Giá: ${tonPrice} USDT`;
         } catch (error) {
-            console.error('Error fetching TON price:', error);
+            console.error('Lỗi khi lấy giá TON:', error);
         }
     }
 
