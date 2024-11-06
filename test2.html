@@ -6,6 +6,7 @@
     <title>Kết nối với TON Connect</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,10 +38,9 @@
 
 <!-- Header -->
 <header>
-    
-        <img id="user-avatar" src="default-avatar.png" alt="Avatar">
-        <span id="user-username">@username</span>
-    </div>
+    <img id="user-avatar" src="default-avatar.png" alt="Avatar">
+    <span id="user-name">Loading...</span>
+    <span id="user-username">@username</span>
     <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
 </header>
 
@@ -86,46 +86,45 @@
         }
     }
 
-// Danh sách ảnh đại diện ngẫu nhiên
+
+    // Danh sách ảnh đại diện ngẫu nhiên
     const avatars = [
-    '/logo-coin/av1.png',
-    '/logo-coin/av2.png',
-    '/logo-coin/av3.png',
-    '/logo-coin/av4.png',
-    'logo-coin/av5.png',
-    '/logo-coin/av6.png',
-    '/logo-coin/av7.png',
-    '/logo-coin/av8.png',
-    '/logo-coin/av9.png',
-    '/logo-coin/av10.png',
-    '/logo-coin/av11.png',
-    '/logo-coin/av12.png',
+        '/logo-coin/av1.png',
+        '/logo-coin/av2.png',
+        '/logo-coin/av3.png',
+        '/logo-coin/av4.png',
+        '/logo-coin/av5.png',
+        '/logo-coin/av6.png',
+        '/logo-coin/av7.png',
+        '/logo-coin/av8.png',
+        '/logo-coin/av9.png',
+        '/logo-coin/av10.png',
+        '/logo-coin/av11.png',
+        '/logo-coin/av12.png',
     ];
     const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
 
-    // Lấy thông tin người dùng từ Telegram WebApp API
-    if (Telegram.WebApp.initDataUnsafe) {
-        let user = Telegram.WebApp.initDataUnsafe.user;
+    // Kiểm tra và lấy thông tin từ Telegram WebApp API
+    window.addEventListener('load', () => {
+        if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
+            let user = Telegram.WebApp.initDataUnsafe.user;
 
-        if (user) {
-            let userName = user.first_name + " " + (user.last_name || "");
-            let username = user.username || "No Username"; // Thay thế nếu không có username
+            if (user) {
+                let userName = user.first_name + " " + (user.last_name || "");
+                let username = user.username || "No Username"; // Thay thế nếu không có username
 
-            // Cập nhật thông tin vào HTML
-            document.getElementById('user-name').textContent = userName;
-            document.getElementById('user-username').textContent = `@${username}`;
-            document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
+                // Cập nhật thông tin vào HTML
+                document.getElementById('user-name').textContent = userName;
+                document.getElementById('user-username').textContent = `@${username}`;
+                document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
+            } else {
+                console.log("Không có thông tin người dùng.");
+            }
         } else {
-            // Trường hợp không có thông tin người dùng
-            document.getElementById('user-name').textContent = "Loading...";
-            document.getElementById('user-username').textContent = "@username";
-            document.getElementById('user-avatar').src = randomAvatar;
+            console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
         }
-    } else {
-        console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
-                }
+    });
 </script>
 
 </body>
 </html>
-  
