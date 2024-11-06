@@ -43,7 +43,7 @@
     <!-- Nút kết nối TON Wallet -->
     <div id="ton-connect-button" class="button">
         <img src="https://ton.org/favicon.ico" alt="TON logo">
-        Kết nối ví TON
+        a
     </div>
 
     <script>
@@ -66,6 +66,7 @@
                 alert("Lỗi khi kết nối ví.");
             }
         });
+        await tonConnectUI.disconnect();
     </script>
 </body>
 </html>
