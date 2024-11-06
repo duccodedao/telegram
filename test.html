@@ -3,68 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kết nối với TON Wallet</title>
+    <title>Kết nối với TON Connect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #333;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            color: #333;
         }
-        
+        #ton-connect {
+            margin-top: 50px;
+        }
+        .balance {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #007bff;
+        }
+        .wallet-info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0e7ff;
+            border-radius: 8px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
-    <!-- Nút kết nối TON Wallet -->
-<div id="ton-connect"></div>
-        
-<script>
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-        buttonRootId: 'ton-connect'
-    });
+    <h1>Kết nối với TON Connect</h1>
+    <div id="ton-connect"></div>
+    <div class="wallet-info" id="wallet-info" style="display: none;">
+        <p><strong>Đã kết nối với ví!</strong></p>
+        <p id="balance" class="balance">Số dư: Đang tải...</p>
+    </div>
 
-    async function connectToWallet() {
-        const connectedWallet = await tonConnectUI.connectWallet();
-        // Do something with connectedWallet if needed
-        console.log(connectedWallet);
-    }
+    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+    <script>
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+            buttonRootId: 'ton-connect'
+        });
 
-    // Call the function
-    connectToWallet().catch(error => {
-        console.error("Error connecting to wallet:", error);
-    });
+        tonConnectUI.uiOptions = {
+            twaReturnUrl: 'https://t.me/bmassk3_bot'
+        };
 
+        async function connectToWallet() {
+            try {
+                const connectedWallet = await tonConnectUI.connectWallet();
+                
+                // Hiển thị thông báo ví đã kết nối
+                document.getElementById('wallet-info').style.display = 'block';
 
-    tonConnectUI.uiOptions = {
-      twaReturnUrl: 'https://t.me/bmassk3_bot'
-  };
+                // Lấy địa chỉ ví và hiển thị số dư
+                const address = connectedWallet.account.address;
+                console.log('Địa chỉ ví:', address);
 
-    await tonConnectUI.disconnect();
-
-
-    import TonConnectUI from '@tonconnect/ui';
-
-const tonConnectUI = new TonConnectUI({ //connect application
-    manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-    buttonRootId: 'ton-connect'
-});
-
-const transaction = {
-    messages: [
-        {
-            address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // destination address
-            amount: "20000000" //Toncoin in nanotons
+                // Gọi API hoặc SDK để lấy số dư
+                const balance = await tonConnectUI.getBalance(address);
+                
+                // Hiển thị số dư lên giao diện
+                document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
+            } catch (error) {
+                console.error("Lỗi khi kết nối ví:", error);
+            }
         }
-    ]
-}
 
-const result = await tonConnectUI.sendTransaction(transaction)
-
- 
-</script>
+        connectToWallet().catch(error => {
+            console.error("Error connecting to wallet:", error);
+        });
+    </script>
 </body>
 </html>
