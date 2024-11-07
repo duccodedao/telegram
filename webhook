@@ -1,0 +1,32 @@
+from flask import Flask, request
+import requests
+
+app = Flask(__name__)
+TOKEN = '7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk'
+
+# Hàm gửi tin nhắn lại cho người dùng
+def send_message(chat_id, text):
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    payload = {
+        "chat_id": chat_id,
+        "text": text
+    }
+    requests.post(url, json=payload)
+
+@app.route(f"/webhook", methods=["POST"])
+def webhook():
+    data = request.get_json()
+    if "message" in data:
+        chat_id = data["message"]["chat"]["id"]
+        message_text = data["message"]["text"]
+        
+        # Reply tự động
+        if message_text.lower() == "hello":
+            send_message(chat_id, "Xin chào! Bot đây.")
+        else:
+            send_message(chat_id, "Tôi là bot tự động trả lời!")
+    
+    return {"status": "ok"}
+
+if __name__ == "__main__":
+    app.run(port=5000)
