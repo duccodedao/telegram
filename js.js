@@ -271,7 +271,7 @@ function updateVersionAndLanguage() {
 }).then((result) => {
     if (result.isConfirmed) {
         // Khi người dùng bấm nút "Chơi ngay", chuyển hướng đến liên kết mong muốn
-        window.location.href = 'https://t.me/PAWSOG_bot/PAWS?startapp=PVH9wfSq';
+        window.location.href = 'https://unich.com/en/airdrop/sign-up?ref=BSXTQU';
     }
 });
 
