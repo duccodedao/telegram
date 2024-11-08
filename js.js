@@ -253,10 +253,10 @@ function updateVersionAndLanguage() {
         Swal.fire({
     
     html: selectedLanguage === "vi" ? 
-          '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng vừa update thêm dự án $PAWS (PAWS), chơi ngay 🔥' :
+          '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng vừa update thêm dự án $FD (Unich), chơi ngay 🔥' :
           '<b>Ver mới kìa:</b> v2.' + versionIndex + '<br>Cập nhật lẹ đi còn chơi, ở đó đọc concac!',
     
-    imageUrl: 'logo-coin/paws.jpg',  // Đường dẫn ảnh
+    imageUrl: 'logo-coin/IMG_20241108_121723_913.jpg',  // Đường dẫn ảnh
     imageAlt: 'Thông báo cập nhật',      // Chú thích ảnh
     imageWidth: 'auto',                   // Kích thước tự động theo ảnh
     confirmButtonText: 'Chơi ngay',
