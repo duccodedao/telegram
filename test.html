@@ -1,131 +1,76 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giá Token và Biểu Đồ</title>
-    <style>
-        .price-display {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-            background: #333333;
-            border: 1px solid #ff6a00;
-            color: #ff6a00;
-            font-size: 16px;
-            border-radius: 30px;
-            margin-top: 10px;
-            text-align: left;
-            justify-content: space-between;
-            cursor: default;
-        }
+    <title>Kết nối TON Wallet với TonConnectUI</title>
 
-        .price-display img {
-            width: 25px;
-            height: 25px;
-            margin-right: 10px;
-            border-radius: 10px;
-        }
-
-        .chart-container {
-            width: 100px;
-            height: 50px;
-            position: relative;
-        }
-    </style>
+    <!-- Thêm thư viện TonConnectUI từ CDN -->
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
-    <h1>Giá Token và Biểu Đồ</h1>
+    <h1>Unich - Kết nối và giao dịch ví TON</h1>
 
-    <div class="price-display">
-        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Logo">
-        <span id="tonPrice">Giá: Đang tải...</span>
-        <div class="chart-container">
-            <canvas id="tonChart"></canvas>
-        </div>
-    </div>
+    <!-- Nút kết nối ví TON -->
+    <button id="connectButton">Kết nối ví TON</button>
 
-    <div class="price-display">
-        <img src="/logo-coin/dogsx.jpg" alt="DOGS Logo">
-        <span id="dogsPrice">Giá: Đang tải...</span>
-        <div class="chart-container">
-            <canvas id="dogsChart"></canvas>
-        </div>
-    </div>
+    <!-- Hiển thị số dư -->
+    <p id="balanceResult">Số dư: Chưa có</p>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Nút thực hiện giao dịch -->
+    <button id="sendTransactionButton">Gửi giao dịch</button>
+
+    <!-- Kết quả giao dịch -->
+    <p id="transactionResult">Trạng thái giao dịch: Chưa có</p>
+
     <script>
-        async function fetchTokenData(instId, priceElementId, chartElementId) {
+        // Khởi tạo TonConnectUI từ thư viện đã tải qua CDN
+        const tonConnectUI = new TonConnectUI.TonConnectUI({
+            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+            buttonRootId: 'connectButton' // ID của nút kết nối
+        });
+
+        // Hàm kết nối ví TON và lấy số dư
+        async function connectWallet() {
             try {
-                const url = `https://www.okx.com/api/v5/market/ticker?instId=${instId}-USDT`;
-                const response = await fetch(url);
-
-                if (!response.ok) {
-                    throw new Error(`Lỗi khi tải dữ liệu từ API cho ${instId}`);
+                const walletInfo = await tonConnectUI.connect();
+                if (walletInfo) {
+                    console.log("Đã kết nối ví:", walletInfo);
+                    const balance = await tonConnectUI.getBalance(walletInfo.account.address);
+                    document.getElementById("balanceResult").innerText = `Số dư: ${balance / 1e9} TON`; // chuyển từ nanoTON
                 }
-
-                const data = await response.json();
-
-                if (!data.data || data.data.length === 0) {
-                    throw new Error(`Không tìm thấy giá ${instId} từ API`);
-                }
-
-                const tokenPrice = data.data[0].last;
-                const change24h = parseFloat(data.data[0].change24h);
-                document.getElementById(priceElementId).textContent = `Giá: ${tokenPrice} USDT`;
-
-                // Màu gradient cho biểu đồ (xanh nếu tăng, đỏ nếu giảm)
-                const chartColor = change24h >= 0 ? 'rgba(0, 255, 0, 0.5)' : 'rgba(255, 0, 0, 0.5)';
-                const ctx = document.getElementById(chartElementId).getContext('2d');
-                const gradient = ctx.createLinearGradient(0, 0, 0, 200);
-
-                // Tạo hiệu ứng gradient
-                if (change24h >= 0) {
-                    gradient.addColorStop(0, 'rgba(0, 255, 0, 0.5)');
-                    gradient.addColorStop(1, 'rgba(0, 255, 0, 0)');
-                } else {
-                    gradient.addColorStop(0, 'rgba(255, 0, 0, 0.5)');
-                    gradient.addColorStop(1, 'rgba(255, 0, 0, 0)');
-                }
-
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: Array(10).fill(''),
-                        datasets: [{
-                            label: 'Biểu đồ giá',
-                            data: Array.from({length: 10}, () => Math.random() * 10 + 10),
-                            borderColor: chartColor,
-                            backgroundColor: gradient,
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.3
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            x: { display: false },
-                            y: { display: false }
-                        },
-                        plugins: { legend: { display: false } }
-                    }
-                });
-                
             } catch (error) {
-                console.error('Lỗi:', error);
-                document.getElementById(priceElementId).textContent = `Giá ${instId} không thể lấy được`;
+                console.error("Lỗi khi kết nối ví:", error);
             }
         }
 
-        fetchTokenData('TON', 'tonPrice', 'tonChart');
-        fetchTokenData('DOGS', 'dogsPrice', 'dogsChart');
+        // Hàm thực hiện giao dịch
+        async function sendTransaction() {
+            const transaction = {
+                messages: [
+                    {
+                        address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // Địa chỉ ví nhận
+                        amount: "20000000" // Toncoin trong đơn vị nanoTON
+                    }
+                ]
+            };
 
-        // Cập nhật dữ liệu mỗi 10 giây
-        setInterval(() => {
-            fetchTokenData('TON', 'tonPrice', 'tonChart');
-            fetchTokenData('DOGS', 'dogsPrice', 'dogsChart');
-        }, 10000);
+            try {
+                const result = await tonConnectUI.sendTransaction(transaction);
+                console.log("Giao dịch thành công:", result);
+                document.getElementById("transactionResult").innerText = "Giao dịch thành công!";
+            } catch (error) {
+                console.error("Lỗi khi gửi giao dịch:", error);
+                document.getElementById("transactionResult").innerText = "Giao dịch thất bại!";
+            }
+        }
+
+        // Khi đã tải xong trang
+        window.addEventListener('DOMContentLoaded', () => {
+            // Gán sự kiện cho nút kết nối và gửi giao dịch
+            document.getElementById("connectButton").onclick = connectWallet;
+            document.getElementById("sendTransactionButton").onclick = sendTransaction;
+        });
     </script>
 </body>
 </html>
