@@ -199,6 +199,13 @@
     <!-- Hiển thị tên người dùng và username -->
     <div class="connect-text">Hello <span id="user-name">User</span>, Connect your wallet to unlock more features.</div>
 
+
+    <div class="price-display">
+        <img src="/logo-coin/btc.jpg" alt="TON Logo">
+        <span id="btcPrice">Giá: Đang tải...</span>
+    </div>
+
+    
     <div class="price-display">
         <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Logo">
         <span id="tonPrice">Giá: Đang tải...</span>
@@ -413,6 +420,7 @@
         fetchTokenPrice('HMSTR', 'hmstrPrice');
         fetchTokenPrice('NOT', 'notPrice');
         fetchTokenPrice('CATI', 'catiPrice');
+        fetchTokenPrice('BTC', 'btcPrice');
 
         setInterval(() => {
             fetchTokenPrice('TON', 'tonPrice');
@@ -420,6 +428,7 @@
             fetchTokenPrice('HMSTR', 'hmstrPrice');
             fetchTokenPrice('NOT', 'notPrice');
             fetchTokenPrice('CATI', 'catiPrice');
+            fetchTokenPrice('BTC', 'btcPrice');
         }, 10000);
 </script>
 
