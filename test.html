@@ -1,76 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kết nối TON Wallet với TonConnectUI</title>
+    <title>Đếm số lượng thành viên trong Telegram Channel</title>
+    <style>
+        .price-display {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+            cursor: default;
+        }
 
-    <!-- Thêm thư viện TonConnectUI từ CDN -->
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+        .price-display img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Unich - Kết nối và giao dịch ví TON</h1>
-
-    <!-- Nút kết nối ví TON -->
-    <button id="connectButton">Kết nối ví TON</button>
-
-    <!-- Hiển thị số dư -->
-    <p id="balanceResult">Số dư: Chưa có</p>
-
-    <!-- Nút thực hiện giao dịch -->
-    <button id="sendTransactionButton">Gửi giao dịch</button>
-
-    <!-- Kết quả giao dịch -->
-    <p id="transactionResult">Trạng thái giao dịch: Chưa có</p>
+    <h1>Đếm số lượng thành viên trong Telegram Channel</h1>
+    <div class="price-display" id="channelMembers">
+        <img src="/logo-coin/dogsx.jpg" alt="DOGS Logo">
+        <span id="memberCount">Thành viên: Đang tải...</span>
+    </div>
 
     <script>
-        // Khởi tạo TonConnectUI từ thư viện đã tải qua CDN
-        const tonConnectUI = new TonConnectUI.TonConnectUI({
-            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-            buttonRootId: 'connectButton' // ID của nút kết nối
-        });
+        // Thay YOUR_BOT_TOKEN bằng token bot của bạn và @your_channel_username bằng tên channel cần đếm
+        const BOT_TOKEN = '7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk';
+        const CHANNEL_USERNAME = '@bmassk3_channel';
 
-        // Hàm kết nối ví TON và lấy số dư
-        async function connectWallet() {
-            try {
-                const walletInfo = await tonConnectUI.connect();
-                if (walletInfo) {
-                    console.log("Đã kết nối ví:", walletInfo);
-                    const balance = await tonConnectUI.getBalance(walletInfo.account.address);
-                    document.getElementById("balanceResult").innerText = `Số dư: ${balance / 1e9} TON`; // chuyển từ nanoTON
-                }
-            } catch (error) {
-                console.error("Lỗi khi kết nối ví:", error);
-            }
-        }
-
-        // Hàm thực hiện giao dịch
-        async function sendTransaction() {
-            const transaction = {
-                messages: [
-                    {
-                        address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // Địa chỉ ví nhận
-                        amount: "20000000" // Toncoin trong đơn vị nanoTON
+        function getMemberCount() {
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/getChatMembersCount?chat_id=${CHANNEL_USERNAME}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        document.getElementById('memberCount').textContent = `Thành viên: ${data.result}`;
+                    } else {
+                        document.getElementById('memberCount').textContent = "Không thể lấy số lượng thành viên";
+                        console.error("Lỗi:", data.description);
                     }
-                ]
-            };
-
-            try {
-                const result = await tonConnectUI.sendTransaction(transaction);
-                console.log("Giao dịch thành công:", result);
-                document.getElementById("transactionResult").innerText = "Giao dịch thành công!";
-            } catch (error) {
-                console.error("Lỗi khi gửi giao dịch:", error);
-                document.getElementById("transactionResult").innerText = "Giao dịch thất bại!";
-            }
+                })
+                .catch(error => {
+                    document.getElementById('memberCount').textContent = "Có lỗi xảy ra";
+                    console.error("Lỗi:", error);
+                });
         }
 
-        // Khi đã tải xong trang
-        window.addEventListener('DOMContentLoaded', () => {
-            // Gán sự kiện cho nút kết nối và gửi giao dịch
-            document.getElementById("connectButton").onclick = connectWallet;
-            document.getElementById("sendTransactionButton").onclick = sendTransaction;
-        });
+        // Gọi hàm getMemberCount mỗi 10 giây để tự động cập nhật số lượng thành viên
+        setInterval(getMemberCount, 10000);
+        
+        // Gọi lần đầu ngay lập tức khi trang được tải
+        getMemberCount();
     </script>
 </body>
 </html>
