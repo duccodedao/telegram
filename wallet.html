@@ -194,7 +194,7 @@
 
 
 <div class="container">
-    <div class="logo">BmassHD</div>
+
     
     <!-- Hiển thị tên người dùng và username -->
     <div class="connect-text">Xin chào <span id="user-name">User</span>, kết nối ví của bạn để mở khóa thêm nhiều tính năng.</div>
@@ -219,15 +219,17 @@
         <span id="notPrice">Giá: Đang tải...</span>
     </div>
     
+    <div class="price-display">
+        <img src="/logo-coin/cati.jpg" alt="CATI Logo">
+        <span id="catiPrice">Giá: Đang tải...</span>
+    </div>
+    
     <div id="joinGroupButton" class="button" onclick="joinWallet()">
         
         <img src="/ton/wallet.png" alt="Group Icon">
         <span>Wallet Telegram</span>
     </div>
-    <div id="joinGroupButton" class="button" onclick="joinExchange()">
-        <img src="/logo-coin/bmlogo.jpg" alt="Group Icon">
-        <span>Sàn giao dịch</span>
-    </div>
+    
     <!-- Nút tham gia nhóm Telegram -->
     <div id="joinGroupButton" class="button" onclick="joinGroup()">
         <img src="/logo-coin/buyref.svg" alt="Group Icon">
@@ -410,12 +412,14 @@
         fetchTokenPrice('DOGS', 'dogsPrice');
         fetchTokenPrice('HMSTR', 'hmstrPrice');
         fetchTokenPrice('NOT', 'notPrice');
+        fetchTokenPrice('CATI', 'catiPrice');
 
         setInterval(() => {
             fetchTokenPrice('TON', 'tonPrice');
             fetchTokenPrice('DOGS', 'dogsPrice');
             fetchTokenPrice('HMSTR', 'hmstrPrice');
             fetchTokenPrice('NOT', 'notPrice');
+            fetchTokenPrice('CATI', 'catiPrice');
         }, 10000);
 </script>
 
