@@ -179,6 +179,35 @@
             margin-right: 10px;
             border-radius: 10px;
         }
+        #ton-connect {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#connect-btn {
+    background-color: #0088cc;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#connect-btn:hover {
+    background-color: #005f8a;
+    transform: scale(1.05);
+}
+
+#connect-btn:active {
+    background-color: #004466;
+    transform: scale(1);
+}
+        
     </style>
 </head>
 <body>
@@ -187,7 +216,10 @@
 <header>
     <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
     <span id="user-username">@username</span>
-    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
+    <div id="ton-connect">
+    <button id="connect-btn">Kết nối TON</button>
+</div>
+> <!-- Nút TON Connect sẽ hiển thị ở đây -->
 </header>
 
 
@@ -285,6 +317,11 @@
 
     
 <script>
+    document.getElementById("connect-btn").addEventListener("click", function() {
+    // Đây là nơi bạn có thể thêm mã kết nối TON
+    alert("Đã kết nối với TON!");
+});
+    
     // Khởi tạo TonConnectUI
     const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
