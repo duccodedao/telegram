@@ -232,7 +232,10 @@
     </div>
     
     
-    
+    <div class="price-display" id="channelMembers">
+        <img src="/logo-coin/dogsx.jpg" alt="DOGS Logo">
+        <span id="memberCount">Member: Đang tải...</span>
+    </div>
     <!-- Nút tham gia nhóm Telegram -->
     <div id="joinGroupButton" class="button" onclick="joinGroup()">
         <img src="/logo-coin/buyref.svg" alt="Group Icon">
@@ -426,6 +429,37 @@
             fetchTokenPrice('CATI', 'catiPrice');
             fetchTokenPrice('BTC', 'btcPrice');
         }, 10000);
+
+
+
+    // Thay YOUR_BOT_TOKEN bằng token bot của bạn và @your_channel_username bằng tên channel cần đếm
+        const BOT_TOKEN = '7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk';
+        const CHANNEL_USERNAME = '@bmassk3_channel';
+
+        function getMemberCount() {
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/getChatMembersCount?chat_id=${CHANNEL_USERNAME}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        document.getElementById('memberCount').textContent = `Channel: ${data.result} Member active`;
+                    } else {
+                        document.getElementById('memberCount').textContent = "Không thể lấy số lượng thành viên";
+                        console.error("Lỗi:", data.description);
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('memberCount').textContent = "Có lỗi xảy ra";
+                    console.error("Lỗi:", error);
+                });
+        }
+
+        // Gọi hàm getMemberCount mỗi 10 giây để tự động cập nhật số lượng thành viên
+        setInterval(getMemberCount, 10000);
+        
+        // Gọi lần đầu ngay lập tức khi trang được tải
+        getMemberCount();
 </script>
 
 </body>
