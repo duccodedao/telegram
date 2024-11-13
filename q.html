@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mua Crypto | By BmassHD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Mua crypto | BmassHD">
+    <meta property="og:description" content="Đặt hàng tiền điện tử với BmassHD. Quy trình giao dịch dễ dàng và an toàn.">
+    <meta property="og:image" content="https://bmasshd.click/ton/nen.png">
+    <meta property="og:url" content="https://bmasshd.click/ton/ton.html">
+    <meta property="og:type" content="website">
+     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+</head>
+    <style>
+#ton-connect {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Add some padding */
+    font-size: 16px; /* Set font size */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    display: inline-block; /* Align with other elements */
+    margin-top: 20px; /* Space above the button */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+#ton-connect:hover {
+    background-color: #0056b3; /* Darker blue when hovered */
+}
+
+#ton-connect:focus {
+    outline: none; /* Remove outline when focused */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Add focus outline */
+}
+
+
+
+    </style>
+<body>
+
+  
+    <div class="container">
+        <h1>BmassHD</h1>
+       <button type="button" id="ton-connect" class="connect-button">Kết nối với Ví TON</button>
+
+        <p class="notice">Hỗ trợ <a href="https://chatting.page/mupkccfp2hxw92zuqwnu3bkpytm4hb58" target="_blank">@buycoinvn</a> 24/24</p>
+        <form id="orderForm">
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="coin">Coin:</label>
+                    <select id="coin" name="coin" required>
+                        <option value="" disabled selected>Chọn coin</option>
+                        <option value="TON">TON</option>
+                        <option value="SOL">SOL</option>
+                        <option value="BNB">BNB</option>
+                        <option value="ETH">ETH</option>
+                        <option value="NEAR">NEAR</option>
+                        <option value="SUI">SUI</option>
+                        <option value="MATIC">MATIC</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="network">Mạng:</label>
+                    <select id="network" name="network" required>
+                        <option value="" disabled selected>Không</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group small">
+                    <label for="quantity">Số lượng:</label>
+                    <input type="number" placeholder="0.1 - 9.5" id="quantity" name="quantity" required value="0">
+                </div>
+                <div class="form-group large">
+                    <label for="address">Address:</label>
+                    <div class="input-group">
+                        <input type="text" placeholder="Address" id="address" name="address" required>
+                        <button type="button" id="pasteButton" class="paste-button">
+                            <img src="paste2.png" alt="Paste">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group small">
+                    <label for="memoOption">Memo:</label>
+                    <select id="memoOption" name="memoOption">
+                        <option value="none">Không</option>
+                        <option value="input">Có</option>
+                    </select>
+                </div>
+                <div class="form-group large">
+                    <label for="memo">Memo:</label>
+                    <input type="text" placeholder="Memo" id="memo" name="memo" disabled>
+                </div>
+            </div>
+            <button type="submit" id="purchaseButton" class="submit-button">Mua</button>
+            
+            <button type="button" id="openWalletButton" class="submit-button">    
+                Wallet
+            </button>
+        </form>
+
+    </div>
+
+
+
+
+
+<div class="footer">
+    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/nha.png" alt="Home">
+            <span class="new-badge">New</span>
+        </div>
+        <span>Home</span>
+    </a>
+    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/nap_live.png" alt="MuaCoin">
+            
+        </div>
+        <span>MuaCoin</span>
+    </a>
+    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/rut.png" alt="BánCoin">
+            <span class="new-badge">New</span>
+        </div>
+        <span>BánCoin</span>
+    </a>
+    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/fr.png" alt="MuaRef">
+            <span class="new-badge">New</span>
+        </div>
+        <span>MuaRef</span>
+    </a>
+    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/vi.png" alt="Wallet">
+            <span class="new-badge">New</span>
+        </div>
+        <span>Wallet</span>
+    </a>   
+</div>
+
+    
+<script>
+    function setActive(element) {
+        // Xóa lớp active khỏi tất cả các mục
+        const items = document.querySelectorAll('.footer-item');
+        items.forEach(item => item.classList.remove('active'));
+
+        // Thêm lớp active vào mục được nhấp vào
+        element.classList.add('active');
+    }
+</script>
+<script>
+    // Khởi tạo TonConnectUI
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
+    });
+
+    // Cấu hình thêm tuỳ chọn nếu cần
+    tonConnectUI.uiOptions = {
+        twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
+    };
+
+    // Hàm kết nối với ví
+    async function connectToWallet() {
+        try {
+            const connectedWallet = await tonConnectUI.connectWallet();
+            console.log("Connected Wallet:", connectedWallet);
+
+            // Hiển thị thông tin ví
+            document.getElementById('wallet-info').style.display = 'block';
+            document.getElementById('balance').innerText = `Số dư: Đang tải...`;
+
+            // Lấy số dư và cập nhật giao diện
+            const address = connectedWallet.account.address;
+            const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
+            document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
+        } catch (error) {
+            console.error("Lỗi khi kết nối ví:", error);
+        }
+    }
+
+    // Hàm ngắt kết nối ví
+    async function disconnectWallet() {
+        try {
+            await tonConnectUI.disconnect();
+            document.getElementById('wallet-info').style.display = 'none';
+            console.log("Đã ngắt kết nối ví.");
+        } catch (error) {
+            console.error("Lỗi khi ngắt kết nối ví:", error);
+        }
+    }
+</script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+</body>
+</html>
