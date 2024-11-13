@@ -19,13 +19,29 @@
 
 </head>
     <style>
-#ton-connect {
-  position: absolute; /* Đặt phần tử ở vị trí tuyệt đối */
-  top: 5px; /* Đặt phần tử sát phần trên cùng của màn hình */
-  right: 5px; /* Đặt phần tử sát phần bên phải của màn hình */
-  width: 300px; /* Chiều rộng của phần tử */
-  height: 100vh; /* Chiều cao của phần tử bằng chiều cao cửa sổ */
-}
+ header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            color: #fff;
+           
+        }
+        #user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20%;
+            margin-right: 5px;
+        }
+        #ton-connect {
+            cursor: pointer;
+        }
+        #user-username {
+            color: #ff6a00;
+            margin-left: 1px;
+            font-size: 15px;
+            text-align: left;
+        }
 
 
     </style>
@@ -33,7 +49,12 @@
 
   
     <div class="container">
-        <h1>BmassHD</h1>
+<header>
+    <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
+   
+    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
+</header>
+        
        
         <p class="notice">Hỗ trợ <a href="https://chatting.page/mupkccfp2hxw92zuqwnu3bkpytm4hb58" target="_blank">@buycoinvn</a> 24/24</p>
         <form id="orderForm">
