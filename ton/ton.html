@@ -20,9 +20,14 @@
 </head>
     <style>
 #ton-connect {
-  width: 300px; /* Đặt chiều rộng cho div */
-  margin: center; /* Căn giữa theo chiều ngang */
+  position: absolute; /* Đặt phần tử ở vị trí tuyệt đối */
+  top: 0; /* Đặt phần tử sát phần trên cùng của màn hình */
+  left: 0; /* Đặt phần tử sát phần bên trái của màn hình */
+  right: 0; /* Đặt phần tử sát phần bên phải của màn hình */
+  width: auto; /* Để chiều rộng tự động, nhưng được giới hạn bởi 'left' và 'right' */
+  height: 200px; /* Chiều cao có thể thay đổi theo nhu cầu */
 }
+
     </style>
 <body>
 
