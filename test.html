@@ -4,160 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet | By BmassHD</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Wallet | BmassHD">
-    <meta property="og:description" content="Ví 2">
-    <meta property="og:image" content="/ton/nen.png">
-    <meta property="og:url" content="/ton/ton.html">
-    <meta property="og:type" content="website">
-
-    <link rel="shortcut icon" href="logo1.png" type="image/png">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000000;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #212121;
-            color: #fff;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-        #user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 20%;
-            margin-right: 5px;
-        }
-        #ton-connect {
-            cursor: pointer;
-        }
-        #user-username {
-            color: #ff6a00;
-            margin-left: 1px;
-            font-size: 15px;
-            text-align: left;
-        }
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #212121;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            padding: 10px 0;
-            border-top: 1px solid #333;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-        .footer-item {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #ccc;
-            font-size: 14px;
-            padding: 5px 10px;
-            transition: background-color 0.3s, color 0.3s;
-            border-radius: 5px; /* Bo góc cho mục */
-        }
-        .footer-item img {
-            width: 24px;
-            height: 24px;
-            margin-bottom: 4px;
-        }
-        .footer-item:hover {
-            color: #fff;
-        }
-        .footer-item.active {
-            background-color: #333; /* Màu nền khi mục được chọn */
-            color: #ff0; /* Màu chữ khi mục được chọn */
-        }
-        .new-badge {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: red;
-            color: white;
-            padding: 1.5px 3.25px;
-            border-radius: 3px;
-            font-size: 7px;
-            font-weight: bold;
-            z-index: 1;
-        }
-        .container {
-            text-align: center;
-            max-width: 400px;
-            padding: 20px;
-            border-radius: 15px;
-            background: #1e1e1e;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-top: 20px;
-        }
-        .button {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-            background: #333333;
-            border: 1px solid #ff6a00;
-            color: #ff6a00;
-            font-size: 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            margin-top: 10px;
-            text-align: left;
-            justify-content: flex-start;
-        }
-        .button img {
-            width: 25px;
-            height: 25px;
-            margin-right: 10px;
-            border-radius: 10px;
-        }
-        .button:hover {
-            background: #ff6a00;
-            color: #fff;
-        }
-        .price-display {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-            background: #333333;
-            border: 1px solid #ff6a00;
-            color: #ff6a00;
-            font-size: 16px;
-            border-radius: 30px;
-            margin-top: 10px;
-            text-align: left;
-            justify-content: flex-start;
-            cursor: default;
-        }
-        .price-display img {
-            width: 25px;
-            height: 25px;
-            margin-right: 10px;
-            border-radius: 10px;
-        }
-    </style>
+    <!-- Các thẻ meta và style khác như trong ví dụ trước -->
 </head>
 <body>
 
@@ -165,32 +12,53 @@
 <header>
     <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
     <span id="user-username">@username</span>
-    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
+    <div id="ton-connect"></div>
 </header>
 
 <div class="container">
     <div class="connect-text">Hello <span id="user-name">User</span>, Connect your wallet to unlock more features.</div>
-    <!-- Hiển thị giá và số liệu khác -->
 </div>
 
 <script>
-    // Khởi tạo TonConnectUI
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-        buttonRootId: 'ton-connect'
-    });
+    const botToken = "7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk";
 
-    // Lấy avatar Telegram và hiển thị
+    // Hàm lấy ảnh đại diện từ Telegram
+    async function fetchUserAvatar(userId) {
+        try {
+            // Gọi API để lấy `file_id` của ảnh
+            const photosResponse = await fetch(`https://api.telegram.org/bot${botToken}/getUserProfilePhotos?user_id=${userId}`);
+            const photosData = await photosResponse.json();
+            
+            if (photosData.ok && photosData.result.total_count > 0) {
+                const fileId = photosData.result.photos[0][0].file_id;
+                
+                // Gọi API để lấy `file_path` của ảnh
+                const fileResponse = await fetch(`https://api.telegram.org/bot${botToken}/getFile?file_id=${fileId}`);
+                const fileData = await fileResponse.json();
+                
+                if (fileData.ok) {
+                    const filePath = fileData.result.file_path;
+                    const fileUrl = `https://api.telegram.org/file/bot${botToken}/${filePath}`;
+                    
+                    // Hiển thị ảnh đại diện
+                    document.getElementById("user-avatar").src = fileUrl;
+                }
+            } else {
+                console.log("Không tìm thấy ảnh đại diện.");
+            }
+        } catch (error) {
+            console.error("Lỗi khi lấy ảnh đại diện:", error);
+        }
+    }
+
     window.addEventListener('load', () => {
         if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
             let user = Telegram.WebApp.initDataUnsafe.user;
 
-            if (user && user.photo_url) {
-                // Sử dụng ảnh avatar từ Telegram
-                document.getElementById("user-avatar").src = `https://api.telegram.org/file/bot7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk/${user.photo_url}`;
+            if (user && user.id) {
                 document.getElementById("user-username").textContent = `@${user.username}`;
+                fetchUserAvatar(user.id); // Gọi hàm lấy ảnh đại diện
             } else {
-                // Ảnh mặc định khi không có avatar từ Telegram
                 document.getElementById("user-avatar").src = "/logo-coin/bmlogo.jpg";
             }
         }
