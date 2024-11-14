@@ -1,40 +1,126 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng nhập bằng Telegram</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet | By BmassHD</title>
 
-    h1 {
-      color: #2e6da4;
-    }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
 
-    #login-widget {
-      margin-top: 20px;
-    }
-  </style>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Wallet | BmassHD">
+    <meta property="og:description" content="Ví 2">
+    <meta property="og:image" content="/ton/nen.png">
+    <meta property="og:url" content="/ton/ton.html">
+    <meta property="og:type" content="website">
+
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #212121;
+            color: #fff;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        #user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20%;
+            margin-right: 5px;
+        }
+        #ton-connect {
+            cursor: pointer;
+        }
+        #user-username {
+            color: #ff6a00;
+            margin-left: 1px;
+            font-size: 15px;
+            text-align: left;
+        }
+
+    </style>
 </head>
 <body>
-  <h1>Đăng nhập bằng Telegram</h1>
 
-  <!-- Telegram Login Widget -->
-  <script async src="https://telegram.org/js/telegram-widget.js?7"
-          data-telegram-login="bmassk3_bot" 
-          data-size="large" 
-          data-radius="10" 
-          data-auth-url="https://Bmasshd.click/test.html"></script>
+<!-- Header -->
+<header>
+    <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
+    <span id="user-username">@username</span>
+    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
+</header>
 
-  <script>
-    // Xử lý logic nếu cần thêm hành động sau khi widget được tải
-    document.addEventListener("DOMContentLoaded", function() {
-      console.log("Telegram Login widget đã được tải");
+
+
+
+
+
+
+
+
+
+
+    
+<script>
+    // Khởi tạo TonConnectUI
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
     });
-  </script>
+
+    // Cấu hình thêm tuỳ chọn nếu cần
+    tonConnectUI.uiOptions = {
+        twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
+    };
+
+    // Hàm kết nối với ví
+    async function connectToWallet() {
+        try {
+            const connectedWallet = await tonConnectUI.connectWallet();
+            console.log("Connected Wallet:", connectedWallet);
+
+            // Hiển thị thông tin ví
+            document.getElementById('wallet-info').style.display = 'block';
+            document.getElementById('balance').innerText = `Số dư: Đang tải...`;
+
+            // Lấy số dư và cập nhật giao diện
+            const address = connectedWallet.account.address;
+            const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
+            document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
+        } catch (error) {
+            console.error("Lỗi khi kết nối ví:", error);
+        }
+    }
+
+    // Hàm ngắt kết nối ví
+    async function disconnectWallet() {
+        try {
+            await tonConnectUI.disconnect();
+            document.getElementById('wallet-info').style.display = 'none';
+            console.log("Đã ngắt kết nối ví.");
+        } catch (error) {
+            console.error("Lỗi khi ngắt kết nối ví:", error);
+        }
+    }
+
+
+                    
+</script>
+
 </body>
-</html>
+  </html>
