@@ -16,7 +16,6 @@
 
     <link rel="shortcut icon" href="logo1.png" type="image/png">
     
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -53,7 +52,6 @@
             font-size: 15px;
             text-align: left;
         }
-
         .footer {
             position: fixed;
             bottom: 0;
@@ -105,19 +103,16 @@
             font-weight: bold;
             z-index: 1;
         }
-        
-
-.container {
-    text-align: center;
-    max-width: 400px;
-    padding: 20px;
-    border-radius: 15px;
-    background: #1e1e1e;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
-
+        .container {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #1e1e1e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
         }
-        .button{
+        .button {
             display: flex;
             align-items: center;
             padding: 10px 20px;
@@ -132,7 +127,7 @@
             text-align: left;
             justify-content: flex-start;
         }
-        .button img{
+        .button img {
             width: 25px;
             height: 25px;
             margin-right: 10px;
@@ -142,22 +137,6 @@
             background: #ff6a00;
             color: #fff;
         }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #ff6a00;
-        }
-        .connect-text {
-            font-size: 16px;
-            color: #cccccc;
-            margin-bottom: 20px;
-        }
-        .ton-balance {
-            pointer-events: none;
-        }
-
-
         .price-display {
             display: flex;
             align-items: center;
@@ -172,7 +151,6 @@
             justify-content: flex-start;
             cursor: default;
         }
-
         .price-display img {
             width: 25px;
             height: 25px;
@@ -190,273 +168,34 @@
     <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
 </header>
 
-
-
-
 <div class="container">
-
-    
-    <!-- Hiển thị tên người dùng và username -->
     <div class="connect-text">Hello <span id="user-name">User</span>, Connect your wallet to unlock more features.</div>
-
-
-    <div class="price-display">
-        <img src="/logo-coin/btc.jpg" alt="TON Logo">
-        <span id="btcPrice">Giá: Đang tải...</span>
-    </div>
-
-    
-    <div class="price-display">
-        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Logo">
-        <span id="tonPrice">Giá: Đang tải...</span>
-    </div>
-    
-    <div class="price-display">
-        <img src="/logo-coin/dogsx.jpg" alt="DOGS Logo">
-        <span id="dogsPrice">Giá: Đang tải...</span>
-    </div>
-
-    <div class="price-display">
-        <img src="/logo-coin/hmstrx.jpg" alt="HMSTR Logo">
-        <span id="hmstrPrice">Giá: Đang tải...</span>
-    </div>
-
-    <div class="price-display">
-        <img src="/logo-coin/notx.jpg" alt="NOT Logo">
-        <span id="notPrice">Giá: Đang tải...</span>
-    </div>
-    
-    <div class="price-display">
-        <img src="/logo-coin/cati.jpg" alt="CATI Logo">
-        <span id="catiPrice">Giá: Đang tải...</span>
-    </div>
-    
-    
-    <div class="price-display" id="channelMembers">
-        <img src="/logo-coin/bmlogo.jpg" alt="Channel Logo">
-        <span id="memberCount">Member: Đang tải...</span>
-    </div>
-    <!-- Nút tham gia nhóm Telegram -->
-    <div id="joinGroupButton" class="button" onclick="joinGroup()">
-        <img src="/logo-coin/buyref.svg" alt="Group Icon">
-        <span>Join Telegram Group</span>
-    </div>
+    <!-- Hiển thị giá và số liệu khác -->
 </div>
 
-  
-
-<div class="footer">
-    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/nha.png" alt="Home">
-            <span class="new-badge">New</span>
-        </div>
-        <span>Home</span>
-    </a>
-    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/nap.png" alt="MuaCoin">
-            <span class="new-badge">New</span>
-        </div>
-        <span>MuaCoin</span>
-    </a>
-    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/rut.png" alt="BánCoin">
-            <span class="new-badge">New</span>
-        </div>
-        <span>BánCoin</span>
-    </a>
-    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/fr.png" alt="MuaRef">
-            <span class="new-badge">New</span>
-        </div>
-        <span>MuaRef</span>
-    </a>
-    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/vi_live.png" alt="Wallet">
-            
-        </div>
-        <span>Wallet</span>
-    </a>   
-</div>
-
-
-
-
-
-
-    
 <script>
     // Khởi tạo TonConnectUI
     const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-        buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
+        buttonRootId: 'ton-connect'
     });
 
-    // Cấu hình thêm tuỳ chọn nếu cần
-    tonConnectUI.uiOptions = {
-        twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
-    };
+    // Lấy avatar Telegram và hiển thị
+    window.addEventListener('load', () => {
+        if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
+            let user = Telegram.WebApp.initDataUnsafe.user;
 
-    // Hàm kết nối với ví
-    async function connectToWallet() {
-        try {
-            const connectedWallet = await tonConnectUI.connectWallet();
-            console.log("Connected Wallet:", connectedWallet);
-
-            // Hiển thị thông tin ví
-            document.getElementById('wallet-info').style.display = 'block';
-            document.getElementById('balance').innerText = `Số dư: Đang tải...`;
-
-            // Lấy số dư và cập nhật giao diện
-            const address = connectedWallet.account.address;
-            const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
-            document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
-        } catch (error) {
-            console.error("Lỗi khi kết nối ví:", error);
-        }
-    }
-
-    // Hàm ngắt kết nối ví
-    async function disconnectWallet() {
-        try {
-            await tonConnectUI.disconnect();
-            document.getElementById('wallet-info').style.display = 'none';
-            console.log("Đã ngắt kết nối ví.");
-        } catch (error) {
-            console.error("Lỗi khi ngắt kết nối ví:", error);
-        }
-    }
-
-
-
-
-
-
-
-
-        // Hàm tham gia nhóm Telegram
-    function joinGroup() {
-        // Mở liên kết đến nhóm Telegram
-        window.open("https://t.me/bmassk3_channel", "_blank");
-    }
-    function joinWallet() {
-        // Mở liên kết đến nhóm Telegram
-        window.open("https://t.me/wallet/start?startapp", "_blank");
-    }
-    function joinExchange() {
-        // Mở liên kết đến nhóm Telegram
-        window.open("https://bmasshd.click/exchange.html", "_blank");
-    }
-
-
-    async function fetchTokenPrice(instId, elementId) {
-            try {
-                const url = `https://www.okx.com/api/v5/market/ticker?instId=${instId}-USDT`;
-
-                const response = await fetch(url);
-
-                if (!response.ok) {
-                    throw new Error(`Lỗi khi tải dữ liệu từ API cho ${instId}`);
-                }
-
-                const data = await response.json();
-
-                if (!data.data || data.data.length === 0) {
-                    throw new Error(`Không tìm thấy giá ${instId} từ API`);
-                }
-
-                const tokenPrice = data.data[0].last;
-                document.getElementById(elementId).textContent = `${tokenPrice} USDT`;
-            } catch (error) {
-                console.error('Lỗi:', error);
-                document.getElementById(elementId).textContent = `${instId} không thể lấy được`;
+            if (user && user.photo_url) {
+                // Sử dụng ảnh avatar từ Telegram
+                document.getElementById("user-avatar").src = `https://api.telegram.org/file/bot<token>/${user.photo_url}`;
+                document.getElementById("user-username").textContent = `@${user.username}`;
+            } else {
+                // Ảnh mặc định khi không có avatar từ Telegram
+                document.getElementById("user-avatar").src = "/logo-coin/bmlogo.jpg";
             }
         }
-
-        fetchTokenPrice('TON', 'tonPrice');
-        fetchTokenPrice('DOGS', 'dogsPrice');
-        fetchTokenPrice('HMSTR', 'hmstrPrice');
-        fetchTokenPrice('NOT', 'notPrice');
-        fetchTokenPrice('CATI', 'catiPrice');
-        fetchTokenPrice('BTC', 'btcPrice');
-
-        setInterval(() => {
-            fetchTokenPrice('TON', 'tonPrice');
-            fetchTokenPrice('DOGS', 'dogsPrice');
-            fetchTokenPrice('HMSTR', 'hmstrPrice');
-            fetchTokenPrice('NOT', 'notPrice');
-            fetchTokenPrice('CATI', 'catiPrice');
-            fetchTokenPrice('BTC', 'btcPrice');
-        }, 10000);
-
-
-
-    // Thay YOUR_BOT_TOKEN bằng token bot của bạn và @your_channel_username bằng tên channel cần đếm
-        const BOT_TOKEN = '7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk';
-        const CHANNEL_USERNAME = '@bmassk3_channel';
-
-        function getMemberCount() {
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/getChatMembersCount?chat_id=${CHANNEL_USERNAME}`;
-            
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        document.getElementById('memberCount').textContent = `Channel: ${data.result} Member active`;
-                    } else {
-                        document.getElementById('memberCount').textContent = "Không thể lấy số lượng thành viên";
-                        console.error("Lỗi:", data.description);
-                    }
-                })
-                .catch(error => {
-                    document.getElementById('memberCount').textContent = "Có lỗi xảy ra";
-                    console.error("Lỗi:", error);
-                });
-        }
-
-        // Gọi hàm getMemberCount mỗi 10 giây để tự động cập nhật số lượng thành viên
-        setInterval(getMemberCount, 10000);
-        
-        // Gọi lần đầu ngay lập tức khi trang được tải
-        getMemberCount();
+    });
 </script>
-<script>
-// Hàm để lấy file_path từ file_id của ảnh đại diện Telegram
-async function fetchAvatarPath(token, file_id) {
-    let response = await fetch(`https://api.telegram.org/bot${token}/getFile?file_id=${file_id}`);
-    let data = await response.json();
-    if (data.ok) {
-        return `https://api.telegram.org/file/bot${token}/${data.result.file_path}`;
-    } else {
-        console.error("Không thể lấy file_path:", data.description);
-        return null;
-    }
-}
 
-// Hàm xử lý khi trang tải
-window.addEventListener('load', async () => {
-    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
-        let user = Telegram.WebApp.initDataUnsafe.user;
-        let token = "7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk"; // Thay thế bằng token bot của bạn
-
-        if (user && user.photo_url) {
-            let file_id = user.photo_url.split("=")[1];
-            let avatarUrl = await fetchAvatarPath(token, file_id);
-            if (avatarUrl) {
-                document.getElementById("user-avatar").src = avatarUrl;
-            }
-        } else {
-            // Sử dụng avatar ngẫu nhiên nếu không có ảnh đại diện
-            document.getElementById("user-avatar").src = randomAvatar;
-        }
-        document.getElementById("user-username").textContent = "@" + user.username || "Guest";
-    }
-});
-</script>
-    
 </body>
 </html>
