@@ -1,69 +1,40 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallet | By BmassHD</title>
-    <!-- Các thẻ meta và style khác như trong ví dụ trước -->
-</head>
-<body>
-
-<!-- Header -->
-<header>
-    <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
-    <span id="user-username">@username</span>
-    <div id="ton-connect"></div>
-</header>
-
-<div class="container">
-    <div class="connect-text">Hello <span id="user-name">User</span>, Connect your wallet to unlock more features.</div>
-</div>
-
-<script>
-    const botToken = "7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk";
-
-    // Hàm lấy ảnh đại diện từ Telegram
-    async function fetchUserAvatar(userId) {
-        try {
-            // Gọi API để lấy `file_id` của ảnh
-            const photosResponse = await fetch(`https://api.telegram.org/bot${botToken}/getUserProfilePhotos?user_id=${userId}`);
-            const photosData = await photosResponse.json();
-            
-            if (photosData.ok && photosData.result.total_count > 0) {
-                const fileId = photosData.result.photos[0][0].file_id;
-                
-                // Gọi API để lấy `file_path` của ảnh
-                const fileResponse = await fetch(`https://api.telegram.org/bot${botToken}/getFile?file_id=${fileId}`);
-                const fileData = await fileResponse.json();
-                
-                if (fileData.ok) {
-                    const filePath = fileData.result.file_path;
-                    const fileUrl = `https://api.telegram.org/file/bot${botToken}/${filePath}`;
-                    
-                    // Hiển thị ảnh đại diện
-                    document.getElementById("user-avatar").src = fileUrl;
-                }
-            } else {
-                console.log("Không tìm thấy ảnh đại diện.");
-            }
-        } catch (error) {
-            console.error("Lỗi khi lấy ảnh đại diện:", error);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập bằng Telegram</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
     }
 
-    window.addEventListener('load', () => {
-        if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
-            let user = Telegram.WebApp.initDataUnsafe.user;
+    h1 {
+      color: #2e6da4;
+    }
 
-            if (user && user.id) {
-                document.getElementById("user-username").textContent = `@${user.username}`;
-                fetchUserAvatar(user.id); // Gọi hàm lấy ảnh đại diện
-            } else {
-                document.getElementById("user-avatar").src = "/logo-coin/bmlogo.jpg";
-            }
-        }
+    #login-widget {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Đăng nhập bằng Telegram</h1>
+
+  <!-- Telegram Login Widget -->
+  <script async src="https://telegram.org/js/telegram-widget.js?7"
+          data-telegram-login="bmassk3_bot" 
+          data-size="large" 
+          data-radius="10" 
+          data-auth-url="https://Bmasshd.click/test.html"></script>
+
+  <script>
+    // Xử lý logic nếu cần thêm hành động sau khi widget được tải
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("Telegram Login widget đã được tải");
     });
-</script>
-
+  </script>
 </body>
 </html>
