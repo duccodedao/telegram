@@ -15,11 +15,9 @@
     <meta property="og:type" content="website">
 
     <link rel="shortcut icon" href="logo1.png" type="image/png">
-    
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://telegram.org/js/telegram-widget.js?7"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -53,7 +51,6 @@
             font-size: 15px;
             text-align: left;
         }
-
     </style>
 </head>
 <body>
@@ -62,20 +59,36 @@
 <header>
     <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
     <span id="user-username">@username</span>
-    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
+    <div id="ton-connect"></div> <!-- Nút Telegram Login sẽ hiển thị ở đây -->
 </header>
 
+<!-- Telegram Login Widget -->
+<script async src="https://telegram.org/js/telegram-widget.js?7"
+        data-telegram-login="bmassk3_bot" 
+        data-size="large" 
+        data-radius="10" 
+        data-auth-url="https://Bmasshd.click/test.html"></script>
 
+<script>
+    // Cấu hình Telegram Login widget
+    window.addEventListener('message', function (event) {
+        if (event.origin !== "https://web.telegram.org") return;
 
+        const tgData = event.data;
 
+        if (tgData && tgData.user) {
+            // Lấy avatar và username của người dùng sau khi đăng nhập
+            const user = tgData.user;
+            const avatarUrl = user.photo_url;
+            const username = user.username;
 
+            // Cập nhật giao diện với avatar và username
+            document.getElementById('user-avatar').src = avatarUrl || "/logo-coin/bmlogo.jpg"; // Sử dụng ảnh mặc định nếu không có
+            document.getElementById('user-username').innerText = `@${username}`;
+        }
+    });
+</script>
 
-
-
-
-
-
-    
 <script>
     // Khởi tạo TonConnectUI
     const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
@@ -117,10 +130,7 @@
             console.error("Lỗi khi ngắt kết nối ví:", error);
         }
     }
-
-
-                    
 </script>
 
 </body>
-  </html>
+</html>
