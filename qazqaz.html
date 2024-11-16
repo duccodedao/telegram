@@ -303,38 +303,59 @@
     }
 </script>
 
-  <script>
-    const notificationData = JSON.parse(localStorage.getItem("notificationData"));
+<script>
+    // Kiểm tra trạng thái bật/tắt thông báo
+    const isNotificationEnabled = localStorage.getItem("notificationEnabled") === "true";
 
-    if (notificationData) {
-      // Tạo thông báo
-      const notification = document.createElement("div");
-      notification.className = "notification";
-      notification.innerHTML = `
-        <div class="content">
-          <img src="${notificationData.image}" alt="Hình ảnh">
-          <div class="text">
-            <h>${notificationData.title}</h>
-            <p>${notificationData.subtitle}</p>
-          </div>
-        </div>
-        <button class="close">✖</button>
-      `;
+    if (isNotificationEnabled) {
+        // Lấy dữ liệu thông báo từ localStorage
+        const notificationData = JSON.parse(localStorage.getItem("notificationData"));
 
-      // Thêm thông báo vào body
-      document.body.appendChild(notification);
+        if (notificationData) {
+            // Tạo thông báo
+            const notification = document.createElement("div");
+            notification.className = "notification";
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #007bff;
+                color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                z-index: 1000;
+            `;
+            notification.innerHTML = `
+                <div class="content" style="display: flex; align-items: center;">
+                    <img src="${notificationData.image}" alt="Hình ảnh" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+                    <div class="text" style="margin-left: 10px;">
+                        <h style="font-size: 16px; font-weight: bold;">${notificationData.title}</h>
+                        <p style="font-size: 14px;">${notificationData.subtitle}</p>
+                    </div>
+                </div>
+                <button class="close" style="background: transparent; border: none; font-size: 18px; color: white; cursor: pointer;">✖</button>
+            `;
 
-      // Xử lý sự kiện nút đóng
-      notification.querySelector(".close").addEventListener("click", () => {
-        notification.remove();
-      });
+            // Thêm thông báo vào body
+            document.body.appendChild(notification);
 
-      // Tự động xóa thông báo sau 3 giây
-      setTimeout(() => {
-        notification.remove();
-      }, 3000);
+            // Xử lý sự kiện nút đóng
+            notification.querySelector(".close").addEventListener("click", () => {
+                notification.remove();
+            });
+
+            // Tự động xóa thông báo sau 3 giây
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
     }
-  </script>
+</script>
+
 
     
     
