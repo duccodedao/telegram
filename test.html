@@ -192,12 +192,12 @@
 
 
 
-<!-- Thêm mục Bạn bè -->
-<div class="container" id="referralSection">
-    <h2>Bạn bè của bạn</h2>
-    <div id="referralInfo" class="price-display">
-        <img src="/logo-coin/user-icon.png" alt="User Icon">
-        <span id="referralText">Đang tải thông tin người giới thiệu...</span>
+<div class="container">
+    <!-- Hiển thị tên người dùng và mã giới thiệu -->
+    <div class="connect-text">
+        Chào bạn <span id="user-name">User</span>, bạn đã được giới thiệu bởi <span id="referrer-username">@username</span>.
+        Mã giới thiệu của bạn là: 
+        <a id="referral-link" href="#">https://t.me/bmassk3_bot/bmassk3?ref=<span id="user-uid">uid</span></a>
     </div>
 </div>
     
@@ -508,6 +508,29 @@ async function getUsernameByUid(uid) {
 window.onload = function() {
     getReferralInfo();  // Lấy và hiển thị thông tin người giới thiệu
 };
+
+
+
+
+
+
+
+    // Hàm lấy thông tin người dùng và hiển thị mã giới thiệu
+    window.Telegram.WebApp.onEvent('user', function(user) {
+        const referrerUsername = user.referrer_username || 'unknown'; // Tên người giới thiệu
+        const referrerUid = user.referrer_uid || 'unknown'; // UID người giới thiệu
+        const userName = user.username || 'User'; // Tên người dùng
+        const userUid = user.id || 'unknown'; // UID của người dùng
+
+        // Hiển thị thông tin người giới thiệu
+        document.getElementById('user-name').innerText = userName;
+        document.getElementById('referrer-username').innerText = referrerUsername;
+        document.getElementById('user-uid').innerText = userUid;
+
+        // Tạo liên kết giới thiệu
+        const referralLink = `https://t.me/bmassk3_bot/bmassk3?ref=${userUid}`;
+        document.getElementById('referral-link').setAttribute('href', referralLink);
+    });
     
 </script>
 
