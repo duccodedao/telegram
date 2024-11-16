@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xác thực vân tay</title>
+    <title>Đăng ký Passkey</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,24 +21,13 @@
     </style>
 </head>
 <body>
-    <h1>Xác thực Passkey</h1>
-    <button id="authenticate">Xác thực bằng vân tay</button>
+    <h1>Đăng ký Passkey</h1>
+    <button id="register">Đăng ký vân tay</button>
     <p id="status"></p>
 
     <script>
-        const button = document.getElementById("authenticate");
+        const button = document.getElementById("register");
         const status = document.getElementById("status");
-
-        // Kiểm tra xem người dùng đã đăng ký passkey chưa
-        const passkeyCredential = localStorage.getItem("passkeyCredential");
-
-        if (passkeyCredential) {
-            // Nếu đã đăng ký, yêu cầu xác thực vân tay
-            button.style.display = "block";
-        } else {
-            status.textContent = "Bạn chưa đăng ký vân tay. Hãy đăng ký trước!";
-            button.style.display = "none";
-        }
 
         button.addEventListener("click", async () => {
             try {
@@ -48,37 +37,54 @@
                     return;
                 }
 
-                // Tạo challenge (trong thực tế, challenge sẽ được lấy từ server)
+                // Tạo challenge (trong thực tế, challenge nên được lấy từ server)
                 const challenge = new Uint8Array(32);
                 window.crypto.getRandomValues(challenge);
 
-                // Cấu hình yêu cầu xác thực
+                // Cấu hình thông tin đăng ký
                 const publicKey = {
                     challenge: challenge,
-                    allowCredentials: [
-                        {
-                            id: new Uint8Array(JSON.parse(passkeyCredential).rawId), // ID của khóa đã đăng ký
-                            type: "public-key",
-                        },
+                    rp: {
+                        name: "Trang Web Demo",
+                        id: window.location.hostname, // Tên miền hiện tại
+                    },
+                    user: {
+                        id: new Uint8Array(16), // ID người dùng (tạo ngẫu nhiên cho demo)
+                        name: "username@example.com",
+                        displayName: "User Demo",
+                    },
+                    pubKeyCredParams: [
+                        { alg: -7, type: "public-key" }, // ES256
                     ],
                     timeout: 60000, // Thời gian chờ
-                    userVerification: "required", // Yêu cầu xác thực người dùng
+                    authenticatorSelection: {
+                        userVerification: "required",
+                    },
                 };
 
-                // Gửi yêu cầu xác thực
-                const credential = await navigator.credentials.get({ publicKey });
+                // Gửi yêu cầu đăng ký tới thiết bị
+                const credential = await navigator.credentials.create({ publicKey });
 
-                // Xử lý kết quả xác thực
+                // Lưu thông tin vào localStorage
                 if (credential) {
+                    localStorage.setItem(
+                        "passkeyCredential",
+                        JSON.stringify({
+                            id: credential.id,
+                            rawId: Array.from(new Uint8Array(credential.rawId)),
+                            type: credential.type,
+                        })
+                    );
+
                     status.style.color = "green";
-                    status.textContent = "Xác thực thành công! Bạn đã được truy cập.";
+                    status.textContent = "Đăng ký vân tay thành công! Khóa đã được lưu.";
                 } else {
                     status.style.color = "red";
-                    status.textContent = "Xác thực thất bại. Hãy thử lại.";
+                    status.textContent = "Đăng ký thất bại. Hãy thử lại.";
                 }
             } catch (error) {
-                console.error("Lỗi xác thực:", error);
-                status.textContent = "Đã xảy ra lỗi trong quá trình xác thực.";
+                console.error("Lỗi đăng ký:", error);
+                status.textContent = "Đã xảy ra lỗi trong quá trình đăng ký.";
             }
         });
     </script>
