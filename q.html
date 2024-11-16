@@ -6,43 +6,76 @@
   <title>Admin Panel</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
       padding: 0;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
     .container {
       max-width: 500px;
-      margin: 0 auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      background-color: #f9f9f9;
+      width: 100%;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .container h2 {
+      margin-bottom: 20px;
+      color: #333;
     }
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      text-align: left;
     }
     .form-group label {
       display: block;
       margin-bottom: 5px;
       font-weight: bold;
+      color: #555;
     }
-    .form-group input, .form-group textarea {
+    .form-group input,
+    .form-group textarea {
       width: 100%;
       padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #007bff;
     }
     .form-group button {
       width: 100%;
-      padding: 10px;
-      background-color: #007bff;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #007bff;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
     .form-group button:hover {
-      background-color: #0056b3;
+      background: #0056b3;
+    }
+    .preview {
+      margin-top: 15px;
+      text-align: center;
+    }
+    .preview img {
+      max-width: 100%;
+      max-height: 150px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -53,6 +86,9 @@
       <div class="form-group">
         <label for="image">Tải ảnh lên:</label>
         <input type="file" id="image" accept="image/*">
+      </div>
+      <div class="preview" id="preview">
+        <!-- Ảnh xem trước sẽ hiển thị tại đây -->
       </div>
       <div class="form-group">
         <label for="title">Tiêu đề chính:</label>
@@ -69,29 +105,43 @@
   </div>
 
   <script>
+    const imageInput = document.getElementById("image");
+    const preview = document.getElementById("preview");
+
+    // Xử lý xem trước ảnh
+    imageInput.addEventListener("change", function () {
+      const file = imageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.innerHTML = "";
+      }
+    });
+
     document.getElementById("adminForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const imageInput = document.getElementById("image").files[0];
-      const title = document.getElementById("title").value;
-      const subtitle = document.getElementById("subtitle").value;
+      const imageFile = imageInput.files[0];
+      const title = document.getElementById("title").value.trim();
+      const subtitle = document.getElementById("subtitle").value.trim();
 
-      if (!imageInput || !title || !subtitle) {
+      if (!imageFile || !title || !subtitle) {
         alert("Vui lòng nhập đầy đủ thông tin!");
         return;
       }
 
-      // Đọc file ảnh dưới dạng Base64
       const reader = new FileReader();
-      reader.onload = function (event) {
-        const imageBase64 = event.target.result;
-
-        // Lưu dữ liệu vào localStorage
+      reader.onload = function (e) {
+        const imageBase64 = e.target.result;
         const notificationData = { image: imageBase64, title, subtitle };
         localStorage.setItem("notificationData", JSON.stringify(notificationData));
         alert("Đã lưu thông báo thành công!");
       };
-      reader.readAsDataURL(imageInput);
+      reader.readAsDataURL(imageFile);
     });
   </script>
 </body>
