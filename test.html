@@ -4,34 +4,91 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TG App</title>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    /* CSS cho thông báo */
+    .notification {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: black;
+      color: white;
+      padding: 10px;
+      z-index: 9999;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .notification .content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .notification .content .image {
+      width: 40px;
+      height: 40px;
+      background-color: orange;
+      border-radius: 8px;
+    }
+
+    .notification .content .text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .notification .content .text h2 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .notification .content .text p {
+      margin: 0;
+      font-size: 12px;
+    }
+
+    .notification .close {
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <script>
-    // Kiểm tra trạng thái bật thông báo từ localStorage
+    // Kiểm tra trạng thái thông báo
     const isNotificationEnabled = localStorage.getItem('notificationEnabled') === 'true';
 
     if (isNotificationEnabled) {
-      // Hiển thị thông báo
-      Swal.fire({
-        html: `
-          <div style="display: flex; align-items: center; justify-content: space-between; background-color: black; border-radius: 10px; padding: 10px;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <div style="width: 50px; height: 50px; background-color: orange; border-radius: 10px;"></div>
-              <div>
-                <h2 style="color: white; margin: 0;">Thêm tiêu đề</h2>
-                <p style="color: white; margin: 0;">Thêm tiêu đề phụ</p>
-              </div>
-            </div>
-            <div>
-              <span style="color: white; font-size: 20px; font-weight: bold;">&gt;</span>
-            </div>
+      // Tạo thông báo
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.innerHTML = `
+        <div class="content">
+          <div class="image"></div>
+          <div class="text">
+            <h2>Thêm tiêu đề</h2>
+            <p>Thêm tiêu đề phụ</p>
           </div>
-        `,
-        showConfirmButton: false,
-        background: 'transparent',
-        width: '400px',
+        </div>
+        <div class="close">✖</div>
+      `;
+
+      // Thêm thông báo vào body
+      document.body.appendChild(notification);
+
+      // Xử lý sự kiện nút đóng
+      notification.querySelector('.close').addEventListener('click', () => {
+        notification.remove();
       });
+
+      // Tự động xóa thông báo sau 3 giây
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
     }
   </script>
 </body>
