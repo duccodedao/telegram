@@ -3,28 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Index</title>
+  <title>Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <button id="toggleNotification">Bật thông báo</button>
+  <div class="container">
+    <h2>Admin Panel</h2>
+    <form id="adminForm">
+      <div class="form-group">
+        <label for="image">Tải ảnh lên:</label>
+        <input type="file" id="image" accept="image/*">
+      </div>
+      <div class="form-group">
+        <label for="title">Tiêu đề chính:</label>
+        <input type="text" id="title" placeholder="Nhập tiêu đề chính">
+      </div>
+      <div class="form-group">
+        <label for="subtitle">Tiêu đề phụ:</label>
+        <input type="text" id="subtitle" placeholder="Nhập tiêu đề phụ">
+      </div>
+      <div class="form-group">
+        <button type="submit">Lưu thông báo</button>
+      </div>
+    </form>
+  </div>
 
   <script>
-    // Trạng thái bật/tắt thông báo
-    let isNotificationEnabled = localStorage.getItem('notificationEnabled') === 'true';
+    document.getElementById("adminForm").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    // Gán trạng thái nút khi load trang
-    const button = document.getElementById('toggleNotification');
-    button.textContent = isNotificationEnabled ? 'Tắt thông báo' : 'Bật thông báo';
+      const imageInput = document.getElementById("image").files[0];
+      const title = document.getElementById("title").value;
+      const subtitle = document.getElementById("subtitle").value;
 
-    // Thay đổi trạng thái khi nhấn nút
-    button.addEventListener('click', function() {
-      isNotificationEnabled = !isNotificationEnabled;
-      localStorage.setItem('notificationEnabled', isNotificationEnabled);
+      if (!imageInput || !title || !subtitle) {
+        alert("Vui lòng nhập đầy đủ thông tin!");
+        return;
+      }
 
-      // Cập nhật nội dung nút
-      button.textContent = isNotificationEnabled ? 'Tắt thông báo' : 'Bật thông báo';
+      // Đọc file ảnh dưới dạng Base64
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const imageBase64 = event.target.result;
 
-      alert(isNotificationEnabled ? 'Thông báo đã được bật!' : 'Thông báo đã được tắt!');
+        // Lưu dữ liệu vào localStorage
+        const notificationData = { image: imageBase64, title, subtitle };
+        localStorage.setItem("notificationData", JSON.stringify(notificationData));
+        alert("Đã lưu thông báo thành công!");
+      };
+      reader.readAsDataURL(imageInput);
     });
   </script>
 </body>
