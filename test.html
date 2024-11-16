@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet | By BmassHD</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Wallet | BmassHD">
     <meta property="og:description" content="Ví 2">
     <meta property="og:image" content="/ton/nen.png">
     <meta property="og:url" content="/ton/ton.html">
     <meta property="og:type" content="website">
+
     <link rel="shortcut icon" href="logo1.png" type="image/png">
+    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -73,7 +79,7 @@
             font-size: 14px;
             padding: 5px 10px;
             transition: background-color 0.3s, color 0.3s;
-            border-radius: 5px;
+            border-radius: 5px; /* Bo góc cho mục */
         }
         .footer-item img {
             width: 24px;
@@ -84,13 +90,94 @@
             color: #fff;
         }
         .footer-item.active {
-            background-color: #333;
-            color: #ff0;
+            background-color: #333; /* Màu nền khi mục được chọn */
+            color: #ff0; /* Màu chữ khi mục được chọn */
         }
-        iframe {
-            width: 100%;
-            height: calc(100vh - 120px); /* Chiều cao giảm bớt không gian của header và footer */
-            border: none;
+        .new-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: red;
+            color: white;
+            padding: 1.5px 3.25px;
+            border-radius: 3px;
+            font-size: 7px;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+
+.container {
+    text-align: center;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #1e1e1e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+
+        }
+        .button{
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+        }
+        .button img{
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        .button:hover {
+            background: #ff6a00;
+            color: #fff;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        .ton-balance {
+            pointer-events: none;
+        }
+
+
+        .price-display {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+            cursor: default;
+        }
+
+        .price-display img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -100,18 +187,16 @@
 <header>
     <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
     <span id="user-username">@username</span>
-    <div id="ton-connect"></div>
+    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
 </header>
 
-<!-- Nút Send, Deposit, và Swap -->
-<div class="button-container" style="display:none; margin-top: 20px;">
-    <button id="send-button" class="button">Send</button>
-    <button id="deposit-button" class="button">Deposit</button>
-    <button id="swap-button" class="button">Swap</button>
-</div>
 
 
-<!-- Footer -->
+
+
+
+  
+
 <div class="footer">
     <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
@@ -144,65 +229,105 @@
     <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
             <img src="/logo-coin/vi_live.png" alt="Wallet">
+            
         </div>
         <span>Wallet</span>
     </a>   
 </div>
 
-<script>
-// JavaScript code here
-    // Khởi tạo TonConnectUI
-const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-    buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
-});
 
-// Cấu hình thêm tuỳ chọn nếu cần
-tonConnectUI.uiOptions = {
-    twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
-};
 
-// Hàm kết nối với ví
-async function connectToWallet() {
-    try {
-        const connectedWallet = await tonConnectUI.connectWallet();
-        console.log("Connected Wallet:", connectedWallet);
 
-        // Hiển thị thông tin ví
-        document.getElementById('wallet-info').style.display = 'block';
-        document.getElementById('balance').innerText = "Số dư: Đang tải...";
 
-        // Lấy số dư và cập nhật giao diện
-        const address = connectedWallet.account.address;
-        const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
-        document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
 
-        // Hiển thị các nút Send, Deposit, Swap
-        document.querySelector('.button-container').style.display = 'block';
-
-    } catch (error) {
-        console.error("Lỗi khi kết nối ví:", error);
-    }
-}
-
-// Xử lý nút Send
-document.getElementById('send-button').addEventListener('click', () => {
-    alert("Send functionality will be here");
-    // Thêm mã gửi tiền vào ví
-});
-
-// Xử lý nút Deposit
-document.getElementById('deposit-button').addEventListener('click', () => {
-    alert("Deposit functionality will be here");
-    // Thêm mã nạp tiền vào ví
-});
-
-// Xử lý nút Swap
-document.getElementById('swap-button').addEventListener('click', () => {
-    alert("Swap functionality will be here");
-    // Thêm mã hoán đổi token
-});
     
+<script>
+    // Khởi tạo TonConnectUI
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
+    });
+
+    // Cấu hình thêm tuỳ chọn nếu cần
+    tonConnectUI.uiOptions = {
+        twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
+    };
+
+    // Hàm kết nối với ví
+    async function connectToWallet() {
+        try {
+            const connectedWallet = await tonConnectUI.connectWallet();
+            console.log("Connected Wallet:", connectedWallet);
+
+            // Hiển thị thông tin ví
+            document.getElementById('wallet-info').style.display = 'block';
+            document.getElementById('balance').innerText = `Số dư: Đang tải...`;
+
+            // Lấy số dư và cập nhật giao diện
+            const address = connectedWallet.account.address;
+            const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
+            document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
+        } catch (error) {
+            console.error("Lỗi khi kết nối ví:", error);
+        }
+    }
+
+    // Hàm ngắt kết nối ví
+    async function disconnectWallet() {
+        try {
+            await tonConnectUI.disconnect();
+            document.getElementById('wallet-info').style.display = 'none';
+            console.log("Đã ngắt kết nối ví.");
+        } catch (error) {
+            console.error("Lỗi khi ngắt kết nối ví:", error);
+        }
+    }
+
+
+    // Danh sách ảnh đại diện ngẫu nhiên
+    const avatars = [
+        '/logo-coin/av1.png',
+        '/logo-coin/av2.png',
+        '/logo-coin/av3.png',
+        '/logo-coin/av4.png',
+        '/logo-coin/av5.png',
+        '/logo-coin/av6.png',
+        '/logo-coin/av7.png',
+        '/logo-coin/av8.png',
+        '/logo-coin/av9.png',
+        '/logo-coin/av10.png',
+        '/logo-coin/av11.png',
+        '/logo-coin/av12.png',
+    ];
+    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+
+    // Kiểm tra và lấy thông tin từ Telegram WebApp API
+    window.addEventListener('load', () => {
+        if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
+            let user = Telegram.WebApp.initDataUnsafe.user;
+
+            if (user) {
+                let userName = user.first_name + " " + (user.last_name || "");
+                let username = user.username || "No Username"; // Thay thế nếu không có username
+
+                // Cập nhật thông tin vào HTML
+                document.getElementById('user-name').textContent = userName;
+                document.getElementById('user-username').textContent = `@${username}`;
+                document.getElementById('user-avatar').src =
+ randomAvatar; // Sử dụng ảnh ngẫu nhiên
+            } else {
+                console.log("Không có thông tin người dùng.");
+            }
+        } else {
+            console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
+        }
+    });
+
+
+
+
+
+
 </script>
 
 </body>
