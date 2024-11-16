@@ -461,47 +461,6 @@
         // Gọi lần đầu ngay lập tức khi trang được tải
         getMemberCount();
 </script>
-<script>
-// Kiểm tra hỗ trợ localStorage và các API cần thiết
-document.addEventListener("DOMContentLoaded", () => {
-    if (typeof(Storage) === "undefined") {
-        console.log("localStorage không khả dụng, sử dụng cookies thay thế.");
-    } else if (!('querySelector' in document && 'addEventListener' in window)) {
-        console.log("Trình duyệt không hỗ trợ các API hiện tại.");
-    } else {
-        // Chạy logic hiển thị thông báo nếu `notificationEnabled` là "true"
-        const notificationEnabled = localStorage.getItem("notificationEnabled") === "true";
-        if (notificationEnabled) {
-            const notificationData = JSON.parse(localStorage.getItem("notificationData"));
-            
-            if (notificationData) {
-                const notification = document.createElement("div");
-                notification.className = "notification";
-                notification.innerHTML = `
-                    <div class="content">
-                        <img src="${notificationData.image}" alt="Hình ảnh">
-                        <div class="text">
-                            <h>${notificationData.title}</h>
-                            <p>${notificationData.subtitle}</p>
-                        </div>
-                    </div>
-                    <button class="close">✖</button>
-                `;
 
-                document.body.appendChild(notification);
-
-                notification.querySelector(".close").addEventListener("click", () => {
-                    notification.remove();
-                    localStorage.setItem("notificationEnabled", "false");
-                });
-
-                setTimeout(() => {
-                    notification.remove();
-                }, 3000);
-            }
-        }
-    }
-});
-</script>
 </body>
 </html>
