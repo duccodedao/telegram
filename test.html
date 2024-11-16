@@ -192,6 +192,20 @@
 
 
 
+<!-- Thêm mục Bạn bè -->
+<div class="container" id="referralSection">
+    <h2>Bạn bè của bạn</h2>
+    <div id="referralInfo" class="price-display">
+        <img src="/logo-coin/user-icon.png" alt="User Icon">
+        <span id="referralText">Đang tải thông tin người giới thiệu...</span>
+    </div>
+</div>
+    
+
+
+
+    
+
 
 <div class="container">
 
@@ -460,6 +474,41 @@
         
         // Gọi lần đầu ngay lập tức khi trang được tải
         getMemberCount();
+
+
+    // Hàm lấy thông tin người giới thiệu và hiển thị
+async function getReferralInfo() {
+    try {
+        // Giả sử rằng người giới thiệu đã được lưu trong URL, vd: ref=12345
+        const urlParams = new URLSearchParams(window.location.search);
+        const refUid = urlParams.get('ref');  // Lấy UID từ URL
+        if (refUid) {
+            const referralUsername = await getUsernameByUid(refUid); // Hàm giả định để lấy username từ UID
+            const referralLink = `https://t.me/bmassk3_bot/bmassk3?ref=${refUid}`;
+            
+            // Hiển thị thông tin người giới thiệu và mã giới thiệu
+            document.getElementById('referralText').innerHTML = `Bạn đã được giới thiệu bởi <strong>@${referralUsername}</strong>. Mã giới thiệu của bạn là: <a href="${referralLink}" target="_blank">${referralLink}</a>`;
+        } else {
+            document.getElementById('referralText').innerText = "Không có thông tin người giới thiệu.";
+        }
+    } catch (error) {
+        console.error("Lỗi khi lấy thông tin người giới thiệu:", error);
+        document.getElementById('referralText').innerText = "Lỗi khi tải thông tin người giới thiệu.";
+    }
+}
+
+// Hàm giả định để lấy tên người dùng từ UID
+async function getUsernameByUid(uid) {
+    // Thực hiện API gọi hoặc logic cần thiết để lấy username từ UID
+    // Ví dụ, trả về một tên người dùng mẫu
+    return 'sampleuser'; // Thay bằng hàm thực tế để lấy username
+}
+
+// Gọi hàm để hiển thị thông tin người giới thiệu khi trang được tải
+window.onload = function() {
+    getReferralInfo();  // Lấy và hiển thị thông tin người giới thiệu
+};
+    
 </script>
 
 </body>
