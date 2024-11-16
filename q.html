@@ -48,6 +48,9 @@
       outline: none;
       transition: border-color 0.3s ease;
     }
+    .form-group input[type="checkbox"] {
+      width: auto;
+    }
     .form-group input:focus,
     .form-group textarea:focus {
       border-color: #007bff;
@@ -84,6 +87,10 @@
     <h2>Admin Panel</h2>
     <form id="adminForm">
       <div class="form-group">
+        <label for="notificationToggle">Bật/Tắt Thông báo:</label>
+        <input type="checkbox" id="notificationToggle">
+      </div>
+      <div class="form-group">
         <label for="image">Tải ảnh lên:</label>
         <input type="file" id="image" accept="image/*">
       </div>
@@ -107,6 +114,7 @@
   <script>
     const imageInput = document.getElementById("image");
     const preview = document.getElementById("preview");
+    const notificationToggle = document.getElementById("notificationToggle");
 
     // Xử lý xem trước ảnh
     imageInput.addEventListener("change", function () {
@@ -120,6 +128,21 @@
       } else {
         preview.innerHTML = "";
       }
+    });
+
+    // Khởi tạo trạng thái từ localStorage
+    const savedState = localStorage.getItem("notificationEnabled");
+    if (savedState === "true") {
+      notificationToggle.checked = true;
+    } else {
+      notificationToggle.checked = false;
+    }
+
+    // Lưu trạng thái khi bật/tắt
+    notificationToggle.addEventListener("change", function () {
+      const isEnabled = notificationToggle.checked;
+      localStorage.setItem("notificationEnabled", isEnabled);
+      alert(`Thông báo đã ${isEnabled ? "bật" : "tắt"}!`);
     });
 
     document.getElementById("adminForm").addEventListener("submit", function (e) {
