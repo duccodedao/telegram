@@ -103,8 +103,13 @@
     <div id="ton-connect"></div>
 </header>
 
-<!-- Nhúng trang web -->
-<iframe src="https://example.com" title="Embedded Website"></iframe>
+<!-- Nút Send, Deposit, và Swap -->
+<div class="button-container" style="display:none; margin-top: 20px;">
+    <button id="send-button" class="button">Send</button>
+    <button id="deposit-button" class="button">Deposit</button>
+    <button id="swap-button" class="button">Swap</button>
+</div>
+
 
 <!-- Footer -->
 <div class="footer">
@@ -146,6 +151,58 @@
 
 <script>
 // JavaScript code here
+    // Khởi tạo TonConnectUI
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+    buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
+});
+
+// Cấu hình thêm tuỳ chọn nếu cần
+tonConnectUI.uiOptions = {
+    twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
+};
+
+// Hàm kết nối với ví
+async function connectToWallet() {
+    try {
+        const connectedWallet = await tonConnectUI.connectWallet();
+        console.log("Connected Wallet:", connectedWallet);
+
+        // Hiển thị thông tin ví
+        document.getElementById('wallet-info').style.display = 'block';
+        document.getElementById('balance').innerText = "Số dư: Đang tải...";
+
+        // Lấy số dư và cập nhật giao diện
+        const address = connectedWallet.account.address;
+        const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
+        document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
+
+        // Hiển thị các nút Send, Deposit, Swap
+        document.querySelector('.button-container').style.display = 'block';
+
+    } catch (error) {
+        console.error("Lỗi khi kết nối ví:", error);
+    }
+}
+
+// Xử lý nút Send
+document.getElementById('send-button').addEventListener('click', () => {
+    alert("Send functionality will be here");
+    // Thêm mã gửi tiền vào ví
+});
+
+// Xử lý nút Deposit
+document.getElementById('deposit-button').addEventListener('click', () => {
+    alert("Deposit functionality will be here");
+    // Thêm mã nạp tiền vào ví
+});
+
+// Xử lý nút Swap
+document.getElementById('swap-button').addEventListener('click', () => {
+    alert("Swap functionality will be here");
+    // Thêm mã hoán đổi token
+});
+    
 </script>
 
 </body>
