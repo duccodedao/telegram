@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TG App</title>
   <style>
-    /* CSS cho thông báo */
     .notification {
       position: fixed;
       top: 10px;
@@ -42,7 +41,7 @@
       gap: 10px;
     }
 
-    .notification .content .image {
+    .notification .content img {
       width: 40px;
       height: 40px;
       border-radius: 8px;
@@ -86,19 +85,18 @@
 </head>
 <body>
   <script>
-    // Kiểm tra trạng thái thông báo
-    const isNotificationEnabled = localStorage.getItem('notificationEnabled') === 'true';
+    const notificationData = JSON.parse(localStorage.getItem("notificationData"));
 
-    if (isNotificationEnabled) {
+    if (notificationData) {
       // Tạo thông báo
-      const notification = document.createElement('div');
-      notification.className = 'notification';
+      const notification = document.createElement("div");
+      notification.className = "notification";
       notification.innerHTML = `
         <div class="content">
-          <img class="image" src="https://via.placeholder.com/40" alt="Hình ảnh"> <!-- Thay URL ảnh tại đây -->
+          <img src="${notificationData.image}" alt="Hình ảnh">
           <div class="text">
-            <h2>Thêm tiêu đề</h2>
-            <p>Thêm tiêu đề phụ</p>
+            <h2>${notificationData.title}</h2>
+            <p>${notificationData.subtitle}</p>
           </div>
         </div>
         <button class="close">✖</button>
@@ -108,7 +106,7 @@
       document.body.appendChild(notification);
 
       // Xử lý sự kiện nút đóng
-      notification.querySelector('.close').addEventListener('click', () => {
+      notification.querySelector(".close").addEventListener("click", () => {
         notification.remove();
       });
 
