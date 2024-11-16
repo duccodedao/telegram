@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác thực bằng Passkey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #status {
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Trang web yêu cầu xác thực</h1>
+    <button id="authenticate">Xác thực bằng Passkey</button>
+    <p id="status"></p>
+
+    <script>
+        const button = document.getElementById("authenticate");
+        const status = document.getElementById("status");
+
+        button.addEventListener("click", async () => {
+            try {
+                // Kiểm tra nếu trình duyệt hỗ trợ WebAuthn
+                if (!window.PublicKeyCredential) {
+                    status.textContent = "Trình duyệt của bạn không hỗ trợ xác thực Passkey.";
+                    return;
+                }
+
+                // Tạo yêu cầu xác thực
+                const publicKey = {
+                    challenge: new Uint8Array(32), // Challenge từ server (ở đây là demo)
+                    allowCredentials: [
+                        {
+                            id: new Uint8Array(16), // ID của khóa được tạo trước đó
+                            type: "public-key",
+                        },
+                    ],
+                    timeout: 60000, // Thời gian chờ xác thực
+                    userVerification: "required",
+                };
+
+                // Gửi yêu cầu xác thực tới thiết bị
+                const credential = await navigator.credentials.get({ publicKey });
+
+                // Xử lý kết quả xác thực
+                if (credential) {
+                    status.style.color = "green";
+                    status.textContent = "Xác thực thành công! Bạn đã được truy cập.";
+                } else {
+                    status.textContent = "Xác thực không thành công. Hãy thử lại.";
+                }
+            } catch (error) {
+                console.error("Lỗi xác thực:", error);
+                status.textContent = "Đã xảy ra lỗi trong quá trình xác thực.";
+            }
+        });
+    </script>
+</body>
+</html>
