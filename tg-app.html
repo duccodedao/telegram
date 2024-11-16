@@ -303,6 +303,40 @@
     }
 </script>
 
+  <script>
+    const notificationData = JSON.parse(localStorage.getItem("notificationData"));
+
+    if (notificationData) {
+      // Tạo thông báo
+      const notification = document.createElement("div");
+      notification.className = "notification";
+      notification.innerHTML = `
+        <div class="content">
+          <img src="${notificationData.image}" alt="Hình ảnh">
+          <div class="text">
+            <h2>${notificationData.title}</h2>
+            <p>${notificationData.subtitle}</p>
+          </div>
+        </div>
+        <button class="close">✖</button>
+      `;
+
+      // Thêm thông báo vào body
+      document.body.appendChild(notification);
+
+      // Xử lý sự kiện nút đóng
+      notification.querySelector(".close").addEventListener("click", () => {
+        notification.remove();
+      });
+
+      // Tự động xóa thông báo sau 3 giây
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+  </script>
+
+    
     
     
     <script src="js.js"></script>
