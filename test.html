@@ -191,7 +191,12 @@
 </header>
 
 
-
+<div id="wallet-info" style="display: none;">
+    <h3>Thông tin ví</h3>
+    <p id="wallet-address"></p>
+    <p id="balance"></p>
+</div>
+    
 
 
 
@@ -325,7 +330,26 @@
 
 
 
+// Hàm kết nối với ví
+async function connectToWallet() {
+    try {
+        const connectedWallet = await tonConnectUI.connectWallet();
+        console.log("Connected Wallet:", connectedWallet);
 
+        // Hiển thị thông tin ví
+        document.getElementById('wallet-info').style.display = 'block';
+        document.getElementById('wallet-address').innerText = `Địa chỉ ví: ${connectedWallet.account.address}`;
+        document.getElementById('balance').innerText = `Số dư: Đang tải...`;
+
+        // Lấy số dư và cập nhật giao diện
+        const address = connectedWallet.account.address;
+        const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
+        document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
+    } catch (error) {
+        console.error("Lỗi khi kết nối ví:", error);
+    }
+}
+    
 
 
 </script>
