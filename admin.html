@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      max-width: 500px;
+      width: 100%;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .container h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #007bff;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .form-group button:hover {
+      background: #0056b3;
+    }
+    .preview {
+      margin-top: 15px;
+      text-align: center;
+    }
+    .preview img {
+      max-width: 100%;
+      max-height: 150px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .notification-toggle {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Admin Panel</h2>
+    <form id="adminForm">
+      <div class="form-group">
+        <label for="image">Tải ảnh lên:</label>
+        <input type="file" id="image" accept="image/*">
+      </div>
+      <div class="preview" id="preview">
+        <!-- Ảnh xem trước sẽ hiển thị tại đây -->
+      </div>
+      <div class="form-group">
+        <label for="title">Tiêu đề chính:</label>
+        <input type="text" id="title" placeholder="Nhập tiêu đề chính">
+      </div>
+      <div class="form-group">
+        <label for="subtitle">Tiêu đề phụ:</label>
+        <input type="text" id="subtitle" placeholder="Nhập tiêu đề phụ">
+      </div>
+      <div class="form-group">
+        <button type="submit">Lưu thông báo</button>
+      </div>
+    </form>
+
+    <!-- Nút bật/tắt thông báo -->
+    <div class="notification-toggle">
+      <button id="toggleNotificationBtn">Bật thông báo</button>
+    </div>
+  </div>
+
+  <script>
+    const imageInput = document.getElementById("image");
+    const preview = document.getElementById("preview");
+    const toggleNotificationBtn = document.getElementById("toggleNotificationBtn");
+
+    // Lấy trạng thái thông báo từ localStorage
+    const notificationStatus = localStorage.getItem("notificationStatus") || "off";
+    if (notificationStatus === "on") {
+      toggleNotificationBtn.textContent = "Tắt thông báo";
+    } else {
+      toggleNotificationBtn.textContent = "Bật thông báo";
+    }
+
+    // Lưu trạng thái bật/tắt thông báo
+    toggleNotificationBtn.addEventListener("click", function() {
+      if (notificationStatus === "off") {
+        localStorage.setItem("notificationStatus", "on");
+        toggleNotificationBtn.textContent = "Tắt thông báo";
+      } else {
+        localStorage.setItem("notificationStatus", "off");
+        toggleNotificationBtn.textContent = "Bật thông báo";
+      }
+    });
+
+    // Xử lý xem trước ảnh
+    imageInput.addEventListener("change", function () {
+      const file = imageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.innerHTML = "";
+      }
+    });
+
+    // Lưu thông báo
+    document.getElementById("adminForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const imageFile = imageInput.files[0];
+      const title = document.getElementById("title").value.trim();
+      const subtitle = document.getElementById("subtitle").value.trim();
+
+      if (!imageFile || !title || !subtitle) {
+        alert("Vui lòng nhập đầy đủ thông tin!");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const imageBase64 = e.target.result;
+        const notificationData = { image: imageBase64, title, subtitle };
+        localStorage.setItem("notificationData", JSON.stringify(notificationData));
+        alert("Đã lưu thông báo thành công!");
+      };
+      reader.readAsDataURL(imageFile);
+    });
+  </script>
+</body>
+  </html>
+  
