@@ -406,3 +406,86 @@ h2 {
             font-weight: bold;
             z-index: 1;
         }
+
+
+
+
+
+
+
+.notification {
+      position: fixed;
+      top: 10px;
+      left: 5px;
+      right: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #333;
+      color: #fff;
+      padding: 10px 15px;
+      z-index: 9999;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(-50px);
+      animation: slideDown 0.5s ease forwards;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .notification .content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .notification .content img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .notification .content .text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .notification .content .text h2 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .notification .content .text p {
+      margin: 0;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    .notification .close {
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #fff;
+      background-color: #ff5e57;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification .close:hover {
+      background-color: #ff7875;
+    }
