@@ -5,13 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet | By BmassHD</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
 
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Wallet | BmassHD">
+    <meta property="og:description" content="Ví 2">
+    <meta property="og:image" content="/ton/nen.png">
+    <meta property="og:url" content="/ton/ton.html">
+    <meta property="og:type" content="website">
+
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #000000;
-            color: #fff;
+            color: #333;
             margin: 0;
             padding: 0;
         }
@@ -21,164 +34,432 @@
             align-items: center;
             padding: 10px 20px;
             background-color: #212121;
+            color: #fff;
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
         }
-        .container {
-            padding: 20px;
-        }
-        .token-container {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #333;
-            border-radius: 8px;
-            color: white;
-        }
-        .token {
-            margin-bottom: 10px;
-        }
-        .token-name {
-            font-weight: bold;
-        }
-        .token-balance {
-            color: #ff6a00;
-        }
-        .countdown {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #ff6a00;
-        }
-        .check-button {
-            padding: 10px;
-            background-color: #ff6a00;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .check-button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
+        #user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20%;
+            margin-right: 5px;
         }
         #ton-connect {
-            margin-top: 20px;
+            cursor: pointer;
+        }
+        #user-username {
+            color: #ff6a00;
+            margin-left: 1px;
+            font-size: 15px;
+            text-align: left;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #212121;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid #333;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .footer-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #ccc;
+            font-size: 14px;
+            padding: 5px 10px;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px; /* Bo góc cho mục */
+        }
+        .footer-item img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+        }
+        .footer-item:hover {
+            color: #fff;
+        }
+        .footer-item.active {
+            background-color: #333; /* Màu nền khi mục được chọn */
+            color: #ff0; /* Màu chữ khi mục được chọn */
+        }
+        .new-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: red;
+            color: white;
+            padding: 1.5px 3.25px;
+            border-radius: 3px;
+            font-size: 7px;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+
+.container {
+    text-align: center;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #1e1e1e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+
+        }
+        .button{
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+        }
+        .button img{
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        .button:hover {
+            background: #ff6a00;
+            color: #fff;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        .ton-balance {
+            pointer-events: none;
+        }
+
+
+        .price-display {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+            cursor: default;
+        }
+
+        .price-display img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
+<!-- Header -->
 <header>
-    <h1>Ví của bạn</h1>
+    <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
+    <span id="user-username">@username</span>
+    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
 </header>
 
+
+
+
 <div class="container">
-    <!-- TON Connect Button -->
-    <div id="ton-connect"></div>
 
-    <!-- Token Info -->
-    <div id="tokens-list" class="token-container">
-        <div class="token">
-            <span class="token-name">TON</span>
-            <span id="ton-balance" class="token-balance">Số dư: Chưa kiểm tra</span>
-        </div>
+    
+    <!-- Hiển thị tên người dùng và username -->
+    <div class="connect-text">Hello <span id="user-name">User</span>, Connect your wallet to unlock more features.</div>
+
+
+    <div class="price-display">
+        <img src="/logo-coin/btc.jpg" alt="TON Logo">
+        <span id="btcPrice">Giá: Đang tải...</span>
     </div>
 
-    <!-- Countdown -->
-    <div class="countdown" id="countdown">
-        Thời gian còn lại: 00:00:00
+    
+    <div class="price-display">
+        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Logo">
+        <span id="tonPrice">Giá: Đang tải...</span>
+    </div>
+    
+    <div class="price-display">
+        <img src="/logo-coin/dogsx.jpg" alt="DOGS Logo">
+        <span id="dogsPrice">Giá: Đang tải...</span>
     </div>
 
-    <!-- Check Balance Button -->
-    <button id="check-balance" class="check-button">Kiểm tra số dư</button>
+    <div class="price-display">
+        <img src="/logo-coin/hmstrx.jpg" alt="HMSTR Logo">
+        <span id="hmstrPrice">Giá: Đang tải...</span>
+    </div>
+
+    <div class="price-display">
+        <img src="/logo-coin/notx.jpg" alt="NOT Logo">
+        <span id="notPrice">Giá: Đang tải...</span>
+    </div>
+    
+    <div class="price-display">
+        <img src="/logo-coin/cati.jpg" alt="CATI Logo">
+        <span id="catiPrice">Giá: Đang tải...</span>
+    </div>
+    
+    
+    <div class="price-display" id="channelMembers">
+        <img src="/logo-coin/bmlogo.jpg" alt="Channel Logo">
+        <span id="memberCount">Member: Đang tải...</span>
+    </div>
+    <!-- Nút tham gia nhóm Telegram -->
+    <div id="joinGroupButton" class="button" onclick="joinGroup()">
+        <img src="/logo-coin/buyref.svg" alt="Group Icon">
+        <span>Join Telegram Group</span>
+    </div>
 </div>
 
-<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+  
+
+<div class="footer">
+    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/nha.png" alt="Home">
+            <span class="new-badge">New</span>
+        </div>
+        <span>Home</span>
+    </a>
+    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/nap.png" alt="MuaCoin">
+            <span class="new-badge">New</span>
+        </div>
+        <span>MuaCoin</span>
+    </a>
+    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/rut.png" alt="BánCoin">
+            <span class="new-badge">New</span>
+        </div>
+        <span>BánCoin</span>
+    </a>
+    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/fr.png" alt="MuaRef">
+            <span class="new-badge">New</span>
+        </div>
+        <span>MuaRef</span>
+    </a>
+    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/vi_live.png" alt="Wallet">
+            
+        </div>
+        <span>Wallet</span>
+    </a>   
+</div>
+
+
+
+
+
+
+    
 <script>
-    // TonConnect
+    // Khởi tạo TonConnectUI
     const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-        buttonRootId: 'ton-connect' // Nút sẽ hiển thị tại đây
+        buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
     });
 
-    // Xác định ngày hôm nay
-    function getTodayDate() {
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
-        const dd = String(today.getDate()).padStart(2, '0');
-        return `${yyyy}-${mm}-${dd}`;
+    // Cấu hình thêm tuỳ chọn nếu cần
+    tonConnectUI.uiOptions = {
+        twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
+    };
+
+    // Hàm kết nối với ví
+    async function connectToWallet() {
+        try {
+            const connectedWallet = await tonConnectUI.connectWallet();
+            console.log("Connected Wallet:", connectedWallet);
+
+            // Hiển thị thông tin ví
+            document.getElementById('wallet-info').style.display = 'block';
+            document.getElementById('balance').innerText = `Số dư: Đang tải...`;
+
+            // Lấy số dư và cập nhật giao diện
+            const address = connectedWallet.account.address;
+            const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
+            document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
+        } catch (error) {
+            console.error("Lỗi khi kết nối ví:", error);
+        }
     }
 
-    // Kiểm tra trạng thái kiểm tra trong ngày
-    function hasCheckedToday() {
-        const today = getTodayDate();
-        const lastChecked = localStorage.getItem('lastCheckedDate');
-        return today === lastChecked;
+    // Hàm ngắt kết nối ví
+    async function disconnectWallet() {
+        try {
+            await tonConnectUI.disconnect();
+            document.getElementById('wallet-info').style.display = 'none';
+            console.log("Đã ngắt kết nối ví.");
+        } catch (error) {
+            console.error("Lỗi khi ngắt kết nối ví:", error);
+        }
     }
 
-    // Lưu ngày kiểm tra
-    function saveCheckDate() {
-        const today = getTodayDate();
-        localStorage.setItem('lastCheckedDate', today);
-    }
 
-    // Đếm ngược đến 0h sáng ngày hôm sau
-    function startCountdown() {
-        const now = new Date();
-        const tomorrow = new Date();
-        tomorrow.setDate(now.getDate() + 1);
-        tomorrow.setHours(0, 0, 0, 0); // Đặt thời gian về 0h sáng
+    // Danh sách ảnh đại diện ngẫu nhiên
+    const avatars = [
+        '/logo-coin/av1.png',
+        '/logo-coin/av2.png',
+        '/logo-coin/av3.png',
+        '/logo-coin/av4.png',
+        '/logo-coin/av5.png',
+        '/logo-coin/av6.png',
+        '/logo-coin/av7.png',
+        '/logo-coin/av8.png',
+        '/logo-coin/av9.png',
+        '/logo-coin/av10.png',
+        '/logo-coin/av11.png',
+        '/logo-coin/av12.png',
+    ];
+    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
 
-        const interval = setInterval(() => {
-            const currentTime = new Date();
-            const timeLeft = tomorrow - currentTime;
+    // Kiểm tra và lấy thông tin từ Telegram WebApp API
+    window.addEventListener('load', () => {
+        if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
+            let user = Telegram.WebApp.initDataUnsafe.user;
 
-            if (timeLeft <= 0) {
-                clearInterval(interval);
-                document.getElementById('countdown').innerText = "Đã sẵn sàng kiểm tra!";
-                document.getElementById('check-balance').disabled = false;
-                return;
+            if (user) {
+                let userName = user.first_name + " " + (user.last_name || "");
+                let username = user.username || "No Username"; // Thay thế nếu không có username
+
+                // Cập nhật thông tin vào HTML
+                document.getElementById('user-name').textContent = userName;
+                document.getElementById('user-username').textContent = `@${username}`;
+                document.getElementById('user-avatar').src =
+ randomAvatar; // Sử dụng ảnh ngẫu nhiên
+            } else {
+                console.log("Không có thông tin người dùng.");
             }
+        } else {
+            console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
+        }
+    });
 
-            const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
-            const seconds = Math.floor((timeLeft / 1000) % 60);
 
-            document.getElementById('countdown').innerText = 
-                `Thời gian còn lại: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        }, 1000);
+
+
+
+        // Hàm tham gia nhóm Telegram
+    function joinGroup() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://t.me/bmassk3_channel", "_blank");
+    }
+    function joinWallet() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://t.me/wallet/start?startapp", "_blank");
+    }
+    function joinExchange() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://bmasshd.click/exchange.html", "_blank");
     }
 
-    // Lấy số dư (giả lập)
-    async function getBalance() {
-        return "100 TON"; // Thay bằng API thực để lấy số dư
-    }
 
-    // Xử lý nút kiểm tra số dư
-    document.getElementById('check-balance').addEventListener('click', async () => {
-        if (hasCheckedToday()) {
-            alert("Bạn đã kiểm tra số dư hôm nay rồi!");
-            return;
+    async function fetchTokenPrice(instId, elementId) {
+            try {
+                const url = `https://www.okx.com/api/v5/market/ticker?instId=${instId}-USDT`;
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`Lỗi khi tải dữ liệu từ API cho ${instId}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.data || data.data.length === 0) {
+                    throw new Error(`Không tìm thấy giá ${instId} từ API`);
+                }
+
+                const tokenPrice = data.data[0].last;
+                document.getElementById(elementId).textContent = `${tokenPrice} USDT`;
+            } catch (error) {
+                console.error('Lỗi:', error);
+                document.getElementById(elementId).textContent = `${instId} không thể lấy được`;
+            }
         }
 
-        // Lấy số dư từ ví
-        const balance = await getBalance();
-        document.getElementById('ton-balance').innerText = `Số dư: ${balance}`;
+        fetchTokenPrice('TON', 'tonPrice');
+        fetchTokenPrice('DOGS', 'dogsPrice');
+        fetchTokenPrice('HMSTR', 'hmstrPrice');
+        fetchTokenPrice('NOT', 'notPrice');
+        fetchTokenPrice('CATI', 'catiPrice');
+        fetchTokenPrice('BTC', 'btcPrice');
 
-        // Lưu ngày đã kiểm tra
-        saveCheckDate();
+        setInterval(() => {
+            fetchTokenPrice('TON', 'tonPrice');
+            fetchTokenPrice('DOGS', 'dogsPrice');
+            fetchTokenPrice('HMSTR', 'hmstrPrice');
+            fetchTokenPrice('NOT', 'notPrice');
+            fetchTokenPrice('CATI', 'catiPrice');
+            fetchTokenPrice('BTC', 'btcPrice');
+        }, 10000);
 
-        // Vô hiệu hóa nút kiểm tra
-        document.getElementById('check-balance').disabled = true;
-    });
 
-    // Kiểm tra trạng thái khi tải trang
-    if (hasCheckedToday()) {
-        document.getElementById('check-balance').disabled = true;
-    }
 
-    // Bắt đầu đếm ngược
-    startCountdown();
+    // Thay YOUR_BOT_TOKEN bằng token bot của bạn và @your_channel_username bằng tên channel cần đếm
+        const BOT_TOKEN = '7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk';
+        const CHANNEL_USERNAME = '@bmassk3_channel';
+
+        function getMemberCount() {
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/getChatMembersCount?chat_id=${CHANNEL_USERNAME}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        document.getElementById('memberCount').textContent = `Channel: ${data.result} Member active`;
+                    } else {
+                        document.getElementById('memberCount').textContent = "Không thể lấy số lượng thành viên";
+                        console.error("Lỗi:", data.description);
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('memberCount').textContent = "Có lỗi xảy ra";
+                    console.error("Lỗi:", error);
+                });
+        }
+
+        // Gọi hàm getMemberCount mỗi 10 giây để tự động cập nhật số lượng thành viên
+        setInterval(getMemberCount, 10000);
+        
+        // Gọi lần đầu ngay lập tức khi trang được tải
+        getMemberCount();
 </script>
 
 </body>
