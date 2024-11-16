@@ -8,18 +8,32 @@
     /* CSS cho thông báo */
     .notification {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 10px;
+      left: 5px;
+      right: 5px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: black;
-      color: white;
-      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      padding: 10px 15px;
       z-index: 9999;
-      border-radius: 0 0 10px 10px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(-50px);
+      animation: slideDown 0.5s ease forwards;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .notification .content {
@@ -31,7 +45,6 @@
     .notification .content .image {
       width: 40px;
       height: 40px;
-      background-color: orange;
       border-radius: 8px;
     }
 
@@ -48,12 +61,26 @@
     .notification .content .text p {
       margin: 0;
       font-size: 12px;
+      color: #ccc;
     }
 
     .notification .close {
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      color: #fff;
+      background-color: #ff5e57;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification .close:hover {
+      background-color: #ff7875;
     }
   </style>
 </head>
@@ -68,13 +95,13 @@
       notification.className = 'notification';
       notification.innerHTML = `
         <div class="content">
-          <div class="image"></div>
+          <img class="image" src="https://via.placeholder.com/40" alt="Hình ảnh"> <!-- Thay URL ảnh tại đây -->
           <div class="text">
             <h2>Thêm tiêu đề</h2>
             <p>Thêm tiêu đề phụ</p>
           </div>
         </div>
-        <div class="close">✖</div>
+        <button class="close">✖</button>
       `;
 
       // Thêm thông báo vào body
