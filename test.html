@@ -3,157 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check-in DOGS | BmassHD</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <title>Wallet | By BmassHD</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.css">
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #000;
+            background-color: #000000;
             color: #fff;
             margin: 0;
             padding: 0;
-            text-align: center;
         }
         header {
-            padding: 10px 20px;
-            background-color: #212121;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        .check-in-container {
-            margin-top: 20px;
-        }
-        .check-in-day {
-            display: inline-block;
-            margin: 10px;
-            width: 50px;
-            height: 50px;
-            line-height: 50px;
-            border-radius: 50%;
-            background-color: #444;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .check-in-day.checked {
-            background-color: #ff6a00;
-            cursor: default;
-        }
-        .balance-display {
-            margin-top: 20px;
-            font-size: 20px;
-            color: #00ff00;
-        }
-        .withdraw-section {
-            margin-top: 20px;
-        }
-        .button {
             padding: 10px 20px;
-            background: #333;
-            color: #ff6a00;
-            font-size: 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background 0.3s;
+            background-color: #212121;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
         }
-        .button:hover {
-            background: #ff6a00;
+        .container {
+            padding: 20px;
+        }
+        .token-container {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 8px;
+            color: white;
+        }
+        .token {
+            margin-bottom: 10px;
+        }
+        .token-name {
+            font-weight: bold;
+        }
+        .token-balance {
+            color: #ff6a00;
+        }
+        .countdown {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #ff6a00;
+        }
+        .check-button {
+            padding: 10px;
+            background-color: #ff6a00;
             color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .check-button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        #ton-connect {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
+
 <header>
-    <span id="wallet-status">Chưa kết nối ví</span>
-    <div id="ton-connect"></div>
+    <h1>Ví của bạn</h1>
 </header>
 
-<div class="balance-display" id="balance">Số dư: 0 DOGS</div>
+<div class="container">
+    <!-- TON Connect Button -->
+    <div id="ton-connect"></div>
 
-<div class="check-in-container">
-    <h2>Check-in hằng ngày</h2>
-    <div id="check-in-days"></div>
+    <!-- Token Info -->
+    <div id="tokens-list" class="token-container">
+        <div class="token">
+            <span class="token-name">TON</span>
+            <span id="ton-balance" class="token-balance">Số dư: Chưa kiểm tra</span>
+        </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown" id="countdown">
+        Thời gian còn lại: 00:00:00
+    </div>
+
+    <!-- Check Balance Button -->
+    <button id="check-balance" class="check-button">Kiểm tra số dư</button>
 </div>
 
-<div class="withdraw-section">
-    <button class="button" id="withdraw-button">Yêu cầu rút tiền</button>
-</div>
-
+<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 <script>
-    const rewards = [5, 10, 20, 30, 50, 70, 100];
-    const totalDays = rewards.length;
-
+    // TonConnect
     const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-        buttonRootId: 'ton-connect'
+        buttonRootId: 'ton-connect' // Nút sẽ hiển thị tại đây
     });
 
-    let walletConnected = false;
-    let walletAddress = "";
-    let balance = parseInt(localStorage.getItem("dogs_balance") || "0");
-    let checkInDays = JSON.parse(localStorage.getItem("check_in_days") || "[]");
-
-    function renderCheckInDays() {
-        const container = document.getElementById("check-in-days");
-        container.innerHTML = "";
-        for (let i = 0; i < totalDays; i++) {
-            const day = document.createElement("div");
-            day.className = "check-in-day";
-            if (checkInDays.includes(i)) day.classList.add("checked");
-            day.innerText = `Day ${i + 1}`;
-            day.onclick = () => handleCheckIn(i);
-            container.appendChild(day);
-        }
+    // Xác định ngày hôm nay
+    function getTodayDate() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+        const dd = String(today.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
     }
 
-    async function handleCheckIn(dayIndex) {
-        if (!walletConnected) {
-            alert("Vui lòng kết nối ví trước khi check-in!");
+    // Kiểm tra trạng thái kiểm tra trong ngày
+    function hasCheckedToday() {
+        const today = getTodayDate();
+        const lastChecked = localStorage.getItem('lastCheckedDate');
+        return today === lastChecked;
+    }
+
+    // Lưu ngày kiểm tra
+    function saveCheckDate() {
+        const today = getTodayDate();
+        localStorage.setItem('lastCheckedDate', today);
+    }
+
+    // Đếm ngược đến 0h sáng ngày hôm sau
+    function startCountdown() {
+        const now = new Date();
+        const tomorrow = new Date();
+        tomorrow.setDate(now.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0); // Đặt thời gian về 0h sáng
+
+        const interval = setInterval(() => {
+            const currentTime = new Date();
+            const timeLeft = tomorrow - currentTime;
+
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+                document.getElementById('countdown').innerText = "Đã sẵn sàng kiểm tra!";
+                document.getElementById('check-balance').disabled = false;
+                return;
+            }
+
+            const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+            const seconds = Math.floor((timeLeft / 1000) % 60);
+
+            document.getElementById('countdown').innerText = 
+                `Thời gian còn lại: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }, 1000);
+    }
+
+    // Lấy số dư (giả lập)
+    async function getBalance() {
+        return "100 TON"; // Thay bằng API thực để lấy số dư
+    }
+
+    // Xử lý nút kiểm tra số dư
+    document.getElementById('check-balance').addEventListener('click', async () => {
+        if (hasCheckedToday()) {
+            alert("Bạn đã kiểm tra số dư hôm nay rồi!");
             return;
         }
-        if (checkInDays.includes(dayIndex)) return;
 
-        balance += rewards[dayIndex];
-        checkInDays.push(dayIndex);
+        // Lấy số dư từ ví
+        const balance = await getBalance();
+        document.getElementById('ton-balance').innerText = `Số dư: ${balance}`;
 
-        if (checkInDays.length === totalDays) checkInDays = []; // Reset sau 7 ngày
+        // Lưu ngày đã kiểm tra
+        saveCheckDate();
 
-        localStorage.setItem("dogs_balance", balance.toString());
-        localStorage.setItem("check_in_days", JSON.stringify(checkInDays));
+        // Vô hiệu hóa nút kiểm tra
+        document.getElementById('check-balance').disabled = true;
+    });
 
-        document.getElementById("balance").innerText = `Số dư: ${balance} DOGS`;
-        renderCheckInDays();
+    // Kiểm tra trạng thái khi tải trang
+    if (hasCheckedToday()) {
+        document.getElementById('check-balance').disabled = true;
     }
 
-    async function connectWallet() {
-        try {
-            const wallet = await tonConnectUI.connectWallet();
-            walletConnected = true;
-            walletAddress = wallet.account.address;
-            document.getElementById("wallet-status").innerText = `Kết nối: ${walletAddress}`;
-        } catch (error) {
-            console.error("Lỗi kết nối ví:", error);
-        }
-    }
-
-    async function withdraw() {
-        if (!walletConnected) {
-            alert("Vui lòng kết nối ví trước khi rút tiền!");
-            return;
-        }
-        alert(`Yêu cầu rút ${balance} DOGS đến ví: ${walletAddress}`);
-    }
-
-    tonConnectUI.onStatusChange(connectWallet);
-
-    document.getElementById("withdraw-button").onclick = withdraw;
-
-    document.getElementById("balance").innerText = `Số dư: ${balance} DOGS`;
-    renderCheckInDays();
+    // Bắt đầu đếm ngược
+    startCountdown();
 </script>
+
 </body>
 </html>
