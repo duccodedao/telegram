@@ -228,65 +228,6 @@ loadTelegramUser();
 
 
 
-const versions = {
-    vi: 0,  // Phiên bản tiếng Việt
-    en: 2  // Phiên bản tiếng Anh
-};
-
-// Kiểm tra ngôn ngữ đã chọn trước đó
-let selectedLanguage = localStorage.getItem("selectedLanguage") || "vi";
-
-// Cập nhật hiển thị phiên bản và ngôn ngữ khi trang tải
-function updateVersionAndLanguage() {
-    // Lấy phiên bản dựa theo ngôn ngữ
-    const versionIndex = versions[selectedLanguage];
-    document.getElementById('versionText').textContent = versionIndex;
-
-    // Đặt ngôn ngữ đã chọn vào combobox
-    document.getElementById('languageSelect').value = selectedLanguage;
-
-    // Kiểm tra xem phiên bản đã thông báo lần cuối
-    const lastVersionIndex = localStorage.getItem("lastVersionIndex_" + selectedLanguage);
-
-    if (parseInt(lastVersionIndex) !== versionIndex) {
-        // Nếu phiên bản khác với phiên bản đã lưu
-        Swal.fire({
-    
-    html: selectedLanguage === "vi" ? 
-          '<b>Phiên bản mới:</b> v2.' + versionIndex + '<br>Ứng dụng vừa update thêm dự án $FD (Unich), chơi ngay 🔥' :
-          '<b>Ver mới kìa:</b> v2.' + versionIndex + '<br>Cập nhật lẹ đi còn chơi, ở đó đọc concac!',
-    
-    imageUrl: 'logo-coin/IMG_20241108_121723_913.jpg',  // Đường dẫn ảnh
-    imageAlt: 'Thông báo cập nhật',      // Chú thích ảnh
-    imageWidth: 'auto',                   // Kích thước tự động theo ảnh
-    confirmButtonText: 'Chơi ngay',
-    cancelButtonText: 'Đóng',
-    showCancelButton: true,               // Hiển thị nút Đóng
-    customClass: {
-        popup: 'swal2-popup',
-        title: 'swal2-title',
-        confirmButton: 'swal2-confirm',
-        cancelButton: 'swal2-cancel'
-    }
-}).then((result) => {
-    if (result.isConfirmed) {
-        // Khi người dùng bấm nút "Chơi ngay", chuyển hướng đến liên kết mong muốn
-        window.location.href = 'https://unich.com/en/airdrop/sign-up?ref=BSXTQU';
-    }
-});
-
-    }
-}
-
-// Gọi hàm để cập nhật ngôn ngữ và phiên bản ngay khi tải trang
-updateVersionAndLanguage();
-
-// Xử lý khi thay đổi ngôn ngữ
-document.getElementById('languageSelect').addEventListener('change', function() {
-    selectedLanguage = this.value;
-    localStorage.setItem("selectedLanguage", selectedLanguage);
-    updateVersionAndLanguage();
-});
 
 
 
