@@ -121,17 +121,6 @@
 </head>
 <body>
 
-<!-- Header với nút Connect Ton Wallet và Cancel Connect -->
-<div id="wallet-header">
-    <button id="connect-btn" onclick="connectWallet()">
-        
-       🕹️ MiniApp | BmassHD 🕹️
-    </button>
-    <button id="cancel-btn" onclick="cancelConnect()">
-
-        Disconnect
-    </button>
-</div>
 
 
 
@@ -140,40 +129,8 @@
 
 
 
-<div class="container">
-    <div class="logo">BmassHD</div>
-    
-    <!-- Hiển thị tên người dùng và username -->
-    <div class="connect-text">Xin chào <span id="user-name">User</span> (<span id="user-username">@username</span>), kết nối ví của bạn để mở khóa thêm nhiều tính năng.</div>
 
-    <!-- Avatar người dùng -->
-    <img id="user-avatar" src="default-avatar.png" alt="Avatar" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 20px;">
-    
-    <!-- Nút Connect Wallet -->
-    <div id="walletButton" class="button" onclick="connectWallet()">
-        <img id="walletIcon" src="/logo-coin/IMG_20241103_113656_984.jpg" alt="Wallet Icon">
-        <span id="walletText">TON Connect</span>
-    </div>
-    <div id="joinGroupButton" class="button" onclick="joinWallet()">
-        
-        <img src="/ton/wallet.png" alt="Group Icon">
-        <span>Wallet Telegram</span>
-    </div>
-    <div id="joinGroupButton" class="button" onclick="joinExchange()">
-        <img src="/logo-coin/bmlogo.jpg" alt="Group Icon">
-        <span>Sàn giao dịch</span>
-    </div>
-    <!-- Nút tham gia nhóm Telegram -->
-    <div id="joinGroupButton" class="button" onclick="joinGroup()">
-        <img src="/logo-coin/buyref.svg" alt="Group Icon">
-        <span>Tham gia nhóm Telegram</span>
-    </div>
-<div class="price-display">
-    <img src="/logo-coin/TON.svg" alt="Giá Coin">
-    <span id="tonPrice">Giá: Đang tải...</span>
-</div>
-  
-</div>
+
 
     
 
@@ -230,154 +187,6 @@
         
 </div>
 
-<script>
-    function connectWallet() {
-        Swal.fire({
-            title: 'Nhập mã ví TON của bạn',
-            position: 'top',
-            input: 'text',
-            inputPlaceholder: 'Nhập mã ví TON...',
-            showCancelButton: true,
-            confirmButtonText: 'Kết nối',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed && result.value) {
-                const address = result.value;    
-                document.getElementById('viewer-frame').src = `https://tonscan.org/address/${address}`;
-                document.getElementById('viewer-container').style.display = 'block';
-                document.getElementById('connect-btn').style.display = 'none';
-                document.getElementById('cancel-btn').style.display = 'inline';
-                localStorage.setItem('walletConnected', 'true');
-                localStorage.setItem('walletAddress', address);
-            }
-        });
-    }
 
-    function cancelConnect() {
-        document.getElementById('viewer-frame').src = '';
-        document.getElementById('viewer-container').style.display = 'none';
-        document.getElementById('connect-btn').style.display = 'inline';
-        document.getElementById('cancel-btn').style.display = 'none';
-        localStorage.removeItem('walletConnected');
-        localStorage.removeItem('walletAddress');
-    }
-
-    // Kiểm tra trạng thái kết nối khi tải lại trang
-    window.addEventListener('load', () => {
-        const connected = localStorage.getItem('walletConnected');
-        const address = localStorage.getItem('walletAddress');
-        if (connected === 'true' && address) {
-            document.getElementById('viewer-frame').src = `https://tonscan.org/address/${address}`;
-            document.getElementById('viewer-container').style.display = 'block';
-            document.getElementById('connect-btn').style.display = 'none';
-            document.getElementById('cancel-btn').style.display = 'inline';
-        }
-    });
-
-    function setActive(element) {
-        const items = document.querySelectorAll('.footer-item');
-        items.forEach(item => item.classList.remove('active'));
-        element.classList.add('active');
-    }
-</script>
-
-
-
-<script>
-    // Danh sách ảnh đại diện ngẫu nhiên
-    const avatars = [
-    '/logo-coin/av1.png',
-    '/logo-coin/av2.png',
-    '/logo-coin/av3.png',
-    '/logo-coin/av4.png',
-    'logo-coin/av5.png',
-    '/logo-coin/av6.png',
-    '/logo-coin/av7.png',
-    '/logo-coin/av8.png',
-    '/logo-coin/av9.png',
-    '/logo-coin/av10.png',
-    '/logo-coin/av11.png',
-    '/logo-coin/av12.png',
-    ];
-    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
-
-    // Lấy thông tin người dùng từ Telegram WebApp API
-    if (Telegram.WebApp.initDataUnsafe) {
-        let user = Telegram.WebApp.initDataUnsafe.user;
-
-        if (user) {
-            let userName = user.first_name + " " + (user.last_name || "");
-            let username = user.username || "No Username"; // Thay thế nếu không có username
-
-            // Cập nhật thông tin vào HTML
-            document.getElementById('user-name').textContent = userName;
-            document.getElementById('user-username').textContent = `@${username}`;
-            document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
-        } else {
-            // Trường hợp không có thông tin người dùng
-            document.getElementById('user-name').textContent = "Loading...";
-            document.getElementById('user-username').textContent = "@username";
-            document.getElementById('user-avatar').src = randomAvatar;
-        }
-    } else {
-        console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
-    }
-
-
-    // Hàm tham gia nhóm Telegram
-    function joinGroup() {
-        // Mở liên kết đến nhóm Telegram
-        window.open("https://t.me/bmassk3_channel", "_blank");
-    }
-    function joinWallet() {
-        // Mở liên kết đến nhóm Telegram
-        window.open("https://t.me/wallet/start?startapp", "_blank");
-    }
-    function joinExchange() {
-        // Mở liên kết đến nhóm Telegram
-        window.open("https://bmasshd.click/exchange.html", "_blank");
-    }
-
-    async function fetchTonPrice() {
-        try {
-            // Lấy giá TON từ API OKX
-            const url = 'https://www.okx.com/api/v5/market/ticker?instId=TON-USDT'; // Đảm bảo rằng TON-USDT là cặp giao dịch đúng trên OKX
-
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error('Lỗi khi tải dữ liệu từ API');
-            }
-
-            const data = await response.json();
-
-            // Kiểm tra nếu có dữ liệu giá
-            if (!data.data || data.data.length === 0) {
-                throw new Error('Không tìm thấy giá TON từ API');
-            }
-
-            const tonPrice = data.data[0].last; // Lấy giá cuối cùng
-
-            // Cập nhật giá vào phần tử HTML
-            document.getElementById('tonPrice').textContent = `Giá: ${tonPrice} USDT`;
-        } catch (error) {
-            console.error('Lỗi:', error);
-            // Nếu có lỗi, hiển thị thông báo lỗi
-            document.getElementById('tonPrice').textContent = 'Giá TON không thể lấy được';
-        }
-    }
-
-    // Gọi hàm fetchTonPrice ngay khi trang tải
-    fetchTonPrice();
-
-    // Cập nhật giá mỗi 10 giây
-    setInterval(fetchTonPrice, 10000);
-</script>
-
-
-
-    
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="script.js"></script>
 </body>
 </html>
