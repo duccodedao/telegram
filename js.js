@@ -101,16 +101,43 @@ if (Telegram.WebApp.initDataUnsafe) {
         // Cập nhật vào phần HTML
         document.getElementById('user-name').textContent = userName;
         document.getElementById('user-username').textContent = `@${username}`;
-        document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
+        
     } else {
         // Trường hợp không có thông tin người dùng
         document.getElementById('user-name').textContent = "Loading...";
         document.getElementById('user-username').textContent = "@username";
-        document.getElementById('user-avatar').src = randomAvatar; // Sử dụng ảnh ngẫu nhiên
+    
     }
 } else {
     console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
 }
+
+
+window.addEventListener('load', () => {
+    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
+        // Lấy thông tin từ Telegram WebApp
+        const user = Telegram.WebApp.initDataUnsafe.user;
+
+        if (user) {
+            const username = user.username || 'default'; // Sử dụng 'default' nếu không có username
+            const avatarUrl = `https://t.me/i/userpic/160/${username}.jpg`;
+
+            // Hiển thị username và ảnh đại diện
+            document.getElementById('user-username').innerText = `@${username}`;
+            document.getElementById('user-avatar').src = avatarUrl;
+
+            console.log("Thông tin người dùng:", user);
+        } else {
+            console.warn("Không tìm thấy thông tin người dùng.");
+        }
+    } else {
+        console.warn("Telegram WebApp API không khả dụng.");
+    }
+});
+
+
+
+
 
 
 
