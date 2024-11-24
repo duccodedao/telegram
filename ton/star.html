@@ -4,18 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mua Star | By BmassHD</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    
-    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Mua Star | BmassHD">
     <meta property="og:description" content="Mua Star với BmassHD. Quy trình giao dịch dễ dàng và an toàn.">
     <meta property="og:image" content="https://bmasshd.click/ton/nen.png">
     <meta property="og:url" content="https://bmasshd.click/ton/stars.html">
     <meta property="og:type" content="website">
-    
     <link rel="shortcut icon" href="logo1.png" type="image/png">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .notice {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .input-icon {
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            left: 10px;
+        }
+
+        #star {
+            padding-left: 40px; /* Chừa chỗ cho icon */
+            height: 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            width: 100%;
+        }
+
+        #star:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .message {
+            color: #007BFF;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .submit-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <!-- Main Content -->
@@ -24,76 +101,54 @@
         <p class="notice">Hỗ trợ <a href="https://chatting.page/mupkccfp2hxw92zuqwnu3bkpytm4hb58" target="_blank">@buycoinvn</a> 24/24</p>
         <form id="starForm">
             <div class="form-row">
-                <div class="form-group">
+                <div class="form-group input-group">
                     <label for="star">Nhập số sao muốn mua:</label>
-                    <input type="number" id="star" name="star" required min="1" placeholder="Nhập số lượng sao">
+                    <div class="input-wrapper">
+                        <img src="/path/to/star-icon.png" alt="Star Icon" class="input-icon">
+                        <input type="number" id="star" name="star" required min="50" placeholder="Nhập số lượng sao (tối thiểu 50)">
+                    </div>
+                    <p id="starMessage" class="message"></p>
                 </div>
             </div>
             <button type="submit" id="buyStarButton" class="submit-button">Mua Star</button>
         </form>
     </div>
 
-    <div class="footer">
-        <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
-            <div class="img-wrapper">
-                <img src="/logo-coin/nha.png" alt="Home">
-                <span class="new-badge">New</span>
-            </div>
-            <span>Home</span>
-        </a>
-        <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
-            <div class="img-wrapper">
-                <img src="/logo-coin/nap.png" alt="MuaCoin">
-                <span class="new-badge">New</span>
-            </div>
-            <span>MuaCoin</span>
-        </a>
-        <a href="/ton/stars.html" class="footer-item" onclick="setActive(this)">
-            <div class="img-wrapper">
-                <img src="/logo-coin/rut_live.png" alt="MuaStar">
-            </div>
-            <span>MuaStar</span>
-        </a>
-        <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
-            <div class="img-wrapper">
-                <img src="/logo-coin/fr.png" alt="MuaRef">
-                <span class="new-badge">New</span>
-            </div>
-            <span>MuaRef</span>
-        </a>
-        <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
-            <div class="img-wrapper">
-                <img src="/logo-coin/vi.png" alt="Wallet">
-                <span class="new-badge">New</span>
-            </div>
-            <span>Wallet</span>
-        </a>   
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function setActive(element) {
-            // Xóa lớp active khỏi tất cả các mục
-            const items = document.querySelectorAll('.footer-item');
-            items.forEach(item => item.classList.remove('active'));
+        document.addEventListener("DOMContentLoaded", function () {
+            const starInput = document.getElementById("star");
+            const starMessage = document.getElementById("starMessage");
 
-            // Thêm lớp active vào mục được nhấp vào
-            element.classList.add('active');
-        }
+            // Hiển thị thông báo khi nhập số sao
+            starInput.addEventListener("input", function () {
+                const quantity = parseInt(starInput.value, 10);
 
-        // Xử lý form mua sao
-        document.getElementById('starForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const starQuantity = document.getElementById('star').value;
-            if (starQuantity > 0) {
-                window.location.href = `https://fragment.com/stars?quantity=${starQuantity}`;
-            } else {
-                alert("Vui lòng nhập số lượng sao hợp lệ!");
-            }
+                if (quantity >= 50) {
+                    starMessage.textContent = `Mua ${quantity} Sao`;
+                } else if (quantity > 0) {
+                    starMessage.textContent = "Số lượng tối thiểu là 50 sao!";
+                } else {
+                    starMessage.textContent = ""; // Xóa thông báo
+                }
+            });
+
+            // Xử lý khi form được gửi
+            document.getElementById("starForm").addEventListener("submit", function (e) {
+                e.preventDefault();
+                const starQuantity = parseInt(starInput.value, 10);
+
+                if (starQuantity >= 50) {
+                    window.location.href = `https://fragment.com/stars?quantity=${starQuantity}`;
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Lỗi",
+                        text: "Số lượng tối thiểu là 50 sao!",
+                    });
+                }
+            });
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sell.js"></script>
-    <script src="/js.js"></script>
 </body>
 </html>
