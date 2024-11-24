@@ -16,44 +16,12 @@
     
     <link rel="shortcut icon" href="logo1.png" type="image/png">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            padding: 20px;
-            text-align: center;
-        }
-        iframe {
-            flex: 1;
-            border: none;
-            width: 100%;
-        }
-        .footer {
-            display: flex;
-            justify-content: space-around;
-            padding: 10px;
-            background-color: #333;
-            color: #fff;
-        }
-        .footer-item {
-            text-align: center;
-            color: #fff;
-            text-decoration: none;
-        }
-        .footer-item img {
-            width: 30px;
-            height: 30px;
-        }
-    </style>
 </head>
 <body>
     <!-- Main Content -->
     <div class="container">
         <h1>Mua Star</h1>
+        <p class="notice">Hỗ trợ <a href="https://chatting.page/mupkccfp2hxw92zuqwnu3bkpytm4hb58" target="_blank">@buycoinvn</a> 24/24</p>
         <form id="starForm">
             <div class="form-row">
                 <div class="form-group">
@@ -65,41 +33,59 @@
         </form>
     </div>
 
-    <!-- Iframe Content -->
-    <iframe id="iframeContent" src="about:blank"></iframe>
-
-    <!-- Footer -->
     <div class="footer">
-        <a href="/tg-app.html" class="footer-item">
-            <img src="/logo-coin/nha.png" alt="Home">
+        <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/nha.png" alt="Home">
+                <span class="new-badge">New</span>
+            </div>
             <span>Home</span>
         </a>
-        <a href="/ton/ton.html" class="footer-item">
-            <img src="/logo-coin/nap.png" alt="MuaCoin">
+        <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/nap.png" alt="MuaCoin">
+                <span class="new-badge">New</span>
+            </div>
             <span>MuaCoin</span>
         </a>
-        <a href="/ton/stars.html" class="footer-item">
-            <img src="/logo-coin/rut_live.png" alt="MuaStar">
+        <a href="/ton/stars.html" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/rut_live.png" alt="MuaStar">
+            </div>
             <span>MuaStar</span>
         </a>
-        <a href="https://buffviewx.com/ref/bmasshd" class="footer-item">
-            <img src="/logo-coin/fr.png" alt="MuaRef">
+        <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/fr.png" alt="MuaRef">
+                <span class="new-badge">New</span>
+            </div>
             <span>MuaRef</span>
         </a>
-        <a href="/wallet.html" class="footer-item">
-            <img src="/logo-coin/vi.png" alt="Wallet">
+        <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/vi.png" alt="Wallet">
+                <span class="new-badge">New</span>
+            </div>
             <span>Wallet</span>
-        </a>
+        </a>   
     </div>
 
     <script>
+        function setActive(element) {
+            // Xóa lớp active khỏi tất cả các mục
+            const items = document.querySelectorAll('.footer-item');
+            items.forEach(item => item.classList.remove('active'));
+
+            // Thêm lớp active vào mục được nhấp vào
+            element.classList.add('active');
+        }
+
         // Xử lý form mua sao
         document.getElementById('starForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const starQuantity = document.getElementById('star').value;
             if (starQuantity > 0) {
-                const iframe = document.getElementById('iframeContent');
-                iframe.src = `https://fragment.com/stars?quantity=${starQuantity}`;
+                window.location.href = `https://fragment.com/stars?quantity=${starQuantity}`;
             } else {
                 alert("Vui lòng nhập số lượng sao hợp lệ!");
             }
@@ -107,5 +93,7 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sell.js"></script>
+    <script src="/js.js"></script>
 </body>
 </html>
