@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dawn Validator Guide</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f7f8fa, #e2e8f0);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 400px;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 8px;
+
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .link-container a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: #007bff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            margin-bottom: 10px;
+        }
+
+        .link-container a:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .code-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #f1f3f5;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #d3d9df;
+
+        }
+
+        .code-container img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .code-container span {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+        }
+
+        .code-container span:hover {
+            background: #e8edf3;
+            border-radius: 5px;
+        }
+
+        .roadmap {
+            max-width: 400px;
+            width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px 20px;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            position: relative;
+            padding: 20px;
+            background: #fff;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .step:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #007bff;
+            border-radius: 50%;
+            border: 4px solid white;
+            top: 50%;
+            transform: translateY(-50%);
+            left: -40px;
+            z-index: 2;
+        }
+
+        .step:after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: calc(100% + 40px);
+            background: #007bff;
+            top: 50%;
+            left: -30px;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .step:last-child:after {
+            display: none;
+        }
+
+        footer {
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="/logo-coin/photo_6086996770979692925_y.jpg" alt="Dawn Logo" class="logo">
+        <h1>Dawn Validator</h1>
+        <p>Tải Extension hoặc sao chép mã dưới đây để sử dụng</p>
+        <div class="link-container">
+            <a href="https://chromewebstore.google.com/detail/dawn-validator-chrome-ext/fpdkjdnhkakefebpekbdhillbhonfjjp" target="_blank">
+                Tải Extension
+            </a>
+        </div>
+        <div class="code-container">
+            <img src="ton/copy.png" alt="Copy Icon">
+            <span id="copyCode">i634ugl7</span>
+        </div>
+    </div>
+
+    <div class="roadmap">
+        <div class="step">Nhấn vào Extension trên trình duyệt</div>
+        <div class="step">Register tài khoản bằng Email</div>
+        <div class="step">Verify Email</div>
+        <div class="step">Boost Reward</div>
+        <div class="step">Mời bạn bè để kiếm thêm Point</div>
+    </div>
+
+    <footer>
+        &copy; 2024 BmassHD | Mini App Telegram
+    </footer>
+
+    <script>
+        document.getElementById('copyCode').addEventListener('click', function() {
+            const code = this.textContent;
+            navigator.clipboard.writeText(code)
+                .then(() => alert('Đã sao chép: ' + code))
+                .catch(err => alert('Không thể sao chép: ' + err));
+        });
+    </script>
+</body>
+</html>
