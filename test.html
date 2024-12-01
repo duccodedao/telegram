@@ -60,6 +60,9 @@
             border-radius: 5px;
             cursor: pointer;
             margin: 0 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         button:disabled {
@@ -71,17 +74,19 @@
             background-color: #0056b3;
         }
 
-        #status {
-            font-size: 14px;
-            color: #555;
+        .spinner {
+            border: 2px solid #fff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
         }
 
-        #send-now {
-            display: block;
-        }
-
-        #status-text {
-            display: none;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -95,8 +100,9 @@
                 <span>Send TON</span>
             </div>
             <div>
-                <button id="send-now">Send Now</button>
-                <span id="status-text">Status</span>
+                <button id="send-now">
+                    <span id="button-text">Send Now</span>
+                </button>
             </div>
         </div>
     </div>
@@ -141,20 +147,21 @@
         // Xử lý gửi giao dịch
         document.getElementById('send-now').addEventListener('click', async () => {
             try {
-                // Disable button and change status
+                // Disable button and change status to Sending...
                 document.getElementById('send-now').disabled = true;
-                document.getElementById('status-text').style.display = 'inline';
-                document.getElementById('status-text').textContent = "Sending...";
+                document.getElementById('button-text').textContent = "Sending...";
+                document.getElementById('send-now').innerHTML = '<div class="spinner"></div><span>Sending...</span>';
 
                 // Gửi giao dịch
                 await tonConnectUI.sendTransaction(transaction);
 
-                // Cập nhật trạng thái sau khi gửi
-                document.getElementById('status-text').textContent = "Done";
+                // Cập nhật trạng thái sau khi gửi thành công
+                document.getElementById('send-now').innerHTML = '<span>Done</span>';
+                document.getElementById('send-now').disabled = true;
                 console.log("Transaction sent:", transaction);
             } catch (error) {
                 console.error("Error sending message:", error);
-                document.getElementById('status-text').textContent = "Send Failed";
+                document.getElementById('send-now').innerHTML = '<span>Send Failed</span>';
             }
         });
     </script>
