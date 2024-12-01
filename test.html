@@ -196,9 +196,7 @@
 <div class="container">
 
     
-    <!-- Hiển thị tên người dùng và username -->
-    <div class="connect-text">Hello <span id="user-name">User</span>, Connect your wallet to unlock more features.</div>
-
+    
 
     <div class="price-display">
         <img src="/logo-coin/btc.jpg" alt="TON Logo">
@@ -229,6 +227,11 @@
     <div class="price-display">
         <img src="/logo-coin/cati.jpg" alt="CATI Logo">
         <span id="catiPrice">Giá: Đang tải...</span>
+    </div>
+
+    <div class="price-display">
+        <img src="/logo-coin/vertcoin.jpg" alt="VERR Logo">
+        <span id="vertPrice">Giá: Đang tải...</span>
     </div>
     
     
@@ -371,7 +374,10 @@
     });
 
 
-window.addEventListener('load', () => {
+
+
+
+    window.addEventListener('load', () => {
     if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
         // Lấy thông tin từ Telegram WebApp
         const user = Telegram.WebApp.initDataUnsafe.user;
@@ -397,14 +403,9 @@ window.addEventListener('load', () => {
 
 
 
+    
 
 
-
-
-
-
-
-  
 
         // Hàm tham gia nhóm Telegram
     function joinGroup() {
@@ -428,20 +429,20 @@ window.addEventListener('load', () => {
                 const response = await fetch(url);
 
                 if (!response.ok) {
-                    throw new Error(`Lỗi khi tải dữ liệu từ API cho ${instId}`);
+                    throw new Error(`Coming soon ✨ - ${instId}`);
                 }
 
                 const data = await response.json();
 
                 if (!data.data || data.data.length === 0) {
-                    throw new Error(`Không tìm thấy giá ${instId} từ API`);
+                    throw new Error(`Coming soon - ✨ ${instId}`);
                 }
 
                 const tokenPrice = data.data[0].last;
                 document.getElementById(elementId).textContent = `${tokenPrice} USDT`;
             } catch (error) {
                 console.error('Lỗi:', error);
-                document.getElementById(elementId).textContent = `${instId} không thể lấy được`;
+                document.getElementById(elementId).textContent = `${instId} | Coming Soon ✨`;
             }
         }
 
@@ -451,6 +452,7 @@ window.addEventListener('load', () => {
         fetchTokenPrice('NOT', 'notPrice');
         fetchTokenPrice('CATI', 'catiPrice');
         fetchTokenPrice('BTC', 'btcPrice');
+        fetchTokenPrice('VERT', 'vertPrice');
 
         setInterval(() => {
             fetchTokenPrice('TON', 'tonPrice');
@@ -459,6 +461,7 @@ window.addEventListener('load', () => {
             fetchTokenPrice('NOT', 'notPrice');
             fetchTokenPrice('CATI', 'catiPrice');
             fetchTokenPrice('BTC', 'btcPrice');
+            fetchTokenPrice('VERT', 'vertPrice');
         }, 10000);
 
 
@@ -494,4 +497,4 @@ window.addEventListener('load', () => {
 </script>
 
 </body>
-</html>
+    </html>
