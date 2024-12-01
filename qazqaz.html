@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TON Connect - Send Messages</title>
+    <title>TON Connect - Wallet Integration</title>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <style>
         body {
@@ -62,66 +62,60 @@
 </head>
 <body>
     <div id="app">
-        <h1>TON Connect - Send Messages</h1>
-        <button id="connect-wallet">Connect Wallet</button>
+        <h1>TON Connect - Wallet Integration</h1>
+        <div id="ton-connect"></div>
         <button id="send-message" disabled>Send Message</button>
         <div id="status"></div>
     </div>
 
     <script>
-        // Import TON Connect UI
-        const tonConnectUI = new TonConnectUI({
-            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json' // Update this to your manifest URL
+        // Tạo đối tượng TON Connect UI
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+            buttonRootId: 'ton-connect' // Gắn nút vào div với id 'ton-connect'
         });
 
-        // Elements
-        const connectWalletButton = document.getElementById('connect-wallet');
-        const sendMessageButton = document.getElementById('send-message');
-        const statusElement = document.getElementById('status');
+        // Tùy chọn giao diện (nếu trong Telegram)
+        tonConnectUI.uiOptions = {
+            twaReturnUrl: 'https://t.me/bmassk3_bot' // Đường dẫn trở về mini app Telegram
+        };
 
-        // Payload for tracking (use unique ID per transaction)
-        const uniqueId = `transaction-${Date.now()}`;
+        // Kết nối ví
+        async function connectToWallet() {
+            try {
+                const connectedWallet = await tonConnectUI.connectWallet();
+                console.log("Wallet connected:", connectedWallet);
+                document.getElementById('send-message').disabled = false; // Kích hoạt nút gửi tin nhắn
+                document.getElementById('status').textContent = "Wallet connected successfully!";
+            } catch (error) {
+                console.error("Error connecting to wallet:", error);
+                document.getElementById('status').textContent = "Error connecting to wallet.";
+            }
+        }
+
+        // Gọi hàm kết nối khi tải trang
+        connectToWallet();
+
+        // Payload giao dịch
         const transaction = {
-            valid_until: Math.floor(Date.now() / 1000) + 3600, // Expires in 1 hour
+            valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour)
             messages: [
                 {
                     address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // Replace with destination address
-                    amount: "20000000", // 0.02 TON in nanotons
-                    payload: btoa(uniqueId) // Encode the unique ID in Base64
+                    amount: "20000000" // 0.02 TON in nanotons
                 }
             ]
         };
 
-        // Connect Wallet
-        connectWalletButton.addEventListener('click', async () => {
-            try {
-                await tonConnectUI.connectWallet();
-                statusElement.textContent = "Wallet connected successfully!";
-                sendMessageButton.disabled = false;
-            } catch (error) {
-                statusElement.textContent = `Error connecting wallet: ${error.message}`;
-            }
-        });
-
-        // Send Message
-        sendMessageButton.addEventListener('click', async () => {
+        // Xử lý gửi giao dịch
+        document.getElementById('send-message').addEventListener('click', async () => {
             try {
                 await tonConnectUI.sendTransaction(transaction);
-                statusElement.textContent = `Message sent! Tracking ID: ${uniqueId}`;
-                console.log(`Tracking ID: ${uniqueId}`);
+                document.getElementById('status').textContent = "Message sent successfully!";
+                console.log("Transaction sent:", transaction);
             } catch (error) {
-                statusElement.textContent = `Error sending message: ${error.message}`;
-            }
-        });
-
-        // Wallet Status
-        tonConnectUI.onStatusChange((status) => {
-            if (status === "connected") {
-                sendMessageButton.disabled = false;
-                statusElement.textContent = "Wallet connected. Ready to send messages.";
-            } else {
-                sendMessageButton.disabled = true;
-                statusElement.textContent = "Please connect your wallet to proceed.";
+                console.error("Error sending message:", error);
+                document.getElementById('status').textContent = "Error sending message.";
             }
         });
     </script>
