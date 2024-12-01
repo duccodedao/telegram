@@ -179,6 +179,48 @@
             margin-right: 10px;
             border-radius: 10px;
         }
+
+        #app {
+            text-align: center;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+
+        #status {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -189,14 +231,16 @@
     <span id="user-username">@username</span>
     <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
 </header>
-
+    <div id="app">
+        <h1>TON Connect - Wallet Integration</h1>
+        
+        <button id="send-message" disabled>Send Message</button>
+        <div id="status"></div>
+    </div>
 
 
 
 <div class="container">
-
-    
-    
 
     <div class="price-display">
         <img src="/logo-coin/btc.jpg" alt="TON Logo">
@@ -335,6 +379,59 @@
     }
 
 
+
+            // Kết nối ví
+        async function connectToWallet() {
+            try {
+                const connectedWallet = await tonConnectUI.connectWallet();
+                console.log("Wallet connected:", connectedWallet);
+                document.getElementById('send-message').disabled = false; // Kích hoạt nút gửi tin nhắn
+                document.getElementById('status').textContent = "Wallet connected successfully!";
+            } catch (error) {
+                console.error("Error connecting to wallet:", error);
+                document.getElementById('status').textContent = "Error connecting to wallet.";
+            }
+        }
+
+        // Gọi hàm kết nối khi tải trang
+        connectToWallet();
+
+        // Payload giao dịch
+        const transaction = {
+            valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour)
+            messages: [
+                {
+                    address: "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD", // Replace with destination address
+                    amount: "2000000" // 0.02 TON in nanotons
+                }
+            ]
+        };
+
+        // Xử lý gửi giao dịch
+        document.getElementById('send-message').addEventListener('click', async () => {
+            try {
+                await tonConnectUI.sendTransaction(transaction);
+                document.getElementById('status').textContent = "Message sent successfully!";
+                console.log("Transaction sent:", transaction);
+            } catch (error) {
+                console.error("Error sending message:", error);
+                document.getElementById('status').textContent = "Error sending message.";
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     // Danh sách ảnh đại diện ngẫu nhiên
     const avatars = [
         '/logo-coin/av1.png',
