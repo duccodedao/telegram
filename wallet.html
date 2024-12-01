@@ -195,8 +195,9 @@
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 400px;
-    margin: 0 auto; /* Để căn giữa */
+    margin: 0 auto;
     font-family: 'Arial', sans-serif;
+    color: #fff; /* Đảm bảo màu chữ không bị lệch */
 }
 
 .row {
@@ -207,62 +208,66 @@
     padding: 10px;
     background-color: #333;
     border-radius: 10px;
+    width: 100%; /* Đảm bảo row chiếm hết không gian */
 }
 
-.row img {
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #ff6a00;
+    font-size: 18px;
+}
+
+.logo img {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
     margin-right: 10px;
 }
-        
 
+#send-now {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ff6a00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
 
+#send-now:hover {
+    background-color: #cc5500;
+}
 
-        .logo img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-        }
+#send-now:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 10px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
+#button-text {
+    margin-left: 10px;
+}
 
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
+.spinner {
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
 
-        button:hover:not(:disabled) {
-            background-color: #0056b3;
-        }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-        .spinner {
-            border: 2px solid #fff;
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
