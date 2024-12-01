@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TON Connect - Wallet Integration</title>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #app {
+            text-align: center;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+
+        #status {
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>TON Connect</h1>
+        <div id="ton-connect"></div>
+        <div class="row">
+            <div class="logo">
+                <img src="https://bmasshd.click/logo.png" alt="Logo">
+                <span>Send TON</span>
+            </div>
+            <button id="send-message" disabled>Send</button>
+            <span id="status">Not Connected</span>
+        </div>
+    </div>
+
+    <script>
+        // Tạo đối tượng TON Connect UI
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+            buttonRootId: 'ton-connect' // Gắn nút vào div với id 'ton-connect'
+        });
+
+        // Tùy chọn giao diện (nếu trong Telegram)
+        tonConnectUI.uiOptions = {
+            twaReturnUrl: 'https://t.me/YOUR_APP_NAME' // Đường dẫn trở về mini app Telegram
+        };
+
+        // Kết nối ví
+        async function connectToWallet() {
+            try {
+                const connectedWallet = await tonConnectUI.connectWallet();
+                console.log("Wallet connected:", connectedWallet);
+                document.getElementById('send-message').disabled = false; // Kích hoạt nút gửi tin nhắn
+                document.getElementById('status').textContent = "Wallet Connected";
+            } catch (error) {
+                console.error("Error connecting to wallet:", error);
+                document.getElementById('status').textContent = "Connection Failed";
+            }
+        }
+
+        // Gọi hàm kết nối khi tải trang
+        connectToWallet();
+
+        // Payload giao dịch
+        const transaction = {
+            valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour)
+            messages: [
+                {
+                    address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // Replace with destination address
+                    amount: "20000000" // 0.02 TON in nanotons
+                }
+            ]
+        };
+
+        // Xử lý gửi giao dịch
+        document.getElementById('send-message').addEventListener('click', async () => {
+            try {
+                await tonConnectUI.sendTransaction(transaction);
+                document.getElementById('status').textContent = "Message Sent";
+                console.log("Transaction sent:", transaction);
+            } catch (error) {
+                console.error("Error sending message:", error);
+                document.getElementById('status').textContent = "Send Failed";
+            }
+        });
+    </script>
+</body>
+</html>
