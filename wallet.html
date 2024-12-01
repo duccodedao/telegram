@@ -391,10 +391,30 @@
         <img src="/logo-coin/btc.jpg" alt="BTC Logo">
         <span id="btcPrice">Giá: Đang tải...</span>
     </div>
+    <div class="price-display">
+        <img src="/logo-coin/paws.jpg" alt="PAWS Logo">
+        <span id="pawsPrice">Giá: Đang tải...</span>
+    </div>
 
     <div class="price-display">
-        <img src="/logo-coin/vertcoin.jpg" alt="VERR Logo">
+        <img src="/logo-coin/vertcoin.jpg" alt="VERT Logo">
         <span id="vertPrice">Giá: Đang tải...</span>
+    </div>
+    <div class="price-display">
+        <img src="/logo-coin/20.jpg" alt="SOON Logo">
+        <span id="soonPrice">Giá: Đang tải...</span>
+    </div>
+    <div class="price-display">
+        <img src="/logo-coin/2.jpg" alt="SEED Logo">
+        <span id="seedPrice">Giá: Đang tải...</span>
+    </div>
+    <div class="price-display">
+        <img src="/logo-coin/vertcoin.jpg" alt="CLAY Logo">
+        <span id="clayPrice">Giá: Đang tải...</span>
+    </div>
+    <div class="price-display">
+        <img src="/logo-coin/9.jpg" alt="TAPS Logo">
+        <span id="tapsPrice">Giá: Đang tải...</span>
     </div>
 
     <div class="price-display" id="channelMembers">
@@ -671,21 +691,23 @@
         }
 
         fetchTokenPrice('TON', 'tonPrice');
-        fetchTokenPrice('DOGS', 'dogsPrice');
-        fetchTokenPrice('HMSTR', 'hmstrPrice');
-        fetchTokenPrice('NOT', 'notPrice');
-        fetchTokenPrice('CATI', 'catiPrice');
+        fetchTokenPrice('PAWS', 'pawsPrice');
+        fetchTokenPrice('SEED', 'seedPrice');
+        fetchTokenPrice('SOON', 'soonPrice');
+        fetchTokenPrice('CLAY', 'clayPrice');
         fetchTokenPrice('BTC', 'btcPrice');
         fetchTokenPrice('VERT', 'vertPrice');
+        fetchTokenPrice('TAPS', 'tapsPrice');
 
         setInterval(() => {
-            fetchTokenPrice('TON', 'tonPrice');
-            fetchTokenPrice('DOGS', 'dogsPrice');
-            fetchTokenPrice('HMSTR', 'hmstrPrice');
-            fetchTokenPrice('NOT', 'notPrice');
-            fetchTokenPrice('CATI', 'catiPrice');
-            fetchTokenPrice('BTC', 'btcPrice');
-            fetchTokenPrice('VERT', 'vertPrice');
+        fetchTokenPrice('TON', 'tonPrice');
+        fetchTokenPrice('PAWS', 'pawsPrice');
+        fetchTokenPrice('SEED', 'seedPrice');
+        fetchTokenPrice('SOON', 'soonPrice');
+        fetchTokenPrice('CLAY', 'clayPrice');
+        fetchTokenPrice('BTC', 'btcPrice');
+        fetchTokenPrice('VERT', 'vertPrice');
+        fetchTokenPrice('TAPS', 'tapsPrice');
         }, 10000);
 
 
