@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sending Messages | TonConnect</title>
+    <title>TON Connect - Send Messages</title>
     <script src="https://cdn.jsdelivr.net/npm/@tonconnect/ui"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
+            background-color: #f4f4f9;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,40 +19,38 @@
 
         #app {
             text-align: center;
-            background: #ffffff;
-            border: 1px solid #ddd;
-            padding: 20px;
+            background: #fff;
             border-radius: 8px;
+            padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 400px;
         }
 
         h1 {
             font-size: 24px;
+            color: #333;
             margin-bottom: 20px;
-            color: #444;
         }
 
         button {
-            display: inline-block;
             padding: 10px 20px;
             font-size: 16px;
             font-weight: bold;
             color: #fff;
             background-color: #007bff;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            margin: 10px 0;
-        }
-
-        button:hover {
-            background-color: #0056b3;
+            margin: 10px 5px;
         }
 
         button:disabled {
-            background-color: #cccccc;
+            background-color: #ccc;
             cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
         }
 
         #status {
@@ -65,51 +62,64 @@
 </head>
 <body>
     <div id="app">
-        <h1>Send Toncoin</h1>
-        <button id="ton-send">Connect Wallet</button>
-        <button id="send-transaction" disabled>Send Transaction</button>
+        <h1>TON Connect - Send Messages</h1>
+        <button id="connect-wallet">Connect Wallet</button>
+        <button id="send-message" disabled>Send Message</button>
         <div id="status"></div>
     </div>
 
     <script>
         // Initialize TonConnect UI
         const tonConnectUI = new TonConnectUI({
-            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json', // Replace with your manifest URL
-            buttonRootId: 'ton-send'
+            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json' // Manifest URL của bạn
         });
 
-        // Define the transaction details
+        // DOM Elements
+        const connectWalletButton = document.getElementById('connect-wallet');
+        const sendMessageButton = document.getElementById('send-message');
+        const statusElement = document.getElementById('status');
+
+        // Transaction data
         const transaction = {
+            valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour from now)
             messages: [
                 {
-                    address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // Destination address
-                    amount: "20000000" // Toncoin in nanotons
+                    address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // Replace with destination address
+                    amount: "20000000", // Amount in nanotons (0.02 TON)
+                    payload: "Test payload" // Optional payload
                 }
             ]
         };
 
-        // DOM elements
-        const sendTransactionButton = document.getElementById('send-transaction');
-        const statusElement = document.getElementById('status');
-
-        // Listen for wallet connection
-        tonConnectUI.onStatusChange(async (status) => {
-            if (status === 'connected') {
-                sendTransactionButton.disabled = false;
-                statusElement.textContent = "Wallet connected. Ready to send transaction!";
-            } else {
-                sendTransactionButton.disabled = true;
-                statusElement.textContent = "Connect your wallet to proceed.";
+        // Connect Wallet
+        connectWalletButton.addEventListener('click', async () => {
+            try {
+                await tonConnectUI.connectWallet();
+                statusElement.textContent = "Wallet connected successfully!";
+                sendMessageButton.disabled = false;
+            } catch (error) {
+                statusElement.textContent = `Error connecting wallet: ${error.message}`;
             }
         });
 
-        // Send transaction on button click
-        sendTransactionButton.addEventListener('click', async () => {
+        // Send Message
+        sendMessageButton.addEventListener('click', async () => {
             try {
                 await tonConnectUI.sendTransaction(transaction);
-                statusElement.textContent = "Transaction sent successfully!";
+                statusElement.textContent = "Message sent successfully!";
             } catch (error) {
-                statusElement.textContent = `Transaction failed: ${error.message}`;
+                statusElement.textContent = `Error sending message: ${error.message}`;
+            }
+        });
+
+        // Handle Wallet Status Change
+        tonConnectUI.onStatusChange((status) => {
+            if (status === "connected") {
+                sendMessageButton.disabled = false;
+                statusElement.textContent = "Wallet connected. Ready to send messages.";
+            } else {
+                sendMessageButton.disabled = true;
+                statusElement.textContent = "Please connect your wallet to proceed.";
             }
         });
     </script>
