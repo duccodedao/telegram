@@ -181,42 +181,125 @@
         }
 
 
-#app {
+
+
+
+
+
+        .container {
     text-align: center;
-    background: #1e1e1e;
-    border-radius: 8px;
+    max-width: 400px;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    margin: 0 auto;
-    font-family: 'Arial', sans-serif;
-    color: #fff;
+    margin: 20px auto;
+    background: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+/* Hàng (row) hiển thị logo và nút Send */
 .row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
-    padding: 10px;
-    background-color: #333;
-    border-radius: 10px;
-    width: 100%;
 }
 
+/* Logo */
 .logo {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     color: #ff6a00;
-    font-size: 18px;
+    font-weight: bold;
 }
 
 .logo img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+/* Nút Send */
+#send-now {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #ff6a00;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+#send-now img {
+    width: 20px;
+    height: 20px;
     margin-right: 10px;
 }
+
+#send-now:hover {
+    background-color: #e55d00;
+}
+
+/* Hiển thị giá */
+.price-display {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    margin-top: 10px;
+    background: #333333;
+    color: #ff6a00;
+    border-radius: 25px;
+    font-size: 14px;
+}
+
+.price-display img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+/* Nút tham gia Telegram */
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #ff6a00;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.button:hover {
+    background-color: #e55d00;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 #tonPrice {
     font-size: 16px;
@@ -230,7 +313,7 @@
     color: #fff;
     background-color: #ff6a00;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -265,15 +348,6 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-        
-
-
-
-
-
-
-
-
     </style>
 </head>
 <body>
@@ -302,48 +376,32 @@
 
 
 <div class="container">
+    <div class="row">
+        <div class="logo">
+            <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="Logo">
+            <span id="tonPrice">Giá: Đang tải...</span>
+        </div>
+        <button id="send-now">
+            <img src="/logo-coin/buyref.svg" alt="Send Icon">
+            <span>Donate</span>
+        </button>
+    </div>
+
     <div class="price-display">
-        <img src="/logo-coin/btc.jpg" alt="TON Logo">
+        <img src="/logo-coin/btc.jpg" alt="BTC Logo">
         <span id="btcPrice">Giá: Đang tải...</span>
-    </div>
-
-    
-    <div class="price-display">
-        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Logo">
-        <span id="tonPrice">Giá: Đang tải...</span>
-    </div>
-    
-    <div class="price-display">
-        <img src="/logo-coin/dogsx.jpg" alt="DOGS Logo">
-        <span id="dogsPrice">Giá: Đang tải...</span>
-    </div>
-
-    <div class="price-display">
-        <img src="/logo-coin/hmstrx.jpg" alt="HMSTR Logo">
-        <span id="hmstrPrice">Giá: Đang tải...</span>
-    </div>
-
-    <div class="price-display">
-        <img src="/logo-coin/notx.jpg" alt="NOT Logo">
-        <span id="notPrice">Giá: Đang tải...</span>
-    </div>
-    
-    <div class="price-display">
-        <img src="/logo-coin/cati.jpg" alt="CATI Logo">
-        <span id="catiPrice">Giá: Đang tải...</span>
     </div>
 
     <div class="price-display">
         <img src="/logo-coin/vertcoin.jpg" alt="VERR Logo">
         <span id="vertPrice">Giá: Đang tải...</span>
     </div>
-    
-    
+
     <div class="price-display" id="channelMembers">
         <img src="/logo-coin/bmlogo.jpg" alt="Channel Logo">
         <span id="memberCount">Member: Đang tải...</span>
     </div>
-    <!-- Nút tham gia nhóm Telegram -->
+
     <div id="joinGroupButton" class="button" onclick="joinGroup()">
         <img src="/logo-coin/buyref.svg" alt="Group Icon">
         <span>Join Telegram Group</span>
