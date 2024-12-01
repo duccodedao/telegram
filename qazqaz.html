@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TON Connect - Send Messages</title>
-<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,24 +69,25 @@
     </div>
 
     <script>
-        // Initialize TonConnect UI
+        // Import TON Connect UI
         const tonConnectUI = new TonConnectUI({
-            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json' // Manifest URL của bạn
+            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json' // Update this to your manifest URL
         });
 
-        // DOM Elements
+        // Elements
         const connectWalletButton = document.getElementById('connect-wallet');
         const sendMessageButton = document.getElementById('send-message');
         const statusElement = document.getElementById('status');
 
-        // Transaction data
+        // Payload for tracking (use unique ID per transaction)
+        const uniqueId = `transaction-${Date.now()}`;
         const transaction = {
-            valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour from now)
+            valid_until: Math.floor(Date.now() / 1000) + 3600, // Expires in 1 hour
             messages: [
                 {
                     address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // Replace with destination address
-                    amount: "20000000", // Amount in nanotons (0.02 TON)
-                    payload: "Test payload" // Optional payload
+                    amount: "20000000", // 0.02 TON in nanotons
+                    payload: btoa(uniqueId) // Encode the unique ID in Base64
                 }
             ]
         };
@@ -106,13 +107,14 @@
         sendMessageButton.addEventListener('click', async () => {
             try {
                 await tonConnectUI.sendTransaction(transaction);
-                statusElement.textContent = "Message sent successfully!";
+                statusElement.textContent = `Message sent! Tracking ID: ${uniqueId}`;
+                console.log(`Tracking ID: ${uniqueId}`);
             } catch (error) {
                 statusElement.textContent = `Error sending message: ${error.message}`;
             }
         });
 
-        // Handle Wallet Status Change
+        // Wallet Status
         tonConnectUI.onStatusChange((status) => {
             if (status === "connected") {
                 sendMessageButton.disabled = false;
