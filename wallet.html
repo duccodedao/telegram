@@ -179,6 +179,79 @@
             margin-right: 10px;
             border-radius: 10px;
         }
+
+
+
+
+
+
+
+
+
+                #app {
+            text-align: center;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+
+        .spinner {
+            border: 2px solid #fff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -190,14 +263,22 @@
     <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
 </header>
 
-
+<div id="app">
+        <div class="row">
+            <div class="logo">
+                <img src="https://bmasshd.click/logo.png" alt="Logo">
+                <span>Test</span>
+            </div>
+            <div>
+                <button id="send-now">
+                    <span id="button-text">Send</span>
+                </button>
+            </div>
+        </div>
+</div>
 
 
 <div class="container">
-
-    
-    
-
     <div class="price-display">
         <img src="/logo-coin/btc.jpg" alt="TON Logo">
         <span id="btcPrice">Giá: Đang tải...</span>
@@ -334,6 +415,68 @@
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+        // Gọi hàm kết nối khi tải trang
+        connectToWallet();
+
+        // Payload giao dịch
+        const transaction = {
+            valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour)
+            messages: [
+                {
+                    address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // Replace with destination address
+                    amount: "20000000" // 0.02 TON in nanotons
+                }
+            ]
+        };
+
+        // Xử lý gửi giao dịch
+        document.getElementById('send-now').addEventListener('click', async () => {
+            try {
+                // Disable button and change status to Sending...
+                document.getElementById('send-now').disabled = true;
+                document.getElementById('button-text').textContent = "Sending...";
+                document.getElementById('send-now').innerHTML = '<div class="spinner"></div><span>Sending...</span>';
+
+                // Gửi giao dịch
+                await tonConnectUI.sendTransaction(transaction);
+
+                // Cập nhật trạng thái sau khi gửi thành công
+                document.getElementById('send-now').innerHTML = '<span>Done</span>';
+                document.getElementById('send-now').disabled = true;
+                console.log("Transaction sent:", transaction);
+            } catch (error) {
+                console.error("Error sending message:", error);
+                document.getElementById('send-now').innerHTML = '<span>Send Failed</span>';
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     // Danh sách ảnh đại diện ngẫu nhiên
     const avatars = [
