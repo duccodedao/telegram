@@ -1,265 +1,207 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8PJY7SWBRR"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airdrop cùng BmassHD</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Wallet | By BmassHD</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    
+
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Airdrop cùng BmassHD">
-    <meta property="og:description" content="Airdrop Telegram là một cơ hội tuyệt vời để nhận phần thưởng miễn phí từ các dự án blockchain, hãy cùng tham gia cùng BmsssK3 để khám phá những cơ hội hấp dẫn này!">
-    <meta property="og:image" content="https://bmasshd.click/logo/bia.png">
-    <meta property="og:url" content="https://bmasshd.click/">
+    <meta property="og:title" content="Wallet | BmassHD">
+    <meta property="og:description" content="Ví 2">
+    <meta property="og:image" content="/ton/nen.png">
+    <meta property="og:url" content="/ton/ton.html">
     <meta property="og:type" content="website">
+
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
     
-    <link rel="shortcut icon" href="logo/bm.png" type="image/png">
-    <link rel="icon" type="image/png" href="logo/bm.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #212121;
+            color: #fff;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        #user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20%;
+            margin-right: 5px;
+        }
+        #ton-connect {
+            cursor: pointer;
+        }
+        #user-username {
+            color: #ff6a00;
+            margin-left: 1px;
+            font-size: 15px;
+            text-align: left;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #212121;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid #333;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .footer-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #ccc;
+            font-size: 14px;
+            padding: 5px 10px;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px; /* Bo góc cho mục */
+        }
+        .footer-item img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+        }
+        .footer-item:hover {
+            color: #fff;
+        }
+        .footer-item.active {
+            background-color: #333; /* Màu nền khi mục được chọn */
+            color: #ff0; /* Màu chữ khi mục được chọn */
+        }
+        .new-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: red;
+            color: white;
+            padding: 1.5px 3.25px;
+            border-radius: 3px;
+            font-size: 7px;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+
+.container {
+    text-align: center;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #1e1e1e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+
+        }
+        .button{
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+        }
+        .button img{
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        .button:hover {
+            background: #ff6a00;
+            color: #fff;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff6a00;
+        }
+        .connect-text {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+        .ton-balance {
+            pointer-events: none;
+        }
 
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        .price-display {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #333333;
+            border: 1px solid #ff6a00;
+            color: #ff6a00;
+            font-size: 16px;
+            border-radius: 30px;
+            margin-top: 10px;
+            text-align: left;
+            justify-content: flex-start;
+            cursor: default;
+        }
 
-
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PPD7N5XXJX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-PPD7N5XXJX');
-    </script>
-
-    
-<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+        .price-display img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-<header class="header">
-    <div class="profile-container">
-        <img id="user-avatar" class="avatar" src="" alt="Avatar">
-        <div class="user-info">
-            <div id="user-name">
-                Loading...<i class="fas fa-check-circle verified-icon"></i> 
-            </div>
-            <div id="user-username">
-                @username<i class="fas fa-check-circle verified-icon"></i>
-            </div>
-            <div id="active-timer">
-                <span class="dot"></span> 
-                <span id="minutes">00</span> phút 
-                <span id="seconds">00</span> giây
-            </div>
-            
-        </div>
-    </div>
+
+<!-- Header -->
+<header>
+    <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
+    <div id="ton-send"></div>
+    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
 </header>
 
 
 
 
 
-    
 
+  
 
-    
-    
-    <div class="app-category">
-        <h2>Favourite - Yêu thích ❤️</h2>
-        <div id="favorite-apps" class="menu"></div> <!-- Danh sách yêu thích -->
-    </div>
-
-    <div class="app-category">
-        <h2>Trending - Xu hướng 🔥</h2>
-        <div class="menu">
-            <!-- 15 ứng dụng trong mục Trending -->
-            
-            <div class="app"><a href="https://t.me/tonstationgames_bot/app?startapp=ref_vyjqderh4emwxsssun3hza"><img src="logo-coin/20.jpg" alt="App 32"></a><span>TST <i class="heart" data-app="30">♡</i></span></div>
-            <div class="app"><a href="http://t.me/BlumCryptoBot/app?startapp=ref_Sn8ogL25Ap"><img src="logo-coin/12.jpg" alt="App 3"></a><span>BLUM <i class="heart" data-app="03">♡</i></span></div>
-            <div class="app"><a href="https://t.me/wcoin_tapbot?start=NTM4NzcyNTEwNA=="><img src="logo-coin/3.jpg" alt="App 15"></a><span>W-C <i class="heart" data-app="15">♡</i></span></div>
-            <div class="app"><a href="https://t.me/tapswap_mirror_bot?start=r_5387725104"><img src="logo-coin/9.jpg" alt="App 22"></a><span>TAPS <i class="heart" data-app="20">♡</i></span></div>
-            <div class="app"><a href="http://t.me/seed_coin_bot/app?startapp=5387725104"><img src="logo-coin/2.jpg" alt="App 1"></a><span>SEED <i class="heart" data-app="01">♡</i></span></div>
-        </div>
-    </div>
-
-        <div class="app-category">
-        <h2>New App - Ứng dụng mới ✨</h2>
-        <div class="menu">
-            <!-- 15 ứng dụng trong mục Trending -->
-            <div class="app"><a href="https://t.me/WontonOrgBot/gameapp?startapp=referralCode=I7HQOXXI"><img src="logo-coin/wt.jpg" alt="App 1"></a><span>WTON <i class="heart" data-app="09">♡</i></span></div>
-            <div class="app"><a href="https://t.me/PAWSOG_bot/PAWS?startapp=PVH9wfSq"><img src="logo-coin/paws.jpg" alt="App 1"></a><span>PAWS <i class="heart" data-app="71">♡</i></span></div>
-           <div class="app"><a href="https://t.me/UnichAirdropBot/start"><img src="logo-coin/IMG_20241108_121723_913.jpg" alt="App 2"></a><span>UN <i class="heart" data-app="73">♡</i></span></div>
-            <div class="app"<><a href="/"><img src="logo-coin/loading.gif" alt="App 61"></a><span>✨ </span></div>
-            
-        </div>
-        </div>
-
-    <div class="app-category">
-        <h2>Generally - Hay dùng 🕹️</h2>
-        <div class="menu">
-            <div class="app"><a href="https://t.me/skate_app_bot?start=5w2G5b"><img src="logo-coin/IMG_20241103_162332_342.jpg" alt="App 1"></a><span>LP <i class="heart" data-app="72">♡</i></span></div>
-            <div class="app"><a href="https://t.me/theYescoin_bot/Yescoin?startapp=ZdaoFU"><img src="logo-coin/7.jpg" alt="App 2"></a><span>YV <i class="heart" data-app="02">♡</i></span></div>
-            
-            
-            <div class="app"><a href="https://t.me/codexfieldbot/wallet?startapp=RF689Doj85mU"><img src="logo-coin/cf.jpg" alt="App 3"></a><span>CF <i class="heart" data-app="62">♡</i></span></div>
-            <div class="app"<><a href="https://t.me/TsubasaRivalsBot/start?startapp=inviter_id-5387725104"><img src="logo-coin/ct.jpg" alt="App 7"></a><span>CT <i class="heart" data-app="63">♡</i></span></div>
-            <div class="app"><a href="https://t.me/krypton_game_bot/app?startapp=v0_rX5CF1p_guXTPhX"><img src="logo-coin/kr.jpg" alt="App 64"></a><span>KR <i class="heart" data-app="10">♡</i></span></div>
-            <div class="app"<><a href="https://t.me/PinEye_Bot/pineye?startapp=r_5387725104"><img src="logo-coin/pe.jpg" alt="App 7"></a><span>PE <i class="heart" data-app="65">♡</i></span></div>
-            <div class="app"><a href="https://t.me/trikonbot/game?startapp=w94cbjy6"><img src="logo-coin/tk.jpg" alt="App 3"></a><span>TK <i class="heart" data-app="66">♡</i></span></div>
-            <div class="app"<><a href="https://t.me/tomowalletbot/tomo_wallet_app?startapp=VASRDHI3DQ"><img src="logo-coin/tm.jpg" alt="App 7"></a><span>TM <i class="heart" data-app="67">♡</i></span></div>
-            
-            <div class="app"><a href="https://t.me/Binance_Moonbix_bot/start?startapp=ref_5387725104&startApp=ref_5387725104"><img src="logo-coin/bnbmb.jpg" alt="App 4"></a><span>BNB <i class="heart" data-app="04">♡</i></span></div>
-            <div class="app"><a href="https://t.me/OKX_official_bot/OKX_Racer?startapp=linkCode_24237303"><img src="logo-coin/race.jpg" alt="App 6"></a><span>OKX <i class="heart" data-app="5">♡</i></span></div>
-            <div class="app"><a href="https://t.me/xkucoinbot/kucoinminiapp?startapp=cm91dGU9JTJGdGFwLWdhbWUlM0ZpbnZpdGVyVXNlcklkJTNENTM4NzcyNTEwNCUyNnJjb2RlJTNEUUJBRVFFMUw="><img src="logo-coin/kucoinx.jpg" alt="6"></a><span>KC <i class="heart" data-app="06">♡</i></span></div>
-            <div class="app"><a href="https://t.me/claytoncoinbot/game?startapp=f11c0b"><img src="logo-coin/IMG_20240930_101506_596.jpg" alt="App 1"></a><span>CL <i class="heart" data-app="07">♡</i></span></div>
-            <div class="app"><a href="https://t.me/OGCommunityBot?start=rml8VLtInPw3V6Pn"><img src="logo-coin/IMG_20241027_235701_441.jpg" alt="App 1"></a><span>OGC <i class="heart" data-app="70">♡</i></span></div>
-        
-            <!-- 27 ứng dụng trong mục Hay Dùng -->
-            <div class="app"><a href="https://t.me/coub/app?startapp=coub__marker_19934812/"><img src="logo-coin/IMG_20240930_101421_266.jpg" alt="App 3"></a><span>COUB <i class="heart" data-app="08">♡</i></span></div>
-            <div class="app"<><a href="https://t.me/notpixel/app?startapp=f5387725104"><img src="logo-coin/fixel.jpg" alt="App 7"></a><span>PIXEL <i class="heart" data-app="09">♡</i></span></div>
-            <div class="app"><a href="https://t.me/walbi_ala_bot/walbi?startapp=Y29kZT1jNTI2YjImZGxfaWQ9cmVmZXJyYWxDb2Rl"><img src="logo-coin/IMG_20240930_102758_160.jpg" alt="App 3"></a><span>PTS <i class="heart" data-app="10">♡</i></span></div>
-            <div class="app"<><a href="https://t.me/fastmintapp_bot?start=5387725104"><img src="logo-coin/IMG_20240930_102622_677.jpg" alt="App 7"></a><span>MT <i class="heart" data-app="11">♡</i></span></div>
-            <div class="app"><a href="https://t.me/birdx2_bot/birdx?startapp=5387725104"><img src="logo-coin/birds.jpg" alt="App 3"></a><span>BIRD <i class="heart" data-app="12">♡</i></span></div>
-            <div class="app"<><a href="https://t.me/PinGo_MiniBot/join?startapp=HWZAUGL4"><img src="logo-coin/pingo.jpg" alt="App 7"></a><span>PG <i class="heart" data-app="13">♡</i></span></div>
-            <div class="app"<><a href="https://t.me/TheWhaleAppBot?start=r_5387725104"><img src="logo-coin/wxw.jpg" alt="App "></a><span>WXW <i class="heart" data-app="61">♡</i></span></div>
-            
-            
-            <div class="app"><a href="https://t.me/cexio_tap_bot?start=1716270247286630"><img src="logo-coin/1.jpg" alt="App 14"></a><span>CEXP <i class="heart" data-app="14">♡</i></span></div>
-            
-            <div class="app"><a href="https://t.me/quackquack_game_bot?start=?start=4orpdv6clD"><img src="logo-coin/4.jpg" alt="App 18"></a><span>Q <i class="heart" data-app="16">♡</i></span></div>
-            <div class="app"><a href="https://t.me/realyescoinbot?start=r_5387725104"><img src="logo-coin/5.jpg" alt="App 19"></a><span>YT <i class="heart" data-app="17">♡</i></span></div>
-            <div class="app"><a href="https://t.me/dotcoin_bot?start=r_5387725104"><img src="logo-coin/6.jpg" alt="App 20"></a><span>DTC <i class="heart" data-app="18">♡</i></span></div>
-            <div class="app"><a href="http://t.me/vertus_app_bot/app?startapp=5387725104"><img src="logo-coin/8.jpg" alt="App 21"></a><span>VERT <i class="heart" data-app="19">♡</i></span></div>
-            
-            <div class="app"><a href="https://t.me/hamster_kombat_bot?start=kentId5387725104"><img src="logo-coin/10.jpg" alt="App 23"></a><span>HMS <i class="heart" data-app="21">♡</i></span></div>
-            <div class="app"><a href="https://t.me/Shuttle_ton_bot?start=r_5387725104"><img src="logo-coin/11.jpg" alt="App 24"></a><span>ST <i class="heart" data-app="22">♡</i></span></div>
-            <div class="app"><a href="https://t.me/HexacoinBot/wallet?startapp=5387725104"><img src="logo-coin/token.gif" alt="App 25"></a><span>HXC <i class="heart" data-app="23">♡</i></span></div>
-            <div class="app"><a href="https://t.me/pocketfi_bot/Mining?startapp=5387725104"><img src="logo-coin/14.jpg" alt="App 26"></a><span>PFI <i class="heart" data-app="24">♡</i></span></div>
-            <div class="app"><a href="https://t.me/MatchQuestBot/start?startapp=eb6abff2544f765bf5bdb3620b612abd"><img src="logo-coin/15.jpg" alt="App 27"></a><span>MAT <i class="heart" data-app="25">♡</i></span></div>
-            <div class="app"><a href="https://t.me/TimeFarmCryptoBot?start=jnFA1i1f9Xms6E19"><img src="logo-coin/16.jpg" alt="App 28"></a><span>TF <i class="heart" data-app="26">♡</i></span></div>
-            <div class="app"><a href="http://t.me/IcebergAppBot?start=referral_5387725104"><img src="logo-coin/17.jpg" alt="App 29"></a><span>ICE <i class="heart" data-app="27">♡</i></span></div>
-            <div class="app"><a href="https://t.me/onus_tap_tap_tap_bot?start=1724845989868"><img src="logo-coin/19.jpg" alt="App 30"></a><span>ONX <i class="heart" data-app="28">♡</i></span></div>
-            <div class="app"><a href="https://t.me/W3BFLIXBot?start=iv2ac3fc1201"><img src="logo-coin/22.jpg" alt="App 31"></a><span>W3B <i class="heart" data-app="29">♡</i></span></div>
-
-            <div class="app"><a href="https://t.me/Mdaowalletbot?start=5387725104"><img src="logo-coin/21.jpg" alt="App 33"></a><span>MD <i class="heart" data-app="31">♡</i></span></div>
-            <div class="app"><a href="https://t.me/dormint_bot?start=5387725104"><img src="logo-coin/23.jpg" alt="App 34"></a><span>DM <i class="heart" data-app="32">♡</i></span></div>
-            <div class="app"><a href="https://t.me/boom?start=MUnNNVPPWLQ5aYt6k6jQou"><img src="logo-coin/28.jpg" alt="App 35"></a><span>BM <i class="heart" data-app="33">♡</i></span></div>
-            <div class="app"><a href="https://t.me/graph_dex_bot?start=5387725104"><img src="logo-coin/27.jpg" alt="App 8"></a><span>GR <i class="heart" data-app="34">♡</i></span></div>
-            <div class="app"><a href="https://t.me/cryptorank_app_bot/points?startapp=ref_5387725104_"><img src="logo-coin/25.jpg" alt="App 9"></a><span>CR <i class="heart" data-app="35">♡</i></span></div>
-            <div class="app"><a href="https://t.me/TheBaboon_Bot?start=r_5387725104"><img src="logo-coin/24.jpg" alt="App 10"></a><span>BB<i class="heart" data-app="36">♡</i></span></div>
-            <div class="app"><a href="https://fintop.io/6nBvAHD"><img src="logo-coin/hold.jpg" alt="App 11"></a><span>HOLD <i class="heart" data-app="App 11">♡</i></span></div>
-            <div class="app"><a href="http://t.me/hexn_bot/app?startapp=74cc92cc-1c10-4044-8048-1dbabbc02a88"><img src="logo-coin/30.jpg" alt="App 12"></a><span>HEXN <i class="heart" data-app="37">♡</i></span></div>
-            <div class="app"><a href="https://t.me/DejenDogBot?start=2dcfebaf"><img src="logo-coin/32.jpg" alt="App 13"></a><span>DjD <i class="heart" data-app="38">♡</i></span></div>
-            <div class="app"><a href="https://t.me/MMproBump_bot?start=ref_5387725104"><img src="logo-coin/IMG_20240929_194018_843.jpg" alt="App 14"></a><span>MMB <i class="heart" data-app="39">♡</i></span></div>
-            <div class="app"><a href="https://t.me/Agent301Bot/app?startapp=onetime5387725104"><img src="logo-coin/301.jpg" alt="App 15"></a><span>301 <i class="heart" data-app="40">♡</i></span></div>
-            <div class="app"><a href="https://t.me/tonxdao_bot?start=dao_5387725104_180853"><img src="logo-coin/txd.jpg" alt="App 8"></a><span>TxD <i class="heart" data-app="41">♡</i></span></div>
-            <div class="app"><a href="https://t.me/bwcwukong_bot/Play?startapp=5387725104"><img src="logo-coin/bwc.jpg" alt="App 9"></a><span>BWC <i class="heart" data-app="42">♡</i></span></div>
-            <div class="app"><a href="https://t.me/NotBoredPuppies_bot?start=r_5387725104"><img src="logo-coin/nbp.jpg" alt="App 10"></a><span>NBP <i class="heart" data-app="43">♡</i></span></div>
-            <div class="app"><a href="https://t.me/b_usersbot/join?startapp=ref-jUKQpUvcqtonEgaDDZdCbn"><img src="logo-coin/bu.jpg" alt="App 11"></a><span>BU <i class="heart" data-app="44">♡</i></span></div>
-            <div class="app"><a href="https://t.me/Vanilla_Finance_Bot/Vanillafinance?startapp=inviteId10141498"><img src="logo-coin/vani.jpg" alt="App 12"></a><span>VNF <i class="heart" data-app="45">♡</i></span></div>
-            <div class="app"><a href="https://t.me/DuckChain_bot/quack?startapp=yY9AdkK8"><img src="logo-coin/dc.jpg" alt="App 13"></a><span>DC <i class="heart" data-app="46">♡</i></span></div>
-            <div class="app"><a href="https://t.me/VanaDataHeroBot/VanaDataHero?startapp=5387725104"><img src="logo-coin/vana.jpg" alt="App 14"></a><span>VN <i class="heart" data-app="47">♡</i></span></div>
-            <div class="app"><a href="https://forms.gle/t1oKnEaiGHMT3G7Z7"><img src="logo-coin/add.png" alt="Add"></a><span>Add</span></div>
-        </div>
-    </div>
-
-    <div class="app-category">
-        <h2>Extensions - Tiện ích 💎</h2>
-        <div class="menu">
-            <!-- 5 ứng dụng trong mục Khác -->
-            <div class="app"><a href="https://bmasshd.click/tg-app.html"><img src="logo-coin/loading.gif" alt="Loading"></a><span>Loading</span></div>
-            
-            
-            
-        </div>
-    </div>
-
-
-        <div class="app-category">
-        <h2>Social - Mã xã hội 🌐</h2>
-        <div class="menu">
-            <!-- 5 ứng dụng trong mục Khác -->
-            <div class="app"><a href="https://t.me/bmassk3_channel"><img src="logo-coin/bmlogo.jpg" alt="App 50"></a><span>Channel 
-            </span></div>
-            <div class="app"><a href="https://t.me/traodoiref_link"><img src="logo-coin/bmlogo.jpg" alt="App 55"></a><span>Group </span></div>
-            
-        </div>
-        </div>
-
-        <div class="app-category">
-        <h2>Event - Sự kiện 🍒</h2>
-        <div class="menu">
-            <!-- 5 ứng dụng trong mục Khác -->
-            <div class="app"><a href="https://bmasshd.click/tg-app.html"><img src="logo-coin/loading.gif" alt="Loading"></a><span>Loading</span></div>
-            
-        </div>
-        </div>
-
-
-
-    
-        
-
-    
-    <div class="app-category">
-        <h2>Exchange - Sàn Giao dịch 🪙</h2>
-        <div class="menu">
-            <!-- 5 ứng dụng trong mục Khác 2 -->
-            <div class="app"><a href="https://www.binance.info/vi/activity/referral-entry/CPA/together-v3?ref=CPA_00N60370DE"><img src="logo-coin/Binance-Logo.jpg" alt="App 56"></a><span>BINANCE</span></div>
-            <div class="app"><a href="https://okx.com/join/94425783"><img src="logo-coin/okx.jpg" alt="App 57"></a><span>OKX</span></div>
-            <div class="app"><a href="https://www.bybitglobal.com/invite?ref=4K7A14M"><img src="logo-coin/bybitx.png" alt="App 58"></a><span>BYBIT</span></div>
-            <div class="app"><a href="https://share.bitget.com/u/Y1TJB7JX"><img src="logo-coin/bitget.jpg" alt="App 59"></a><span>BITGET</span></div>
-            <div class="app"><a href="https://www.gate.io/signup/AVLMVF0O?ref_type=103"><img src="logo-coin/gate.jpg" alt="App 60"></a><span>GATE</span></div>
-        </div>
-    </div>
-
-
-
-    <div class="app-category">
-        <h2>Listed</h2>
-        <div class="menu">
-            <!-- 5 ứng dụng trong mục Khác 2 -->
-            <div class="app"><a href="/"><img src="logo-coin/3.jpg" alt="App"></a><span>27/10</span></div>
-            <div class="app"><a href="/"><img src="logo-coin/10.jpg" alt="App"></a><span>HMSTR</span></div>
-            
-            <div class="app"><a href="/"><img src="logo-coin/dogs.jpg" alt="App"></a><span>DOGS</span></div>
-            <div class="app"><a href="/"><img src="logo-coin/cati.jpg" alt="App"></a><span>CATI</span></div>
-            <div class="app"><a href="/"><img src="logo-coin/major.jpg" alt="App"></a><span>MAJOR</span></div>
-            <div class="app"><a href="/"><img src="logo-coin/x.jpg" alt="App"></a><span>X</span></div>
-            <div class="app"><a href="/"><img src="logo-coin/toma.jpg" alt="App"></a><span>TOMA</span></div>
-            <div class="app"><a href="/"><img src="logo-coin/arix.jpg" alt="App"></a><span>ARIX</span></div>
-            <div class="app"><a href="/"><img src="logo-coin/loading.gif" alt="App"></a><span>✨</span></div>
-        </div>
-    </div>
-
-
-
-
-    
-
-
-    
-<div class="marquee-container">
-    <div class="marquee-content">
-        <span>1️⃣: Trang web sẽ bảo trì vào ngày 15/5/2025.</span>
-    </div>
-</div>
-
-
-
-
-    
-
-    <!-- Footer Section -->
 <div class="footer">
     <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
-            <img src="/logo-coin/nha_live.png" alt="Home">
-            
+            <img src="/logo-coin/nha.png" alt="Home">
+            <span class="new-badge">New</span>
         </div>
         <span>Home</span>
     </a>
@@ -277,81 +219,231 @@
         </div>
         <span>BánCoin</span>
     </a>
-    <a href="https://buffviewx.com/ref/bmasshd" class="footer-item" onclick="setActive(this)">
+    <a href="/ton/star.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
-            <img src="/logo-coin/fr.png" alt="MuaRef">
+            <img src="/logo-coin/star.png" alt="MuaRef">
             <span class="new-badge">New</span>
         </div>
-        <span>MuaRef</span>
+        <span>MuaStar</span>
     </a>
     <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
-            <img src="/logo-coin/vi.png" alt="Wallet">
-            <span class="new-badge">New</span>
+            <img src="/logo-coin/vi_live.png" alt="Wallet">
+            
         </div>
         <span>Wallet</span>
     </a>   
 </div>
+
+
+
+
+
+
+    
 <script>
-    function setActive(element) {
-        // Xóa lớp active khỏi tất cả các mục
-        const items = document.querySelectorAll('.footer-item');
-        items.forEach(item => item.classList.remove('active'));
+    // Khởi tạo TonConnectUI
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect' // Nút kết nối sẽ hiển thị tại đây
+    });
 
-        // Thêm lớp active vào mục được nhấp vào
-        element.classList.add('active');
-    }
-</script>
+    // Cấu hình thêm tuỳ chọn nếu cần
+    tonConnectUI.uiOptions = {
+        twaReturnUrl: 'https://t.me/bmassk3_bot/BmassK3'
+    };
 
-<script>
-// Kiểm tra hỗ trợ localStorage và các API cần thiết
-document.addEventListener("DOMContentLoaded", () => {
-    if (typeof(Storage) === "undefined") {
-        console.log("localStorage không khả dụng, sử dụng cookies thay thế.");
-    } else if (!('querySelector' in document && 'addEventListener' in window)) {
-        console.log("Trình duyệt không hỗ trợ các API hiện tại.");
-    } else {
-        // Chạy logic hiển thị thông báo nếu `notificationEnabled` là "true"
-        const notificationEnabled = localStorage.getItem("notificationEnabled") === "true";
-        if (notificationEnabled) {
-            const notificationData = JSON.parse(localStorage.getItem("notificationData"));
-            
-            if (notificationData) {
-                const notification = document.createElement("div");
-                notification.className = "notification";
-                notification.innerHTML = `
-                    <div class="content">
-                        <img src="${notificationData.image}" alt="Hình ảnh">
-                        <div class="text">
-                            <h>${notificationData.title}</h>
-                            <p>${notificationData.subtitle}</p>
-                        </div>
-                    </div>
-                    <button class="close">✖</button>
-                `;
+    // Hàm kết nối với ví
+    async function connectToWallet() {
+        try {
+            const connectedWallet = await tonConnectUI.connectWallet();
+            console.log("Connected Wallet:", connectedWallet);
 
-                document.body.appendChild(notification);
+            // Hiển thị thông tin ví
+            document.getElementById('wallet-info').style.display = 'block';
+            document.getElementById('balance').innerText = `Số dư: Đang tải...`;
 
-                notification.querySelector(".close").addEventListener("click", () => {
-                    notification.remove();
-                    localStorage.setItem("notificationEnabled", "false");
-                });
-
-                setTimeout(() => {
-                    notification.remove();
-                }, 3000);
-            }
+            // Lấy số dư và cập nhật giao diện
+            const address = connectedWallet.account.address;
+            const balance = await tonConnectUI.getBalance(address); // Dùng API để lấy số dư thật
+            document.getElementById('balance').innerText = `Số dư: ${balance} TON`;
+        } catch (error) {
+            console.error("Lỗi khi kết nối ví:", error);
         }
+    }
+
+    // Hàm ngắt kết nối ví
+    async function disconnectWallet() {
+        try {
+            await tonConnectUI.disconnect();
+            document.getElementById('wallet-info').style.display = 'none';
+            console.log("Đã ngắt kết nối ví.");
+        } catch (error) {
+            console.error("Lỗi khi ngắt kết nối ví:", error);
+        }
+    }
+
+
+    // Danh sách ảnh đại diện ngẫu nhiên
+    const avatars = [
+        '/logo-coin/av1.png',
+        '/logo-coin/av2.png',
+        '/logo-coin/av3.png',
+        '/logo-coin/av4.png',
+        '/logo-coin/av5.png',
+        '/logo-coin/av6.png',
+        '/logo-coin/av7.png',
+        '/logo-coin/av8.png',
+        '/logo-coin/av9.png',
+        '/logo-coin/av10.png',
+        '/logo-coin/av11.png',
+        '/logo-coin/av12.png',
+    ];
+    const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+
+    // Kiểm tra và lấy thông tin từ Telegram WebApp API
+    window.addEventListener('load', () => {
+        if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
+            let user = Telegram.WebApp.initDataUnsafe.user;
+
+            if (user) {
+                let userName = user.first_name + " " + (user.last_name || "");
+                let username = user.username || "No Username"; // Thay thế nếu không có username
+
+                // Cập nhật thông tin vào HTML
+                document.getElementById('user-name').textContent = userName;
+                document.getElementById('user-username').textContent = `@${username}`;
+                
+            } else {
+                console.log("Không có thông tin người dùng.");
+            }
+        } else {
+            console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
+        }
+    });
+
+
+
+
+
+    window.addEventListener('load', () => {
+    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
+        // Lấy thông tin từ Telegram WebApp
+        const user = Telegram.WebApp.initDataUnsafe.user;
+
+        if (user) {
+            const username = user.username || 'default'; // Sử dụng 'default' nếu không có username
+            const avatarUrl = `https://t.me/i/userpic/160/${username}.jpg`;
+
+            // Hiển thị username và ảnh đại diện
+            document.getElementById('user-username').innerText = `@${username}`;
+            document.getElementById('user-avatar').src = avatarUrl;
+
+            console.log("Thông tin người dùng:", user);
+        } else {
+            console.warn("Không tìm thấy thông tin người dùng.");
+        }
+    } else {
+        console.warn("Telegram WebApp API không khả dụng.");
     }
 });
 
+
+
+
+
+    
+
+
+
+        // Hàm tham gia nhóm Telegram
+    function joinGroup() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://t.me/bmassk3_channel", "_blank");
+    }
+    function joinWallet() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://t.me/wallet/start?startapp", "_blank");
+    }
+    function joinExchange() {
+        // Mở liên kết đến nhóm Telegram
+        window.open("https://bmasshd.click/exchange.html", "_blank");
+    }
+
+
+    async function fetchTokenPrice(instId, elementId) {
+            try {
+                const url = `https://www.okx.com/api/v5/market/ticker?instId=${instId}-USDT`;
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`Coming soon ✨ - ${instId}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.data || data.data.length === 0) {
+                    throw new Error(`Coming soon - ✨ ${instId}`);
+                }
+
+                const tokenPrice = data.data[0].last;
+                document.getElementById(elementId).textContent = `${tokenPrice} USDT`;
+            } catch (error) {
+                console.error('Lỗi:', error);
+                document.getElementById(elementId).textContent = `${instId} | Coming Soon ✨`;
+            }
+        }
+
+        fetchTokenPrice('TON', 'tonPrice');
+        fetchTokenPrice('DOGS', 'dogsPrice');
+        fetchTokenPrice('HMSTR', 'hmstrPrice');
+        fetchTokenPrice('NOT', 'notPrice');
+        fetchTokenPrice('CATI', 'catiPrice');
+        fetchTokenPrice('BTC', 'btcPrice');
+        fetchTokenPrice('VERT', 'vertPrice');
+
+        setInterval(() => {
+            fetchTokenPrice('TON', 'tonPrice');
+            fetchTokenPrice('DOGS', 'dogsPrice');
+            fetchTokenPrice('HMSTR', 'hmstrPrice');
+            fetchTokenPrice('NOT', 'notPrice');
+            fetchTokenPrice('CATI', 'catiPrice');
+            fetchTokenPrice('BTC', 'btcPrice');
+            fetchTokenPrice('VERT', 'vertPrice');
+        }, 10000);
+
+
+
+    // Thay YOUR_BOT_TOKEN bằng token bot của bạn và @your_channel_username bằng tên channel cần đếm
+        const BOT_TOKEN = '7840174548:AAF-anFo7OS7YPaGsDrpzG-ZdJzkdyjJfHk';
+        const CHANNEL_USERNAME = '@bmassk3_channel';
+
+        function getMemberCount() {
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/getChatMembersCount?chat_id=${CHANNEL_USERNAME}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        document.getElementById('memberCount').textContent = `Channel: ${data.result} Member active`;
+                    } else {
+                        document.getElementById('memberCount').textContent = "Không thể lấy số lượng thành viên";
+                        console.error("Lỗi:", data.description);
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('memberCount').textContent = "Có lỗi xảy ra";
+                    console.error("Lỗi:", error);
+                });
+        }
+
+        // Gọi hàm getMemberCount mỗi 10 giây để tự động cập nhật số lượng thành viên
+        setInterval(getMemberCount, 10000);
+        
+        // Gọi lần đầu ngay lập tức khi trang được tải
+        getMemberCount();
 </script>
 
-
-    
-    
-    
-    <script src="js.js"></script>
-    <script src="ton-connect.js"></script>
 </body>
-    </html>                                                                                
+</html>
