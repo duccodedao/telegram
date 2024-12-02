@@ -681,7 +681,7 @@
                 }
 
                 const tokenPrice = data.data[0].last;
-                document.getElementById(elementId).textContent = `${tokenPrice} USDT`;
+                document.getElementById(elementId).textContent = `$${tokenPrice}`;
             } catch (error) {
                 console.error('Lỗi:', error);
                 document.getElementById(elementId).textContent = `${instId} | Coming Soon ✨`;
