@@ -348,6 +348,21 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+        
+.price-change {
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.price-change.increase {
+    color: green; /* Màu xanh cho tăng giá */
+}
+.price-change.decrease {
+    color: red; /* Màu đỏ cho giảm giá */
+}
+
+        
     </style>
 </head>
 <body>
@@ -368,6 +383,7 @@
         <div class="logo">
             <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="Logo">
             <span id="tonPrice">Giá: Đang tải...</span>
+            <span id="tonChange" class="price-change">Đang tải...</span>
         </div>
         <button id="send-now">
             <img src="/logo-coin/3363517.png" alt="Send Icon">
@@ -722,6 +738,46 @@
         
         // Gọi lần đầu ngay lập tức khi trang được tải
         getMemberCount();
+
+
+
+    unction updateTONChange(changeElementId, change24h) {
+    const changeElement = document.getElementById(changeElementId);
+
+    // Nếu không có dữ liệu về thay đổi, đặt mặc định là 0%
+    const changePercentage = change24h !== null ? change24h.toFixed(2) : 0;
+
+    // Cập nhật phần trăm thay đổi và màu sắc
+    changeElement.textContent = `(${changePercentage}%)`;
+    if (change24h > 0) {
+        changeElement.classList.add("increase");
+        changeElement.classList.remove("decrease");
+    } else if (change24h < 0) {
+        changeElement.classList.add("decrease");
+        changeElement.classList.remove("increase");
+    } else {
+        changeElement.classList.remove("increase", "decrease"); // Không màu nếu thay đổi là 0%
+    }
+}
+
+// Tích hợp API
+fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd')
+    .then(response => response.json())
+    .then(data => {
+        // Lấy dữ liệu của TON
+        const ton = data.find(coin => coin.symbol === "ton");
+        if (ton) {
+            updateTONChange("tonChange", ton.price_change_percentage_24h);
+        } else {
+            // Nếu không tìm thấy TON, hiển thị mặc định
+            updateTONChange("tonChange", 0);
+        }
+    })
+    .catch(error => {
+        console.error('Lỗi khi lấy dữ liệu:', error);
+        // Nếu xảy ra lỗi API, đặt mặc định
+        updateTONChange("tonChange", 0);
+    });
 </script>
 
 </body>
