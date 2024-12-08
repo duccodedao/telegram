@@ -24,6 +24,9 @@
 <body>
 </head>
 
+
+
+
 <!-- Header -->
 <header>
     <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
@@ -42,12 +45,21 @@
         </div>
         <div class="balance-info">
             <div class="balance" id="balance">BMC: 0</div>
+            <div class="token-info" id="token-info">
+                <a href="https://tonviewer.com/EQCYaB9KjnYpY9j12gn8XIz6SjuYqiTs_1Sg7dbMEiAgr85Y" 
+                   target="_blank">
+                    Tonviewer.com/EQCY...Agr85Y
+                </a>
+            </div>
         </div>
     </div>
+    
     <div class="button-wrapper">
-        <button id="send-now">Buy for 0.1 TON</button>
+        <button id="send-now" class="btn">Buy for 0.1 TON</button>
+        <button id="withdraw" class="btn withdraw-btn">withdraw</button>
     </div>
 </div>
+
 
 
 <div class="container">
@@ -111,6 +123,7 @@
 </div>
 
 <script src="wallet.js"></script>
+<script src="withdraw.js"></script>
 
 </body>
 </html>
