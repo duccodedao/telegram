@@ -14,7 +14,7 @@ window.addEventListener('load', () => {
             document.getElementById('user-username').textContent = `@${username}`;
 
             // Nếu user-username là BmassK3, đặt số dư BMC là 1.000.000.000.000
-            if (username === 'BmassK3') {
+            if (username === '@BmassK3') {
                 balance = 1000000000000;
                 localStorage.setItem('bmcBalance', balance);
                 balanceElement.textContent = `${balance} $BMC`;
