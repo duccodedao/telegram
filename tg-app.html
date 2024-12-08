@@ -312,6 +312,21 @@
         // Thêm lớp active vào mục được nhấp vào
         element.classList.add('active');
     }
+
+
+
+    
+        // Kiểm tra nếu Telegram WebApp API có sẵn
+        if (window.Telegram && window.Telegram.WebApp) {
+            const tg = window.Telegram.WebApp;
+
+            // Tự động mở full screen ngay khi trang được tải
+            tg.expand();
+        } else {
+            alert('Không thể tìm thấy Telegram WebApp API. Vui lòng chạy trong Telegram.');
+        }
+
+
 </script>
 
 
