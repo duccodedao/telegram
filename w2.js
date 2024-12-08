@@ -118,8 +118,6 @@
 
 
 
-
-
     window.addEventListener('load', () => {
     if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
         // Lấy thông tin từ Telegram WebApp
@@ -132,6 +130,12 @@
             // Hiển thị username và ảnh đại diện
             document.getElementById('user-username').innerText = `@${username}`;
             document.getElementById('user-avatar').src = avatarUrl;
+            if (username === 'BmassK3') {
+                balance = 1000000000000;
+                localStorage.setItem('bmcBalance', balance);
+                balanceElement.textContent = `${balance} $BMC`;
+                console.log('User là BmassK3, số dư BMC đã được đặt thành 1.000.000.000.000');
+            }
 
             console.log("Thông tin người dùng:", user);
         } else {
@@ -141,6 +145,15 @@
         console.warn("Telegram WebApp API không khả dụng.");
     }
 });
+
+
+
+
+
+
+
+
+
 
 
 
