@@ -316,17 +316,17 @@
 
 
     
-        // Kiểm tra nếu Telegram WebApp API có sẵn
-        if (window.Telegram && window.Telegram.WebApp) {
+ if (window.Telegram && window.Telegram.WebApp) {
             const tg = window.Telegram.WebApp;
+
+            // Khởi tạo WebApp để đảm bảo các phương thức có sẵn
+            tg.init();
 
             // Tự động mở full screen ngay khi trang được tải
             tg.expand();
         } else {
-            alert('Không thể tìm thấy Telegram WebApp API. Vui lòng chạy trong Telegram.');
+            alert('Không thể tìm thấy Telegram WebApp API. Vui lòng chạy ứng dụng trong Telegram.');
         }
-
-
 </script>
 
 
