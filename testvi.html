@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet | By BmassHD</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    <link rel="stylesheet" href="wallet.css">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Wallet | BmassHD">
+    <meta property="og:description" content="Ví 2">
+    <meta property="og:image" content="/ton/nen.png">
+    <meta property="og:url" content="/ton/ton.html">
+    <meta property="og:type" content="website">
+
+    <link rel="shortcut icon" href="logo1.png" type="image/png">
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+   
+<body>
+</head>
+
+
+
+
+<!-- Header -->
+<header>
+    <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
+    <span id="user-username">@username</span>
+    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
+</header>
+
+
+
+
+
+<div class="container">
+    <div class="balance-wrapper">
+        <div class="logo">
+            <img src="/logo-coin/bmlogo.jpg" alt="Logo BMC">
+        </div>
+        <div class="balance-info">
+            <div class="balance" id="balance">BMC: 0</div>
+            <div class="token-info" id="token-info">
+                <a href="https://tonviewer.com/EQCYaB9KjnYpY9j12gn8XIz6SjuYqiTs_1Sg7dbMEiAgr85Y" 
+                   target="_blank">
+                    Tonviewer.com/EQCY...Agr85Y
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="button-wrapper">
+        <button id="send-now" class="btn">Buy for 0.1 TON</button>
+        <button id="withdraw" class="btn withdraw-btn">withdraw</button>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="price-display">
+        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="BTC Logo">
+        <span id="tonPrice">Giá: Đang tải...</span>
+        <span id="tonChange" class="price-change">Đang tải...</span>
+    </div>
+ 
+
+    <div class="price-display">
+        <img src="/logo-coin/btc.jpg" alt="BTC Logo">
+        <span id="btcPrice">Giá: Đang tải...</span>
+        <span id="btcChange" class="price-change">Đang tải...</span>
+    </div>
+    <div class="price-display">
+        <img src="/logo-coin/bmlogo.jpg" alt="BTC Logo">
+        <span id="btcPrice">$BMC: Loading...</span>
+    </div>
+</div>  
+   
+
+  
+
+<div class="footer">
+    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/nha.png" alt="Home">
+            <span class="new-badge">New</span>
+        </div>
+        <span>Home</span>
+    </a>
+    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/nap.png" alt="MuaCoin">
+            <span class="new-badge">New</span>
+        </div>
+        <span>MuaCoin</span>
+    </a>
+    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/rut.png" alt="BánCoin">
+            <span class="new-badge">New</span>
+        </div>
+        <span>BánCoin</span>
+    </a>
+    <a href="/ton/star.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/star.png" alt="MuaRef">
+            <span class="new-badge">New</span>
+        </div>
+        <span>MuaStar</span>
+    </a>
+    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+        <div class="img-wrapper">
+            <img src="/logo-coin/vi_live.png" alt="Wallet">
+            
+        </div>
+        <span>Wallet</span>
+    </a>   
+</div>
+
+<script src="wallet.js"></script>
+
+
+</body>
+</html>
