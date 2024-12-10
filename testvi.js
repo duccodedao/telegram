@@ -43,16 +43,18 @@
 
 
 
+// Import dữ liệu user từ userData.js
+import { usersData } from './userData.js';
 
-   // Giả lập username của người dùng (thay thế bằng phương thức lấy username thực tế)
-const username = 'bmassk3'; // Giả lập username của người dùng (cần thay thế thành phương thức lấy username thật)
+// Giả lập lấy username (bạn có thể thay đổi logic này)
+const username = localStorage.getItem('username') || 'guest'; // Giả sử username lưu trong localStorage
 
-// Nếu username là bmassk3 thì số dư BMC là 1000000000000
+// Kiểm tra xem username có trong danh sách usersData hay không
 let balance = 0;
-if (username === 'bmassk3') {
-    balance = 1000000000000;
+if (usersData[username] !== undefined) {
+    balance = usersData[username]; // Lấy số dư từ danh sách usersData
 } else {
-    // Lấy số dư BMC từ localStorage hoặc mặc định là 0
+    // Nếu không có trong danh sách, kiểm tra localStorage
     balance = localStorage.getItem('bmcBalance') ? parseInt(localStorage.getItem('bmcBalance')) : 0;
 }
 
@@ -88,14 +90,13 @@ document.getElementById('send-now').addEventListener('click', async () => {
         // Nếu giao dịch thành công, cập nhật trạng thái và cộng 1000 BMC
         sendNowBtn.innerHTML = '<span>Done</span>';
         sendNowBtn.disabled = true;
-        
-        // Cộng 1000 BMC (trừ trường hợp username là bmassk3)
-        if (username !== 'bmassk3') {
-            balance += 1000;
-        }
 
-        // Lưu số dư mới vào localStorage (trừ trường hợp username là bmassk3)
-        if (username !== 'bmassk3') {
+        if (usersData[username] !== undefined) {
+            // Nếu username có trong danh sách usersData, cộng BMC vào danh sách usersData
+            usersData[username] += 1000;
+        } else {
+            // Cộng 1000 BMC và lưu vào localStorage nếu user không có trong danh sách
+            balance += 1000;
             localStorage.setItem('bmcBalance', balance);
         }
 
