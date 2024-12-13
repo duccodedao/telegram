@@ -14,7 +14,7 @@
         messages: [
             {
                 address: "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD", // Thay thế bằng địa chỉ đích
-                amount: "100000000" // 0.02 TON in nanotons
+                amount: "1" // 0.02 TON in nanotons
             }
         ]
     };
