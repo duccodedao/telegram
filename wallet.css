@@ -523,6 +523,76 @@ color: red; /* Màu đỏ cho giảm giá */
 
 
 
+/* Tạo kiểu cho phần container */
+#task-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Kiểu cho phần nội dung "Mời 1 bạn bè" */
+#task {
+    font-size: 20px;
+    color: #2f3640;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* Kiểu cho nút "Làm nhiệm vụ" */
+#task-btn {
+    background: linear-gradient(90deg, #4e73df, #1cc88a); /* Màu nền gradient */
+    color: white; /* Màu chữ */
+    font-size: 18px;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 50px; /* Bo tròn góc */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng cho nút */
+}
+
+/* Thay đổi màu khi hover */
+#task-btn:hover {
+    background: linear-gradient(90deg, #1cc88a, #4e73df); /* Đổi gradient khi hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Tăng độ đổ bóng */
+    transform: scale(1.05); /* Phóng to nút khi hover */
+}
+
+/* Hiển thị khi đang gửi giao dịch */
+#task-btn .spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+/* Animations cho spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Kiểu cho phần thông tin ví và số dư */
+#wallet-info {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #2f3640;
+    display: none;
+}
+
+/* Kiểu cho số dư BMC */
+#balance {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ff6f61; /* Màu đỏ cam cho số dư */
+    margin-top: 10px;
+}
+
+
 
 
 
