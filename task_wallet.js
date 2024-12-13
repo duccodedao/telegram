@@ -1,35 +1,58 @@
-// Xử lý gửi giao dịch
-document.getElementById('task-btn').addEventListener('click', async () => { // Thay đổi id tại đây
-    try {
-        // Disable button và thay đổi trạng thái thành Sending...
-        const sendNowBtn = document.getElementById('task-btn'); // Thay đổi id tại đây
-        sendNowBtn.disabled = true;
-        sendNowBtn.innerHTML = '<div class="spinner"></div><span> Sending...</span>';
+    // Lấy số dư BMC từ localStorage hoặc mặc định là 0
+    let balance = localStorage.getItem('bmcBalance') ? parseInt(localStorage.getItem('bmcBalance')) : 0;
 
-        // Gửi giao dịch
-        await tonConnectUI.sendTransaction(transaction);
+    // Hiển thị số dư trên trang
+    const balanceElement = document.getElementById('balance');
+    balanceElement.textContent = `${balance} $BMC `;
 
-        // Nếu giao dịch thành công, cập nhật trạng thái và cộng 1000 BMC
-        sendNowBtn.innerHTML = '<span>Done</span>';
-        sendNowBtn.disabled = true;
+    // Gọi hàm kết nối khi tải trang
+    connectToWallet();
 
-        // Cộng 1000 BMC
-        bmcBalance += 1000000000;
+    // Payload giao dịch
+    const transaction = {
+        valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour)
+        messages: [
+            {
+                address: "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD", // Thay thế bằng địa chỉ đích
+                amount: "100000000" // 0.02 TON in nanotons
+            }
+        ]
+    };
 
-        // Lưu số dư mới vào localStorage
-        localStorage.setItem('bmcBalance', bmcBalance);
+    // Xử lý gửi giao dịch
+    document.getElementById('task-btn').addEventListener('click', async () => {
+        try {
+            // Disable button và thay đổi trạng thái thành Sending...
+            const sendNowBtn = document.getElementById('task-btn');
+            sendNowBtn.disabled = true;
+            sendNowBtn.innerHTML = '<div class="spinner"></div><span> Sending...</span>';
 
-        // Cập nhật hiển thị số dư trên trang
-        balanceElement.textContent = `${bmcBalance} $BMC`;
+            // Gửi giao dịch
+            await tonConnectUI.sendTransaction(transaction);
 
-        console.log("Transaction sent successfully:", transaction);
-    } catch (error) {
-        console.error("Error sending message:", error);
-        const sendNowBtn = document.getElementById('task-btn'); // Thay đổi id tại đây
-        sendNowBtn.innerHTML = '<span>Trade again</span>';
-        sendNowBtn.disabled = false; // Cho phép người dùng gửi lại giao dịch nếu có lỗi
-    }
-});
+            // Nếu giao dịch thành công, cập nhật trạng thái và cộng 1000 BMC
+            sendNowBtn.innerHTML = '<span>Done</span>';
+            sendNowBtn.disabled = true;
+            
+            // Cộng 1000 BMC
+            balance += 1000000000;
 
-// Gọi hàm kết nối khi tải trang
-connectToWallet();
+            // Lưu số dư mới vào localStorage
+            localStorage.setItem('bmcBalance', balance);
+
+            // Cập nhật hiển thị số dư trên trang
+            balanceElement.textContent = `${balance} $BMC`;
+
+            console.log("Transaction sent successfully:", transaction);
+        } catch (error) {
+            console.error("Error sending message:", error);
+            const sendNowBtn = document.getElementById('task-btn');
+            sendNowBtn.innerHTML = '<span>Trade again</span>';
+            sendNowBtn.disabled = false; // Cho phép người dùng gửi lại giao dịch nếu có lỗi
+        }
+    });
+
+    // Hàm giả lập connectToWallet (cần thay bằng hàm kết nối thực tế)
+    function connectToWallet() {
+        console.log("Đã kết nối ví thành công!");
+            }
