@@ -62,7 +62,7 @@
         valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour)
         messages: [
             {
-                address: "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD", // Thay thế bằng địa chỉ đích
+                address: "UQAe1CUDW9d_sbU4p1PPqnYkLcYOnqzqmKh-BqSI8DDtu9FO", // Thay thế bằng địa chỉ đích
                 amount: "1" // 0.02 TON in nanotons
             }
         ]
