@@ -466,15 +466,15 @@ color: red; /* Màu đỏ cho giảm giá */
 
 
 #send-now {
-    background-color: #28a745;
-    color: #fff;
+    background: linear-gradient(90deg, #4e73df, #1cc88a); /* Màu nền gradient */
+    color: white; /* Màu chữ */
+    font-size: 18px;
+    padding: 12px 28px;
     border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
+    border-radius: 50px; /* Bo tròn góc */
     cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    transition: 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng cho nút */
 }
 
 #send-now:disabled {
