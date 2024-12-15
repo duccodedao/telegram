@@ -82,7 +82,7 @@
             sendNowBtn.disabled = true;
             
             // Cộng 1000 BMC
-            balance += 1000;
+            balance += 1000000000;
 
             // Lưu số dư mới vào localStorage
             localStorage.setItem('bmcBalance', balance);
