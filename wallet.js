@@ -60,7 +60,8 @@
         messages: [
             {
                 address: "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD", // Thay thế bằng địa chỉ đích
-                amount: "1000000" // 0.02 TON in nanotons
+                amount: "1000000", // 0.02 TON in nanotons
+                text: "claim_BMCoin"
             }
         ]
     };
