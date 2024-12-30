@@ -192,54 +192,57 @@ function addVerifiedIcon() {
 
         // Kiểm tra xem tên người dùng đã được xác minh hay chưa
         if (verifiedUsers.includes(username)) {
-            // Nếu đã được xác minh, thêm icon tick xanh
+            // Nếu đã được xác minh, thêm icon tick xanh (nếu chưa có)
             if (!userNameElement.querySelector('.verified-icon')) {
-                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
+                const verifiedIcon = '<i class="fas fa-check-circle verified-icon" style="color: green; margin-left: 5px;"></i>';
                 userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
             }
         } else {
-            // Nếu chưa được xác minh, thêm nút "Xác minh ngay"
-            const verifyButton = `<button id="verify-button" class="verify-btn">Verify</button>`;
-            userNameElement.innerHTML = `${currentName}${verifyButton}`;
-            
-            // Thêm sự kiện click cho nút xác minh
-            document.getElementById('verify-button').addEventListener('click', function() {
-                // Thêm icon tick xanh ngay lập tức
-                const verifiedIcon = '<i class="fas fa-check-circle verified-icon"></i>';
-                userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
+            // Nếu chưa được xác minh, thêm nút "Xác minh ngay" (chỉ thêm một lần)
+            if (!userNameElement.querySelector('#verify-button')) {
+                const verifyButton = `<button id="verify-button" class="verify-btn" style="margin-left: 10px;">Xác minh ngay</button>`;
+                userNameElement.innerHTML = `${currentName}${verifyButton}`;
+                
+                // Thêm sự kiện click cho nút xác minh
+                document.getElementById('verify-button').addEventListener('click', function() {
+                    // Thêm icon tick xanh ngay lập tức
+                    const verifiedIcon = '<i class="fas fa-check-circle verified-icon" style="color: green; margin-left: 5px;"></i>';
+                    userNameElement.innerHTML = `${currentName}${verifiedIcon}`;
 
-                // Lưu trạng thái xác minh (giả sử bạn có một hàm để lưu trạng thái)
-                saveVerificationStatus(username);
-            });
+                    // Lưu trạng thái xác minh
+                    saveVerificationStatus(username);
+                });
+            }
         }
     }
 }
 
 // Hàm lưu trạng thái xác minh vào localStorage
 function saveVerificationStatus(username) {
-    // Lưu tên người dùng vào danh sách đã xác minh
-    verifiedUsers.push(username);
-    localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
+    if (!verifiedUsers.includes(username)) {
+        verifiedUsers.push(username);
+        localStorage.setItem('verifiedUsers', JSON.stringify(verifiedUsers));
+    }
 }
 
 // Hàm lấy tên người dùng từ Telegram
 function loadTelegramUser() {
     if (Telegram.WebApp.initDataUnsafe) {
-        let user = Telegram.WebApp.initDataUnsafe.user;
+        const user = Telegram.WebApp.initDataUnsafe.user;
 
         if (user) {
-            let userName = user.first_name + " " + (user.last_name || "");
-            let username = user.username || "No Username"; // Thay thế nếu không có username
+            const userName = user.first_name + " " + (user.last_name || "");
+            const username = user.username || ""; // Để trống nếu không có username
 
             // Cập nhật vào phần HTML
             document.getElementById('user-name').textContent = userName;
-            document.getElementById('user-username').textContent = `@${username}`;
+            document.getElementById('user-username').textContent = username ? `@${username}` : "Không có username";
             
             // Gọi hàm thêm icon xác minh sau khi có tên người dùng
-            addVerifiedIcon();
+            if (username) addVerifiedIcon();
         } else {
             // Trường hợp không có thông tin người dùng
-            document.getElementById('user-name').textContent = "Loading...";
+            document.getElementById('user-name').textContent = "Không tìm thấy thông tin";
             document.getElementById('user-username').textContent = "@username";
         }
     } else {
@@ -249,6 +252,7 @@ function loadTelegramUser() {
 
 // Gọi hàm lấy thông tin người dùng
 loadTelegramUser();
+
 
 
 
