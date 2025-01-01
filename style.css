@@ -1,7 +1,7 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
+    background-color: #000000;
+    color: #ffffff;
     margin: 0;
     padding: 0 10px; /* Thêm padding để tránh sát rìa */
     padding-bottom: 80px;
@@ -17,10 +17,11 @@ h2 {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 15px;
-    color: #444;
+    color: #fffbfb;
     text-transform: uppercase;
     border-bottom: 2px solid #ccc;
     padding-bottom: 10px;
+
 }
 
 .menu {
@@ -39,6 +40,7 @@ h2 {
     border-radius: 15px;
     margin-bottom: 10px;
     transition: transform 0.3s ease;
+    border: 2px solid #FFF;
 }
 
 .app:hover img {
@@ -48,7 +50,7 @@ h2 {
 .app span {
     display: block;
     font-size: 14px;
-    color: #333;
+    color: #fffbfb;
     font-weight: 500;
     margin-top: 5px;
 }
@@ -61,9 +63,9 @@ h2 {
 
 .heart {
     cursor: pointer;
-    font-size: 16px;
+    font-size: 20px;
     margin-left: 5px;
-    color: red;
+    color: rgb(255, 0, 0);
 }
 
 /* Điều chỉnh kích thước trên thiết bị di động */
@@ -86,11 +88,12 @@ h2 {
 
 
 .header {
-    background-color: #f1f1f1;
+    background-color: #201e1e;
     padding: 10px 15px; /* Giảm padding để header nhỏ lại */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-bottom-left-radius: 10px; /* Bo góc trên bên trái */
-    border-bottom-right-radius: 10px; /* Bo góc trên bên phải */
+    box-shadow: 0 2px 4px rgba(235, 230, 230, 0.1);
+    border-radius: 10px; /* Bo góc trên bên trái */
+    border: 2px solid #FFF;
+    margin-top: 55px;
 
 }
 
@@ -104,7 +107,7 @@ h2 {
     height: 70px; /* Giảm kích thước ảnh đại diện */
     border-radius: 10%; /* Bo tròn hình ảnh */
     cursor: default; /* Không cho phép thay đổi ảnh */
-    border: 2px solid #000000; /* Đường viền màu */
+    border: 2px solid #ffffff; /* Đường viền màu */
 }
 
 .user-info {
@@ -117,7 +120,7 @@ h2 {
 }
 
 #user-username {
-    color: #555;
+    color: #fa7101;
     font-size: 14px; /* Giảm kích thước chữ của username */
 }
 
@@ -149,7 +152,7 @@ h2 {
 
 #active-timer {
   font-size: 14px;
-  color: #555;
+  color: hsl(0, 0%, 99%);
 }
 
 
@@ -531,8 +534,9 @@ h2 {
     .logo img {
         width: 40px;
         height: 40px;
-        border-radius: 5px;
+        border-radius: 15px;
         object-fit: cover;
+        border: 2px solid #FFF;
     }
 
     .countdown-time {
@@ -551,6 +555,7 @@ h2 {
         text-align: center;
         text-decoration: none;
         transition: background-color 0.3s ease;
+        border: 2px solid #21ff03;
     }
 
     .action-btn:hover {
