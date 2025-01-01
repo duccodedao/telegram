@@ -119,6 +119,10 @@ h2 {
 #user-name {
     font-size: 18px;
     font-weight: bold;
+    white-space: nowrap; /* Ngăn cắt dòng tên */
+    overflow: hidden; /* Ẩn phần văn bản bị cắt */
+    text-overflow: ellipsis; /* Hiển thị dấu ba chấm khi văn bản quá dài */
+    max-width: 200px; /* Thiết lập chiều rộng tối đa của phần tử */
 }
 
 #user-username {
