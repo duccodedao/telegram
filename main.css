@@ -123,7 +123,7 @@ h2 {
     box-shadow: 0 2px 4px rgba(235, 230, 230, 0.1);
     border-radius: 10px;
     border: 2px solid #FFF;
-    margin-top: 65px;
+
     display: flex;
     justify-content: space-between; /* Căn giữa các phần tử và đưa nút ra phía bên phải */
     align-items: center;
