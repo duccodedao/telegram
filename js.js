@@ -278,3 +278,40 @@ function setActive(element) {
             setActive(firstItem);
         }
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function updateCountdowns() {
+        const countdownElements = document.querySelectorAll(".countdown-time");
+        const now = new Date();
+
+        countdownElements.forEach(element => {
+            const endTime = new Date(element.dataset.time);
+            const remainingTime = Math.max(0, endTime - now);
+
+            if (remainingTime > 0) {
+                const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+                const hours = String(Math.floor((remainingTime / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+                const minutes = String(Math.floor((remainingTime / (1000 * 60)) % 60)).padStart(2, '0');
+                const seconds = String(Math.floor((remainingTime / 1000) % 60)).padStart(2, '0');
+                element.textContent = `${days}d ${hours}:${minutes}:${seconds}`;
+            } else {
+                element.textContent = "Time's up!";
+            }
+        });
+    }
+
+    setInterval(updateCountdowns, 1000);
+    updateCountdowns();
