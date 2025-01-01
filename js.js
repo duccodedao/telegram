@@ -306,9 +306,9 @@ function setActive(element) {
                 const hours = String(Math.floor((remainingTime / (1000 * 60 * 60)) % 24)).padStart(2, '0');
                 const minutes = String(Math.floor((remainingTime / (1000 * 60)) % 60)).padStart(2, '0');
                 const seconds = String(Math.floor((remainingTime / 1000) % 60)).padStart(2, '0');
-                element.textContent = `${days}d ${hours}:${minutes}:${seconds}`;
+                element.textContent = `${days}day ${hours}:${minutes}:${seconds}`;
             } else {
-                element.textContent = "Time's up!";
+                element.textContent = "Updating...";
             }
         });
     }
