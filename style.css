@@ -489,3 +489,82 @@ h2 {
     .notification .close:hover {
       background-color: #ff7875;
     }
+
+
+
+
+
+
+
+
+    .container {
+        width: 90%;
+        max-width: 800px;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    th {
+        background: #007bff;
+        color: #fff;
+    }
+
+    .logo img {
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        object-fit: cover;
+    }
+
+    .countdown-time {
+        font-weight: bold;
+        color: #ff5722;
+    }
+
+    .action-btn {
+        display: block;
+        padding: 8px 15px;
+        font-size: 14px;
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .action-btn:hover {
+        background-color: #218838;
+    }
+
+    @media (max-width: 768px) {
+        th, td {
+            font-size: 14px;
+            padding: 10px;
+        }
+
+        .action-btn {
+            font-size: 12px;
+            padding: 6px 10px;
+        }
+    }
