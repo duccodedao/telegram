@@ -242,7 +242,7 @@ function loadTelegramUser() {
             if (username) addVerifiedIcon();
         } else {
             // Trường hợp không có thông tin người dùng
-            document.getElementById('user-name').textContent = "Không tìm thấy thông tin";
+            document.getElementById('user-name').textContent = "No name";
             document.getElementById('user-username').textContent = "@username";
         }
     } else {
