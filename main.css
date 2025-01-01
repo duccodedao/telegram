@@ -87,14 +87,46 @@ h2 {
 
 
 
+
+
+.verify-btn {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+}
+
+.verify-btn:hover {
+    background-color: #45a049;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .header {
     background-color: #201e1e;
-    padding: 10px 15px; /* Giảm padding để header nhỏ lại */
+    padding: 10px 15px;
     box-shadow: 0 2px 4px rgba(235, 230, 230, 0.1);
-    border-radius: 10px; /* Bo góc trên bên trái */
+    border-radius: 10px;
     border: 2px solid #FFF;
-   
-
+    margin-top: 65px;
+    display: flex;
+    justify-content: space-between; /* Căn giữa các phần tử và đưa nút ra phía bên phải */
+    align-items: center;
 }
 
 .profile-container {
@@ -103,40 +135,35 @@ h2 {
 }
 
 .avatar {
-    width: 40px; /* Giảm kích thước ảnh đại diện */
-    height: 40px; /* Giảm kích thước ảnh đại diện */
-    border-radius: 10%; /* Bo tròn hình ảnh */
-    cursor: default; /* Không cho phép thay đổi ảnh */
-    border: 2px solid #ffffff; /* Đường viền màu */
+    width: 40px;
+    height: 40px;
+    border-radius: 10%;
+    cursor: default;
+    border: 2px solid #ffffff;
 }
 
 .user-info {
-    margin-left: 10px; /* Giảm khoảng cách giữa ảnh và tên */
+    margin-left: 10px;
 }
 
 #user-name {
-    font-size: 18px; /* Giảm kích thước chữ của tên */
+    font-size: 18px;
     font-weight: bold;
-}
-
-
-
-.custom {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center; /* Canh giữa theo chiều ngang */
-    align-items: center; /* Canh giữa theo chiều dọc */
+    white-space: nowrap; /* Ngăn cắt dòng tên */
+    overflow: hidden; /* Ẩn phần văn bản bị cắt */
+    text-overflow: ellipsis; /* Hiển thị dấu ba chấm khi văn bản quá dài */
+    max-width: 200px; /* Thiết lập chiều rộng tối đa của phần tử */
 }
 
 #user-username {
     color: #fa7101;
-    font-size: 14px; /* Giảm kích thước chữ của username */
+    font-size: 14px;
 }
 
 #active-timer {
     font-size: 14px;
     margin-top: 5px;
-    color: #0078ff; /* Màu xanh nổi bật */
+    color: #0078ff;
     font-weight: bold;
 }
 
@@ -158,11 +185,37 @@ h2 {
     opacity: 0.5;
   }
 }
-
-#active-timer {
-  font-size: 14px;
-  color: hsl(0, 0%, 99%);
+.ton-connect-btn {
+    color: #2f88ff; /* Màu chữ giống với màu nền ban đầu */
+   
+    padding: 5px 5px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: transparent; /* Loại bỏ nền */
 }
+
+.ton-connect-btn:hover {
+    color: white; /* Thay đổi màu chữ khi hover */
+    border-color: #1c6fb2; /* Thay đổi màu viền khi hover */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -582,3 +635,28 @@ h2 {
             padding: 6px 10px;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
