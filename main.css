@@ -1,0 +1,584 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    margin: 0;
+    padding: 0 10px; /* Thêm padding để tránh sát rìa */
+    padding-bottom: 80px;
+}
+#ton-connect {
+            cursor: pointer;
+}
+.app-category {
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #fffbfb;
+    text-transform: uppercase;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.app {
+    text-align: center;
+}
+
+.app img {
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+
+}
+
+.app:hover img {
+    transform: scale(1.1);
+}
+
+.app span {
+    display: block;
+    font-size: 14px;
+    color: #fffbfb;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.app a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.heart {
+    cursor: pointer;
+    font-size: 15px;
+    margin-left: 5px;
+    color: rgb(255, 0, 0);
+}
+
+/* Điều chỉnh kích thước trên thiết bị di động */
+@media screen and (max-width: 768px) {
+    .menu {
+        gap: 10px;
+    }
+
+    .app img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .app span {
+        font-size: 12px;
+    }
+}
+
+
+
+
+.header {
+    background-color: #201e1e;
+    padding: 10px 15px; /* Giảm padding để header nhỏ lại */
+    box-shadow: 0 2px 4px rgba(235, 230, 230, 0.1);
+    border-radius: 10px; /* Bo góc trên bên trái */
+    border: 2px solid #FFF;
+   
+
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 40px; /* Giảm kích thước ảnh đại diện */
+    height: 40px; /* Giảm kích thước ảnh đại diện */
+    border-radius: 10%; /* Bo tròn hình ảnh */
+    cursor: default; /* Không cho phép thay đổi ảnh */
+    border: 2px solid #ffffff; /* Đường viền màu */
+}
+
+.user-info {
+    margin-left: 10px; /* Giảm khoảng cách giữa ảnh và tên */
+}
+
+#user-name {
+    font-size: 18px; /* Giảm kích thước chữ của tên */
+    font-weight: bold;
+}
+
+
+
+.custom {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center; /* Canh giữa theo chiều ngang */
+    align-items: center; /* Canh giữa theo chiều dọc */
+}
+
+#user-username {
+    color: #fa7101;
+    font-size: 14px; /* Giảm kích thước chữ của username */
+}
+
+#active-timer {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #0078ff; /* Màu xanh nổi bật */
+    font-weight: bold;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+#active-timer {
+  font-size: 14px;
+  color: hsl(0, 0%, 99%);
+}
+
+
+
+
+
+#countdown {
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+  font-size: 18px;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  width: fit-content;
+  margin: 20px auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#countdown span {
+  font-weight: bold;
+  color: #ffcc00;
+  margin: 0 3px;
+}
+
+
+
+
+
+
+
+.marquee-container {
+    background-color: #fff; /* Màu nền cho thanh thông báo */
+    padding: 10px 0; /* Khoảng cách trên dưới */
+    overflow: hidden; /* Giấu phần thông báo vượt ra ngoài */
+    position: relative; /* Để tạo hiệu ứng chạy ngang */
+    white-space: nowrap; /* Không xuống dòng */
+    font-size: 16px; /* Kích thước chữ */
+    color: #333; /* Màu chữ */
+    border-top: 2px solid #000000; /* Viền trên */
+    border-bottom: 2px solid #000000; /* Viền dưới */
+    
+}
+
+.marquee-content {
+    display: inline-block; /* Hiển thị ngang */
+    animation: marquee 15s linear infinite; /* Tạo hiệu ứng chạy ngang */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%); /* Bắt đầu từ ngoài bên phải */
+    }
+    100% {
+        transform: translateX(-100%); /* Kết thúc ngoài bên trái */
+    }
+}
+
+
+
+.verified-icon {
+    color: #1da1f2; /* Màu xanh giống Facebook */
+    margin-left: 3px;
+    margin-bottom: 1px;
+    font-size: 14px;
+    vertical-align: middle; /* Có thể bỏ nếu không cần thiết */
+    display: inline; /* Đảm bảo icon hiển thị như inline element */
+}
+
+
+
+/* Tùy chỉnh phong cách swal.fire */
+.swal2-popup {
+    background-color: #e0f7fa !important; /* Nền xanh biển nhạt */
+    color: #333 !important;               /* Màu chữ */
+    border-radius: 8px;                   /* Bo tròn góc */
+    border: 2px solid #0288d1;            /* Viền xanh biển */
+    padding: 20px;                        /* Thêm khoảng cách nội dung */
+}
+.swal2-title {
+    color: #0288d1 !important;            /* Màu tiêu đề xanh biển */
+    font-weight: bold !important;
+    font-size: 24px !important;           /* Kích thước lớn hơn */
+}
+.swal2-confirm {
+    background-color: #0288d1 !important; /* Nút xác nhận xanh biển */
+    color: white !important;
+    font-weight: bold !important;
+    padding: 10px 20px !important;        /* Tăng kích thước nút */
+    border-radius: 6px !important;        /* Bo tròn nút */
+}
+
+        /* Style cho phần phiên bản và chọn ngôn ngữ */
+        .version-info {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+.language-selector {
+            display: inline-block;
+            position: relative;
+    padding-bottom: 8px;
+        }
+
+        select {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 2px solid #4caf50;
+            border-radius: 30px;  /* Bo tròn góc */
+            background-color: #f0f8ff;  /* Màu nền nhạt */
+            color: #333;
+            appearance: none;  /* Xóa giao diện mặc định của trình duyệt */
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;  /* Hiệu ứng mượt */
+            outline: none;
+        }
+
+        select:hover {
+            background-color: #e0f7fa;  /* Màu nền khi hover */
+        }
+
+        select:focus {
+            border-color: #00796b;  /* Đổi màu viền khi được focus */
+        }
+
+        /* Tùy chỉnh mũi tên của select */
+        .language-selector::after {
+            content: '▼';  /* Mũi tên tùy chỉnh */
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            pointer-events: none;  /* Đảm bảo mũi tên không làm cản chọn */
+            color: #333;
+            padding-bottom: 8px;
+        }
+
+
+
+.verify-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.verify-btn:hover {
+    background-color: #218838;
+}
+
+
+
+
+
+
+
+
+
+.verified-icon {
+    color: #1da1f2;
+    margin-left: 5px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.verifying {
+    font-size: 0.9rem;
+    color: #ffc107;
+    margin-left: 5px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.verify-btn {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.verify-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Hiệu ứng fade-in cho chuyển đổi mượt mà */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+
+
+.footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #212121;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid #333;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .footer-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #ccc;
+            font-size: 14px;
+            padding: 5px 10px;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px; /* Bo góc cho mục */
+        }
+        .footer-item img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+        }
+        .footer-item:hover {
+            color: #fff;
+        }
+        .footer-item.active {
+            background-color: #333; /* Màu nền khi mục được chọn */
+            color: #ff0; /* Màu chữ khi mục được chọn */
+        }
+        .new-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: red;
+            color: white;
+            padding: 1.5px 3.25px;
+            border-radius: 3px;
+            font-size: 7px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+
+
+
+
+
+
+.notification {
+      position: fixed;
+      top: 10px;
+      left: 5px;
+      right: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #333;
+      color: #fff;
+      padding: 10px 15px;
+      z-index: 9999;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(-50px);
+      animation: slideDown 0.5s ease forwards;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .notification .content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .notification .content img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .notification .content .text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .notification .content .text h {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .notification .content .text p {
+      margin: 0;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    .notification .close {
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #fff;
+      background-color: #ff5e57;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification .close:hover {
+      background-color: #ff7875;
+    }
+
+
+
+
+
+
+
+
+    .container {
+        width: 90%;
+        max-width: 800px;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    th {
+        background: #007bff;
+        color: #fff;
+    }
+
+    .logo img {
+        width: 40px;
+        height: 40px;
+        border-radius: 15px;
+        object-fit: cover;
+        border: 2px solid #FFF;
+    }
+
+    .countdown-time {
+        font-weight: bold;
+        color: #ff5722;
+    }
+
+    .action-btn {
+        display: block;
+        padding: 8px 15px;
+        font-size: 14px;
+        color: #fff;
+        background: linear-gradient(90deg, #4e73df, #1cc88a); /* Màu nền gradient */
+        border: none;
+        border-radius: 25px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        border: 2px solid #21ff03;
+    }
+
+    .action-btn:hover {
+        background: linear-gradient(90deg, #1cc88a, #4e73df); /* Đổi gradient khi hover */
+    }
+
+    @media (max-width: 768px) {
+        th, td {
+            font-size: 14px;
+            padding: 10px;
+        }
+
+        .action-btn {
+            font-size: 12px;
+            padding: 6px 10px;
+        }
+    }
