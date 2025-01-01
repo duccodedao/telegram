@@ -545,16 +545,16 @@ h2 {
         padding: 8px 15px;
         font-size: 14px;
         color: #fff;
-        background-color: #28a745;
+        background-color: linear-gradient(90deg, #4e73df, #1cc88a); /* Màu nền gradient */
         border: none;
-        border-radius: 5px;
+        border-radius: 25px;
         text-align: center;
         text-decoration: none;
         transition: background-color 0.3s ease;
     }
 
     .action-btn:hover {
-        background-color: #218838;
+        background-color: linear-gradient(90deg, #1cc88a, #4e73df); /* Đổi gradient khi hover */
     }
 
     @media (max-width: 768px) {
