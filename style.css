@@ -87,13 +87,43 @@ h2 {
 
 
 
+
+
+.verify-btn {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+}
+
+.verify-btn:hover {
+    background-color: #45a049;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .header {
     background-color: #201e1e;
     padding: 10px 15px;
     box-shadow: 0 2px 4px rgba(235, 230, 230, 0.1);
     border-radius: 10px;
     border: 2px solid #FFF;
-
+    margin-top: 65px;
     display: flex;
     justify-content: space-between; /* Căn giữa các phần tử và đưa nút ra phía bên phải */
     align-items: center;
@@ -169,6 +199,23 @@ h2 {
     color: white; /* Thay đổi màu chữ khi hover */
     border-color: #1c6fb2; /* Thay đổi màu viền khi hover */
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -588,3 +635,28 @@ h2 {
             padding: 6px 10px;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
