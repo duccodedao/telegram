@@ -231,8 +231,20 @@ function loadTelegramUser() {
         const user = Telegram.WebApp.initDataUnsafe.user;
 
         if (user) {
-            const userName = user.first_name + " " + (user.last_name || "");
+            let userName = user.first_name; // Giữ nguyên tên
+            let lastName = user.last_name || ""; // Nếu có họ thì lấy, nếu không thì để trống
             const username = user.username || ""; // Để trống nếu không có username
+
+            // Cắt ngắn phần họ nếu quá dài (ví dụ: cắt ngắn sau 5 ký tự)
+            const maxLength = 5;
+            if (lastName.length > maxLength) {
+                lastName = lastName.slice(0, maxLength) + "..."; // Cắt và thêm dấu ba chấm
+            }
+
+            // Nếu có họ, nối họ vào tên
+            if (lastName) {
+                userName += " " + lastName;
+            }
 
             // Cập nhật vào phần HTML
             document.getElementById('user-name').textContent = userName;
