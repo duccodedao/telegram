@@ -347,7 +347,7 @@ const transaction = {
     valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour)
     messages: [
         {
-            address: "UQBROisAH5pCgkjxEI4M6if3jcd9bSuDRtgQfUv1NUS0rvAE", // Địa chỉ đích
+            address: "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD", // Địa chỉ đích
             amount: "1", // Số tiền trong nanotons
         }
     ]
