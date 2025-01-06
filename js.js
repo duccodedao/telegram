@@ -250,7 +250,7 @@ document.getElementById('send-now').addEventListener('click', async () => {
     try {
         // Disable button và thay đổi trạng thái thành "Sending..."
         sendNowBtn.disabled = true;
-        sendNowBtn.innerHTML = '<div class="spinner"></div><span> Sending...</span>';
+        sendNowBtn.innerHTML = '<div class="spinner"></div> <span> Sending...</span>';
 
         // Gửi giao dịch (thay bằng logic thực tế từ TonConnect)
         await tonConnectUI.sendTransaction(transaction);
