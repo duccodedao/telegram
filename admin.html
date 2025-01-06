@@ -1,178 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      max-width: 500px;
-      width: 100%;
-      padding: 30px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      text-align: center;
-    }
-    .container h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
-    .form-group {
-      margin-bottom: 20px;
-      text-align: left;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #555;
-    }
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      outline: none;
-      transition: border-color 0.3s ease;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: #007bff;
-    }
-    .form-group button {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .form-group button:hover {
-      background: #0056b3;
-    }
-    .preview {
-      margin-top: 15px;
-      text-align: center;
-    }
-    .preview img {
-      max-width: 100%;
-      max-height: 150px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-    }
-    .notification-toggle {
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Verify Toggle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .admin-container {
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .verify-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        #toggle-status {
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+        #apply-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #apply-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Admin Panel</h2>
-    <form id="adminForm">
-      <div class="form-group">
-        <label for="image">Tải ảnh lên:</label>
-        <input type="file" id="image" accept="image/*">
-      </div>
-      <div class="preview" id="preview">
-        <!-- Ảnh xem trước sẽ hiển thị tại đây -->
-      </div>
-      <div class="form-group">
-        <label for="title">Tiêu đề chính:</label>
-        <input type="text" id="title" placeholder="Nhập tiêu đề chính">
-      </div>
-      <div class="form-group">
-        <label for="subtitle">Tiêu đề phụ:</label>
-        <input type="text" id="subtitle" placeholder="Nhập tiêu đề phụ">
-      </div>
-      <div class="form-group">
-        <button type="submit">Lưu thông báo</button>
-      </div>
-    </form>
 
-    <!-- Nút bật/tắt thông báo -->
-    <div class="notification-toggle">
-      <button id="toggleNotificationBtn">Bật thông báo</button>
+    <div class="admin-container">
+        <h1>Admin Panel</h1>
+        <div class="verify-toggle-container">
+            <label class="switch">
+                <input type="checkbox" id="verify-toggle">
+                <span class="slider"></span>
+            </label>
+            <span id="toggle-status">Unverified</span>
+        </div>
+        <button id="apply-btn">Apply</button>
     </div>
-  </div>
 
-  <script>
-    const imageInput = document.getElementById("image");
-    const preview = document.getElementById("preview");
-    const toggleNotificationBtn = document.getElementById("toggleNotificationBtn");
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const verifyToggle = document.getElementById('verify-toggle');
+            const toggleStatus = document.getElementById('toggle-status');
+            const applyBtn = document.getElementById('apply-btn');
 
-    // Lấy trạng thái thông báo từ localStorage
-    const notificationStatus = localStorage.getItem("notificationStatus") || "off";
-    if (notificationStatus === "on") {
-      toggleNotificationBtn.textContent = "Tắt thông báo";
-    } else {
-      toggleNotificationBtn.textContent = "Bật thông báo";
-    }
+            // Lấy trạng thái từ localStorage nếu có
+            const isVerified = localStorage.getItem('isVerified') === 'true';
+            
+            // Thiết lập trạng thái công tắc khi load trang
+            verifyToggle.checked = isVerified;
+            toggleStatus.textContent = isVerified ? 'Verified' : 'Unverified';
 
-    // Lưu trạng thái bật/tắt thông báo
-    toggleNotificationBtn.addEventListener("click", function() {
-      if (notificationStatus === "off") {
-        localStorage.setItem("notificationStatus", "on");
-        toggleNotificationBtn.textContent = "Tắt thông báo";
-      } else {
-        localStorage.setItem("notificationStatus", "off");
-        toggleNotificationBtn.textContent = "Bật thông báo";
-      }
-    });
+            // Xử lý sự kiện thay đổi trạng thái công tắc
+            verifyToggle.addEventListener('change', () => {
+                if (verifyToggle.checked) {
+                    toggleStatus.textContent = 'Verified';
+                } else {
+                    toggleStatus.textContent = 'Unverified';
+                }
+            });
 
-    // Xử lý xem trước ảnh
-    imageInput.addEventListener("change", function () {
-      const file = imageInput.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
-        };
-        reader.readAsDataURL(file);
-      } else {
-        preview.innerHTML = "";
-      }
-    });
+            // Xử lý nút Apply
+            applyBtn.addEventListener('click', () => {
+                if (verifyToggle.checked) {
+                    localStorage.setItem('isVerified', 'true');
+                    alert('User is now verified.');
+                } else {
+                    localStorage.setItem('isVerified', 'false');
+                    alert('User is now unverified.');
+                }
+            });
+        });
+    </script>
 
-    // Lưu thông báo
-    document.getElementById("adminForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const imageFile = imageInput.files[0];
-      const title = document.getElementById("title").value.trim();
-      const subtitle = document.getElementById("subtitle").value.trim();
-
-      if (!imageFile || !title || !subtitle) {
-        alert("Vui lòng nhập đầy đủ thông tin!");
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const imageBase64 = e.target.result;
-        const notificationData = { image: imageBase64, title, subtitle };
-        localStorage.setItem("notificationData", JSON.stringify(notificationData));
-        alert("Đã lưu thông báo thành công!");
-      };
-      reader.readAsDataURL(imageFile);
-    });
-  </script>
 </body>
-  </html>
-  
+</html>
