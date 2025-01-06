@@ -141,79 +141,7 @@ window.addEventListener('load', () => {
 
 
 
-// Biến lưu số phút và giây
-let activeMinutes = 0;
-let activeSeconds = 0;
 
-// Kiểm tra nếu đã có dữ liệu thời gian trong localStorage
-if (localStorage.getItem('activeMinutes')) {
-    activeMinutes = parseInt(localStorage.getItem('activeMinutes'));
-}
-
-if (localStorage.getItem('activeSeconds')) {
-    activeSeconds = parseInt(localStorage.getItem('activeSeconds'));
-}
-
-// Hàm cập nhật thời gian hoạt động
-function updateActiveTime() {
-    activeSeconds++;
-    if (activeSeconds === 60) {
-        activeMinutes++;
-        activeSeconds = 0;
-    }
-
-    // Cập nhật thời gian hoạt động vào localStorage
-    localStorage.setItem('activeMinutes', activeMinutes);
-    localStorage.setItem('activeSeconds', activeSeconds);
-
-    // Cập nhật hiển thị trên giao diện
-    document.getElementById('minutes').textContent = activeMinutes.toString().padStart(2, '0');
-    document.getElementById('seconds').textContent = activeSeconds.toString().padStart(2, '0');
-}
-
-// Gọi hàm cập nhật mỗi giây
-setInterval(updateActiveTime, 1000);
-
-
-// Hàm lấy tên người dùng từ Telegram
-function loadTelegramUser() {
-    if (Telegram.WebApp.initDataUnsafe) {
-        const user = Telegram.WebApp.initDataUnsafe.user;
-
-        if (user) {
-            let userName = user.first_name; // Giữ nguyên tên
-            let lastName = user.last_name || ""; // Nếu có họ thì lấy, nếu không thì để trống
-            const username = user.username || ""; // Để trống nếu không có username
-
-            // Cắt ngắn phần họ nếu quá dài (ví dụ: cắt ngắn sau 5 ký tự)
-            const maxLength = 5;
-            if (lastName.length > maxLength) {
-                lastName = lastName.slice(0, maxLength) + "..."; // Cắt và thêm dấu ba chấm
-            }
-
-            // Nếu có họ, nối họ vào tên
-            if (lastName) {
-                userName += " " + lastName;
-            }
-
-            // Cập nhật vào phần HTML
-            document.getElementById('user-name').textContent = userName;
-            document.getElementById('user-username').textContent = username ? `@${username}` : "Không có username";
-            
-            // Gọi hàm thêm icon xác minh sau khi có tên người dùng
-            if (username) addVerifiedIcon();
-        } else {
-            // Trường hợp không có thông tin người dùng
-            document.getElementById('user-name').textContent = "No name";
-            document.getElementById('user-username').textContent = "@username";
-        }
-    } else {
-        console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
-    }
-}
-
-// Gọi hàm lấy thông tin người dùng
-loadTelegramUser();
 
 
 
