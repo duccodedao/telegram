@@ -35,7 +35,7 @@
       gtag('config', 'G-PPD7N5XXJX');
     </script>
 
-    
+
 <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
@@ -44,15 +44,23 @@
         <div class="profile-container">
             <img id="user-avatar" class="avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
             <div class="user-info">
-                <div id="user-username">@username<i class="fas fa-check-circle verified-icon"></i></div>
+                <div id="user-username">@username</div>
             </div>
         </div>
         <!-- Nút ton-connect -->
         <button class="ton-connect-btn" id="ton-connect"></button>
     </header>
     
-    <div id="user-name">Loading... </div>
-
+    <div class="header-wrapper">
+        <div id="user-name">User Name</div>
+        <button id="send-now" class="btn">
+            Verify 
+            <i class="fa fa-check-circle tick-icon" aria-hidden="true"></i>
+        </button>
+    </div>
+    
+    
+    
     
     <div class="table-container">
         <table>
@@ -387,8 +395,8 @@
 
 
     
-    
-    
+
+
     <script src="js.js"></script>
     <script src="ton-connect.js"></script>
 </body>
