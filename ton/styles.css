@@ -15,95 +15,6 @@ body {
 
 
 
-.header {
-    background-color: #f1f1f1;
-    padding: 10px 15px; /* Giảm padding để header nhỏ lại */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.profile-container {
-    display: flex;
-    align-items: center;
-}
-
-.avatar {
-    width: 70px; /* Giảm kích thước ảnh đại diện */
-    height: 70px; /* Giảm kích thước ảnh đại diện */
-    border-radius: 50%; /* Bo tròn hình ảnh */
-    cursor: default; /* Không cho phép thay đổi ảnh */
-    border: 2px solid #0078ff; /* Đường viền màu */
-}
-
-.user-info {
-    margin-left: 10px; /* Giảm khoảng cách giữa ảnh và tên */
-}
-
-#user-name {
-    font-size: 18px; /* Giảm kích thước chữ của tên */
-    font-weight: bold;
-}
-
-#user-username {
-    color: #555;
-    font-size: 14px; /* Giảm kích thước chữ của username */
-}
-
-#active-timer {
-    font-size: 14px;
-    margin-top: 5px;
-    color: #0078ff; /* Màu xanh nổi bật */
-    font-weight: bold;
-}
-
-.dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background-color: green;
-  border-radius: 50%;
-  margin-right: 8px;
-  animation: blink 1.5s infinite;
-}
-
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-#active-timer {
-  font-size: 14px;
-  color: #555;
-}
-
-
-#countdown {
-  font-family: 'Arial', sans-serif;
-  color: #fff;
-  font-size: 18px;
-  background-color: #333;
-  padding: 10px;
-  border-radius: 5px;
-  text-align: center;
-  width: fit-content;
-  margin: 20px auto;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-#countdown span {
-  font-weight: bold;
-  color: #ffcc00;
-  margin: 0 3px;
-}
-
-
-
-
-
-
 
 
 
@@ -330,3 +241,81 @@ select option {
             font-weight: bold;
             z-index: 1;
         }
+
+
+
+
+
+
+
+        
+
+
+.header {
+    background-color: #201e1e;
+    padding: 10px 15px;
+    box-shadow: 0 2px 4px rgba(235, 230, 230, 0.1);
+    border-radius: 10px;
+    border: 2px solid #FFF;
+    margin-top: 65px;
+    display: flex;
+    justify-content: space-between; /* Căn giữa các phần tử và đưa nút ra phía bên phải */
+    align-items: center;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10%;
+    cursor: default;
+    border: 2px solid #ffffff;
+}
+
+.user-info {
+    margin-left: 10px;
+}
+
+
+
+
+#user-username {
+    color: #fa7101;
+    font-size: 14px;
+}
+
+#active-timer {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #0078ff;
+    font-weight: bold;
+}
+
+
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+.ton-connect-btn {
+    color: #2f88ff; /* Màu chữ giống với màu nền ban đầu */
+   
+    padding: 5px 5px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: transparent; /* Loại bỏ nền */
+}
+
+.ton-connect-btn:hover {
+    color: white; /* Thay đổi màu chữ khi hover */
+    border-color: #1c6fb2; /* Thay đổi màu viền khi hover */
+}
