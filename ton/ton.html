@@ -6,7 +6,8 @@
     <title>Mua Crypto | By BmassHD</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Mua crypto | BmassHD">
     <meta property="og:description" content="Đặt hàng tiền điện tử với BmassHD. Quy trình giao dịch dễ dàng và an toàn.">
@@ -75,9 +76,8 @@
                 </div>
             </div>
             <button type="submit" id="purchaseButton" class="submit-button">Mua</button>
-            <button type="button" id="openWalletButton" class="submit-button">    
-                Wallet
-            </button>
+
+            <button class="ton-connect-btn" id="ton-connect"></button>
         </form>
 
     </div>
@@ -86,46 +86,35 @@
 
 
 <div class="footer">
-    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/nha.png" alt="Home">
-            <span class="new-badge">New</span>
-        </div>
-        <span>Home</span>
-    </a>
+
     <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
             <img src="/logo-coin/nap_live.png" alt="MuaCoin">
             
         </div>
-        <span>MuaCoin</span>
+        <span>Deposit</span>
     </a>
-    <a href="/ton/sell.html" class="footer-item" onclick="setActive(this)">
+    <a href="/app/index.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
-            <img src="/logo-coin/rut.png" alt="BánCoin">
-            <span class="new-badge">New</span>
+            <img src="/logo-coin/nha.png" alt="Home">
+            <span class="new-badge">+9</span>
         </div>
-        <span>BánCoin</span>
+        <span>Home</span>
     </a>
-    <a href="/ton/star.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/star.png" alt="MuaRef">
-            <span class="new-badge">New</span>
-        </div>
-        <span>MuaStar</span>
-    </a>
-    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+
+    <a href="/app/wallet.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
             <img src="/logo-coin/vi.png" alt="Wallet">
-            <span class="new-badge">New</span>
+
         </div>
         <span>Wallet</span>
-    </a>   
+    </a> 
 </div>
 
 
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>
+    <script src="/ton-connect.js"></script>
 </body>
 </html>
