@@ -358,31 +358,6 @@
         <span>Wallet</span>
     </a>   
 </div>
-<script>
-    function setActive(element) {
-        // Xóa lớp active khỏi tất cả các mục
-        const items = document.querySelectorAll('.footer-item');
-        items.forEach(item => item.classList.remove('active'));
-
-        // Thêm lớp active vào mục được nhấp vào
-        element.classList.add('active');
-    }
-
-
-
-    
- if (window.Telegram && window.Telegram.WebApp) {
-            const tg = window.Telegram.WebApp;
-
-            // Khởi tạo WebApp để đảm bảo các phương thức có sẵn
-            tg.init();
-
-            // Tự động mở full screen ngay khi trang được tải
-            tg.expand();
-        } else {
-            alert('Không thể tìm thấy Telegram WebApp API. Vui lòng chạy ứng dụng trong Telegram.');
-        }
-</script>
 
 
 
