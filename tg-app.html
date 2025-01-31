@@ -323,18 +323,17 @@
 
 
 
-    
+     
 
-    <!-- Footer Section -->
+<!-- Footer Section -->
 <div class="footer">
-
-    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
+    <a href="#" class="footer-item disabled" onclick="alert('Deposit đang bảo trì!'); return false;">
         <div class="img-wrapper">
             <img src="/logo-coin/nap.png" alt="MuaCoin">
-
         </div>
         <span>Deposit</span>
     </a>
+
     <a href="/tg-app" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
             <img src="/logo-coin/nha_live.png" alt="Home">
@@ -346,17 +345,55 @@
     <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
             <img src="/logo-coin/vi.png" alt="Wallet">
-
         </div>
         <span>Wallet</span>
     </a>   
 </div>
 
+<style>
+    .footer-item.disabled {
+        pointer-events: none; /* Vô hiệu hóa click */
+        opacity: 0.5; /* Làm mờ */
+        cursor: not-allowed; /* Hiển thị con trỏ không cho phép */
+    }
+</style>
+    
+    
+<script>
+// Đảm bảo rằng mã JavaScript chỉ chạy khi tài liệu đã được tải xong
+document.addEventListener('DOMContentLoaded', function() {
+  Swal.fire({
+    text: 'Get 50 FD points now at @UnichAirdropBot',
+    imageUrl: '/logo-coin/IMG_20241108_121723_913.jpg',  // Đường dẫn ảnh
+    imageWidth: 100,  // Đặt kích thước ảnh
+    imageHeight: 100, // Đặt kích thước ảnh
+    imageAlt: 'Logo Coin',
+    confirmButtonText: 'Start', // Nút Start duy nhất
+    showCloseButton: false, // Không hiển thị nút đóng
+    customClass: {
+      popup: 'swal2-popup', // Áp dụng class cho popup
+      title: 'swal2-title',
+      text: 'swal2-text',
+      confirmButton: 'swal2-confirm', // Áp dụng class cho nút
+      image: 'swal2-image' // Áp dụng class cho ảnh
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = 'https://t.me/UnichAirdropBot/start'; // Chuyển hướng đến liên kết khi nhấn "Start"
+    }
+  });
+});
+
+</script>
 
 
-    
-    
-    
+
+
+
+
+
+
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js.js"></script>
     <script src="/ton-connect.js"></script>
 </body>
