@@ -726,4 +726,96 @@ h2 {
         vertical-align: middle; /* Căn giữa theo chiều dọc */
     }
     
-    
+
+
+
+
+/* Popup Swal */
+.swal2-popup {
+  position: relative;
+  padding: 30px;
+  border-radius: 15px; /* Bo tròn góc popup */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Thêm bóng cho popup */
+  background: rgba(0, 0, 0, 0.6); /* Nền tối cho popup */
+  background-image: url('/logo-coin/IMG_20241108_121723_913.jpg'); /* Đặt ảnh làm nền */
+  background-size: cover; /* Làm nền phủ toàn bộ */
+  background-position: center; /* Căn giữa ảnh nền */
+  background-attachment: fixed; /* Giữ ảnh nền cố định */
+  color: white; /* Chữ màu trắng để nổi bật trên nền tối */
+  overflow: hidden; /* Ẩn phần dư thừa ra ngoài */
+}
+
+/* Đảm bảo ảnh trong popup sẽ bo tròn và thêm đường viền */
+.swal2-image {
+  border-radius: 50%; /* Bo tròn ảnh */
+  border: 5px solid #ff6347; /* Thêm đường viền cho ảnh */
+  object-fit: cover; /* Đảm bảo ảnh không bị vỡ */
+  margin-bottom: 15px; /* Khoảng cách giữa ảnh và text */
+}
+
+/* Đảm bảo chữ nằm giữa popup */
+.swal2-title, .swal2-text {
+  text-align: center; /* Đặt chữ vào giữa */
+  color: #fff; /* Chữ màu trắng */
+  font-weight: bold;
+}
+
+/* Thêm màu nền cho nút Start và hiệu ứng kim tuyến */
+.swal2-confirm {
+  background-color: #ff6347; /* Màu nền cho nút */
+  color: white;
+  font-weight: bold;
+  border-radius: 5px; /* Bo tròn nút */
+  padding: 10px 20px;
+  border: none;
+  position: relative; /* Để hiệu ứng ánh sáng hoạt động */
+  overflow: hidden; /* Ẩn các phần thừa ra ngoài */
+  cursor: pointer;
+}
+
+/* Hiệu ứng kim tuyến lấp lánh bay ra xung quanh */
+.swal2-confirm::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+  animation: sparkleEffect 2s infinite;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+/* Animation tạo hiệu ứng kim tuyến lấp lánh bay ra */
+@keyframes sparkleEffect {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+/* Thay đổi màu của nút khi hover */
+.swal2-confirm:hover {
+  background-color: #e55347; /* Màu khi hover */
+}
+
+/* Cải thiện kiểu chữ */
+.swal2-title {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.swal2-text {
+  font-size: 16px;
+}
+
