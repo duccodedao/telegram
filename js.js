@@ -248,3 +248,13 @@ const transaction = {
         }
     ]
 };
+
+
+
+// Giả sử bạn đã có API hoặc cách lấy thông tin premium của người dùng
+let isPremium = true;  // Giả định người dùng là premium
+
+if (isPremium) {
+    document.getElementById('user-premium').style.display = 'inline'; // Hiển thị huy hiệu
+}
+
