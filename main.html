@@ -342,7 +342,7 @@
         <span></span>
     </a>
 
-    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+     <a href="#" class="footer-item disabled" onclick="alert('Wallet đang bảo trì!'); return false;">
         <div class="img-wrapper">
             <img src="/logo-coin/vi.png" alt="Wallet">
         </div>
@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
     imageHeight: 100, // Đặt kích thước ảnh
     imageAlt: 'Logo Coin',
     confirmButtonText: 'Start', // Nút Start duy nhất
-    showCloseButton: True, // Không hiển thị nút đóng
+    showCloseButton: true, // Không hiển thị nút đóng
     customClass: {
       popup: 'swal2-popup', // Áp dụng class cho popup
       title: 'swal2-title',
