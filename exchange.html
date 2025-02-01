@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airdrop cùng BmassHD</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    <script src="https://telegram.org/js/telegram-widget.js?7" data-telegram-login="BmassK3_bot" data-size="large" data-auth-url="https://bmasshd.clickclick/auth" data-request-access="write"></script>
+    
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Airdrop cùng BmassHD">
     <meta property="og:description" content="Airdrop Telegram là một cơ hội tuyệt vời để nhận phần thưởng miễn phí từ các dự án blockchain, hãy cùng tham gia cùng BmsssK3 để khám phá những cơ hội hấp dẫn này!">
@@ -45,6 +45,7 @@
             <img id="user-avatar" class="avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
             <div class="user-info">
                 <div id="user-username">@username<i class="fas fa-check-circle verified-icon"></i></div>
+                <div id="user-premium" class="premium-badge">Premium</div> <!-- Huy hiệu Premium -->
             </div>
         </div>
         <!-- Nút ton-connect -->
@@ -58,22 +59,8 @@
             <i class="fa fa-check-circle tick-icon" aria-hidden="true"></i>
         </button>
     </div>
-    <h2>Login with Telegram</h2>
-<script async src="https://telegram.org/js/telegram-widget.js?22"
-    data-telegram-login="bmassk3_bot"
-    data-size="large"
-    data-radius="20"
-    data-onauth="onTelegramAuth(user)"
-    data-request-access="write"></script>
-
-<script type="text/javascript">
-  function onTelegramAuth(user) {
-    console.log(user); // Xem toàn bộ thông tin trong Console
-    alert(`Đăng nhập thành công!\nID: ${user.id}\nTên: ${user.first_name} ${user.last_name || ''}\nUsername: @${user.username || 'Không có'}\nẢnh đại diện: ${user.photo_url}`);
-  }
-</script>
-
-
+    
+    
 
     
     <div class="table-container">
@@ -338,7 +325,7 @@
 
 
 
-    
+     
 
 <!-- Footer Section -->
 <div class="footer">
@@ -372,6 +359,14 @@
         cursor: not-allowed; /* Hiển thị con trỏ không cho phép */
     }
 </style>
+
+<style>
+    .footer-item.disabled {
+        pointer-events: none; /* Vô hiệu hóa click */
+        opacity: 0.5; /* Làm mờ */
+        cursor: not-allowed; /* Hiển thị con trỏ không cho phép */
+    }
+</style>
     
     
 <script>
@@ -384,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
     imageHeight: 100, // Đặt kích thước ảnh
     imageAlt: 'Logo Coin',
     confirmButtonText: 'Start', // Nút Start duy nhất
-    showCloseButton: true, // Không hiển thị nút đóng
+    showCloseButton: false, // Không hiển thị nút đóng
     customClass: {
       popup: 'swal2-popup', // Áp dụng class cho popup
       title: 'swal2-title',
@@ -413,3 +408,4 @@ document.addEventListener('DOMContentLoaded', function() {
     <script src="/ton-connect.js"></script>
 </body>
     </html>                                                                                
+
