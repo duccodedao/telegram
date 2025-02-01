@@ -707,7 +707,7 @@ h2 {
         margin-left: 8px;
         width: 16px;
         height: 16px;
-        background-image: url('https://duccodedao.github.io/telegram/logo-coin/gold-tick.png'); /* Thay bằng URL tick xanh */
+        background-image: url('https://duccodedao.github.io/telegram/logo-coin/gold_tick.png'); /* Thay bằng URL tick xanh */
         background-size: cover;
         vertical-align: middle;
     }
