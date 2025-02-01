@@ -342,13 +342,21 @@
         <span></span>
     </a>
 
-    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+     <a href="#" class="footer-item disabled" onclick="alert('Wallet đang bảo trì!'); return false;">
         <div class="img-wrapper">
             <img src="/logo-coin/vi.png" alt="Wallet">
         </div>
         <span>Wallet</span>
     </a>   
 </div>
+
+<style>
+    .footer-item.disabled {
+        pointer-events: none; /* Vô hiệu hóa click */
+        opacity: 0.5; /* Làm mờ */
+        cursor: not-allowed; /* Hiển thị con trỏ không cho phép */
+    }
+</style>
 
 <style>
     .footer-item.disabled {
