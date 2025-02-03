@@ -360,30 +360,28 @@
     
     
 <script>
-// Đảm bảo rằng mã JavaScript chỉ chạy khi tài liệu đã được tải xong
 document.addEventListener('DOMContentLoaded', function() {
   Swal.fire({
-    text: 'Get 50 FD points now at @UnichAirdropBot',
-    imageUrl: '/logo-coin/IMG_20241108_121723_913.jpg',  // Đường dẫn ảnh
-    imageWidth: 100,  // Đặt kích thước ảnh
-    imageHeight: 100, // Đặt kích thước ảnh
+    title: '🚀 Get 50 FD Points!',
+    text: 'Join @UnichAirdropBot and claim your reward!',
+    imageUrl: '/logo-coin/IMG_20241108_121723_913.jpg',
+    imageWidth: 120,
+    imageHeight: 120,
     imageAlt: 'Logo Coin',
-    confirmButtonText: 'Start', // Nút Start duy nhất
-    showCloseButton: true, // Không hiển thị nút đóng
+    confirmButtonText: 'Start Now',
+    showCloseButton: true,
     customClass: {
-      popup: 'swal2-popup', // Áp dụng class cho popup
+      popup: 'swal2-popup',
       title: 'swal2-title',
-      text: 'swal2-text',
-      confirmButton: 'swal2-confirm', // Áp dụng class cho nút
-      image: 'swal2-image' // Áp dụng class cho ảnh
+      confirmButton: 'swal2-confirm',
+      image: 'swal2-image'
     }
   }).then((result) => {
     if (result.isConfirmed) {
-      window.location.href = 'https://t.me/UnichAirdropBot/start'; // Chuyển hướng đến liên kết khi nhấn "Start"
+      window.location.href = 'https://t.me/UnichAirdropBot/start';
     }
   });
 });
-
 </script>
 
 
