@@ -725,5 +725,76 @@ h2 {
         font-size: 18px; /* Kích thước biểu tượng */
         vertical-align: middle; /* Căn giữa theo chiều dọc */
     }
-    
+
+
+
+
+/* Popup với hiệu ứng glassmorphism */
+.swal2-popup {
+    position: relative;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Nền trong suốt */
+    backdrop-filter: blur(10px); /* Làm mờ nền sau */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); /* Hiệu ứng ánh sáng neon */
+    text-align: center;
+    color: #000000;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Bo tròn ảnh và hiệu ứng phát sáng */
+  .swal2-image {
+    border-radius: 50%;
+    border: 5px solid #00ffcc;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
+  }
+  
+  /* Hiệu ứng chữ phát sáng */
+  .swal2-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+  }
+  
+  /* Nút Start với hiệu ứng ánh sáng và chuyển động */
+  .swal2-confirm {
+    background: linear-gradient(90deg, #00ffcc, #ff33cc);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Hiệu ứng phát sáng khi hover */
+  .swal2-confirm:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 51, 204, 0.9);
+  }
+  
+  /* Hiệu ứng lấp lánh bay ra */
+  .swal2-confirm::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(110, 60, 60, 0.8), transparent);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    opacity: 0;
+    animation: sparkleEffect 2s infinite;
+  }
+  
+  
+ 
 
