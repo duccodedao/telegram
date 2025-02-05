@@ -49,7 +49,6 @@
 
   <script>
     const botToken = '7545800115:AAHiyoeL2SkxXGaecK0VdgBovlNfQxTJmBA';
-    const chatId = 'YOUR_CHAT_ID'; // Thay thế bằng chat_id của người dùng hoặc nhóm
 
     function purchase(starsRequired) {
       // Kiểm tra số dư Star người dùng
@@ -63,7 +62,6 @@
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                chat_id: chatId,
                 stars: starsRequired,
                 item_id: 'item001', // Mã vật phẩm
               }),
@@ -84,4 +82,3 @@
   </script>
 </body>
 </html>
-
