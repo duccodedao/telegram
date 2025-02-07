@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Nhập Telegram</title>
+    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,13 +14,17 @@
             padding: 20px;
         }
 
-        .login-container {
-            margin: 30px auto;
+        .container {
+            margin: 50px auto;
             max-width: 400px;
             padding: 20px;
             background: #1E1E1E;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .telegram-login {
+            margin: 20px 0;
         }
 
         .user-info {
@@ -59,8 +64,8 @@
             font-size: 16px;
         }
     </style>
+
     <script>
-        // Xử lý khi đăng nhập thành công
         function onTelegramAuth(user) {
             const fullName = user.last_name ? `${user.first_name} ${user.last_name}` : user.first_name;
             const isPremium = user.is_premium === true ? "Có ✅" : "Không ❌";
@@ -73,14 +78,10 @@
                 photo_url: user.photo_url || "default-avatar.png"
             };
 
-            // Lưu vào localStorage để duy trì trạng thái đăng nhập
             localStorage.setItem("telegram_user", JSON.stringify(userInfo));
-
-            // Hiển thị thông tin người dùng
             displayUserInfo(userInfo);
         }
 
-        // Hiển thị thông tin người dùng
         function displayUserInfo(user) {
             document.getElementById("telegram-login").style.display = "none";
             document.getElementById("user-info").style.display = "block";
@@ -92,7 +93,6 @@
             document.getElementById("premium").textContent = `Premium: ${user.is_premium}`;
         }
 
-        // Sao chép vào clipboard khi nhấn vào thông tin
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
                 alert(`Đã sao chép: ${text}`);
@@ -102,7 +102,6 @@
             });
         }
 
-        // Kiểm tra trạng thái đăng nhập khi tải trang
         document.addEventListener("DOMContentLoaded", function () {
             const savedUser = localStorage.getItem("telegram_user");
             if (savedUser) {
@@ -110,7 +109,6 @@
             }
         });
 
-        // Đăng xuất
         function logout() {
             localStorage.removeItem("telegram_user");
             window.location.reload();
@@ -118,11 +116,11 @@
     </script>
 </head>
 <body>
-    <div class="login-container">
+    <div class="container">
         <!-- Nút đăng nhập Telegram -->
-        <div id="telegram-login">
+        <div id="telegram-login" class="telegram-login">
             <script async src="https://telegram.org/js/telegram-widget.js?22"
-                data-telegram-login="samplebot"
+                data-telegram-login="bmassk3_bot"
                 data-size="large"
                 data-onauth="onTelegramAuth(user)"
                 data-request-access="write"></script>
