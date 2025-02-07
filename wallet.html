@@ -307,7 +307,7 @@
                     showConfirmButton: false
                 });
             }).catch(err => {
-                alert("Lỗi khi sao chép");
+                alert("Error copying");
                 console.error(err);
             });
         }
@@ -338,7 +338,7 @@ function logout() {
         showCancelButton: true,
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
-        confirmButtonText: "Logout",
+        confirmButtonText: "Log out!",
         cancelButtonText: "Cancel"
     }).then((result) => {
         if (result.isConfirmed) {
@@ -382,7 +382,7 @@ function logout() {
          
             </div>
 
-            <button id="logout-btn" onclick="logout()">Logout</button>
+            <button id="logout-btn" onclick="logout()">Log out!</button>
 
         </div>
 
