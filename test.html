@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="wallet.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <style>
         body {
@@ -26,108 +27,125 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
-        .history-container {
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th, td {
-            border: 1px solid white;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
+        .user-info {
+            padding: 15px;
             background: #292929;
+            border-radius: 10px;
         }
 
-        .clear-history {
-            margin-top: 10px;
-            padding: 5px 10px;
-            background-color: red;
-            border: none;
-            color: white;
+        .avatar-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            border: 3px solid white;
+            overflow: hidden;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .user-details {
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            gap: 10px;
+            text-align: left;
+            align-items: center;
+        }
+
+        .label {
+            background: #373737;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .value {
+            background: #474747;
+            padding: 10px;
+            border-radius: 5px;
             cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .value:hover {
+            background: #575757;
+        }
+
+        /* Nút đăng xuất */
+        #logout-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+        }
+
+        /* Nút xác minh */
+        #verify-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            background: linear-gradient(90deg, #4CAF50, #388E3C);
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: none;
+            transition: 0.3s;
+        }
+
+        #verify-btn:hover {
+            background: linear-gradient(90deg, #66bb6a, #2e7d32);
+            transform: scale(1.05);
+        }
+
+        #verify-btn:active {
+            transform: scale(0.95);
+        }
+
+        #tg-login-container {
+            margin-top: 15px;
         }
     </style>
-</head>
-<body>
-
-    <div class="container">
-        <div class="user-info">
-            <h2>Thông tin tài khoản</h2>
-            <p id="username">Username: Chưa đăng nhập</p>
-            <button id="logout-btn" onclick="logout()" style="display:none;">Đăng xuất</button>
-        </div>
-
-        <div id="tg-login-container">
-            <script async src="https://telegram.org/js/telegram-widget.js?22"
-                data-telegram-login="bmassk3_bot"
-                data-size="large"
-                data-onauth="onTelegramAuth(user)"
-                data-request-access="write"></script>
-        </div>
-
-        <div class="history-container">
-            <h3>Lịch sử đăng nhập/đăng xuất</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Username</th>
-                        <th>Loại</th>
-                        <th>Trạng thái</th>
-                    </tr>
-                </thead>
-                <tbody id="history-body"></tbody>
-            </table>
-            <button class="clear-history" onclick="clearHistory()">Xóa lịch sử</button>
-        </div>
-    </div>
 
     <script>
-        function saveHistory(username, type, status) {
-            const now = new Date();
-            const time = now.toLocaleString("vi-VN", { hour12: false });
-
-            let history = JSON.parse(localStorage.getItem("login_history")) || [];
-            history.unshift({ time, username, type, status });
-
-            localStorage.setItem("login_history", JSON.stringify(history));
-            displayHistory();
-        }
-
-        function displayHistory() {
-            const historyBody = document.getElementById("history-body");
-            historyBody.innerHTML = "";
-
-            let history = JSON.parse(localStorage.getItem("login_history")) || [];
-            history.forEach(entry => {
-                let row = `<tr>
-                    <td>${entry.time}</td>
-                    <td>${entry.username}</td>
-                    <td>${entry.type}</td>
-                    <td>${entry.status}</td>
-                </tr>`;
-                historyBody.innerHTML += row;
-            });
-        }
-
         function onTelegramAuth(user) {
-            const username = user.username || "Không có";
-            document.getElementById("username").textContent = `Username: @${username}`;
+            const fullName = user.last_name ? `${user.first_name} ${user.last_name}` : user.first_name;
+            let premiumText = user.is_premium === true ? "Có" : "Không";
+
+            const userInfo = {
+                id: user.id,
+                full_name: fullName,
+                username: user.username || "Không có",
+                photo_url: user.photo_url || "https://via.placeholder.com/80",
+                is_premium: premiumText
+            };
+
+            localStorage.setItem("telegram_user", JSON.stringify(userInfo));
+
+            document.getElementById("avatar").src = user.photo_url || "https://via.placeholder.com/80";
+            document.getElementById("avatar").style.display = "block";
+
+            document.getElementById("id").textContent = user.id;
+            document.getElementById("name").textContent = fullName;
+            document.getElementById("username").textContent = `@${user.username || "Không có"}`;
+            document.getElementById("premium").textContent = premiumText;
+
             document.getElementById("logout-btn").style.display = "block";
+            document.getElementById("verify-btn").style.display = "block";
             document.getElementById("tg-login-container").style.display = "none";
-
-            localStorage.setItem("telegram_user", JSON.stringify(user));
-
-            saveHistory(username, "Đăng nhập", "Success");
 
             Swal.fire({
                 title: "Đăng nhập thành công!",
@@ -137,43 +155,79 @@
             });
         }
 
-        function logout() {
-            const savedUser = JSON.parse(localStorage.getItem("telegram_user"));
-            const username = savedUser ? savedUser.username || "Không có" : "Không có";
-
-            localStorage.removeItem("telegram_user");
-
-            document.getElementById("username").textContent = "Username: Chưa đăng nhập";
-            document.getElementById("logout-btn").style.display = "none";
-            document.getElementById("tg-login-container").style.display = "block";
-
-            saveHistory(username, "Đăng xuất", "Success");
-
-            Swal.fire({
-                title: "Đăng xuất thành công!",
-                text: "Bạn đã đăng xuất khỏi hệ thống.",
-                timer: 2000,
-                showConfirmButton: false
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                Swal.fire({
+                    title: "Đã sao chép!",
+                    text: text,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }).catch(err => {
+                alert("Lỗi khi sao chép");
+                console.error(err);
             });
         }
 
-        function clearHistory() {
-            localStorage.removeItem("login_history");
-            displayHistory();
+        function logout() {
+            Swal.fire({
+                title: "Bạn có chắc chắn muốn đăng xuất?",
+                text: "Sau khi đăng xuất, bạn sẽ cần đăng nhập lại để sử dụng dịch vụ.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Có, đăng xuất!",
+                cancelButtonText: "Hủy"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem("telegram_user");
+                    Swal.fire({
+                        title: "Đăng xuất thành công!",
+                        text: "Bạn đã đăng xuất khỏi hệ thống.",
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                }
+            });
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            displayHistory();
-
             const savedUser = localStorage.getItem("telegram_user");
             if (savedUser) {
                 const user = JSON.parse(savedUser);
-                document.getElementById("username").textContent = `Username: @${user.username}`;
+                document.getElementById("avatar").src = user.photo_url;
+                document.getElementById("avatar").style.display = "block";
+
+                document.getElementById("id").textContent = user.id;
+                document.getElementById("name").textContent = user.full_name;
+                document.getElementById("username").textContent = `@${user.username}`;
+                document.getElementById("premium").textContent = user.is_premium;
+
                 document.getElementById("logout-btn").style.display = "block";
+                document.getElementById("verify-btn").style.display = "block";
                 document.getElementById("tg-login-container").style.display = "none";
             }
         });
     </script>
-
+</head>
+<body>
+    <div class="container">
+        <div class="user-info">
+            <div class="avatar-container">
+                <img id="avatar" class="avatar" src="https://via.placeholder.com/80" alt="Avatar">
+            </div>
+            <div class="user-details">
+                <div class="label">ID</div> <div class="value" id="id">Loading...</div>
+                <div class="label">Tên</div> <div class="value" id="name">Loading...</div>
+                <div class="label">User</div> <div class="value" id="username">Loading...</div>
+                <div class="label">Premium</div> <div class="value" id="premium">Loading...</div>
+            </div>
+            <button id="verify-btn">Xác minh</button>
+            <button id="logout-btn" onclick="logout()">Đăng xuất</button>
+        </div>
+    </div>
 </body>
 </html>
