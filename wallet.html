@@ -55,15 +55,24 @@
             cursor: pointer;
             font-size: 14px;
         }
+        #user-details {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ccc;
+            text-align: left;
+            max-width: 300px;
+            margin: 10px auto;
+            word-wrap: break-word;
+        }
     </style>
 </head>
 <body>
 
     <div class="login-container">
         <!-- Nút Đăng Nhập Telegram -->
-        <div id="telegram-login">
+        <div id="telegram-login" style="display: none;">
             <script async src="https://telegram.org/js/telegram-widget.js?22"
-                data-telegram-login="bmassk3_bot"
+                data-telegram-login="samplebot"
                 data-size="large"
                 data-onauth="onTelegramAuth(user)"
                 data-request-access="write"></script>
@@ -76,22 +85,11 @@
                 <span id="name"></span>
             </a>
             <button id="logout-btn">Đăng xuất</button>
+            <div id="user-details"></div>
         </div>
     </div>
 
     <script>
-        // Lấy thông tin từ URL
-        function getQueryParams() {
-            const params = new URLSearchParams(window.location.search);
-            return {
-                id: params.get("id"),
-                first_name: params.get("first_name"),
-                last_name: params.get("last_name") || "",
-                username: params.get("username"),
-                photo_url: params.get("photo_url")
-            };
-        }
-
         // Hàm xử lý khi người dùng đăng nhập qua Telegram
         function onTelegramAuth(user) {
             localStorage.setItem("user", JSON.stringify(user));
@@ -106,9 +104,21 @@
 
             const avatar = document.getElementById("avatar");
             const name = document.getElementById("name");
+            const userDetails = document.getElementById("user-details");
 
             avatar.src = user.photo_url || "default-avatar.png";
             name.textContent = user.first_name + " " + user.last_name;
+
+            // Hiển thị toàn bộ thông tin
+            userDetails.innerHTML = `
+                <strong>ID:</strong> ${user.id}<br>
+                <strong>First Name:</strong> ${user.first_name}<br>
+                <strong>Last Name:</strong> ${user.last_name || "Không có"}<br>
+                <strong>Username:</strong> ${user.username || "Không có"}<br>
+                <strong>Photo URL:</strong> <a href="${user.photo_url || "#"}" target="_blank">Xem ảnh</a><br>
+                <strong>Auth Date:</strong> ${new Date(user.auth_date * 1000).toLocaleString()}<br>
+                <strong>Hash:</strong> ${user.hash}
+            `;
         }
 
         // Kiểm tra thông tin người dùng trong localStorage
@@ -117,6 +127,8 @@
             if (userData) {
                 const user = JSON.parse(userData);
                 displayUserInfo(user);
+            } else {
+                document.getElementById("telegram-login").style.display = "block";
             }
         });
 
