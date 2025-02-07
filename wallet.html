@@ -32,14 +32,41 @@
             padding: 15px;
             background: #292929;
             border-radius: 10px;
+            position: relative;
+        }
+
+        .avatar-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .avatar {
-            width: 80px;
-            height: 80px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            margin-bottom: 15px;
-            border: 3px solid white;
+            display: none;
+        }
+
+        .skeleton-loader {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #444 25%, #666 50%, #444 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            position: absolute;
+        }
+
+        @keyframes loading {
+            from { background-position: -200% 0; }
+            to { background-position: 200% 0; }
         }
 
         .user-details {
@@ -81,6 +108,10 @@
             font-size: 16px;
             display: none;
         }
+
+        #tg-login-container {
+            margin-top: 15px;
+        }
     </style>
 
     <script>
@@ -88,7 +119,7 @@
             const fullName = user.last_name ? `${user.first_name} ${user.last_name}` : user.first_name;
             let premiumText = "Loading...";
 
-            // Hiệu ứng dấu ba chấm khi load Premium
+            // Hiệu ứng loading premium
             let dots = 0;
             const interval = setInterval(() => {
                 dots = (dots + 1) % 4;
@@ -112,6 +143,9 @@
             localStorage.setItem("telegram_user", JSON.stringify(userInfo));
 
             document.getElementById("avatar").src = user.photo_url || "https://via.placeholder.com/80";
+            document.querySelector(".skeleton-loader").style.display = "none";
+            document.getElementById("avatar").style.display = "block";
+
             showLoadingEffect(() => {
                 document.getElementById("id").textContent = user.id;
                 document.getElementById("name").textContent = fullName;
@@ -120,7 +154,7 @@
             });
 
             document.getElementById("logout-btn").style.display = "block";
-            document.getElementById("tg-login").style.display = "none";
+            document.getElementById("tg-login-container").style.display = "none";
 
             Swal.fire({
                 title: "Đăng nhập thành công!",
@@ -164,13 +198,16 @@
             if (savedUser) {
                 const user = JSON.parse(savedUser);
                 document.getElementById("avatar").src = user.photo_url;
+                document.querySelector(".skeleton-loader").style.display = "none";
+                document.getElementById("avatar").style.display = "block";
+
                 document.getElementById("id").textContent = user.id;
                 document.getElementById("name").textContent = user.full_name;
                 document.getElementById("username").textContent = `@${user.username}`;
                 document.getElementById("premium").textContent = user.is_premium;
 
                 document.getElementById("logout-btn").style.display = "block";
-                document.getElementById("tg-login").style.display = "none";
+                document.getElementById("tg-login-container").style.display = "none";
             }
         });
 
@@ -190,7 +227,10 @@
 <body>
     <div class="container">
         <div class="user-info">
-            <img id="avatar" class="avatar" src="https://via.placeholder.com/80" alt="Avatar">
+            <div class="avatar-container">
+                <div class="skeleton-loader"></div>
+                <img id="avatar" class="avatar" src="https://via.placeholder.com/80" alt="Avatar">
+            </div>
             <div class="user-details">
                 <div class="label">ID</div>        <div class="value" id="id" onclick="copyToClipboard(this.textContent)">Loading...</div>
                 <div class="label">Tên</div>       <div class="value" id="name" onclick="copyToClipboard(this.textContent)">Loading...</div>
@@ -200,8 +240,7 @@
             <button id="logout-btn" onclick="logout()">Đăng xuất</button>
         </div>
 
-        <!-- Nút đăng nhập Telegram -->
-        <div id="tg-login">
+        <div id="tg-login-container">
             <script async src="https://telegram.org/js/telegram-widget.js?22"
                 data-telegram-login="bmassk3_bot"
                 data-size="large"
