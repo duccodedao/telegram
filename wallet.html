@@ -273,6 +273,36 @@ function logout() {
                 data-request-access="write"></script>
         </div>
     </div>
+<button id="verify-btn" onclick="verifyCaptcha()" style="display:none; margin-top: 10px;">Xác minh</button>
+    <div id="captcha-container" style="display:none;">
+    <div class="g-recaptcha" data-sitekey="6Ld0ts8qAAAAAOmndq-sv9P8vKRjwCh5yP9uWByA" data-callback="captchaSuccess"></div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const savedUser = localStorage.getItem("telegram_user");
+    if (savedUser) {
+        document.getElementById("verify-btn").style.display = "block";
+    }
+});
+
+function verifyCaptcha() {
+    document.getElementById("captcha-container").style.display = "block";
+}
+
+function captchaSuccess() {
+    Swal.fire({
+        title: "Xác minh thành công!",
+        text: "Bạn đã vượt qua kiểm tra bảo mật.",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false
+    });
+    document.getElementById("verify-btn").style.display = "none";
+    document.getElementById("captcha-container").style.display = "none";
+}
+
+</script>
+
 
 
 
