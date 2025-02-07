@@ -335,6 +335,9 @@ function logout() {
                 <div class="skeleton-loader"></div>
                 <img id="avatar" class="avatar" src="https://via.placeholder.com/80" alt="Avatar">
             </div>
+            <button id="send-now" class="btn">Verify 
+               <i class="fa fa-check-circle tick-icon" aria-hidden="true"></i>
+            </button>
             <div class="user-details">
                 <div class="label">ID</div>        <div class="value" id="id" onclick="copyToClipboard(this.textContent)">Loading...</div>
                 <div class="label">Tên</div>       <div class="value" id="name" onclick="copyToClipboard(this.textContent)">Loading...</div>
@@ -343,10 +346,7 @@ function logout() {
                 <div id="ton-connect"></div>
             </div>
             <button id="logout-btn" onclick="logout()">Đăng xuất</button>
-            <button id="send-now" class="btn">
-            Verify 
-            <i class="fa fa-check-circle tick-icon" aria-hidden="true"></i>
-            </button>
+
         </div>
 
         <div id="tg-login-container">
