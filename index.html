@@ -3,111 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="30; url=/tg-app.html" />
-    <title>404 - Không tìm thấy trang</title>
+    <title>Đăng Nhập Telegram</title>
+    <link rel="stylesheet" href="wallet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             text-align: center;
-            color: #333;
+            background-color: #121212;
+            color: white;
+            padding: 20px;
         }
 
         .container {
-            background-color: #fff;
+            margin: 50px auto;
+            max-width: 400px;
+            padding: 20px;
+            background: #1E1E1E;
             border-radius: 10px;
-            padding: 40px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
-        .logo {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 20px;
+        .user-info {
+            text-align: center;
+            padding: 15px;
+            background: #292929;
+            border-radius: 10px;
         }
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
+        .avatar-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid white;
         }
 
-        .loading-bars {
-            display: flex;
-            justify-content: center;
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .skeleton-loader {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #444 25%, #666 50%, #444 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            position: absolute;
+        }
+
+        @keyframes loading {
+            from { background-position: -200% 0; }
+            to { background-position: 200% 0; }
+        }
+
+        .user-details {
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            gap: 10px;
+            text-align: left;
             align-items: center;
-            gap: 5px;
-            margin-bottom: 20px;
         }
 
-        .loading-bars div {
-            width: 10px;
-            height: 40px;
-            background-color: #fbc531;
-            animation: bounce 1.2s infinite ease-in-out;
+        .label {
+            background: #373737;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
         }
 
-        .loading-bars div:nth-child(1) {
-            animation-delay: 0s;
+        .value {
+            background: #474747;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        .loading-bars div:nth-child(2) {
-            animation-delay: 0.1s;
+        #logout-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
         }
 
-        .loading-bars div:nth-child(3) {
-            animation-delay: 0.2s;
-        }
-
-        .loading-bars div:nth-child(4) {
-            animation-delay: 0.3s;
-        }
-
-        .loading-bars div:nth-child(5) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: scaleY(1);
-            }
-            50% {
-                transform: scaleY(1.5);
-            }
-        }
-
-        p {
-            font-size: 18px;
-        }
-
-        a {
-            text-decoration: none;
-            color: #3498db;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
+        #tg-login-container {
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="bmlogo.jpg" alt="Logo" class="logo">
-        <h1>404 - Không tìm thấy trang</h1>
-        <div class="loading-bars">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+        <div class="user-info">
+            <div class="avatar-container">
+                <div class="skeleton-loader"></div>
+                <img id="avatar" class="avatar" src="https://via.placeholder.com/80" alt="Avatar">
+            </div>
+            <div class="user-details">
+                <div class="label">ID</div>        <div class="value" id="id">Loading...</div>
+                <div class="label">Tên</div>       <div class="value" id="name">Loading...</div>
+                <div class="label">User</div>      <div class="value" id="username">Loading...</div>
+                <div class="label">Premium</div>   <div class="value" id="premium">Loading...</div>
+            </div>
+            <button id="logout-btn" onclick="logout()">Đăng xuất</button>
         </div>
-        <p>Xin lỗi, trang bạn tìm kiếm không tồn tại. <br>Bạn sẽ được chuyển về trang chủ trong 30 giây. Nếu không, <a href="/tg-app.html">bấm vào đây</a>.</p>
+
+        <div id="tg-login-container">
+            <script async src="https://telegram.org/js/telegram-widget.js?22"
+                data-telegram-login="bmassk3_bot"
+                data-size="large"
+                data-onauth="onTelegramAuth(user)"
+                data-request-access="write"></script>
+        </div>
     </div>
+
+    <script src="wallet.js"></script>
 </body>
 </html>
