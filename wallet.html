@@ -140,17 +140,14 @@
 
 
 
-
-        /* Gộp chung CSS cho cả #send-now và #logout-btn */
 /* Container chứa cả hai phần tử */
 .button-container {
     display: flex;
-    justify-content: space-between; /* Đẩy các phần tử về hai bên */
-    align-items: center;
-    width: 100%; /* Chiều rộng full */
-    max-width: 500px; /* Giới hạn tối đa để không quá rộng */
-    margin: 20px auto; /* Căn giữa theo chiều ngang */
-    padding: 0 20px; /* Tạo khoảng cách hai bên */
+    flex-direction: column; /* Xếp chồng phần tử theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    justify-content: center; /* Căn giữa theo chiều dọc (nếu container chiếm toàn bộ màn hình) */
+    width: 100%;
+    height: 100vh; /* Chiều cao toàn màn hình */
 }
 
 /* CSS gốc của #send-now */
@@ -167,18 +164,20 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px; /* Tạo khoảng cách giữa nút và #ton-connect */
 }
 
-/* Định dạng #ton-connect để có kích thước phù hợp */
+/* Định dạng #ton-connect */
 #ton-connect {
-    width: 150px; /* Định kích thước theo nhu cầu */
+    width: 150px;
     height: 40px;
-    background-color: #ccc; /* Màu nền mặc định */
+    background-color: #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50px;
 }
+
 
 
 /* Trạng thái khi bị disabled */
@@ -367,6 +366,7 @@ function logout() {
     </button>
     <div id="ton-connect"></div>
 </div>
+
 
             <div class="user-details">
                 <div class="label">ID</div>        <div class="value" id="id" onclick="copyToClipboard(this.textContent)">Loading...</div>
