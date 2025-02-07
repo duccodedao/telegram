@@ -8,7 +8,7 @@
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -310,37 +310,41 @@ function logout() {
     </div>
 
     
-<form action="verify.php" method="POST">
+
+
     <div class="g-recaptcha" data-sitekey="6Lents8qAAAAAJ5_GtvpZKu1JAjgJe0KutegZvfN"></div>
     <br>
-    <button type="submit" class="submit-btn">Xác minh</button>
-</form>
+    <button class="submit-btn" id="verifyBtn">Xác minh</button>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const savedUser = localStorage.getItem("telegram_user");
-    if (savedUser) {
-        document.getElementById("verify-btn").style.display = "block";
-    }
-});
+    <p class="result" id="resultText"></p>
+ <script>
+        document.getElementById("verifyBtn").addEventListener("click", function() {
+            let response = grecaptcha.getResponse();
 
-function verifyCaptcha() {
-    document.getElementById("captcha-container").style.display = "block";
-}
+            if (!response) {
+                document.getElementById("resultText").innerText = "❌ Vui lòng xác minh reCAPTCHA!";
+                return;
+            }
 
-function captchaSuccess() {
-    Swal.fire({
-        title: "Xác minh thành công!",
-        text: "Bạn đã vượt qua kiểm tra bảo mật.",
-        icon: "success",
-        timer: 2000,
-        showConfirmButton: false
-    });
-    document.getElementById("verify-btn").style.display = "none";
-    document.getElementById("captcha-container").style.display = "none";
-}
+            let secretKey = "6Lents8qAAAAAAPTM6KC5ORmffRs7W7s2vtAjyfg"; // Thay thế bằng secret key của bạn
 
-</script>
+            // Gửi yêu cầu xác minh đến Google
+            fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${response}`, {
+                method: "POST"
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("resultText").innerText = "✅ Xác minh thành công!";
+                } else {
+                    document.getElementById("resultText").innerText = "❌ Xác minh thất bại!";
+                }
+            })
+            .catch(error => {
+                document.getElementById("resultText").innerText = "⚠ Lỗi kết nối!";
+            });
+        });
+    </script>
 
 
 
