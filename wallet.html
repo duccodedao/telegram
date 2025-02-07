@@ -68,6 +68,17 @@
             from { background-position: -200% 0; }
             to { background-position: 200% 0; }
         }
+/* Hiệu ứng loading */
+    .skeleton-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: linear-gradient(90deg, #444 25%, #666 50%, #444 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+        display: inline-block;
+    }
+
 
         .user-details {
             display: grid;
@@ -269,7 +280,7 @@
         <span>Home</span>
     </a>
 
-    <a href="#" class="footer-item" onclick="alert('Wallet đang bảo trì!'); return false;">
+    <a href="#" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
             <div id="wallet-avatar-container">
                 <div class="skeleton-avatar"></div>
