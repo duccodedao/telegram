@@ -3,49 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallet | By BmassHD</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    <link rel="stylesheet" href="wallet.css">
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Wallet | BmassHD">
-    <meta property="og:description" content="Ví 2">
-    <meta property="og:image" content="/ton/nen.png">
-    <meta property="og:url" content="/ton/ton.html">
-    <meta property="og:type" content="website">
-
-    <link rel="shortcut icon" href="logo1.png" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
+    <title>Đăng Nhập Telegram</title>
     <style>
-        .login-container {
+        body {
+            font-family: Arial, sans-serif;
             text-align: center;
-            margin: 20px 0;
+            padding: 20px;
         }
-        #login-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #0088cc;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
+
+        .login-container {
+            margin: 20px auto;
+        }
+
+        .user-info {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .user-info div {
+            margin: 10px;
+            padding: 10px;
+            background-color: #f3f3f3;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-        }
-        #login-btn img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        #logout-btn {
             display: inline-block;
+            width: 80%;
+        }
+
+        .user-info div:hover {
+            background-color: #e2e2e2;
+        }
+
+        #avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        #logout-btn {
             margin-top: 15px;
             padding: 8px 15px;
             background-color: red;
@@ -55,45 +52,23 @@
             cursor: pointer;
             font-size: 14px;
         }
-        #user-details {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #ccc;
-            text-align: left;
-            max-width: 300px;
-            margin: 10px auto;
-            word-wrap: break-word;
-        }
     </style>
-</head>
-<body>
-
-    <div class="login-container">
-        <!-- Nút Đăng Nhập Telegram -->
-        <div id="telegram-login" style="display: none;">
-            <script async src="https://telegram.org/js/telegram-widget.js?22"
-                data-telegram-login="samplebot"
-                data-size="large"
-                data-onauth="onTelegramAuth(user)"
-                data-request-access="write"></script>
-        </div>
-
-        <!-- Thông Tin Người Dùng -->
-        <div id="user-info" style="display: none;">
-            <a id="login-btn" href="#">
-                <img id="avatar" src="" alt="Avatar">
-                <span id="name"></span>
-            </a>
-            <button id="logout-btn">Đăng xuất</button>
-            <div id="user-details"></div>
-        </div>
-    </div>
-
     <script>
-        // Hàm xử lý khi người dùng đăng nhập qua Telegram
+        // Xử lý khi đăng nhập thành công
         function onTelegramAuth(user) {
-            localStorage.setItem("user", JSON.stringify(user));
-            displayUserInfo(user);
+            const userInfo = {
+                id: user.id,
+                first_name: user.first_name,
+                username: user.username || "Không có",
+                is_premium: user.is_premium ? "Có" : "Không",
+                photo_url: user.photo_url || "default-avatar.png"
+            };
+
+            // Lưu vào localStorage để duy trì trạng thái
+            localStorage.setItem("telegram_user", JSON.stringify(userInfo));
+
+            // Hiển thị thông tin người dùng
+            displayUserInfo(userInfo);
         }
 
         // Hiển thị thông tin người dùng
@@ -102,42 +77,58 @@
             const userInfoDiv = document.getElementById("user-info");
             userInfoDiv.style.display = "block";
 
-            const avatar = document.getElementById("avatar");
-            const name = document.getElementById("name");
-            const userDetails = document.getElementById("user-details");
-
-            avatar.src = user.photo_url || "default-avatar.png";
-            name.textContent = user.first_name + " " + user.last_name;
-
-            // Hiển thị toàn bộ thông tin
-            userDetails.innerHTML = `
-                <strong>ID:</strong> ${user.id}<br>
-                <strong>First Name:</strong> ${user.first_name}<br>
-                <strong>Last Name:</strong> ${user.last_name || "Không có"}<br>
-                <strong>Username:</strong> ${user.username || "Không có"}<br>
-                <strong>Photo URL:</strong> <a href="${user.photo_url || "#"}" target="_blank">Xem ảnh</a><br>
-                <strong>Auth Date:</strong> ${new Date(user.auth_date * 1000).toLocaleString()}<br>
-                <strong>Hash:</strong> ${user.hash}
-            `;
+            document.getElementById("avatar").src = user.photo_url;
+            document.getElementById("id").textContent = `ID: ${user.id}`;
+            document.getElementById("name").textContent = `Tên: ${user.first_name}`;
+            document.getElementById("username").textContent = `Username: ${user.username}`;
+            document.getElementById("premium").textContent = `Premium: ${user.is_premium}`;
         }
 
-        // Kiểm tra thông tin người dùng trong localStorage
+        // Xử lý sao chép dữ liệu vào clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`Đã sao chép: ${text}`);
+            }).catch(err => {
+                alert("Lỗi khi sao chép");
+                console.error(err);
+            });
+        }
+
+        // Kiểm tra trạng thái đăng nhập
         document.addEventListener("DOMContentLoaded", function () {
-            const userData = localStorage.getItem("user");
-            if (userData) {
-                const user = JSON.parse(userData);
-                displayUserInfo(user);
-            } else {
-                document.getElementById("telegram-login").style.display = "block";
+            const savedUser = localStorage.getItem("telegram_user");
+            if (savedUser) {
+                displayUserInfo(JSON.parse(savedUser));
             }
         });
 
-        // Xử lý nút Đăng xuất
-        document.getElementById("logout-btn").addEventListener("click", function () {
-            localStorage.removeItem("user");
+        // Đăng xuất
+        function logout() {
+            localStorage.removeItem("telegram_user");
             window.location.reload();
-        });
+        }
     </script>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Nút đăng nhập Telegram -->
+        <div id="telegram-login">
+            <script async src="https://telegram.org/js/telegram-widget.js?22"
+                data-telegram-login="bmassk3_bot"
+                data-size="large"
+                data-onauth="onTelegramAuth(user)"
+                data-request-access="write"></script>
+        </div>
 
+        <!-- Thông tin người dùng -->
+        <div id="user-info" class="user-info">
+            <img id="avatar" src="" alt="Avatar">
+            <div id="id" onclick="copyToClipboard(this.textContent)"></div>
+            <div id="name" onclick="copyToClipboard(this.textContent)"></div>
+            <div id="username" onclick="copyToClipboard(this.textContent)"></div>
+            <div id="premium" onclick="copyToClipboard(this.textContent)"></div>
+            <button id="logout-btn" onclick="logout()">Đăng xuất</button>
+        </div>
+    </div>
 </body>
 </html>
