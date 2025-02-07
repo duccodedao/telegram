@@ -233,3 +233,18 @@ function showDepositAlert() {
     });
     return false;
 }
+
+
+// Kiểm tra trạng thái đăng nhập khi tải trang
+        document.addEventListener("DOMContentLoaded", function () {
+            const savedUser = localStorage.getItem("telegram_user");
+            if (savedUser) {
+                displayUserInfo(JSON.parse(savedUser));
+            }
+        });
+
+        // Đăng xuất
+        function logout() {
+            localStorage.removeItem("telegram_user");
+            window.location.reload();
+        }
