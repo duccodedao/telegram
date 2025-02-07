@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
     <link rel="stylesheet" href="wallet.css">
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Wallet | BmassHD">
     <meta property="og:description" content="Ví 2">
@@ -15,113 +16,113 @@
     <meta property="og:type" content="website">
 
     <link rel="shortcut icon" href="logo1.png" type="image/png">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8FQ6KeNf1H9SRox01rfK0uZZ9e67/I9sw1O7r" crossorigin="anonymous">
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-   
-<body>
+
+    <style>
+        .login-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        #user-info {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+        #avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        #logout-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
+<body>
 
-
-
-
-<!-- Header -->
-<header>
-    <img id="user-avatar" src="/logo-coin/bmlogo.jpg" alt="Avatar">
-    <span id="user-username">@username</span>
-    <div id="ton-connect"></div> <!-- Nút TON Connect sẽ hiển thị ở đây -->
-</header>
-
-
-
-
-
-<div class="container">
-    <div class="balance-wrapper">
-        <div class="logo">
-            <img src="/logo-coin/bmlogo.jpg" alt="Logo BMC">
+    <div class="login-container">
+        <div id="telegram-login">
+            <script async src="https://telegram.org/js/telegram-widget.js?7"
+                data-telegram-login="bmassk3_bot"
+                data-size="large"
+                data-auth-url="wallet.html"
+                data-request-access="write"></script>
         </div>
-        <div class="balance-info">
-            <div class="balance" id="balance">BMC: 0</div>
-            <div class="token-info" id="token-info">
-                <a href="https://tonviewer.com/EQCYaB9KjnYpY9j12gn8XIz6SjuYqiTs_1Sg7dbMEiAgr85Y" 
-                   target="_blank">
-                    Tonviewer.com/EQCY...Agr85Y
-                </a>
+
+        <div id="user-info">
+            <img id="avatar" src="" alt="Avatar">
+            <h3 id="name"></h3>
+            <p id="username"></p>
+            <button id="logout-btn">Đăng xuất</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="/ton/ton.html" class="footer-item">
+            <div class="img-wrapper">
+                <img src="/logo-coin/nap.png" alt="MuaCoin">
             </div>
-        </div>
-    </div>
-    
-    <div class="button-wrapper">
-        <button id="send-now" class="btn">Claim 1B $BMC</button>
-        <button id="withdraw" class="btn withdraw-btn">withdraw</button>
-    </div>
-</div>
-
-
-
-<div class="container">
-    <div class="price-display">
-        <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="BTC Logo">
-        <span id="tonPrice">Giá: Đang tải...</span>
-        <span id="tonChange" class="price-change">Đang tải...</span>
-    </div>
- 
-
-    <div class="price-display">
-        <img src="/logo-coin/btc.jpg" alt="BTC Logo">
-        <span id="btcPrice">Giá: Đang tải...</span>
-        <span id="btcChange" class="price-change">Đang tải...</span>
-    </div>
-    <div class="price-display">
-        <img src="/logo-coin/bmlogo.jpg" alt="BTC Logo">
-        <span id="btcPrice">$BMC: Loading...</span>
+            <span>Deposit</span>
+        </a>
+        <a href="/tg-app.html" class="footer-item">
+            <div class="img-wrapper">
+                <img src="/logo-coin/nha.png" alt="Home">
+                <span class="new-badge">+9</span>
+            </div>
+            <span>Home</span>
+        </a>
+        <a href="/wallet.html" class="footer-item">
+            <div class="img-wrapper">
+                <img src="/logo-coin/vi_live.png" alt="Wallet">
+            </div>
+            <span></span>
+        </a>   
     </div>
 
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                id: params.get("id"),
+                first_name: params.get("first_name"),
+                last_name: params.get("last_name") || "",
+                username: params.get("username"),
+                photo_url: params.get("photo_url")
+            };
+        }
 
-        <div id="task-container">
-        <span id="task">Nhiệm vụ đặc biệt để nhận 1 tỷ BMC</span>
-        <button id="task-btn" class="btn">Làm nhiệm vụ</button> <!-- Thay đổi id tại đây -->
-        <div id="wallet-info" style="display: none;">
-            <p id="balance">Số dư: Đang tải...</p>
-        </div>
-    </div>
-</div>  
-   
+        document.addEventListener("DOMContentLoaded", function () {
+            if (window.location.search.includes("id=")) {
+                const user = getQueryParams();
+                localStorage.setItem("user", JSON.stringify(user));
+                window.location.href = "wallet.html";
+            } else {
+                const userData = localStorage.getItem("user");
+                if (userData) {
+                    const user = JSON.parse(userData);
+                    document.getElementById("avatar").src = user.photo_url;
+                    document.getElementById("name").textContent = user.first_name + " " + user.last_name;
+                    document.getElementById("username").textContent = "@" + user.username;
+                    document.getElementById("user-info").style.display = "block";
+                    document.getElementById("telegram-login").style.display = "none";
+                }
+            }
+        });
 
-  
-
-<div class="footer">
-
-    <a href="/ton/ton.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/nap.png" alt="MuaCoin">
-            
-        </div>
-        <span>Deposit</span>
-    </a>
-    <a href="/tg-app.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/nha.png" alt="Home">
-            <span class="new-badge">+9</span>
-        </div>
-        <span>Home</span>
-    </a>
-    </a>
-    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/vi_live.png" alt="Wallet">
-            
-        </div>
-        <span></span>
-    </a>   
-</div>
-
-<script src="wallet.js"></script>
-<script src="task_wallet.js"></script>
-
+        document.getElementById("logout-btn").addEventListener("click", function () {
+            localStorage.removeItem("user");
+            window.location.reload();
+        });
+    </script>
 
 </body>
 </html>
