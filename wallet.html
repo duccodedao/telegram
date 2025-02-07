@@ -141,18 +141,17 @@
 
 
 
-/* Container chứa cả hai phần tử */
+/* Container chính */
 .button-container {
     display: flex;
     flex-direction: column; /* Xếp theo chiều dọc */
     align-items: center; /* Căn giữa theo chiều ngang */
-    justify-content: center; /* Căn giữa theo chiều dọc */
-    width: 100%;
-    min-height: 100vh; /* Đảm bảo nằm giữa trang */
+    justify-content: space-evenly; /* Tự động phân bổ khoảng cách */
+    height: 100%; /* Chiều cao đầy đủ */
+    padding: 20px; /* Thêm khoảng trống bên trong */
 }
 
-
-/* CSS gốc của #send-now */
+/* CSS nút gửi */
 #send-now {
     display: flex;
     align-items: center;
@@ -166,18 +165,24 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px; /* Khoảng cách giữa nút */
 }
 
 /* Định dạng #ton-connect */
 #ton-connect {
     width: 150px;
     height: 40px;
-    background-color: #ccc;
+    background-color: #3498db; /* Màu nền xanh */
+    color: white; /* Màu chữ */
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
+
 
 
 /* Trạng thái khi bị disabled */
