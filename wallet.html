@@ -33,26 +33,45 @@
 
         .user-info {
             display: none;
-            text-align: left;
+            text-align: center;
             padding: 15px;
             background: #292929;
             border-radius: 10px;
         }
 
-        .user-detail {
-            font-size: 16px;
-            padding: 8px;
-            margin: 5px 0;
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid white;
+        }
+
+        .user-details {
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            gap: 10px;
+            text-align: left;
+            align-items: center;
+        }
+
+        .label {
             background: #373737;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .value {
+            background: #474747;
+            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
             transition: 0.3s;
-            display: flex;
-            justify-content: space-between;
         }
 
-        .user-detail:hover {
-            background: #474747;
+        .value:hover {
+            background: #575757;
         }
 
         #logout-btn {
@@ -77,19 +96,20 @@
             let dots = 0;
             const interval = setInterval(() => {
                 dots = (dots + 1) % 4;
-                document.getElementById("premium").textContent = `Pre | Loading${".".repeat(dots)}`;
+                document.getElementById("premium").textContent = `Loading${".".repeat(dots)}`;
             }, 500);
 
             setTimeout(() => {
                 clearInterval(interval);
                 premiumText = user.is_premium === true ? "Có" : "Không";
-                document.getElementById("premium").textContent = `Pre | ${premiumText}`;
+                document.getElementById("premium").textContent = premiumText;
             }, 2000);
 
             const userInfo = {
                 id: user.id,
                 full_name: fullName,
                 username: user.username || "Không có",
+                photo_url: user.photo_url || "https://via.placeholder.com/80",
                 is_premium: premiumText
             };
 
@@ -108,10 +128,11 @@
             document.getElementById("telegram-login").style.display = "none";
             document.getElementById("user-info").style.display = "block";
 
-            document.getElementById("id").textContent = `ID  | ${user.id}`;
-            document.getElementById("name").textContent = `Name | ${user.full_name}`;
-            document.getElementById("username").textContent = `User | @${user.username}`;
-            document.getElementById("premium").textContent = `Pre | Loading...`;
+            document.getElementById("avatar").src = user.photo_url;
+            document.getElementById("id").textContent = user.id;
+            document.getElementById("name").textContent = user.full_name;
+            document.getElementById("username").textContent = `@${user.username}`;
+            document.getElementById("premium").textContent = "Loading...";
         }
 
         function copyToClipboard(text) {
@@ -161,10 +182,13 @@
 
         <!-- Thông tin người dùng -->
         <div id="user-info" class="user-info">
-            <div class="user-detail" id="id" onclick="copyToClipboard(this.textContent)"></div>
-            <div class="user-detail" id="name" onclick="copyToClipboard(this.textContent)"></div>
-            <div class="user-detail" id="username" onclick="copyToClipboard(this.textContent)"></div>
-            <div class="user-detail" id="premium" onclick="copyToClipboard(this.textContent)"></div>
+            <img id="avatar" class="avatar" src="https://via.placeholder.com/80" alt="Avatar">
+            <div class="user-details">
+                <div class="label">ID</div>        <div class="value" id="id" onclick="copyToClipboard(this.textContent)"></div>
+                <div class="label">Tên</div>       <div class="value" id="name" onclick="copyToClipboard(this.textContent)"></div>
+                <div class="label">User</div>      <div class="value" id="username" onclick="copyToClipboard(this.textContent)"></div>
+                <div class="label">Premium</div>   <div class="value" id="premium" onclick="copyToClipboard(this.textContent)"></div>
+            </div>
             <button id="logout-btn" onclick="logout()">Đăng xuất</button>
         </div>
     </div>
