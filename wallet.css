@@ -307,4 +307,15 @@ font-size: 18px; /* Kích thước biểu tượng */
 vertical-align: middle; /* Căn giữa theo chiều dọc */
 }
 
+.verified-text {
+    color: #1cc88a; /* Màu xanh lá */
+    font-weight: bold;
+}
 
+
+.verify-icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 1px;
+    vertical-align: middle;
+}
