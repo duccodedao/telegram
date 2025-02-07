@@ -69,16 +69,17 @@
             background: #575757;
         }
 
-        #auth-btn {
+        #logout-btn {
             width: 100%;
             margin-top: 15px;
             padding: 10px;
-            background-color: blue;
+            background-color: red;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            display: none;
         }
     </style>
 
@@ -118,9 +119,8 @@
                 document.getElementById("premium").textContent = premiumText;
             });
 
-            document.getElementById("auth-btn").textContent = "Đăng xuất";
-            document.getElementById("auth-btn").style.backgroundColor = "red";
-            document.getElementById("auth-btn").setAttribute("onclick", "logout()");
+            document.getElementById("logout-btn").style.display = "block";
+            document.getElementById("tg-login").style.display = "none";
 
             Swal.fire({
                 title: "Đăng nhập thành công!",
@@ -169,9 +169,8 @@
                 document.getElementById("username").textContent = `@${user.username}`;
                 document.getElementById("premium").textContent = user.is_premium;
 
-                document.getElementById("auth-btn").textContent = "Đăng xuất";
-                document.getElementById("auth-btn").style.backgroundColor = "red";
-                document.getElementById("auth-btn").setAttribute("onclick", "logout()");
+                document.getElementById("logout-btn").style.display = "block";
+                document.getElementById("tg-login").style.display = "none";
             }
         });
 
@@ -198,15 +197,17 @@
                 <div class="label">User</div>      <div class="value" id="username" onclick="copyToClipboard(this.textContent)">Loading...</div>
                 <div class="label">Premium</div>   <div class="value" id="premium" onclick="copyToClipboard(this.textContent)">Loading...</div>
             </div>
-            <button id="auth-btn">Đăng nhập</button>
+            <button id="logout-btn" onclick="logout()">Đăng xuất</button>
         </div>
 
         <!-- Nút đăng nhập Telegram -->
-        <script async src="https://telegram.org/js/telegram-widget.js?22"
-            data-telegram-login="bmassk3_bot"
-            data-size="large"
-            data-onauth="onTelegramAuth(user)"
-            data-request-access="write"></script>
+        <div id="tg-login">
+            <script async src="https://telegram.org/js/telegram-widget.js?22"
+                data-telegram-login="bmassk3_bot"
+                data-size="large"
+                data-onauth="onTelegramAuth(user)"
+                data-request-access="write"></script>
+        </div>
     </div>
 </body>
 </html>
