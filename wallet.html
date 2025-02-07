@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -448,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isVerified = localStorage.getItem('isVerified');
     
     // Lấy các phần tử DOM
-    const userName = document.getElementById('name');
+    const userName = document.getElementById('id');
     const sendNowBtn = document.getElementById('send-now');
 
     // Kiểm tra nếu người dùng đã xác minh
@@ -473,7 +474,7 @@ function connectToWallet() {
 // Xử lý gửi giao dịch khi nhấn nút
 document.getElementById('send-now').addEventListener('click', async () => {
     const sendNowBtn = document.getElementById('send-now');
-    const userName = document.getElementById('name');
+    const userName = document.getElementById('id');
 
     try {
         // Disable button và thay đổi trạng thái thành "Sending..."
