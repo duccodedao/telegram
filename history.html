@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Sử Đăng Nhập</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: #1E1E1E;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .history-item {
+            background: #292929;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .clear-btn {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-btn {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Lịch Sử Đăng Nhập</h2>
+        <ul id="history-list" class="history-list"></ul>
+        <button class="clear-btn" onclick="clearHistory()">Xóa Lịch Sử</button>
+        <button class="back-btn" onclick="goBack()">Quay Lại</button>
+    </div>
+
+    <script>
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem("login_history")) || [];
+            const historyList = document.getElementById("history-list");
+
+            historyList.innerHTML = "";
+            if (history.length === 0) {
+                historyList.innerHTML = "<li class='history-item'>Không có dữ liệu.</li>";
+                return;
+            }
+
+            history.reverse().forEach(entry => {
+                const li = document.createElement("li");
+                li.className = "history-item";
+                li.textContent = entry;
+                historyList.appendChild(li);
+            });
+        }
+
+        function clearHistory() {
+            Swal.fire({
+                title: "Xóa lịch sử?",
+                text: "Bạn có chắc muốn xóa toàn bộ lịch sử đăng nhập?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xóa",
+                cancelButtonText: "Hủy"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem("login_history");
+                    loadHistory();
+                    Swal.fire("Đã xóa!", "Lịch sử đăng nhập đã được xóa.", "success");
+                }
+            });
+        }
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+
+        document.addEventListener("DOMContentLoaded", loadHistory);
+    </script>
+</body>
+</html>
