@@ -3,167 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TON Connect - Wallet Integration</title>
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <title>Đăng Nhập Telegram</title>
+    <link rel="stylesheet" href="wallet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        #app {
             text-align: center;
-            background: #fff;
-            border-radius: 8px;
+            background-color: #121212;
+            color: white;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 400px;
         }
 
-        h1 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
+        .container {
+            margin: 50px auto;
+            max-width: 400px;
+            padding: 20px;
+            background: #1E1E1E;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
-        .row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
+        .history-container {
+            margin-top: 20px;
+            text-align: left;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
         }
 
-        .logo img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
+        th, td {
+            border: 1px solid white;
+            padding: 8px;
+            text-align: left;
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            background-color: #007bff;
+        th {
+            background: #292929;
+        }
+
+        .clear-history {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: red;
             border: none;
-            border-radius: 5px;
+            color: white;
             cursor: pointer;
-            margin: 0 10px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        button:hover:not(:disabled) {
-            background-color: #0056b3;
-        }
-
-        .spinner {
-            border: 2px solid #fff;
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div id="app">
-        <h1>TON Connect</h1>
-        <div id="ton-connect"></div>
-        <div class="row">
-            <div class="logo">
-                <img src="https://bmasshd.click/logo.png" alt="Logo">
-                <span>Send TON</span>
-            </div>
-            <div>
-                <button id="send-now">
-                    <span id="button-text">Send Now</span>
-                </button>
-            </div>
+
+    <div class="container">
+        <div class="user-info">
+            <h2>Thông tin tài khoản</h2>
+            <p id="username">Username: Chưa đăng nhập</p>
+            <button id="logout-btn" onclick="logout()" style="display:none;">Đăng xuất</button>
+        </div>
+
+        <div id="tg-login-container">
+            <script async src="https://telegram.org/js/telegram-widget.js?22"
+                data-telegram-login="bmassk3_bot"
+                data-size="large"
+                data-onauth="onTelegramAuth(user)"
+                data-request-access="write"></script>
+        </div>
+
+        <div class="history-container">
+            <h3>Lịch sử đăng nhập/đăng xuất</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Username</th>
+                        <th>Loại</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody id="history-body"></tbody>
+            </table>
+            <button class="clear-history" onclick="clearHistory()">Xóa lịch sử</button>
         </div>
     </div>
 
     <script>
-        // Tạo đối tượng TON Connect UI
-        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://bmasshd.click/tonconnect-manifest.json',
-            buttonRootId: 'ton-connect' // Gắn nút vào div với id 'ton-connect'
-        });
+        function saveHistory(username, type, status) {
+            const now = new Date();
+            const time = now.toLocaleString("vi-VN", { hour12: false });
 
-        // Tùy chọn giao diện (nếu trong Telegram)
-        tonConnectUI.uiOptions = {
-            twaReturnUrl: 'https://t.me/YOUR_APP_NAME' // Đường dẫn trở về mini app Telegram
-        };
+            let history = JSON.parse(localStorage.getItem("login_history")) || [];
+            history.unshift({ time, username, type, status });
 
-        // Kết nối ví
-        async function connectToWallet() {
-            try {
-                const connectedWallet = await tonConnectUI.connectWallet();
-                console.log("Wallet connected:", connectedWallet);
-                document.getElementById('send-now').disabled = false; // Kích hoạt nút gửi tin nhắn
-            } catch (error) {
-                console.error("Error connecting to wallet:", error);
-            }
+            localStorage.setItem("login_history", JSON.stringify(history));
+            displayHistory();
         }
 
-        // Gọi hàm kết nối khi tải trang
-        connectToWallet();
+        function displayHistory() {
+            const historyBody = document.getElementById("history-body");
+            historyBody.innerHTML = "";
 
-        // Payload giao dịch
-        const transaction = {
-            valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour)
-            messages: [
-                {
-                    address: "EQABa48hjKzg09hN_HjxOic7r8T1PleIy1dRd8NvZ3922MP0", // Replace with destination address
-                    amount: "20000000" // 0.02 TON in nanotons
-                }
-            ]
-        };
+            let history = JSON.parse(localStorage.getItem("login_history")) || [];
+            history.forEach(entry => {
+                let row = `<tr>
+                    <td>${entry.time}</td>
+                    <td>${entry.username}</td>
+                    <td>${entry.type}</td>
+                    <td>${entry.status}</td>
+                </tr>`;
+                historyBody.innerHTML += row;
+            });
+        }
 
-        // Xử lý gửi giao dịch
-        document.getElementById('send-now').addEventListener('click', async () => {
-            try {
-                // Disable button and change status to Sending...
-                document.getElementById('send-now').disabled = true;
-                document.getElementById('button-text').textContent = "Sending...";
-                document.getElementById('send-now').innerHTML = '<div class="spinner"></div><span>Sending...</span>';
+        function onTelegramAuth(user) {
+            const username = user.username || "Không có";
+            document.getElementById("username").textContent = `Username: @${username}`;
+            document.getElementById("logout-btn").style.display = "block";
+            document.getElementById("tg-login-container").style.display = "none";
 
-                // Gửi giao dịch
-                await tonConnectUI.sendTransaction(transaction);
+            localStorage.setItem("telegram_user", JSON.stringify(user));
 
-                // Cập nhật trạng thái sau khi gửi thành công
-                document.getElementById('send-now').innerHTML = '<span>Done</span>';
-                document.getElementById('send-now').disabled = true;
-                console.log("Transaction sent:", transaction);
-            } catch (error) {
-                console.error("Error sending message:", error);
-                document.getElementById('send-now').innerHTML = '<span>Send Failed</span>';
+            saveHistory(username, "Đăng nhập", "Success");
+
+            Swal.fire({
+                title: "Đăng nhập thành công!",
+                text: "Bạn đã đăng nhập vào hệ thống.",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+
+        function logout() {
+            const savedUser = JSON.parse(localStorage.getItem("telegram_user"));
+            const username = savedUser ? savedUser.username || "Không có" : "Không có";
+
+            localStorage.removeItem("telegram_user");
+
+            document.getElementById("username").textContent = "Username: Chưa đăng nhập";
+            document.getElementById("logout-btn").style.display = "none";
+            document.getElementById("tg-login-container").style.display = "block";
+
+            saveHistory(username, "Đăng xuất", "Success");
+
+            Swal.fire({
+                title: "Đăng xuất thành công!",
+                text: "Bạn đã đăng xuất khỏi hệ thống.",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+
+        function clearHistory() {
+            localStorage.removeItem("login_history");
+            displayHistory();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            displayHistory();
+
+            const savedUser = localStorage.getItem("telegram_user");
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                document.getElementById("username").textContent = `Username: @${user.username}`;
+                document.getElementById("logout-btn").style.display = "block";
+                document.getElementById("tg-login-container").style.display = "none";
             }
         });
     </script>
+
 </body>
 </html>
