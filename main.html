@@ -324,8 +324,6 @@
 
 
     
-
-<!-- Footer Section -->
 <div class="footer">
     <a href="#" class="footer-item disabled" onclick="alert('Deposit đang bảo trì!'); return false;">
         <div class="img-wrapper">
@@ -339,16 +337,31 @@
             <img src="/logo-coin/nha_live.png" alt="Home">
             <span class="new-badge">+9</span>
         </div>
-        <span></span>
+        <span>Home</span>
     </a>
 
-     <a href="#" class="footer-item disabled" onclick="alert('Wallet đang bảo trì!'); return false;">
+    <a href="#" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
-            <img src="/logo-coin/vi.png" alt="Wallet">
+            <div id="wallet-avatar-container">
+                <div class="skeleton-avatar"></div>
+                <span class="new-badge">Login</span>
+            </div>
         </div>
-        <span>Wallet</span>
+        <span>Profile</span>
     </a>   
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const savedUser = localStorage.getItem("telegram_user");
+        const walletContainer = document.getElementById("wallet-avatar-container");
+
+        if (savedUser) {
+            const user = JSON.parse(savedUser);
+            walletContainer.innerHTML = `<img src="${user.photo_url}" alt="Wallet" style="width:30px; height:30px; border-radius:50%;">`;
+        }
+    });
+</script>
 
 <style>
     .footer-item.disabled {
