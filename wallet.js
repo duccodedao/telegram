@@ -39,8 +39,17 @@ function onTelegramAuth(user) {
 }
 
 function logout() {
-    localStorage.removeItem("telegram_user");
     saveLoginHistory("Đăng xuất");
+
+    // Hiển thị loading trước khi chuyển hướng
+    document.getElementById("loading").style.display = "block";
+
+    setTimeout(() => {
+        localStorage.removeItem("isLoggedIn");
+        window.location.href = "index.html"; // Quay về trang chính
+    }, 1000); // Chờ 1 giây để tránh lỗi
+}
+
 
     Swal.fire({
         title: "Đăng xuất thành công!",
