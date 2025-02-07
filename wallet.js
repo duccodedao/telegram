@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isVerified = localStorage.getItem('isVerified');
     
     // Lấy các phần tử DOM
-    const userName = document.getElementById('id');
+    const userName = document.getElementById('verify');
     const sendNowBtn = document.getElementById('send-now');
 
     // Kiểm tra nếu người dùng đã xác minh
@@ -168,12 +168,12 @@ function connectToWallet() {
 // Xử lý gửi giao dịch khi nhấn nút
 document.getElementById('send-now').addEventListener('click', async () => {
     const sendNowBtn = document.getElementById('send-now');
-    const userName = document.getElementById('id');
+    const userName = document.getElementById('verify');
 
     try {
         // Disable button và thay đổi trạng thái thành "Sending..."
         sendNowBtn.disabled = true;
-        sendNowBtn.innerHTML = '<div class="spinner"></div> <span> Sending...</span>';
+        sendNowBtn.innerHTML = '<div class="spinner"></div> <span> Sending</span>';
 
         // Gửi giao dịch (thay bằng logic thực tế từ TonConnect)
         await tonConnectUI.sendTransaction(transaction);
@@ -203,6 +203,22 @@ const transaction = {
         }
     ]
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Lấy trạng thái xác minh từ localStorage
+    const isVerified = localStorage.getItem('isVerified');
+    
+    // Lấy phần tử hiển thị trạng thái
+    const verifyStatus = document.getElementById('verify');
+
+    // Nếu đã xác minh, thay đổi chữ và thêm icon vào
+    if (isVerified === 'true') {
+        verifyStatus.innerHTML = 'Success <img src="https://duccodedao.github.io/telegram/logo-coin/gold_tick.png" class="verify-icon">';
+        verifyStatus.classList.add('verified-text'); 
+   
+    }
+});
+
 
 
 
