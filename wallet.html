@@ -123,6 +123,41 @@
         #tg-login-container {
             margin-top: 15px;
         }
+
+
+
+
+
+
+
+
+
+        .g-recaptcha {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+/* Nút submit */
+button.submit-btn {
+    background-color: #4CAF50; /* Màu xanh lá */
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button.submit-btn:hover {
+    background-color: #45a049; /* Hiệu ứng hover */
+}
+
+button.submit-btn:active {
+    transform: scale(0.95); /* Hiệu ứng khi nhấn */
+}
+
     </style>
 
     <script>
@@ -273,10 +308,14 @@ function logout() {
                 data-request-access="write"></script>
         </div>
     </div>
-<button id="verify-btn" onclick="verifyCaptcha()" style="display:none; margin-top: 10px;">Xác minh</button>
-    <div id="captcha-container" style="display:none;">
-    <div class="g-recaptcha" data-sitekey="6Lents8qAAAAAJ5_GtvpZKu1JAjgJe0KutegZvfN" data-callback="captchaSuccess"></div>
-</div>
+
+    
+<form action="verify.php" method="POST">
+    <div class="g-recaptcha" data-sitekey="6Lents8qAAAAAJ5_GtvpZKu1JAjgJe0KutegZvfN"></div>
+    <br>
+    <button type="submit" class="submit-btn">Xác minh</button>
+</form>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
     const savedUser = localStorage.getItem("telegram_user");
