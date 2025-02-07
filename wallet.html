@@ -222,7 +222,18 @@
             }
         });
 
-        function logout() {
+function logout() {
+    Swal.fire({
+        title: "Bạn có chắc chắn muốn đăng xuất?",
+        text: "Sau khi đăng xuất, bạn sẽ cần đăng nhập lại để sử dụng dịch vụ.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Có, đăng xuất!",
+        cancelButtonText: "Hủy"
+    }).then((result) => {
+        if (result.isConfirmed) {
             localStorage.removeItem("telegram_user");
             Swal.fire({
                 title: "Đăng xuất thành công!",
@@ -233,6 +244,9 @@
                 window.location.reload();
             });
         }
+    });
+}
+
     </script>
 </head>
 <body>
