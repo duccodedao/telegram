@@ -34,10 +34,7 @@
 .footer-item:hover {
     color: #fff;
 }
-.footer-item.active {
-    background-color: #333; /* Màu nền khi mục được chọn */
-    color: #ff0; /* Màu chữ khi mục được chọn */
-}
+
 .new-badge {
     position: absolute;
     top: 5px;
@@ -49,70 +46,6 @@
     font-size: 7px;
     font-weight: bold;
     z-index: 1;
-}
-
-
-.border: none;
-border-radius: 5px;
-cursor: pointer;
-font-size: 14px;
-transition: background-color 0.3s;
-}
-
-#send-now img {
-width: 20px;
-height: 20px;
-margin-right: 10px;
-}
-
-#send-now:hover {
-background-color: #e55d00;
-}
-
-/* Hiển thị giá */
-.price-display {
-display: flex;
-align-items: center;
-justify-content: flex-start;
-padding: 10px;
-margin-top: 10px;
-background: #333333;
-color: #ff6a00;
-border-radius: 25px;
-font-size: 14px;
-}
-
-.price-display img {
-width: 25px;
-height: 25px;
-margin-right: 10px;
-border-radius: 5px;
-}
-
-/* Nút tham gia Telegram */
-.button {
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 10px 20px;
-background-color: #ff6a00;
-color: #fff;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-font-size: 14px;
-margin-top: 20px;
-transition: background-color 0.3s;
-}
-
-.button img {
-width: 20px;
-height: 20px;
-margin-right: 10px;
-}
-
-.button:hover {
-background-color: #e55d00;
 }
 
 
