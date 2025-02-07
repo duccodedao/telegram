@@ -94,30 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-function logout() {
-Swal.fire({
-title: "Are you sure you want to logout?",
-text: "After logging out, you will need to log in again to use the service.",
-icon: "warning",
-showCancelButton: true,
-confirmButtonColor: "#d33",
-cancelButtonColor: "#3085d6",
-confirmButtonText: "Log out!",
-cancelButtonText: "Cancel"
-}).then((result) => {
-if (result.isConfirmed) {
-    localStorage.removeItem("telegram_user");
-    Swal.fire({
-        title: "Successfully!",
-        text: "You have logged out of the mini app.",
-        timer: 2000,
-        showConfirmButton: false
-    }).then(() => {
-        window.location.reload();
-    });
-}
-});
-}
+
 
 
 
@@ -143,7 +120,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const isVerified = localStorage.getItem('isVerified');
     
     // Lấy các phần tử DOM
-    const userName = document.getElementById('verify');
+    const userName = document.getElementById('verify')document.addEventListener("DOMContentLoaded", function () {
+    const savedUser = localStorage.getItem("telegram_user");
+    
+    if (savedUser) {
+        const user = JSON.parse(savedUser);
+
+        // Hiển thị thông tin người dùng
+        document.getElementById("avatar").src = user.photo_url;
+        document.querySelector(".skeleton-loader").style.display = "none";
+        document.getElementById("avatar").style.display = "block";
+        document.getElementById("id").textContent = user.id;
+        document.getElementById("name").textContent = user.full_name;
+        document.getElementById("username").textContent = `@${user.username}`;
+        document.getElementById("premium").textContent = user.is_premium;
+        document.getElementById("logout-btn").style.display = "block";
+        
+        // Ẩn nút đăng nhập
+        document.getElementById("tg-login-container").style.display = "none";
+    } else {
+        // Hiển thị nút đăng nhập
+        document.getElementById("tg-login-container").style.display = "block";
+        document.getElementById("logout-btn").style.display = "none";
+    }
+});
+
+// Hàm đăng xuất
+function logout() {
+    Swal.fire({
+        title: "Are you sure you want to logout?",
+        text: "After logging out, you will need to log in again to use the service.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Log out!",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            localStorage.removeItem("telegram_user");
+            Swal.fire({
+                title: "Successfully!",
+                text: "You have logged out of the mini app.",
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.reload();
+            });
+        }
+    });
+}
+;
     const sendNowBtn = document.getElementById('send-now');
 
     // Kiểm tra nếu người dùng đã xác minh
