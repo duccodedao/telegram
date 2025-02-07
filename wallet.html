@@ -142,20 +142,44 @@
 
 
         /* Gộp chung CSS cho cả #send-now và #logout-btn */
-#send-now {
-    display: flex; /* Căn chỉnh icon và chữ */
+/* Container chứa cả hai phần tử */
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Đẩy các phần tử về hai bên */
     align-items: center;
-    background: linear-gradient(90deg, #4e73df, #1cc88a); /* Nền gradient */
-    color: white; /* Màu chữ */
+    width: 100%; /* Chiều rộng full */
+    max-width: 500px; /* Giới hạn tối đa để không quá rộng */
+    margin: 20px auto; /* Căn giữa theo chiều ngang */
+    padding: 0 20px; /* Tạo khoảng cách hai bên */
+}
+
+/* CSS gốc của #send-now */
+#send-now {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(90deg, #4e73df, #1cc88a);
+    color: white;
     font-size: 16px;
     font-weight: bold;
-    padding: 10px 24px; /* Tăng khoảng cách bên trong nút */
-    border: none; /* Bỏ viền */
-    border-radius: 50px; /* Bo tròn nút */
+    padding: 10px 24px;
+    border: none;
+    border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Đổ bóng mạnh hơn */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
+
+/* Định dạng #ton-connect để có kích thước phù hợp */
+#ton-connect {
+    width: 150px; /* Định kích thước theo nhu cầu */
+    height: 40px;
+    background-color: #ccc; /* Màu nền mặc định */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+}
+
 
 /* Trạng thái khi bị disabled */
 #send-now:disabled, #logout-btn:disabled {
@@ -335,9 +359,15 @@ function logout() {
                 <div class="skeleton-loader"></div>
                 <img id="avatar" class="avatar" src="https://via.placeholder.com/80" alt="Avatar">
             </div>
-            <button id="send-now" class="btn">Verify 
-               <i class="fa fa-check-circle tick-icon" aria-hidden="true"></i>
-            </button>
+
+            
+<div class="button-container">
+    <button id="send-now" class="btn">Verify 
+        <i class="fa fa-check-circle tick-icon" aria-hidden="true"></i>
+    </button>
+    <div id="ton-connect"></div>
+</div>
+
             <div class="user-details">
                 <div class="label">ID</div>        <div class="value" id="id" onclick="copyToClipboard(this.textContent)">Loading...</div>
                 <div class="label">Tên</div>       <div class="value" id="name" onclick="copyToClipboard(this.textContent)">Loading...</div>
@@ -345,7 +375,7 @@ function logout() {
                 <div class="label">Premium</div>   <div class="value" id="premium" onclick="copyToClipboard(this.textContent)">Loading...</div>
          
             </div>
-            <div id="ton-connect"></div>
+
             <button id="logout-btn" onclick="logout()">Đăng xuất</button>
 
         </div>
