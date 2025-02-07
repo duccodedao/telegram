@@ -26,31 +26,41 @@
             text-align: center;
             margin: 20px 0;
         }
-        #user-info {
-            display: none;
-            text-align: center;
-            margin-top: 10px;
+        #login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0088cc;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
         }
-        #avatar {
-            width: 50px;
-            height: 50px;
+        #login-btn img {
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
+            margin-right: 10px;
         }
         #logout-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
             background-color: red;
             color: white;
             border: none;
-            padding: 8px 15px;
-            cursor: pointer;
             border-radius: 5px;
-            margin-top: 10px;
+            cursor: pointer;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
     <div class="login-container">
-        <!-- Telegram Login Widget -->
+        <!-- Nút Đăng Nhập Telegram -->
         <div id="telegram-login">
             <script async src="https://telegram.org/js/telegram-widget.js?22"
                 data-telegram-login="samplebot"
@@ -59,16 +69,18 @@
                 data-request-access="write"></script>
         </div>
 
-        <!-- User Information -->
-        <div id="user-info">
-            <img id="avatar" src="" alt="Avatar">
-            <h3 id="name"></h3>
-            <p id="username"></p>
+        <!-- Thông Tin Người Dùng -->
+        <div id="user-info" style="display: none;">
+            <a id="login-btn" href="#">
+                <img id="avatar" src="" alt="Avatar">
+                <span id="name"></span>
+            </a>
             <button id="logout-btn">Đăng xuất</button>
         </div>
     </div>
 
     <script>
+        // Lấy thông tin từ URL
         function getQueryParams() {
             const params = new URLSearchParams(window.location.search);
             return {
@@ -80,33 +92,39 @@
             };
         }
 
+        // Hàm xử lý khi người dùng đăng nhập qua Telegram
+        function onTelegramAuth(user) {
+            localStorage.setItem("user", JSON.stringify(user));
+            displayUserInfo(user);
+        }
+
+        // Hiển thị thông tin người dùng
+        function displayUserInfo(user) {
+            document.getElementById("telegram-login").style.display = "none";
+            const userInfoDiv = document.getElementById("user-info");
+            userInfoDiv.style.display = "block";
+
+            const avatar = document.getElementById("avatar");
+            const name = document.getElementById("name");
+
+            avatar.src = user.photo_url || "default-avatar.png";
+            name.textContent = user.first_name + " " + user.last_name;
+        }
+
+        // Kiểm tra thông tin người dùng trong localStorage
         document.addEventListener("DOMContentLoaded", function () {
-            if (window.location.search.includes("id=")) {
-                const user = getQueryParams();
-                localStorage.setItem("user", JSON.stringify(user));
-                window.location.href = "wallet.html";
-            } else {
-                const userData = localStorage.getItem("user");
-                if (userData) {
-                    const user = JSON.parse(userData);
-                    document.getElementById("avatar").src = user.photo_url;
-                    document.getElementById("name").textContent = user.first_name + " " + user.last_name;
-                    document.getElementById("username").textContent = "@" + user.username;
-                    document.getElementById("user-info").style.display = "block";
-                    document.getElementById("telegram-login").style.display = "none";
-                }
+            const userData = localStorage.getItem("user");
+            if (userData) {
+                const user = JSON.parse(userData);
+                displayUserInfo(user);
             }
         });
 
+        // Xử lý nút Đăng xuất
         document.getElementById("logout-btn").addEventListener("click", function () {
             localStorage.removeItem("user");
             window.location.reload();
         });
-
-        function onTelegramAuth(user) {
-            alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + 
-                  (user.username ? ', @' + user.username : '') + ')');
-        }
     </script>
 
 </body>
