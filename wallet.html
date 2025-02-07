@@ -33,39 +33,32 @@
 
         .user-info {
             display: none;
-            text-align: center;
-        }
-
-        .user-info img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-            border: 3px solid #00AEEF;
+            text-align: left;
+            padding: 15px;
+            background: #292929;
+            border-radius: 10px;
         }
 
         .user-detail {
-            padding: 10px;
-            background: #292929;
+            font-size: 16px;
+            padding: 8px;
+            margin: 5px 0;
+            background: #373737;
             border-radius: 5px;
-            margin: 8px 0;
             cursor: pointer;
             transition: 0.3s;
-            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .user-detail:hover {
-            background: #373737;
-        }
-
-        #premium {
-            font-weight: bold;
-            color: #00AEEF;
+            background: #474747;
         }
 
         #logout-btn {
+            width: 100%;
             margin-top: 15px;
-            padding: 10px 20px;
+            padding: 10px;
             background-color: red;
             color: white;
             border: none;
@@ -80,40 +73,45 @@
             const fullName = user.last_name ? `${user.first_name} ${user.last_name}` : user.first_name;
             let premiumText = "Loading...";
 
-            // Hiệu ứng dấu 3 chấm khi load Premium
+            // Hiệu ứng dấu ba chấm khi load Premium
             let dots = 0;
             const interval = setInterval(() => {
                 dots = (dots + 1) % 4;
-                document.getElementById("premium").textContent = `Premium: Loading${".".repeat(dots)}`;
+                document.getElementById("premium").textContent = `Pre | Loading${".".repeat(dots)}`;
             }, 500);
 
             setTimeout(() => {
                 clearInterval(interval);
-                premiumText = user.is_premium === true ? "Có ✅" : "Không ❌";
-                document.getElementById("premium").textContent = `Premium: ${premiumText}`;
+                premiumText = user.is_premium === true ? "Có" : "Không";
+                document.getElementById("premium").textContent = `Pre | ${premiumText}`;
             }, 2000);
 
             const userInfo = {
                 id: user.id,
                 full_name: fullName,
                 username: user.username || "Không có",
-                is_premium: premiumText,
-                photo_url: user.photo_url || "default-avatar.png"
+                is_premium: premiumText
             };
 
             localStorage.setItem("telegram_user", JSON.stringify(userInfo));
             displayUserInfo(userInfo);
+
+            Swal.fire({
+                title: "Đăng nhập thành công!",
+                text: "Bạn đã đăng nhập vào hệ thống.",
+                timer: 2000,
+                showConfirmButton: false
+            });
         }
 
         function displayUserInfo(user) {
             document.getElementById("telegram-login").style.display = "none";
             document.getElementById("user-info").style.display = "block";
 
-            document.getElementById("avatar").src = user.photo_url;
-            document.getElementById("id").textContent = `ID: ${user.id}`;
-            document.getElementById("name").textContent = `Tên: ${user.full_name}`;
-            document.getElementById("username").textContent = `Username: @${user.username}`;
-            document.getElementById("premium").textContent = `Premium: Loading...`; // Ban đầu loading
+            document.getElementById("id").textContent = `ID  | ${user.id}`;
+            document.getElementById("name").textContent = `Name | ${user.full_name}`;
+            document.getElementById("username").textContent = `User | @${user.username}`;
+            document.getElementById("premium").textContent = `Pre | Loading...`;
         }
 
         function copyToClipboard(text) {
@@ -121,8 +119,7 @@
                 Swal.fire({
                     title: "Đã sao chép!",
                     text: text,
-                    icon: "success",
-                    timer: 2000,
+                    timer: 1500,
                     showConfirmButton: false
                 });
             }).catch(err => {
@@ -140,7 +137,14 @@
 
         function logout() {
             localStorage.removeItem("telegram_user");
-            window.location.reload();
+            Swal.fire({
+                title: "Đăng xuất thành công!",
+                text: "Bạn đã đăng xuất khỏi hệ thống.",
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.reload();
+            });
         }
     </script>
 </head>
@@ -157,7 +161,6 @@
 
         <!-- Thông tin người dùng -->
         <div id="user-info" class="user-info">
-            <img id="avatar" src="" alt="Avatar">
             <div class="user-detail" id="id" onclick="copyToClipboard(this.textContent)"></div>
             <div class="user-detail" id="name" onclick="copyToClipboard(this.textContent)"></div>
             <div class="user-detail" id="username" onclick="copyToClipboard(this.textContent)"></div>
