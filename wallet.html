@@ -132,30 +132,49 @@
 
 
 
-        .g-recaptcha {
+/* Căn giữa reCAPTCHA trên toàn trang */
+.recaptcha-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Chiều cao 100% màn hình */
+}
+
+/* Giữ nguyên phần căn giữa reCAPTCHA */
+.g-recaptcha {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
 }
 
-/* Nút submit */
-button.submit-btn {
-    background-color: #4CAF50; /* Màu xanh lá */
+/* Căn chỉnh nút xác minh */
+.submit-btn {
+    background: linear-gradient(135deg, #4CAF50, #45a049); /* Gradient xanh lá */
     color: white;
-    font-size: 16px;
-    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 24px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    display: block;
+    width: 100%; /* Để nút rộng hơn */
+    max-width: 250px; /* Giới hạn chiều rộng */
+    margin: 20px auto; /* Căn giữa */
+    text-transform: uppercase; /* Chữ in hoa */
+    box-shadow: 0 4px 10px rgba(0, 255, 0, 0.3);
 }
 
-button.submit-btn:hover {
-    background-color: #45a049; /* Hiệu ứng hover */
+/* Hiệu ứng khi di chuột vào */
+.submit-btn:hover {
+    background: linear-gradient(135deg, #45a049, #3a8d3a);
+    box-shadow: 0 6px 15px rgba(0, 255, 0, 0.5);
 }
 
-button.submit-btn:active {
-    transform: scale(0.95); /* Hiệu ứng khi nhấn */
+/* Hiệu ứng khi nhấn */
+.submit-btn:active {
+    transform: scale(0.97);
 }
 
     </style>
@@ -308,12 +327,15 @@ function logout() {
                 data-request-access="write"></script>
         </div>
     </div>
+<div class="recaptcha-container">
+    <div class="g-recaptcha" data-sitekey="6Lents8qAAAAAJ5_GtvpZKu1JAjgJe0KutegZvfN"></div>
+</div>
 
     
 
 
-    <div class="g-recaptcha" data-sitekey="6Lents8qAAAAAJ5_GtvpZKu1JAjgJe0KutegZvfN"></div>
-    <br>
+
+
     <button class="submit-btn" id="verifyBtn">Xác minh</button>
 
     <p class="result" id="resultText"></p>
