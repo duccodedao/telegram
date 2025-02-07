@@ -1,96 +1,73 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thanh Toán Vật Phẩm</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      width: 300px;
-    }
-
-    .item img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập Telegram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        #user-info {
+            margin-top: 20px;
+            display: none;
+        }
+        #avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Thanh Toán Vật Phẩm</h1>
-    <div class="item">
-      <img src="https://via.placeholder.com/300x200" alt="Vật phẩm mẫu">
-      <h3>Vật Phẩm: Bảo Vệ Tài Khoản</h3>
-      <p>Giá: 50 Stars</p>
-      <button onclick="purchase(50)">Mua</button>
+    <div class="container">
+        <h2>Đăng nhập bằng Telegram</h2>
+        <script async src="https://telegram.org/js/telegram-widget.js?7"
+            data-telegram-login="bmassk3_bot"
+            data-size="large"
+            data-auth-url="index.html"
+            data-request-access="write"></script>
+
+        <div id="user-info">
+            <img id="avatar" src="" alt="Avatar">
+            <h3 id="name"></h3>
+            <p id="username"></p>
+        </div>
     </div>
-  </div>
 
-  <script>
-    const botToken = '7545800115:AAHiyoeL2SkxXGaecK0VdgBovlNfQxTJmBA';
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                id: params.get("id"),
+                first_name: params.get("first_name"),
+                last_name: params.get("last_name") || "",
+                username: params.get("username"),
+                photo_url: params.get("photo_url")
+            };
+        }
 
-    function purchase(starsRequired) {
-      // Kiểm tra số dư Star người dùng
-      fetch(`https://api.telegram.org/bot${botToken}/getStarsBalance`)
-        .then(response => response.json())
-        .then(data => {
-          if (data.result.balance >= starsRequired) {
-            alert(`Đang tiến hành thanh toán ${starsRequired} Stars`);
-            // Thực hiện thanh toán vật phẩm
-            fetch(`https://api.telegram.org/bot${botToken}/payForItem`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                stars: starsRequired,
-                item_id: 'item001', // Mã vật phẩm
-              }),
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.ok) {
-                alert('Thanh toán thành công');
-              } else {
-                alert('Có lỗi trong quá trình thanh toán');
-              }
-            });
-          } else {
-            alert('Số dư Stars không đủ');
-          }
+        document.addEventListener("DOMContentLoaded", function () {
+            if (window.location.search.includes("id=")) {
+                const user = getQueryParams();
+                localStorage.setItem("user", JSON.stringify(user));
+                window.location.href = "index.html";
+            } else {
+                const userData = localStorage.getItem("user");
+                if (userData) {
+                    const user = JSON.parse(userData);
+                    document.getElementById("avatar").src = user.photo_url;
+                    document.getElementById("name").textContent = user.first_name + " " + user.last_name;
+                    document.getElementById("username").textContent = "@" + user.username;
+                    document.getElementById("user-info").style.display = "block";
+                }
+            }
         });
-    }
-  </script>
+    </script>
 </body>
 </html>
-
-
-
-
