@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Cập nhật trạng thái xác minh (Hiển thị tick xanh và đổi nút)
 function updateVerifiedStatus(userName, sendNowBtn) {
     // Thêm tick xanh vào tên người dùng và hiển thị icon "verified"
-    userName.innerHTML = 'Verified<img src="https://duccodedao.github.io/telegram/logo-coin/gold_tick.png" class="verified-tick" alt="Verified" />'; 
+    userName.innerHTML = 'Verified <img src="https://duccodedao.github.io/telegram/logo-coin/gold_tick.png" class="verified-tick" alt="Verified" />'; 
     
     // Đổi văn bản nút thành 'Verified'
     sendNowBtn.innerHTML = '<span>Verified</span>'; 
