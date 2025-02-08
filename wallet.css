@@ -335,3 +335,85 @@ vertical-align: middle; /* Căn giữa theo chiều dọc */
     height: 100%;
     object-fit: cover;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+  .avatar-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+/* Hiệu ứng loading xoay vòng */
+.loading-spinner {
+    width: 75px;
+    height: 75px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    z-index: 2;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.skeleton-ava {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(120deg, #e0e0e0 30%, #f8f8f8 50%, #e0e0e0 70%);
+    background-size: 200% 100%;
+    animation: skeleton-glow 1.5s infinite linear;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+@keyframes skeleton-glow {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+/* Khi ảnh tải xong */
+.avatar.loaded {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Ẩn hiệu ứng loading sau khi ảnh tải xong */
+.avatar.loaded + .skeleton-ava,
+.avatar.loaded ~ .loading-spinner {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
