@@ -48,12 +48,12 @@ function onTelegramAuth(user) {
     document.getElementById('id').textContent = user.id || 'N/A';
     document.getElementById('name').textContent = user.first_name || 'N/A';
     document.getElementById('username').textContent = user.username || 'N/A';
-    document.getElementById('verify').textContent = 'Checking...'; // Trạng thái mặc định
+    document.getElementById('verify').textContent = 'Verified'; // Hoặc trạng thái bạn muốn
     document.getElementById('premium').textContent = user.premium ? 'Yes' : 'No';
 
     // Cập nhật ảnh đại diện của người dùng
     const avatarImg = document.getElementById('avatar');
-    avatarImg.src = user.photo_url || 'https://via.placeholder.com/80';
+    avatarImg.src = user.photo_url || 'https://via.placeholder.com/80';  // Gán ảnh đại diện
 
     // Ẩn nút đăng nhập và hiện nút đăng xuất
     document.getElementById('tg-login-container').style.display = 'none';  // Ẩn nút đăng nhập
@@ -67,6 +67,7 @@ function onTelegramAuth(user) {
         timer: 1500
     });
 }
+
 
 // Hàm đăng xuất với xác nhận
 function logout() {
