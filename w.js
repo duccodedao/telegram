@@ -196,16 +196,7 @@ if (Telegram.WebApp.initDataUnsafe) {
         document.getElementById('user-name').textContent = userName;
         document.getElementById('user-username').textContent = `@${username}`;
         
-    } else {
-        // Trường hợp không có thông tin người dùng
-        document.getElementById('user-name').textContent = "Loading...";
-        document.getElementById('user-username').textContent = "@username";
-    
     }
-} else {
-    console.error("Telegram WebApp API không khả dụng hoặc không có thông tin người dùng.");
-}
-
 
 window.addEventListener('load', () => {
     if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
