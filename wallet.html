@@ -61,15 +61,14 @@
 
 
 <div class="footer">
-    <a href="#" class="footer-item disabled" onclick="return showDepositAlert();">
-
+    <a href="#" class="footer-item disabled" onclick="alert('Deposit đang bảo trì!'); return false;">
         <div class="img-wrapper">
             <img src="/logo-coin/nap.png" alt="MuaCoin">
         </div>
         <span>Deposit</span>
     </a>
 
-    <a href="/main" class="footer-item" onclick="setActive(this)">
+    <a href="#" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
             <img src="/logo-coin/nha.png" alt="Home">
             <span class="new-badge">Hot</span>
@@ -77,9 +76,10 @@
         <span>Home</span>
     </a>
 
- <a href="#" class="footer-item" onclick="setActive(this)">
+    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
-            <div id="avatar" src="https://via.placeholder.com/80" alt="Avatar">
+            <div id="wallet-avatar-container">
+                <div class="skeleton-avatar"></div>
                 <span class="new-badge">Login</span>
             </div>
         </div>
@@ -87,6 +87,17 @@
     </a>   
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const savedUser = localStorage.getItem("telegram_user");
+        const walletContainer = document.getElementById("wallet-avatar-container");
+
+        if (savedUser) {
+            const user = JSON.parse(savedUser);
+            walletContainer.innerHTML = `<img src="${user.photo_url}" alt="Wallet" style="width:30px; height:30px; border-radius:50%;">`;
+        }
+    });
+</script>
 
 <script src="/w.js"></script>
 <script src="/ton-connect.js"></script>
