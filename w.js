@@ -67,5 +67,42 @@ const transaction = {
 
 
 
+// Hàm xử lý đăng nhập từ Telegram
+function onTelegramAuth(user) {
+    // Lấy thông tin người dùng và hiển thị trên giao diện
+    document.getElementById('id').textContent = user.id || 'N/A';
+    document.getElementById('name').textContent = user.first_name || 'N/A';
+    document.getElementById('username').textContent = user.username || 'N/A';
+    document.getElementById('verify').textContent = 'Verified'; // Có thể thay đổi tùy theo trạng thái
+    document.getElementById('premium').textContent = user.premium ? 'Yes' : 'No';
+
+    // Cập nhật ảnh đại diện của người dùng
+    document.getElementById('avatar').src = user.photo_url || 'https://via.placeholder.com/80';
+    
+    // Hiển thị thông báo đăng nhập thành công
+    Swal.fire({
+        icon: 'success',
+        title: 'Logged In!',
+        text: 'You have successfully logged in with Telegram.',
+        timer: 1500
+    });
+}
+
+// Hàm sao chép thông tin vào clipboard
+function copyToClipboard(text) {
+    const tempInput = document.createElement("input");
+    document.body.appendChild(tempInput);
+    tempInput.value = text;
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Copied!',
+        text: 'The text has been copied to clipboard.',
+        timer: 1500
+    });
+}
 
 
