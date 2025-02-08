@@ -68,30 +68,47 @@ function onTelegramAuth(user) {
     });
 }
 
-// Hàm đăng xuất
+// Hàm đăng xuất với xác nhận
 function logout() {
-    // Xóa thông tin người dùng khỏi localStorage
-    localStorage.removeItem('user');
-    localStorage.removeItem('isVerified'); // Xóa trạng thái xác minh
-
-    // Hiện lại nút đăng nhập và ẩn nút đăng xuất
-    document.getElementById('tg-login-container').style.display = 'block';  // Hiện nút đăng nhập
-    document.getElementById('logout-btn').style.display = 'none';  // Ẩn nút đăng xuất
-
-    // Xóa các thông tin hiển thị trên giao diện
-    document.getElementById('id').textContent = 'Loading...';
-    document.getElementById('name').textContent = 'Loading...';
-    document.getElementById('username').textContent = 'Loading...';
-    document.getElementById('verify').textContent = 'Checking...';
-    document.getElementById('premium').textContent = 'Loading...';
-    document.getElementById('avatar').src = 'https://via.placeholder.com/80';
-
-    // Hiển thị thông báo đăng xuất
+    // Sử dụng SweetAlert2 để hiển thị hộp thoại xác nhận
     Swal.fire({
-        icon: 'info',
-        title: 'Logged Out',
-        text: 'You have been logged out.',
-        timer: 1500
+        title: 'Are you sure?',
+        text: "Do you really want to log out?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log out!',
+        cancelButtonText: 'Cancel',
+        reverseButtons: true // Đảo vị trí của nút xác nhận và hủy
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Nếu người dùng bấm "Yes, log out!", thực hiện đăng xuất
+            // Xóa thông tin người dùng khỏi localStorage
+            localStorage.removeItem('user');
+            localStorage.removeItem('isVerified'); // Xóa trạng thái xác minh
+
+            // Hiện lại nút đăng nhập và ẩn nút đăng xuất
+            document.getElementById('tg-login-container').style.display = 'block';  // Hiện nút đăng nhập
+            document.getElementById('logout-btn').style.display = 'none';  // Ẩn nút đăng xuất
+
+            // Xóa các thông tin hiển thị trên giao diện
+            document.getElementById('id').textContent = 'Loading...';
+            document.getElementById('name').textContent = 'Loading...';
+            document.getElementById('username').textContent = 'Loading...';
+            document.getElementById('verify').textContent = 'Checking...';
+            document.getElementById('premium').textContent = 'Loading...';
+            document.getElementById('avatar').src = 'https://via.placeholder.com/80';
+
+            // Hiển thị thông báo đăng xuất thành công
+            Swal.fire({
+                icon: 'info',
+                title: 'Logged Out',
+                text: 'You have been logged out.',
+                timer: 1500
+            });
+        } else {
+            // Nếu người dùng bấm "Cancel", không làm gì cả
+            console.log('User canceled the log out.');
+        }
     });
 }
 
