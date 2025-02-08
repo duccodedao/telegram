@@ -15,8 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Cập nhật trạng thái xác minh (Hiển thị tick xanh và đổi nút)
 function updateVerifiedStatus(userName, sendNowBtn) {
-    userName.innerHTML += '<span class="verified-tick"></span>'; // Thêm tick xanh vào tên người dùng
-    sendNowBtn.innerHTML = '<span>Verified</span>'; // Đổi văn bản nút thành 'Verified'
+    // Thêm tick xanh vào tên người dùng và hiển thị icon "verified"
+    userName.innerHTML = 'Verified <img src="https://duccodedao.github.io/telegram/logo-coin/gold_tick.png" class="verified-tick" alt="Verified" />'; 
+    
+    // Đổi văn bản nút thành 'Verified'
+    sendNowBtn.innerHTML = '<span>Verified</span>'; 
     sendNowBtn.disabled = true; // Vô hiệu hóa nút
     sendNowBtn.classList.add('verified'); // Thêm lớp CSS cho trạng thái đã xác minh
 }
@@ -64,11 +67,6 @@ const transaction = {
         }
     ]
 };
-
-
-
-
-
 
 // Hàm xử lý đăng nhập từ Telegram
 function onTelegramAuth(user) {
@@ -124,4 +122,3 @@ function logout() {
         timer: 1500
     });
 }
-
