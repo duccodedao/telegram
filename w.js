@@ -148,3 +148,23 @@ const transaction = {
         }
     ]
 };
+
+
+
+
+// Hàm sao chép thông tin vào clipboard
+function copyToClipboard(text) {
+    const tempInput = document.createElement("input");
+    document.body.appendChild(tempInput);
+    tempInput.value = text;
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Copied!',
+        text: 'The text has been copied to clipboard.',
+        timer: 1500
+    });
+}
