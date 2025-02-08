@@ -25,7 +25,7 @@ function onTelegramAuth(user) {
 
     localStorage.setItem("telegram_user", JSON.stringify(userInfo));
 
-    document.getElementById("avatar").src = user.photo_url || "https://via.placeholder.com/80";
+    document.getElementById("avatar").src = user.photo_url;
     document.querySelector(".skeleton-loader").style.display = "none";
     document.getElementById("avatar").style.display = "block";
 
@@ -47,6 +47,12 @@ function onTelegramAuth(user) {
     });
 }
 
+
+function logout() {
+    saveLoginHistory("Đăng xuất");
+    // Hiển thị loading trước khi chuyển hướng
+    document.getElementById("loading").style.display = "block";
+    }
 function showLoadingEffect(callback) {
     const fields = ["id", "name", "username", "premium"];
     fields.forEach(field => {
