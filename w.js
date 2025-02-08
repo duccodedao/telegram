@@ -152,19 +152,26 @@ const transaction = {
 
 
 
-// Hàm sao chép thông tin vào clipboard
+// Hàm sao chép nội dung vào clipboard và hiển thị thông báo
 function copyToClipboard(text) {
-    const tempInput = document.createElement("input");
-    document.body.appendChild(tempInput);
-    tempInput.value = text;
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
-
-    Swal.fire({
-        icon: 'success',
-        title: 'Copied!',
-        text: 'The text has been copied to clipboard.',
-        timer: 1500
+    // Sử dụng Clipboard API để sao chép
+    navigator.clipboard.writeText(text).then(() => {
+        // Hiển thị thông báo khi sao chép thành công
+        Swal.fire({
+            icon: 'success',
+            title: 'Copied!',
+            text: 'The content has been copied to clipboard.',
+            timer: 1500,
+            showConfirmButton: false
+        });
+    }).catch(err => {
+        // Nếu có lỗi khi sao chép, hiển thị thông báo lỗi
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Failed to copy content.',
+            timer: 1500,
+            showConfirmButton: false
+        });
     });
 }
