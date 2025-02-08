@@ -87,7 +87,17 @@
     </a>   
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const savedUser = localStorage.getItem("telegram_user");
+        const walletContainer = document.getElementById("wallet-avatar-container");
 
+        if (savedUser) {
+            const user = JSON.parse(savedUser);
+            walletContainer.innerHTML = `<img src="${user.photo_url}" alt="Wallet" style="width:30px; height:30px; border-radius:50%;">`;
+        }
+    });
+</script>
 
 <script src="/w.js"></script>
 <script src="/ton-connect.js"></script>
