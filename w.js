@@ -34,7 +34,7 @@ function updateVerifiedStatus(userName, sendNowBtn) {
     userName.innerHTML = 'Successed <img src="https://duccodedao.github.io/telegram/logo-coin/gold_tick.png" class="verified-tick" alt="Verified" />'; 
     
     // Đổi văn bản nút thành 'Verified'
-    sendNowBtn.innerHTML = '<span>Verified</span>'; 
+    sendNowBtn.innerHTML = '<span>bbbbbbbbbbbbbbbbbbbbbbbb</span>'; 
     sendNowBtn.disabled = true; // Vô hiệu hóa nút
     sendNowBtn.classList.add('verified'); // Thêm lớp CSS cho trạng thái đã xác minh
 }
@@ -48,7 +48,7 @@ function onTelegramAuth(user) {
     document.getElementById('id').textContent = user.id || 'N/A';
     document.getElementById('name').textContent = user.first_name || 'N/A';
     document.getElementById('username').textContent = user.username || 'N/A';
-    document.getElementById('verify').textContent = 'Verified'; // Hoặc trạng thái bạn muốn
+    document.getElementById('verify').textContent = 'aaaaaaaaaaaaaaaaaaa'; // Hoặc trạng thái bạn muốn
     document.getElementById('premium').textContent = user.premium ? 'Yes' : 'No';
 
     // Cập nhật ảnh đại diện của người dùng
