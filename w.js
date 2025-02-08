@@ -125,19 +125,3 @@ function logout() {
     });
 }
 
-// Kiểm tra trạng thái đăng nhập khi tải lại trang
-function checkLoginStatus() {
-    const user = localStorage.getItem('user');
-    if (user) {
-        // Nếu có thông tin người dùng trong localStorage, hiển thị thông tin người dùng
-        const parsedUser = JSON.parse(user);
-        onTelegramAuth(parsedUser);  // Gọi lại hàm đăng nhập để hiển thị thông tin
-
-        // Ẩn nút đăng nhập và hiện nút đăng xuất
-        document.getElementById('tg-login-container').style.display = 'none';
-        document.getElementById('logout-btn').style.display = 'inline-block';
-    }
-}
-
-// Gọi hàm kiểm tra trạng thái đăng nhập khi trang được tải
-window.onload = checkLoginStatus;
