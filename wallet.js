@@ -1,4 +1,4 @@
-// Hàm xử lý khi người dùng đăng nhập qua Telegram
+// Hàm xử lý đăng nhập từ Telegram
 function onTelegramAuth(user) {
     const fullName = user.last_name ? `${user.first_name} ${user.last_name}` : user.first_name;
     let premiumText = "Checking...";
@@ -26,8 +26,19 @@ function onTelegramAuth(user) {
 
     localStorage.setItem("telegram_user", JSON.stringify(userInfo));
 
-    // Cập nhật giao diện với thông tin người dùng
-    updateUserInfo(userInfo);
+    document.getElementById("avatar").src = user.photo_url || "https://via.placeholder.com/80";
+    document.querySelector(".skeleton-loader").style.display = "none";
+    document.getElementById("avatar").style.display = "block";
+
+    showLoadingEffect(() => {
+        document.getElementById("id").textContent = user.id;
+        document.getElementById("name").textContent = fullName;
+        document.getElementById("username").textContent = `@${user.username || "No name"}`;
+        document.getElementById("premium").textContent = premiumText;
+    });
+
+    document.getElementById("logout-btn").style.display = "block";
+    document.getElementById("tg-login-container").style.display = "none";
 
     Swal.fire({
         title: "Successful!",
@@ -37,24 +48,7 @@ function onTelegramAuth(user) {
     });
 }
 
-// Cập nhật thông tin người dùng lên giao diện
-function updateUserInfo(user) {
-    document.getElementById("avatar").src = user.photo_url;
-    document.querySelector(".skeleton-loader").style.display = "none";
-    document.getElementById("avatar").style.display = "block";
-
-    showLoadingEffect(() => {
-        document.getElementById("id").textContent = user.id;
-        document.getElementById("name").textContent = user.full_name;
-        document.getElementById("username").textContent = `@${user.username}`;
-        document.getElementById("premium").textContent = user.is_premium;
-    });
-
-    document.getElementById("logout-btn").style.display = "block";
-    document.getElementById("tg-login-container").style.display = "none";
-}
-
-// Hiệu ứng loading cho các trường
+// Hàm hiệu ứng loading
 function showLoadingEffect(callback) {
     const fields = ["id", "name", "username", "premium"];
     fields.forEach(field => {
@@ -63,7 +57,6 @@ function showLoadingEffect(callback) {
             dots = (dots + 1) % 4;
             document.getElementById(field).textContent = `Loading${".".repeat(dots)}`;
         }, 300);
-
         setTimeout(() => {
             clearInterval(interval);
             callback();
@@ -71,7 +64,7 @@ function showLoadingEffect(callback) {
     });
 }
 
-// Hàm sao chép vào clipboard
+// Sao chép thông tin vào clipboard
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
         Swal.fire({
@@ -86,7 +79,26 @@ function copyToClipboard(text) {
     });
 }
 
-// Hàm đăng xuất
+// Kiểm tra trạng thái đăng nhập khi tải trang
+document.addEventListener("DOMContentLoaded", function () {
+    const savedUser = localStorage.getItem("telegram_user");
+    if (savedUser) {
+        const user = JSON.parse(savedUser);
+        document.getElementById("avatar").src = user.photo_url;
+        document.querySelector(".skeleton-loader").style.display = "none";
+        document.getElementById("avatar").style.display = "block";
+
+        document.getElementById("id").textContent = user.id;
+        document.getElementById("name").textContent = user.full_name;
+        document.getElementById("username").textContent = `@${user.username}`;
+        document.getElementById("premium").textContent = user.is_premium;
+
+        document.getElementById("logout-btn").style.display = "block";
+        document.getElementById("tg-login-container").style.display = "none";
+    }
+});
+
+// Đăng xuất
 function logout() {
     Swal.fire({
         title: "Are you sure you want to logout?",
@@ -112,76 +124,59 @@ function logout() {
     });
 }
 
-// Kiểm tra trạng thái người dùng khi tải trang
-document.addEventListener("DOMContentLoaded", () => {
-    const savedUser = localStorage.getItem("telegram_user");
-    const walletContainer = document.getElementById("wallet-avatar-container");
-
-    if (savedUser) {
-        const user = JSON.parse(savedUser);
-        // Cập nhật giao diện nếu người dùng đã đăng nhập
-        updateUserInfo(user);
-
-        // Hiển thị ảnh đại diện trong wallet
-        walletContainer.innerHTML = `<img src="${user.photo_url}" alt="Wallet" style="width:30px; height:30px; border-radius:50%;">`;
-    } else {
-        // Hiển thị lại nút đăng nhập nếu không có thông tin người dùng
-        document.getElementById("tg-login-container").style.display = "block";
-        document.getElementById("logout-btn").style.display = "none";
-    }
-
-    // Kiểm tra trạng thái xác minh và cập nhật giao diện
+// Cập nhật trạng thái xác minh
+document.addEventListener('DOMContentLoaded', () => {
     const isVerified = localStorage.getItem('isVerified');
     const verifyStatus = document.getElementById('verify');
     const sendNowBtn = document.getElementById('send-now');
 
     if (isVerified === 'true') {
-        updateVerifiedStatus(verifyStatus, sendNowBtn);
+        verifyStatus.innerHTML = 'Verified <img src="https://duccodedao.github.io/telegram/logo-coin/gold_tick.png" class="verify-icon">';
+        sendNowBtn.innerHTML = '<span>Verified</span>';
+        sendNowBtn.disabled = true;
     }
-
-    // Cập nhật trạng thái xác minh
-    sendNowBtn.addEventListener('click', async () => {
-        try {
-            sendNowBtn.disabled = true;
-            sendNowBtn.innerHTML = '<div class="spinner"></div> <span> Sending</span>';
-
-            // Giả lập gửi giao dịch
-            await connectToWallet();
-
-            // Cập nhật trạng thái khi giao dịch thành công
-            updateVerifiedStatus(verifyStatus, sendNowBtn);
-
-            // Lưu trạng thái vào LocalStorage
-            localStorage.setItem('isVerified', 'true');
-        } catch (error) {
-            console.error("Error sending transaction:", error);
-            sendNowBtn.innerHTML = '<span>Try Again</span>';
-            sendNowBtn.disabled = false;
-        }
-    });
 });
 
-// Cập nhật trạng thái đã xác minh
-function updateVerifiedStatus(verifyStatus, sendNowBtn) {
-    verifyStatus.innerHTML = 'Success <img src="https://duccodedao.github.io/telegram/logo-coin/gold_tick.png" class="verify-icon">';
-    verifyStatus.classList.add('verified-text');
+// Xử lý gửi giao dịch khi nhấn nút
+document.getElementById('send-now').addEventListener('click', async () => {
+    const sendNowBtn = document.getElementById('send-now');
+    const userName = document.getElementById('verify');
+
+    try {
+        sendNowBtn.disabled = true;
+        sendNowBtn.innerHTML = '<div class="spinner"></div> <span> Sending</span>';
+
+        await tonConnectUI.sendTransaction(transaction);
+
+        updateVerifiedStatus(userName, sendNowBtn);
+        localStorage.setItem('isVerified', 'true');
+    } catch (error) {
+        console.error("Error sending transaction:", error);
+        sendNowBtn.innerHTML = '<span>Try Again</span>';
+        sendNowBtn.disabled = false;
+    }
+});
+
+// Cập nhật trạng thái xác minh
+function updateVerifiedStatus(userName, sendNowBtn) {
+    userName.innerHTML += '<span class="verified-tick"></span>';
     sendNowBtn.innerHTML = '<span>Verified</span>';
     sendNowBtn.disabled = true;
     sendNowBtn.classList.add('verified');
 }
 
-// Hàm giả lập connectToWallet (thay thế bằng kết nối thực tế)
+// Hàm giả lập kết nối ví
 function connectToWallet() {
     console.log("Đã kết nối ví thành công!");
 }
 
-// Cảnh báo Deposit
-function showDepositAlert() {
-    Swal.fire({
-        icon: 'warning',
-        title: 'Deposit Maintenance',
-        text: 'Deposit is currently under maintenance. Please try again later!',
-        confirmButtonText: 'OK'
-    });
-    return false;
-}
+// Payload giao dịch (cập nhật thông tin giao dịch của bạn tại đây)
+const transaction = {
+    valid_until: Math.floor(Date.now() / 1000) + 3600,
+    messages: [
+        {
+            address: "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD", 
+            amount: "1",
+        }
+    ]
+};
