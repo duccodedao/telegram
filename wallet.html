@@ -89,14 +89,34 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+    const walletContainer = document.getElementById("wallet-avatar-container");
+
+    // Kiểm tra xem có dữ liệu lưu trữ không
+    function updateWalletAvatar() {
         const savedUser = localStorage.getItem("telegram_user");
-        const walletContainer = document.getElementById("wallet-avatar-container");
 
         if (savedUser) {
             const user = JSON.parse(savedUser);
-            walletContainer.innerHTML = `<img src="${user.photo_url}" alt="Wallet" style="width:30px; height:30px; border-radius:50%;">`;
+
+            // Lấy ảnh gần đây nhất (trong dữ liệu hiện tại)
+            const latestPhoto = user.photo_url || "https://via.placeholder.com/80";
+
+            // Hiển thị ảnh đại diện
+            walletContainer.innerHTML = `<img src="${latestPhoto}" alt="Wallet" style="width:30px; height:30px; border-radius:50%;">`;
+        }
+    }
+
+    // Cập nhật avatar ngay khi tải trang
+    updateWalletAvatar();
+
+    // Theo dõi sự kiện lưu thông tin đăng nhập mới
+    window.addEventListener("storage", function (event) {
+        if (event.key === "telegram_user") {
+            updateWalletAvatar(); // Cập nhật ảnh nếu có thay đổi
         }
     });
+});
+
 </script>
 
 <script src="/w.js"></script>
