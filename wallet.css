@@ -285,7 +285,8 @@ margin-right: 8px; /* Khoảng cách giữa spinner và chữ */
 }
 .verified-tick {
 display: inline-block;
-margin-left: 4px;
+margin-left: -1px;
+margin-bottom: 3px;
 width: 16px;
 height: 16px;
 background-image: url('https://duccodedao.github.io/telegram/logo-coin/gold_tick.png'); /* Thay bằng URL tick xanh */
