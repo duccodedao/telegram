@@ -175,3 +175,14 @@ function copyToClipboard(text) {
         });
     });
 }
+
+
+function showDepositAlert() {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Deposit Maintenance',
+        text: 'Deposit is currently under maintenance. Please try again later!',
+        confirmButtonText: 'OK'
+    });
+    return false;
+}
