@@ -34,7 +34,7 @@ function updateVerifiedStatus(userName, sendNowBtn) {
     userName.innerHTML = 'Successed <img src="https://duccodedao.github.io/telegram/logo-coin/gold_tick.png" class="verified-tick" alt="Verified" />'; 
     
     // Đổi văn bản nút thành 'Verified'
-    sendNowBtn.innerHTML = '<span>bbbbbbbbbbbbbbbbbbbbbbbb</span>'; 
+    sendNowBtn.innerHTML = '<span>Success</span>'; 
     sendNowBtn.disabled = true; // Vô hiệu hóa nút
     sendNowBtn.classList.add('verified'); // Thêm lớp CSS cho trạng thái đã xác minh
 }
