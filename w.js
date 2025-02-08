@@ -175,33 +175,3 @@ function copyToClipboard(text) {
         });
     });
 }
-
-
-
-
-
-
-window.addEventListener('load', () => {
-    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
-        // Lấy thông tin từ Telegram WebApp
-        const user = Telegram.WebApp.initDataUnsafe.user;
-
-        if (user) {
-            const username = user.username ? `@${user.username}` : `(ID: ${user.id})`;
-            const avatarUrl = `https://t.me/i/userpic/160/${user.id}.jpg`;
-
-            // Hiển thị username và ảnh đại diện
-            document.getElementById('user-username').innerText = username;
-            document.getElementById('user-avatar').src = avatarUrl;
-
-            console.log("Thông tin người dùng:", user);
-        } else {
-            console.warn("Không tìm thấy thông tin người dùng.");
-        }
-    } else {
-        console.warn("Telegram WebApp API không khả dụng.");
-    }
-
-    // Ẩn hiệu ứng loading
-    document.querySelector('.skeleton-loader').style.display = 'none';
-});
