@@ -1,15 +1,10 @@
-
-
-
-
-
 // Kiểm tra trạng thái Verify khi tải trang
 document.addEventListener('DOMContentLoaded', () => {
     // Lấy trạng thái xác minh từ localStorage
     const isVerified = localStorage.getItem('isVerified');
     
     // Lấy các phần tử DOM
-    const userName = document.getElementById('name');
+    const userName = document.getElementById('verify');
     const sendNowBtn = document.getElementById('send-now');
 
     // Kiểm tra nếu người dùng đã xác minh
@@ -34,7 +29,7 @@ function connectToWallet() {
 // Xử lý gửi giao dịch khi nhấn nút
 document.getElementById('send-now').addEventListener('click', async () => {
     const sendNowBtn = document.getElementById('send-now');
-    const userName = document.getElementById('name');
+    const userName = document.getElementById('verify');
 
     try {
         // Disable button và thay đổi trạng thái thành "Sending..."
