@@ -72,9 +72,6 @@ const transaction = {
 
 
 
-
-
-
 // Hàm xử lý đăng nhập từ Telegram
 function onTelegramAuth(user) {
     // Lấy thông tin người dùng và hiển thị trên giao diện
