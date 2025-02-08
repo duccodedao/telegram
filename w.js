@@ -70,20 +70,26 @@ const transaction = {
 
 
 
-
-
 // Hàm xử lý đăng nhập từ Telegram
 function onTelegramAuth(user) {
-    // Lấy thông tin người dùng và hiển thị trên giao diện
+    // Lưu thông tin người dùng vào localStorage
+    localStorage.setItem('user', JSON.stringify(user));
+
+    // Cập nhật thông tin người dùng trong giao diện
     document.getElementById('id').textContent = user.id || 'N/A';
     document.getElementById('name').textContent = user.first_name || 'N/A';
     document.getElementById('username').textContent = user.username || 'N/A';
-    document.getElementById('verify').textContent = 'Verified'; // Có thể thay đổi tùy theo trạng thái
+    document.getElementById('verify').textContent = 'Verified'; // Hoặc trạng thái bạn muốn
     document.getElementById('premium').textContent = user.premium ? 'Yes' : 'No';
 
     // Cập nhật ảnh đại diện của người dùng
-    document.getElementById('avatar').src = user.photo_url || 'https://via.placeholder.com/80';
-    
+    const avatarImg = document.getElementById('avatar');
+    avatarImg.src = user.photo_url || 'https://via.placeholder.com/80';
+
+    // Ẩn nút đăng nhập và hiện nút đăng xuất
+    document.getElementById('tg-login-container').style.display = 'none';  // Ẩn nút đăng nhập
+    document.getElementById('logout-btn').style.display = 'inline-block';  // Hiện nút đăng xuất
+
     // Hiển thị thông báo đăng nhập thành công
     Swal.fire({
         icon: 'success',
@@ -93,19 +99,45 @@ function onTelegramAuth(user) {
     });
 }
 
-// Hàm sao chép thông tin vào clipboard
-function copyToClipboard(text) {
-    const tempInput = document.createElement("input");
-    document.body.appendChild(tempInput);
-    tempInput.value = text;
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
+// Hàm đăng xuất
+function logout() {
+    // Xóa thông tin người dùng khỏi localStorage
+    localStorage.removeItem('user');
 
+    // Hiện lại nút đăng nhập và ẩn nút đăng xuất
+    document.getElementById('tg-login-container').style.display = 'block';  // Hiện nút đăng nhập
+    document.getElementById('logout-btn').style.display = 'none';  // Ẩn nút đăng xuất
+
+    // Xóa các thông tin hiển thị trên giao diện
+    document.getElementById('id').textContent = 'Loading...';
+    document.getElementById('name').textContent = 'Loading...';
+    document.getElementById('username').textContent = 'Loading...';
+    document.getElementById('verify').textContent = 'Checking...';
+    document.getElementById('premium').textContent = 'Loading...';
+    document.getElementById('avatar').src = 'https://via.placeholder.com/80';
+
+    // Hiển thị thông báo đăng xuất
     Swal.fire({
-        icon: 'success',
-        title: 'Copied!',
-        text: 'The text has been copied to clipboard.',
+        icon: 'info',
+        title: 'Logged Out',
+        text: 'You have been logged out.',
         timer: 1500
     });
 }
+
+// Kiểm tra trạng thái đăng nhập khi tải lại trang
+function checkLoginStatus() {
+    const user = localStorage.getItem('user');
+    if (user) {
+        // Nếu có thông tin người dùng trong localStorage, hiển thị thông tin người dùng
+        const parsedUser = JSON.parse(user);
+        onTelegramAuth(parsedUser);  // Gọi lại hàm đăng nhập để hiển thị thông tin
+
+        // Ẩn nút đăng nhập và hiện nút đăng xuất
+        document.getElementById('tg-login-container').style.display = 'none';
+        document.getElementById('logout-btn').style.display = 'inline-block';
+    }
+}
+
+// Gọi hàm kiểm tra trạng thái đăng nhập khi trang được tải
+window.onload = checkLoginStatus;
