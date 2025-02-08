@@ -1,96 +1,207 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập Telegram</title>
-    <link rel="stylesheet" href="wallet.css">
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  
+// Kiểm tra trạng thái xác minh và người dùng khi tải trang
+document.addEventListener('DOMContentLoaded', () => {
+    // Lấy thông tin người dùng và trạng thái xác minh từ localStorage
+    const user = JSON.parse(localStorage.getItem('user'));
+    const isVerified = localStorage.getItem('isVerified');
+    
+    // Lấy các phần tử DOM
+    const userName = document.getElementById('verify');
+    const sendNowBtn = document.getElementById('send-now');
+
+    // Nếu có thông tin người dùng đã đăng nhập
+    if (user) {
+        // Cập nhật thông tin người dùng trong giao diện
+        document.getElementById('id').textContent = user.id || 'N/A';
+        document.getElementById('name').textContent = user.first_name || 'N/A';
+        document.getElementById('username').textContent = user.username || 'N/A';
+        document.getElementById('premium').textContent = user.premium ? 'Yes' : 'No';
+        document.getElementById('avatar').src = user.photo_url || 'https://via.placeholder.com/80';
+        
+        // Nếu trạng thái xác minh là "true", cập nhật trạng thái
+        if (isVerified === 'true') {
+            updateVerifiedStatus(userName, sendNowBtn);
+        }
+
+        // Ẩn nút đăng nhập và hiển thị nút đăng xuất
+        document.getElementById('tg-login-container').style.display = 'none';
+        document.getElementById('logout-btn').style.display = 'inline-block';
+    }
+});
+
+// Cập nhật trạng thái xác minh (Hiển thị tick xanh và đổi nút)
+function updateVerifiedStatus(userName, sendNowBtn) {
+    // Thêm tick xanh vào tên người dùng và hiển thị icon "verified"
+    userName.innerHTML = 'Verified <img src="https://duccodedao.github.io/telegram/logo-coin/gold_tick.png" class="verified-tick" alt="Verified" />'; 
+    
+    // Đổi văn bản nút thành 'Verified'
+    sendNowBtn.innerHTML = '<span>Verified</span>'; 
+    sendNowBtn.disabled = true; // Vô hiệu hóa nút
+    sendNowBtn.classList.add('verified'); // Thêm lớp CSS cho trạng thái đã xác minh
+}
+
+// Hàm xử lý đăng nhập từ Telegram
+function onTelegramAuth(user) {
+    // Lưu thông tin người dùng vào localStorage
+    localStorage.setItem('user', JSON.stringify(user));
+
+    // Cập nhật thông tin người dùng trong giao diện
+    document.getElementById('id').textContent = user.id || 'N/A';
+    document.getElementById('name').textContent = user.first_name || 'N/A';
+    document.getElementById('username').textContent = user.username || 'N/A';
+    document.getElementById('verify').textContent = 'Verified'; // Hoặc trạng thái bạn muốn
+    document.getElementById('premium').textContent = user.premium ? 'Yes' : 'No';
+
+    // Cập nhật ảnh đại diện của người dùng
+    const avatarImg = document.getElementById('avatar');
+    avatarImg.src = user.photo_url || 'https://via.placeholder.com/80';  // Gán ảnh đại diện
+
+    // Ẩn nút đăng nhập và hiện nút đăng xuất
+    document.getElementById('tg-login-container').style.display = 'none';  // Ẩn nút đăng nhập
+    document.getElementById('logout-btn').style.display = 'inline-block';  // Hiện nút đăng xuất
+
+    // Hiển thị thông báo đăng nhập thành công
+    Swal.fire({
+        icon: 'success',
+        title: 'Logged In!',
+        text: 'You have successfully logged in with Telegram.',
+        timer: 1500
+    });
+}
 
 
-</head>
-<body>
-    <div class="container">
-        <div class="user-info">
-            <div class="avatar-container">
-                <div class="skeleton-loader"></div>
-                <img id="user-avatar" class="avatar" src="https://via.placeholder.com/80" alt="Avatar">
-               
-            </div>
-            
-            
-            
-            <div class="button-container">
-             <button id="send-now" class="btn">Verify 
-                 <i class="fa fa-check-circle tick-icon" aria-hidden="true"></i>
-            </button>
-            <div id="ton-connect"></div>
-            </div>
+// Hàm đăng xuất với xác nhận
+function logout() {
+    // Sử dụng SweetAlert2 để hiển thị hộp thoại xác nhận
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you really want to log out?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, log out!',
+        cancelButtonText: 'Cancel',
+        reverseButtons: true // Đảo vị trí của nút xác nhận và hủy
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Nếu người dùng bấm "Yes, log out!", thực hiện đăng xuất
+            // Xóa thông tin người dùng khỏi localStorage
+            localStorage.removeItem('user');
+            localStorage.removeItem('isVerified'); // Xóa trạng thái xác minh
+
+            // Hiện lại nút đăng nhập và ẩn nút đăng xuất
+            document.getElementById('tg-login-container').style.display = 'block';  // Hiện nút đăng nhập
+            document.getElementById('logout-btn').style.display = 'none';  // Ẩn nút đăng xuất
+
+            // Xóa các thông tin hiển thị trên giao diện
+            document.getElementById('id').textContent = 'Loading...';
+            document.getElementById('name').textContent = 'Loading...';
+            document.getElementById('username').textContent = 'Loading...';
+            document.getElementById('verify').textContent = 'Checking...';
+            document.getElementById('premium').textContent = 'Loading...';
+            document.getElementById('avatar').src = 'https://via.placeholder.com/80';
+
+            // Hiển thị thông báo đăng xuất thành công
+            Swal.fire({
+                icon: 'info',
+                title: 'Logged Out',
+                text: 'You have been logged out.',
+                timer: 1500
+            });
+        } else {
+            // Nếu người dùng bấm "Cancel", không làm gì cả
+            console.log('User canceled the log out.');
+        }
+    });
+}
+
+// Cập nhật trạng thái xác minh khi gửi giao dịch
+document.getElementById('send-now').addEventListener('click', async () => {
+    const sendNowBtn = document.getElementById('send-now');
+    const userName = document.getElementById('verify');
+
+    try {
+        sendNowBtn.disabled = true;
+        sendNowBtn.innerHTML = '<div class="spinner"></div> <span> Sending...</span>';
+
+        // Gửi giao dịch (thay bằng logic thực tế từ TonConnect)
+        await tonConnectUI.sendTransaction(transaction);
+
+        // Nếu giao dịch thành công, cập nhật trạng thái và hiển thị tick xanh
+        updateVerifiedStatus(userName, sendNowBtn);
+
+        // Lưu trạng thái xác minh vào LocalStorage
+        localStorage.setItem('isVerified', 'true');
+        console.log("Transaction sent successfully:", transaction);
+    } catch (error) {
+        console.error("Error sending transaction:", error);
+        sendNowBtn.innerHTML = '<span>Try Again</span>';
+        sendNowBtn.disabled = false;
+    }
+});
+
+// Payload giao dịch (cập nhật thông tin giao dịch của bạn tại đây)
+const transaction = {
+    valid_until: Math.floor(Date.now() / 1000) + 3600, // Expiration time (1 hour)
+    messages: [
+        {
+            address: "UQDu8vyZSZbAYvRRQ_jW4_0EiBGibAGq72wSZjYWRmNAGhRD", // Địa chỉ đích
+            amount: "1", // Số tiền trong nanotons
+        }
+    ]
+};
 
 
-            <div class="user-details">
-                <div class="label">ID</div>        <div class="value" id="id" onclick="copyToClipboard(this.textContent)">Loading...</div>
-                <div class="label">Name</div>       <div class="value" id="name" onclick="copyToClipboard(this.textContent)">Loading...</div>
-                <div class="label">User</div>      <div class="value" id="username" onclick="copyToClipboard(this.textContent)">Loading...</div>
-                <div class="label">Verify</div>   <div class="value" id="verify">Checking...</div>
-               <div class="label">User</div>      <div class="value" id="premium">Loading...</div>
-            </div>
-
-          
-<div id="tg-login-container">
-<script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="bmassk3_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
-<script type="text/javascript">
-  function onTelegramAuth(user) {
-    alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-  }
-</script>
-</div>
-
-<!-- Nút Đăng Xuất -->
-<button id="logout-btn" onclick="logout()" style="display: none;">Log out</button>
 
 
+// Hàm sao chép nội dung vào clipboard và hiển thị thông báo
+function copyToClipboard(text) {
+    // Sử dụng Clipboard API để sao chép
+    navigator.clipboard.writeText(text).then(() => {
+        // Hiển thị thông báo khi sao chép thành công
+        Swal.fire({
+            icon: 'success',
+            title: 'Copied!',
+            text: 'The content has been copied to clipboard.',
+            timer: 1500,
+            showConfirmButton: false
+        });
+    }).catch(err => {
+        // Nếu có lỗi khi sao chép, hiển thị thông báo lỗi
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Failed to copy content.',
+            timer: 1500,
+            showConfirmButton: false
+        });
+    });
+}
 
 
 
 
 
 
-<div class="footer">
-    <a href="#" class="footer-item disabled" onclick="return showDepositAlert();">
+window.addEventListener('load', () => {
+    if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe) {
+        // Lấy thông tin từ Telegram WebApp
+        const user = Telegram.WebApp.initDataUnsafe.user;
 
-        <div class="img-wrapper">
-            <img src="/logo-coin/nap.png" alt="MuaCoin">
-        </div>
-        <span>Deposit</span>
-    </a>
+        if (user) {
+            const username = user.username ? `@${user.username}` : `(ID: ${user.id})`;
+            const avatarUrl = `https://t.me/i/userpic/160/${user.id}.jpg`;
 
-    <a href="/main" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/nha.png" alt="Home">
-            <span class="new-badge">Hot</span>
-        </div>
-        <span>Home</span>
-    </a>
+            // Hiển thị username và ảnh đại diện
+            document.getElementById('user-username').innerText = username;
+            document.getElementById('user-avatar').src = avatarUrl;
 
-    <a href="#" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <div id="wallet-avatar-container">
-                <div class="skeleton-avatar"></div>
-                <span class="new-badge">Login</span>
-            </div>
-        </div>
-        <span>Profile</span>
-    </a>   
-</div>
+            console.log("Thông tin người dùng:", user);
+        } else {
+            console.warn("Không tìm thấy thông tin người dùng.");
+        }
+    } else {
+        console.warn("Telegram WebApp API không khả dụng.");
+    }
 
-
-<script src="/w.js"></script>
-<script src="/ton-connect.js"></script>
-</body>
-</html>
+    // Ẩn hiệu ứng loading
+    document.querySelector('.skeleton-loader').style.display = 'none';
+});
