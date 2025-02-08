@@ -48,7 +48,7 @@ function onTelegramAuth(user) {
     document.getElementById('id').textContent = user.id || 'N/A';
     document.getElementById('name').textContent = user.first_name || 'N/A';
     document.getElementById('username').textContent = user.username || 'N/A';
-    document.getElementById('verify').textContent = 'Error'; // Hoặc trạng thái bạn muốn
+    document.getElementById('verify').textContent = 'Not verified'; // Hoặc trạng thái bạn muốn
     document.getElementById('premium').textContent = user.premium ? 'Yes' : 'No';
 
     // Cập nhật ảnh đại diện của người dùng
@@ -92,11 +92,11 @@ function logout() {
             document.getElementById('logout-btn').style.display = 'none';  // Ẩn nút đăng xuất
 
             // Xóa các thông tin hiển thị trên giao diện
-            document.getElementById('id').textContent = 'Loading...';
-            document.getElementById('name').textContent = 'Loading...';
-            document.getElementById('username').textContent = 'Loading...';
-            document.getElementById('verify').textContent = 'Checking...';
-            document.getElementById('premium').textContent = 'Loading...';
+            document.getElementById('id').textContent = 'Updating ID...';
+            document.getElementById('name').textContent = 'Updating name...';
+            document.getElementById('username').textContent = 'Updating user...';
+            document.getElementById('verify').textContent = 'Updating status...';
+            document.getElementById('premium').textContent = 'Scanning...';
             document.getElementById('avatar').src = 'https://via.placeholder.com/80';
 
             // Hiển thị thông báo đăng xuất thành công
