@@ -235,20 +235,7 @@ box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 margin-bottom: 10px; /* Khoảng cách giữa nút */
 }
 
-/* Định dạng #ton-connect */
-#ton-connect {
-width: 10px;
-height: 40px;
-background-color: #3498db; /* Màu nền xanh */
-color: white; /* Màu chữ */
-display: none;
-align-items: center;
-justify-content: center;
-border-radius: 50px;
-font-size: 16px;
-font-weight: bold;
-box-shadow: 0 16px 12px rgba(0, 0, 0, 0.2);
-}
+
 
 
 
@@ -377,14 +364,27 @@ vertical-align: middle; /* Căn giữa theo chiều dọc */
     margin-right: 10px;
 }
 
+
+
+
+
+/* Header chứa hai nút */
+.header-container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1px 1px;
+ 
+    z-index: 1000; /* Đảm bảo header nằm trên cùng */
+}
+
+/* Nút Back */
 .back-icon {
-    position: absolute;
-    top: 8px;
-    left: 15px;
     font-size: 24px;
     color: #fcfcfc;
     text-decoration: none;
-    z-index: 1000;
     transition: outline 0.3s ease, color 0.3s ease;
     outline: 2px solid transparent;
 }
@@ -393,3 +393,22 @@ vertical-align: middle; /* Căn giữa theo chiều dọc */
     color: #0056b3;
 }
 
+/* Nút Ton Connect */
+#ton-connect {
+
+    color: #ffffff;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-align: center;
+}
+
+#ton-connect:hover {
+    background-color: #f8f9fa;
+}
+
+/* Phần nội dung bên dưới header */
+.content {
+    margin-top: 60px; /* Đẩy nội dung xuống dưới header */
+    padding: 2px; /* Khoảng cách nội dung */
+}
