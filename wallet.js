@@ -14,7 +14,7 @@ async function fetchWalletData(wallet) {
         // ✅ Lấy số dư TON từ TonAPI
         const tonResponse = await fetch(`https://tonapi.io/v2/accounts/${walletAddress}`);
         const tonData = await tonResponse.json();
-        const tonBalance = (tonData.balance / 1e9).toFixed(4); // Chuyển sang TON
+        const tonBalance = (tonData.balance / 1e9).toFixed(9); // Chuyển sang TON
         document.getElementById('wallet-balance').textContent = `${tonBalance} TON`;
 
         // ✅ Lấy danh sách token có trong ví
