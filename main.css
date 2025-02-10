@@ -446,6 +446,11 @@ h2 {
             height: 24px;
             margin-bottom: 4px;
         }
+        .footer-item img {
+            width: 45px;
+            height: 45px;
+            margin-bottom: 4px;
+        }
         .footer-item:hover {
             color: #fff;
         }
