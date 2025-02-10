@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông báo</title>
-    <link rel="stylesheet" href="abc.css">
+    <link rel="stylesheet" href="sss.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -180,7 +180,7 @@
 
 <div class="footer">
 
-    <a href="/main" class="footer-item" onclick="setActive(this)">
+    <a href="/main.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
             <img src="/logo-coin/nha.png" alt="Home">
             <span class="new-badge">Hot</span>
@@ -198,7 +198,7 @@
 
 
 
-    <a href="/wallet" class="footer-item" onclick="setActive(this)">
+    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
             <div id="wallet-avatar-container">
                 <div class="skeleton-avatar"></div>
@@ -243,10 +243,11 @@
 
     <script>
         let notifications = JSON.parse(localStorage.getItem('notifications')) || [
-            { title: "Thông báo 1", image: "/logo-coin/9.jpg", content: "Đây là nội dung đầy đủ của thông báo 1." },
-            { title: "Thông báo 2", image: "/logo-coin/3.jpg", content: "Đây là nội dung đầy đủ của thông báo 2." },
-            { title: "Thông báo 3", image: "/logo-coin/9.jpg", content: "Đây là nội dung đầy đủ của thông báo 3." },
-            { title: "Thông báo 4", image: "/logo-coin/9.jpg", content: "Đây là nội dung đầy đủ của thông báo 3." },
+            { title: "New Listing", image: "/logo-coin/9.jpg", content: "TapSwap Airdrop and Listing Date Confirmed for February 14, 2025: Everything You Need to Know🚀" },
+            { title: "New Listing", image: "/logo-coin/3.jpg", content: "W-coin Airdrop and Listing Date Confirmed for February 25, 2025: Everything You Need to Know🚀" },
+            
+       
+       
         ];
         let readNotifications = JSON.parse(localStorage.getItem('readNotifications')) || [];
 
@@ -299,7 +300,34 @@
 
         updateNotifications();
         updateReadNotifications();
+
+
+
+        function markAsRead(index) {
+    const notification = notifications[index];
+
+    // Hiển thị nội dung đầy đủ trong modal
+    document.getElementById("modal-title").innerText = notification.title;
+    document.getElementById("modal-image").src = notification.image;
+    document.getElementById("modal-content").innerText = notification.content;
+    
+    document.getElementById("modal").style.display = "flex";
+
+    // Chuyển sang danh sách đã đọc
+    readNotifications.push(notification);
+    notifications.splice(index, 1);
+    
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+    localStorage.setItem('readNotifications', JSON.stringify(readNotifications));
+    
+    updateNotifications();
+    updateReadNotifications();
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
     </script>
 </body>
 </html>
-
