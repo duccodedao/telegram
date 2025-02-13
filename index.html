@@ -131,7 +131,7 @@
         function onTelegramAuth(user) {
             var userInfo = document.getElementById("user-info");
             var avatarUrl = user.photo_url ? user.photo_url : 'https://via.placeholder.com/30';
-            var userHtml = '<img src="' + avatarUrl + '" class="user-avatar">' + user.first_name + (user.last_name ? ' ' + user.last_name : '') + ' (@' + user.username + ')';
+            var userHtml = '<img src="' + avatarUrl + '" class="user-avatar">' + user.first_name + (user.last_name ? ' ' + user.last_name : '')';
             userInfo.innerHTML = userHtml;
             userInfo.style.display = "flex";
             document.getElementById("tg-login-container").style.display = "none";
