@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông báo</title>
-    <link rel="stylesheet" href="a.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -139,11 +139,6 @@
     height: 24px;
     margin-bottom: 4px;
 }
-.footer-itemm img {
-    width: 45px;
-    height: 45px;
-    margin-bottom: 4px;
-}
 .footer-item:hover {
     color: #fff;
 }
@@ -165,10 +160,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>Notification 🔔 (<span id="count">0</span>)</h1>
+        <h1>Danh sách thông báo (<span id="count">0</span>)</h1>
         <div id="notification-list" class="notification-list"></div>
         <div class="read-section" onclick="toggleReadNotifications()">
-            <h3>Readed <span class="arrow">▼</span></h3>
+            <h3>Đã đọc <span class="arrow">▼</span></h3>
         </div>
         <div id="read-notifications" class="read-notifications hidden"></div>
     </div>
@@ -193,12 +188,12 @@
         <span>Home</span>
     </a>
 
-    <a href="#" class="footer-itemm" onclick="setActive(this)">
+    <a href="#" class="footer-item" onclick="setActive(this)">
         <div class="img-wrapper">
             <img src="/logo-coin/chuong.gif" alt="Noti">
           
         </div>
-        <span></span>
+        <span>Noti</span>
     </a>
 
 
@@ -215,106 +210,92 @@
 </div>
 
 <script>
-
     document.addEventListener("DOMContentLoaded", function () {
-        let notifications = JSON.parse(localStorage.getItem('notifications')) || [
-            { title: "New Listing", image: "/logo-coin/9.jpg", content: "TapSwap Airdrop and Listing Date Confirmed for February 14, 2025: Everything You Need to Know🚀" },
-            { title: "New Listing", image: "/logo-coin/3.jpg", content: "W-coin Airdrop and Listing Date Confirmed for February 25, 2025: Everything You Need to Know🚀" },
-            { title: "TGE Date", image: "/logo-coin/7.jpg", content: "Yescoin: The TGE is still on track for March 31, 2025 🔥" },
-        ];
-        let readNotifications = JSON.parse(localStorage.getItem('readNotifications')) || [];
+    const walletContainer = document.getElementById("wallet-avatar-container");
 
-        function updateNotifications() {
-            document.getElementById("notification-list").innerHTML = notifications.map((notification, index) => `
-                <div class="notification-item" onclick="markAsRead(${index})">
-                    <img src="${notification.image}" alt="">
-                    <div>
-                        <h2>${notification.title}</h2>
-                        <p>${notification.content.substring(0, 30)}...</p>
-                        <span class="view-more">Xem thêm</span>
-                    </div>
-                </div>
-            `).join('');
-            document.getElementById("count").innerText = notifications.length;
+    // Kiểm tra xem có dữ liệu lưu trữ không
+    function updateWalletAvatar() {
+        const savedUser = localStorage.getItem("telegram_user");
+
+        if (savedUser) {
+            const user = JSON.parse(savedUser);
+
+            // Lấy ảnh gần đây nhất (trong dữ liệu hiện tại)
+            const latestPhoto = user.photo_url || "https://via.placeholder.com/80";
+
+            // Hiển thị ảnh đại diện
+            walletContainer.innerHTML = `<img src="${latestPhoto}" alt="Wallet" style="width:30px; height:30px; border-radius:50%;">`;
         }
+    }
 
-        function updateReadNotifications() {
-            document.getElementById("read-notifications").innerHTML = readNotifications.map(notification => `
-                <div class="notification-item">
-                    <img src="${notification.image}" alt="">
-                    <div>
-                        <h2>${notification.title}</h2>
-                        <p>${notification.content}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
+    // Cập nhật avatar ngay khi tải trang
+    updateWalletAvatar();
 
-        function markAsRead(index) {
-            const notification = notifications[index];
-
-            // Hiển thị nội dung đầy đủ trong modal
-            document.getElementById("modal-title").innerText = notification.title;
-            document.getElementById("modal-image").src = notification.image;
-            document.getElementById("modal-content").innerText = notification.content;
-            
-            document.getElementById("modal").style.display = "flex";
-
-            // Chuyển sang danh sách đã đọc
-            readNotifications.push(notification);
-            notifications.splice(index, 1);
-            
-            localStorage.setItem('notifications', JSON.stringify(notifications));
-            localStorage.setItem('readNotifications', JSON.stringify(readNotifications));
-            
-            updateNotifications();
-            updateReadNotifications();
-        }
-
-        function toggleReadNotifications() {
-            let readSection = document.getElementById("read-notifications");
-            let arrow = document.querySelector(".arrow");
-            if (readSection.classList.contains("hidden")) {
-                readSection.classList.remove("hidden");
-                arrow.style.transform = "rotate(180deg)";
-            } else {
-                readSection.classList.add("hidden");
-                arrow.style.transform = "rotate(0deg)";
-            }
-        }
-
-        // Hàm thêm thông báo mới
-        function addNotification(newNotification) {
-            // Thêm thông báo mới vào danh sách
-            notifications.push(newNotification);
-            
-            // Cập nhật lại thông báo trong localStorage
-            localStorage.setItem('notifications', JSON.stringify(notifications));
-            
-            // Cập nhật lại giao diện
-            updateNotifications();
-        }
-
-        // Hàm để thêm một thông báo mới vào
-        function addNewNotificationExample() {
-            addNotification({
-                title: "New Event",
-                image: "/logo-coin/10.jpg", // Sử dụng ảnh khác cho thông báo mới
-                content: "Join our new event happening this weekend! Stay tuned for more details!"
-            });
-        }
-
-        updateNotifications();
-        updateReadNotifications();
-
-        // Test thêm một thông báo mới khi trang tải xong (bạn có thể gọi hàm này ở bất cứ đâu để thêm thông báo)
-        addNewNotificationExample();
-
-        function closeModal() {
-            document.getElementById("modal").style.display = "none";
+    // Theo dõi sự kiện lưu thông tin đăng nhập mới
+    window.addEventListener("storage", function (event) {
+        if (event.key === "telegram_user") {
+            updateWalletAvatar(); // Cập nhật ảnh nếu có thay đổi
         }
     });
+});
 
+</script>
+
+    <script>
+    let notifications = [
+    { id: 1, title: "New Listing", image: "/logo-coin/9.jpg", content: "TapSwap Airdrop and Listing Date Confirmed for February 14, 2025: Everything You Need to Know🚀" },
+    { id: 2, title: "New Listing", image: "/logo-coin/3.jpg", content: "W-coin Airdrop and Listing Date Confirmed for February 25, 2025: Everything You Need to Know🚀" },
+   
+];
+
+let readNotifications = new Set(JSON.parse(localStorage.getItem('readNotifications')) || []);
+
+function updateNotifications() {
+    document.getElementById("notification-list").innerHTML = notifications.map(notification => `
+        <div class="notification-item" onclick="markAsRead(${notification.id})">
+            <img src="${notification.image}" alt="">
+            <div>
+                <h2>${notification.title}</h2>
+                <p>${notification.content.substring(0, 30)}...</p>
+                <span class="view-more">Xem thêm</span>
+            </div>
+        </div>
+    `).join('');
+    document.getElementById("count").innerText = notifications.length;
+}
+
+function updateReadNotifications() {
+    document.getElementById("read-notifications").innerHTML = notifications.filter(n => readNotifications.has(n.id)).map(notification => `
+        <div class="notification-item">
+            <img src="${notification.image}" alt="">
+            <div>
+                <h2>${notification.title}</h2>
+            </div>
+        </div>
+    `).join('');
+}
+
+function markAsRead(id) {
+    readNotifications.add(id);
+    localStorage.setItem('readNotifications', JSON.stringify([...readNotifications]));
+    updateNotifications();
+    updateReadNotifications();
+}
+
+function toggleReadNotifications() {
+    let readSection = document.getElementById("read-notifications");
+    let arrow = document.querySelector(".arrow");
+    if (readSection.classList.contains("hidden")) {
+        readSection.classList.remove("hidden");
+        arrow.style.transform = "rotate(180deg)";
+    } else {
+        readSection.classList.add("hidden");
+        arrow.style.transform = "rotate(0deg)";
+    }
+}
+
+updateNotifications();
+updateReadNotifications();
 
     </script>
 </body>
