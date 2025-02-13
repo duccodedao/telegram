@@ -215,45 +215,12 @@
 </div>
 
 <script>
+
     document.addEventListener("DOMContentLoaded", function () {
-    const walletContainer = document.getElementById("wallet-avatar-container");
-
-    // Kiểm tra xem có dữ liệu lưu trữ không
-    function updateWalletAvatar() {
-        const savedUser = localStorage.getItem("telegram_user");
-
-        if (savedUser) {
-            const user = JSON.parse(savedUser);
-
-            // Lấy ảnh gần đây nhất (trong dữ liệu hiện tại)
-            const latestPhoto = user.photo_url || "https://via.placeholder.com/80";
-
-            // Hiển thị ảnh đại diện
-            walletContainer.innerHTML = `<img src="${latestPhoto}" alt="Wallet" style="width:30px; height:30px; border-radius:50%;">`;
-        }
-    }
-
-    // Cập nhật avatar ngay khi tải trang
-    updateWalletAvatar();
-
-    // Theo dõi sự kiện lưu thông tin đăng nhập mới
-    window.addEventListener("storage", function (event) {
-        if (event.key === "telegram_user") {
-            updateWalletAvatar(); // Cập nhật ảnh nếu có thay đổi
-        }
-    });
-});
-
-</script>
-
-    <script>
         let notifications = JSON.parse(localStorage.getItem('notifications')) || [
             { title: "New Listing", image: "/logo-coin/9.jpg", content: "TapSwap Airdrop and Listing Date Confirmed for February 14, 2025: Everything You Need to Know🚀" },
             { title: "New Listing", image: "/logo-coin/3.jpg", content: "W-coin Airdrop and Listing Date Confirmed for February 25, 2025: Everything You Need to Know🚀" },
             { title: "TGE Date", image: "/logo-coin/7.jpg", content: "Yescoin: The TGE is still on track for March 31, 2025 🔥" },
-            
-       
-       
         ];
         let readNotifications = JSON.parse(localStorage.getItem('readNotifications')) || [];
 
@@ -284,10 +251,22 @@
         }
 
         function markAsRead(index) {
-            readNotifications.push(notifications[index]);
+            const notification = notifications[index];
+
+            // Hiển thị nội dung đầy đủ trong modal
+            document.getElementById("modal-title").innerText = notification.title;
+            document.getElementById("modal-image").src = notification.image;
+            document.getElementById("modal-content").innerText = notification.content;
+            
+            document.getElementById("modal").style.display = "flex";
+
+            // Chuyển sang danh sách đã đọc
+            readNotifications.push(notification);
             notifications.splice(index, 1);
+            
             localStorage.setItem('notifications', JSON.stringify(notifications));
             localStorage.setItem('readNotifications', JSON.stringify(readNotifications));
+            
             updateNotifications();
             updateReadNotifications();
         }
@@ -304,35 +283,38 @@
             }
         }
 
+        // Hàm thêm thông báo mới
+        function addNotification(newNotification) {
+            // Thêm thông báo mới vào danh sách
+            notifications.push(newNotification);
+            
+            // Cập nhật lại thông báo trong localStorage
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            
+            // Cập nhật lại giao diện
+            updateNotifications();
+        }
+
+        // Hàm để thêm một thông báo mới vào
+        function addNewNotificationExample() {
+            addNotification({
+                title: "New Event",
+                image: "/logo-coin/10.jpg", // Sử dụng ảnh khác cho thông báo mới
+                content: "Join our new event happening this weekend! Stay tuned for more details!"
+            });
+        }
+
         updateNotifications();
         updateReadNotifications();
 
+        // Test thêm một thông báo mới khi trang tải xong (bạn có thể gọi hàm này ở bất cứ đâu để thêm thông báo)
+        addNewNotificationExample();
 
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+    });
 
-        function markAsRead(index) {
-    const notification = notifications[index];
-
-    // Hiển thị nội dung đầy đủ trong modal
-    document.getElementById("modal-title").innerText = notification.title;
-    document.getElementById("modal-image").src = notification.image;
-    document.getElementById("modal-content").innerText = notification.content;
-    
-    document.getElementById("modal").style.display = "flex";
-
-    // Chuyển sang danh sách đã đọc
-    readNotifications.push(notification);
-    notifications.splice(index, 1);
-    
-    localStorage.setItem('notifications', JSON.stringify(notifications));
-    localStorage.setItem('readNotifications', JSON.stringify(readNotifications));
-    
-    updateNotifications();
-    updateReadNotifications();
-}
-
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
 
     </script>
 </body>
