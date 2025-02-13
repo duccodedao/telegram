@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BmassHD</title>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+
     <style>
         body {
             margin: 0;
@@ -98,6 +100,41 @@
                 display: none;
             }
         }
+
+        .content {
+            padding: 100px 20px 80px;
+        }
+        #ton-connect {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+
+            border-radius: 10px;
+            width: 300px;
+            margin: 20px auto;
+        }
+        #wallet-info {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            margin: 20px auto;
+        }
+        #wallet-header {
+            margin-top: 10px;
+            font-size: 18px;
+            display: none;
+        }
+        #wallet-address, #wallet-details {
+            font-weight: bold;
+            color: #f39c12;
+            font-size: 30px;
+        }
+        #wallet-balance {
+            font-weight: bold;
+            color: #27ae60;
+        }
     </style>
 </head>
 <body>
@@ -120,8 +157,18 @@
         </nav>
     </header>
     <div class="content">
-        <h1>Chào mừng đến với BmassHD</h1>
-        <p>Khám phá airdrop, thông báo và hồ sơ cá nhân của bạn.</p>
+        <h1>Welcome to BmassHD</h1>
+        <p>Explore airdrops, notifications and your personal profile.</p>
+        <div id="ton-connect"></div>
+    </div>
+    <div id="wallet-info">
+        <div id="user-info" class="user-info"></div>
+        <div id="wallet-header">
+            <b>Address:</b> <span id="wallet-address">abcd****1234</span>
+        </div>
+        <div id="wallet-details">
+            <b>Balance:</b> <span id="wallet-balance">Not connected</span>
+        </div>
     </div>
     <script>
         function toggleMenu() {
@@ -131,7 +178,7 @@
         function onTelegramAuth(user) {
             var userInfo = document.getElementById("user-info");
             var avatarUrl = user.photo_url ? user.photo_url : 'https://via.placeholder.com/30';
-            var userHtml = '<img src="' + avatarUrl + '" class="user-avatar">' + user.first_name + (user.last_name ? ' ' + user.last_name : '')';
+            var userHtml = '<img src="' + avatarUrl + '" class="user-avatar">' + user.first_name + (user.last_name ? ' ' + user.last_name : '') + ' (@' + user.username + ')';
             userInfo.innerHTML = userHtml;
             userInfo.style.display = "flex";
             document.getElementById("tg-login-container").style.display = "none";
@@ -166,5 +213,5 @@
         document.addEventListener("DOMContentLoaded", checkLoginStatus);
     </script>
 </body>
+<script src="/wallet.js"></script>
 </html>
-
