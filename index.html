@@ -3,130 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập Telegram</title>
-    <link rel="stylesheet" href="wallet.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <title>BmassHD</title>
     <style>
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #121212;
+            background-color: #0a0a0a;
             color: white;
-            padding: 20px;
-        }
-
-        .container {
-            margin: 50px auto;
-            max-width: 400px;
-            padding: 20px;
-            background: #1E1E1E;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-
-        .user-info {
             text-align: center;
-            padding: 15px;
-            background: #292929;
-            border-radius: 10px;
         }
-
-        .avatar-container {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 15px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid white;
-        }
-
-        .avatar {
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            display: none;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            box-sizing: border-box;
+            z-index: 1000;
         }
-
-        .skeleton-loader {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #444 25%, #666 50%, #444 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            position: absolute;
-        }
-
-        @keyframes loading {
-            from { background-position: -200% 0; }
-            to { background-position: 200% 0; }
-        }
-
-        .user-details {
-            display: grid;
-            grid-template-columns: 1fr 4fr;
-            gap: 10px;
-            text-align: left;
+        .logo-container {
+            display: flex;
             align-items: center;
         }
-
-        .label {
-            background: #373737;
+        .logo-container img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .logo-text {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: rgba(0, 0, 0, 0.9);
             padding: 10px;
             border-radius: 5px;
-            text-align: center;
         }
-
-        .value {
-            background: #474747;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #logout-btn {
-            width: 100%;
-            margin-top: 15px;
-            padding: 10px;
-            background-color: red;
+        .nav a {
             color: white;
-            border: none;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+            display: block;
+        }
+        .nav a:hover {
+            background: #333;
             border-radius: 5px;
-            cursor: pointer;
+        }
+        .user-info {
+            display: none;
+            align-items: center;
+            font-size: 16px;
+            color: #ccc;
+        }
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .content {
+            padding: 100px 20px 80px;
+        }
+        .menu-icon {
             display: none;
         }
-
-        #tg-login-container {
-            margin-top: 15px;
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                display: none;
+            }
+            .menu-icon {
+                display: block;
+                cursor: pointer;
+                font-size: 30px;
+            }
+            .nav.active {
+                display: flex;
+            }
+        }
+        @media (min-width: 769px) {
+            .menu-icon {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="user-info">
-            <div class="avatar-container">
-                <div class="skeleton-loader"></div>
-                <img id="avatar" class="avatar" src="https://via.placeholder.com/80" alt="Avatar">
-            </div>
-            <div class="user-details">
-                <div class="label">ID</div>        <div class="value" id="id">Loading...</div>
-                <div class="label">Tên</div>       <div class="value" id="name">Loading...</div>
-                <div class="label">User</div>      <div class="value" id="username">Loading...</div>
-                <div class="label">Premium</div>   <div class="value" id="premium">Loading...</div>
-            </div>
-            <button id="logout-btn" onclick="logout()">Đăng xuất</button>
+    <header class="header">
+        <div class="logo-container">
+            <img src="https://via.placeholder.com/40" alt="Logo">
+            <div class="logo-text">BmassHD</div>
         </div>
-
-        <div id="tg-login-container">
-            <script async src="https://telegram.org/js/telegram-widget.js?22"
-                data-telegram-login="bmassk3_bot"
-                data-size="large"
-                data-onauth="onTelegramAuth(user)"
-                data-request-access="write"></script>
-        </div>
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <nav class="nav" id="navbar">
+            <a href="#airdrop">Airdrop</a>
+            <a href="#thongbao">Thông báo</a>
+            <a href="#profile">Profile</a>
+            <div id="user-info" class="user-info"></div>
+            <div id="tg-login-container">
+                <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="bmassk3_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+            </div>
+        </nav>
+    </header>
+    <div class="content">
+        <h1>Chào mừng đến với BmassHD</h1>
+        <p>Khám phá airdrop, thông báo và hồ sơ cá nhân của bạn.</p>
     </div>
-
-    <script src="wallet.js"></script>
+    <script>
+        function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("active");
+        }
+        
+        function onTelegramAuth(user) {
+            var userInfo = document.getElementById("user-info");
+            var avatarUrl = user.photo_url ? user.photo_url : 'https://via.placeholder.com/30';
+            var userHtml = '<img src="' + avatarUrl + '" class="user-avatar">' + user.first_name + (user.last_name ? ' ' + user.last_name : '') + ' (@' + user.username + ')';
+            userInfo.innerHTML = userHtml;
+            userInfo.style.display = "flex";
+            document.getElementById("tg-login-container").style.display = "none";
+            
+            var userData = {
+                first_name: user.first_name,
+                last_name: user.last_name || '',
+                username: user.username,
+                photo_url: avatarUrl,
+                timestamp: new Date().getTime()
+            };
+            localStorage.setItem("userData", JSON.stringify(userData));
+        }
+        
+        function checkLoginStatus() {
+            var storedData = localStorage.getItem("userData");
+            if (storedData) {
+                var userData = JSON.parse(storedData);
+                var currentTime = new Date().getTime();
+                if (currentTime - userData.timestamp < 60 * 60 * 1000) {
+                    var userInfo = document.getElementById("user-info");
+                    var userHtml = '<img src="' + userData.photo_url + '" class="user-avatar">' + userData.first_name + (userData.last_name ? ' ' + userData.last_name : '') + ' (@' + userData.username + ')';
+                    userInfo.innerHTML = userHtml;
+                    userInfo.style.display = "flex";
+                    document.getElementById("tg-login-container").style.display = "none";
+                } else {
+                    localStorage.removeItem("userData");
+                }
+            }
+        }
+        
+        document.addEventListener("DOMContentLoaded", checkLoginStatus);
+    </script>
 </body>
 </html>
+
