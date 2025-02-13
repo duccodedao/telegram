@@ -135,6 +135,42 @@
             font-weight: bold;
             color: #27ae60;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+        .language-selector {
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .language-selector label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        .language-selector select {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+            background-color: #222;
+            color: white;
+            cursor: pointer;
+            outline: none;
+        }
+        .language-selector select:hover {
+            border-color: #fff;
+        }
+        .language-selector select:focus {
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -157,7 +193,7 @@
         </nav>
     </header>
     <div class="content">
-        <h1>Welcome to BmassHD</h1>
+        <h1 id="welcome-text">Welcome to BmassHD</h1>
         <p>Explore airdrops, notifications and your personal profile.</p>
         <div id="ton-connect"></div>
     </div>
@@ -169,6 +205,25 @@
         <div id="wallet-details">
             <b>Balance:</b> <span id="wallet-balance">Not connected</span>
         </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="language-selector">
+        <label for="language">Choose Language:</label>
+        <select id="language" onchange="changeLanguage()">
+            <option>English</option>
+            <option value="vi">Vietnamese</option>
+            <option value="en">English</option>
+        </select>
     </div>
     <script>
         function toggleMenu() {
@@ -211,7 +266,52 @@
         }
         
         document.addEventListener("DOMContentLoaded", checkLoginStatus);
+
+
+
+
+
+
+        function checkLoginStatus() {
+    var storedData = localStorage.getItem("userData");
+    if (storedData) {
+        var userData = JSON.parse(storedData);
+        var currentTime = new Date().getTime();
+        if (currentTime - userData.timestamp < 60 * 60 * 1000) {
+            var userInfo = document.getElementById("user-info");
+            var userHtml = '<img src="' + userData.photo_url + '" class="user-avatar">' + userData.first_name + (userData.last_name ? ' ' + userData.last_name : '') + ' (@' + userData.username + ')';
+            userInfo.innerHTML = userHtml;
+            userInfo.style.display = "flex";
+            document.getElementById("tg-login-container").style.display = "none";
+
+            // Cập nhật tiêu đề Welcome
+            document.getElementById("welcome-text").innerText = `Welcome ${userData.first_name} ${userData.last_name} to BmassHD`;
+        } else {
+            localStorage.removeItem("userData");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("active");
+        }
+        function changeLanguage() {
+            var lang = document.getElementById("language").value;
+            document.documentElement.lang = lang;
+            window.location.href = `/${lang}/index.html`;
+        }
     </script>
 </body>
+<script src="/js/login-tg.js"></script>
 <script src="/wallet.js"></script>
 </html>
