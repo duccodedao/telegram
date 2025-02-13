@@ -49,17 +49,9 @@
             margin-left: auto;
         }
         .nav {
-            position: absolute;
-            top: 50px;
-            right: 0;
-            width: 200px;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            flex-direction: column;
-            transition: opacity 0.3s ease-in-out;
-            padding: 10px;
-            border-radius: 5px;
-            opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         .nav a {
             color: white;
@@ -72,15 +64,10 @@
             background: #333;
             border-radius: 5px;
         }
-        .nav.active {
-            display: flex;
-            opacity: 1;
-        }
         .user-info {
-            display: flex;
+            display: none;
             align-items: center;
-            margin-top: 10px;
-            font-size: 14px;
+            font-size: 16px;
             color: #ccc;
         }
         .user-avatar {
@@ -92,19 +79,6 @@
         .content {
             padding: 100px 20px 80px;
         }
-        .footer {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 15px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        .footer a img {
-            width: 30px;
-        }
     </style>
 </head>
 <body>
@@ -113,38 +87,28 @@
             <img src="https://via.placeholder.com/40" alt="Logo">
             <div class="logo-text">BmassHD</div>
         </div>
-        <div class="menu-container">
-            <div class="menu-icon" onclick="toggleMenu()">☰</div>
-            <nav class="nav" id="navbar">
-                <a href="#airdrop">Airdrop</a>
-                <a href="#thongbao">Thông báo</a>
-                <a href="#profile">Profile</a>
-                <div id="user-info" class="user-info"></div>
-            </nav>
-        </div>
+        <nav class="nav" id="navbar">
+            <a href="#airdrop">Airdrop</a>
+            <a href="#thongbao">Thông báo</a>
+            <a href="#profile">Profile</a>
+            <div id="user-info" class="user-info"></div>
+            <div id="tg-login-container">
+                <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="bmassk3_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+            </div>
+        </nav>
     </header>
     <div class="content">
         <h1>Chào mừng đến với BmassHD</h1>
         <p>Khám phá airdrop, thông báo và hồ sơ cá nhân của bạn.</p>
-        <img src="https://via.placeholder.com/800x400" alt="Hình ảnh minh họa">
-        <div id="tg-login-container">
-            <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="bmassk3_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
-        </div>
     </div>
-    <footer class="footer">
-        <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/X_logo_2023_original.svg" alt="X"></a>
-        <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"></a>
-    </footer>
     <script>
-        function toggleMenu() {
-            var menu = document.getElementById("navbar");
-            menu.classList.toggle("active");
-        }
         function onTelegramAuth(user) {
             var userInfo = document.getElementById("user-info");
             var avatarUrl = user.photo_url ? user.photo_url : 'https://via.placeholder.com/30';
             var userHtml = '<img src="' + avatarUrl + '" class="user-avatar">' + user.first_name + (user.last_name ? ' ' + user.last_name : '') + ' (@' + user.username + ')';
             userInfo.innerHTML = userHtml;
+            userInfo.style.display = "flex";
+            document.getElementById("tg-login-container").style.display = "none";
             
             // Lưu trạng thái đăng nhập vào localStorage
             var userData = {
@@ -166,6 +130,8 @@
                     var userInfo = document.getElementById("user-info");
                     var userHtml = '<img src="' + userData.photo_url + '" class="user-avatar">' + userData.first_name + (userData.last_name ? ' ' + userData.last_name : '') + ' (@' + userData.username + ')';
                     userInfo.innerHTML = userHtml;
+                    userInfo.style.display = "flex";
+                    document.getElementById("tg-login-container").style.display = "none";
                 } else {
                     localStorage.removeItem("userData");
                 }
