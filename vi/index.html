@@ -109,6 +109,7 @@
             justify-content: center;
             align-items: center;
             height: 50px;
+
             border-radius: 10px;
             width: 300px;
             margin: 20px auto;
@@ -134,7 +135,18 @@
             font-weight: bold;
             color: #27ae60;
         }
-       
+
+
+
+
+
+
+
+
+
+
+
+
         .language-selector {
             margin-top: 20px;
             padding: 10px;
@@ -181,29 +193,116 @@
         </nav>
     </header>
     <div class="content">
-        <h1>chào mừng bạn đã đến với BmassHD</h1>
+        <h1 id="welcome-text">Chào mừng đến với BmassHD</h1>
         <p>Khám phá airdrop, thông báo và hồ sơ cá nhân của bạn.</p>
         <div id="ton-connect"></div>
     </div>
     <div id="wallet-info">
         <div id="user-info" class="user-info"></div>
         <div id="wallet-header">
-            <b>Địa chỉ ví:</b> <span id="wallet-address">abcd****1234</span>
+            <b>Địa chỉ:</b> <span id="wallet-address">abcd****1234</span>
         </div>
         <div id="wallet-details">
-            <b>Số dư:</b> <span id="wallet-balance">Not connected</span>
+            <b>Số dư:</b> <span id="wallet-balance">Chưa kết nối</span>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
     <div class="language-selector">
-        <label for="language">Chọn ngôn ngữ:</label>
+        <label for="language">Chọn ngôn ngữ</label>
         <select id="language" onchange="changeLanguage()">
-            <option>Vietnamese</option>
+            <option>Click</option>
             <option value="vi">Vietnamese</option>
             <option value="en">English</option>
         </select>
     </div>
     <script>
         function toggleMenu() {
+            document.getElementById("navbar").classList.toggle("active");
+        }
+        
+        function onTelegramAuth(user) {
+            var userInfo = document.getElementById("user-info");
+            var avatarUrl = user.photo_url ? user.photo_url : 'https://via.placeholder.com/30';
+            var userHtml = '<img src="' + avatarUrl + '" class="user-avatar">' + user.first_name + (user.last_name ? ' ' + user.last_name : '') + ' (@' + user.username + ')';
+            userInfo.innerHTML = userHtml;
+            userInfo.style.display = "flex";
+            document.getElementById("tg-login-container").style.display = "none";
+            
+            var userData = {
+                first_name: user.first_name,
+                last_name: user.last_name || '',
+                username: user.username,
+                photo_url: avatarUrl,
+                timestamp: new Date().getTime()
+            };
+            localStorage.setItem("userData", JSON.stringify(userData));
+        }
+        
+        function checkLoginStatus() {
+            var storedData = localStorage.getItem("userData");
+            if (storedData) {
+                var userData = JSON.parse(storedData);
+                var currentTime = new Date().getTime();
+                if (currentTime - userData.timestamp < 60 * 60 * 1000) {
+                    var userInfo = document.getElementById("user-info");
+                    var userHtml = '<img src="' + userData.photo_url + '" class="user-avatar">' + userData.first_name + (userData.last_name ? ' ' + userData.last_name : '') + ' (@' + userData.username + ')';
+                    userInfo.innerHTML = userHtml;
+                    userInfo.style.display = "flex";
+                    document.getElementById("tg-login-container").style.display = "none";
+                } else {
+                    localStorage.removeItem("userData");
+                }
+            }
+        }
+        
+        document.addEventListener("DOMContentLoaded", checkLoginStatus);
+
+
+
+
+
+
+        function checkLoginStatus() {
+    var storedData = localStorage.getItem("userData");
+    if (storedData) {
+        var userData = JSON.parse(storedData);
+        var currentTime = new Date().getTime();
+        if (currentTime - userData.timestamp < 60 * 60 * 1000) {
+            var userInfo = document.getElementById("user-info");
+            var userHtml = '<img src="' + userData.photo_url + '" class="user-avatar">' + userData.first_name + (userData.last_name ? ' ' + userData.last_name : '') + ' (@' + userData.username + ')';
+            userInfo.innerHTML = userHtml;
+            userInfo.style.display = "flex";
+            document.getElementById("tg-login-container").style.display = "none";
+
+            // Cập nhật tiêu đề Welcome
+            document.getElementById("welcome-text").innerText = `Chào mừng ${userData.first_name} ${userData.last_name} đến với BmassHD`;
+        } else {
+            localStorage.removeItem("userData");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+function toggleMenu() {
             document.getElementById("navbar").classList.toggle("active");
         }
         function changeLanguage() {
