@@ -4,106 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông báo</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: #121212;
+            color: #fff;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, rgba(0, 0, 0, 0) 70%), url('https://source.unsplash.com/1600x900/?galaxy,stars');
+            background-size: cover;
+            background-position: center;
         }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .notification-list, .read-notifications {
-            list-style: none;
-            padding: 0;
-        }
-        .notification-item {
-            display: flex;
-            align-items: center;
-            background: #fff;
-            margin-bottom: 10px;
+        .notification {
+            border: 1px solid #444;
             padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out;
+            margin: 10px 0;
+            border-radius: 20px;
+            background: rgba(34, 34, 34, 0.8);
+            position: relative;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, background 0.3s, transform 0.3s;
         }
-        .notification-item:hover {
+        .notification:hover {
+            background: rgba(51, 51, 51, 0.9);
             transform: scale(1.02);
         }
-        .notification-item img {
+        .notification img {
             width: 50px;
             height: 50px;
             margin-right: 10px;
-            border-radius: 50%;
+            vertical-align: middle;
+            border-radius: 5px;
         }
-        .notification-item h2 {
-            margin: 0;
-            font-size: 16px;
-        }
-        .notification-item p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #666;
-        }
-        .notification-item .view-more {
-            color: blue;
-            cursor: pointer;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            text-align: center;
-        }
-        .modal-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-        .close {
-            float: right;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .read-section {
-            margin-top: 20px;
-            cursor: pointer;
-        }
-        .read-section h3 {
-            margin: 0;
+        .notification-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            font-weight: bold;
         }
-        .arrow {
-            transition: transform 0.3s;
+        .notification-content {
+            max-height: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            transition: max-height 0.6s ease-in-out;
         }
-        .hidden {
-            display: none;
+        .expanded {
+            max-height: 500px;
+            white-space: normal;
         }
-
-
+        .toggle-btn {
+            color: #1e90ff;
+            cursor: pointer;
+            margin-top: 5px;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+        .toggle-btn:hover {
+            color: #87ceeb;
+        }
 
 
 
@@ -164,145 +121,54 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Danh sách thông báo (<span id="count">0</span>)</h1>
-        <div id="notification-list" class="notification-list"></div>
-        <div class="read-section" onclick="toggleReadNotifications()">
-            <h3>Đã đọc <span class="arrow">▼</span></h3>
+    <div class="notification">
+        <div class="notification-header">
+            <img src="/logo-coin/3.jpg" alt="icon">
+            <span>Wcoin</span>
         </div>
-        <div id="read-notifications" class="read-notifications hidden"></div>
+        <div class="notification-content">W-coin Airdrop and Listing Date Confirmed for February 25, 2025: Everything You Need to Know🚀</div>
+        <span class="toggle-btn">Detail</span>
     </div>
 
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modal-title"></h2>
-            <img id="modal-image" src="" alt="">
-            <p id="modal-content"></p>
-        </div>
-    </div>
+    <div class="footer">
 
-
-<div class="footer">
-
-    <a href="/main.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/nha.png" alt="Home">
-            <span class="new-badge">Hot</span>
-        </div>
-        <span>Home</span>
-    </a>
-
-    <a href="#" class="footer-itemm" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <img src="/logo-coin/chuong.gif" alt="Noti">
-          
-        </div>
-        <span></span>
-    </a>
-
-
-
-    <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
-        <div class="img-wrapper">
-            <div id="wallet-avatar-container">
-                <div class="skeleton-avatar"></div>
-                <span class="new-badge">Login</span>
+        <a href="/main.html" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/nha.png" alt="Home">
+                <span class="new-badge">Hot</span>
             </div>
-        </div>
-        <span>Profile</span>
-    </a>   
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const walletContainer = document.getElementById("wallet-avatar-container");
-
-    // Kiểm tra xem có dữ liệu lưu trữ không
-    function updateWalletAvatar() {
-        const savedUser = localStorage.getItem("telegram_user");
-
-        if (savedUser) {
-            const user = JSON.parse(savedUser);
-
-            // Lấy ảnh gần đây nhất (trong dữ liệu hiện tại)
-            const latestPhoto = user.photo_url || "https://via.placeholder.com/80";
-
-            // Hiển thị ảnh đại diện
-            walletContainer.innerHTML = `<img src="${latestPhoto}" alt="Wallet" style="width:30px; height:30px; border-radius:50%;">`;
-        }
-    }
-
-    // Cập nhật avatar ngay khi tải trang
-    updateWalletAvatar();
-
-    // Theo dõi sự kiện lưu thông tin đăng nhập mới
-    window.addEventListener("storage", function (event) {
-        if (event.key === "telegram_user") {
-            updateWalletAvatar(); // Cập nhật ảnh nếu có thay đổi
-        }
-    });
-});
-
-</script>
+            <span>Home</span>
+        </a>
+    
+        <a href="#" class="footer-itemm" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <img src="/logo-coin/chuong.gif" alt="Noti">
+              
+            </div>
+            <span></span>
+        </a>
+    
+    
+    
+        <a href="/wallet.html" class="footer-item" onclick="setActive(this)">
+            <div class="img-wrapper">
+                <div id="wallet-avatar-container">
+                    <div class="skeleton-avatar"></div>
+                    <span class="new-badge">Login</span>
+                </div>
+            </div>
+            <span>Profile</span>
+        </a>   
+    </div>
 
     <script>
-    let notifications = [
-    { id: 1, title: "New Listing", image: "/logo-coin/9.jpg", content: "TapSwap Airdrop and Listing Date Confirmed for February 14, 2025: Everything You Need to Know🚀" },
-    { id: 2, title: "New Listing", image: "/logo-coin/3.jpg", content: "W-coin Airdrop and Listing Date Confirmed for February 25, 2025: Everything You Need to Know🚀" },
-   
-];
-
-let readNotifications = new Set(JSON.parse(localStorage.getItem('readNotifications')) || []);
-
-function updateNotifications() {
-    document.getElementById("notification-list").innerHTML = notifications.map(notification => `
-        <div class="notification-item" onclick="markAsRead(${notification.id})">
-            <img src="${notification.image}" alt="">
-            <div>
-                <h2>${notification.title}</h2>
-                <p>${notification.content.substring(0, 30)}...</p>
-                <span class="view-more">Xem thêm</span>
-            </div>
-        </div>
-    `).join('');
-    document.getElementById("count").innerText = notifications.length;
-}
-
-function updateReadNotifications() {
-    document.getElementById("read-notifications").innerHTML = notifications.filter(n => readNotifications.has(n.id)).map(notification => `
-        <div class="notification-item">
-            <img src="${notification.image}" alt="">
-            <div>
-                <h2>${notification.title}</h2>
-            </div>
-        </div>
-    `).join('');
-}
-
-function markAsRead(id) {
-    readNotifications.add(id);
-    localStorage.setItem('readNotifications', JSON.stringify([...readNotifications]));
-    updateNotifications();
-    updateReadNotifications();
-}
-
-function toggleReadNotifications() {
-    let readSection = document.getElementById("read-notifications");
-    let arrow = document.querySelector(".arrow");
-    if (readSection.classList.contains("hidden")) {
-        readSection.classList.remove("hidden");
-        arrow.style.transform = "rotate(180deg)";
-    } else {
-        readSection.classList.add("hidden");
-        arrow.style.transform = "rotate(0deg)";
-    }
-}
-
-updateNotifications();
-updateReadNotifications();
-
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                let content = this.previousElementSibling;
+                content.classList.toggle('expanded');
+                this.textContent = content.classList.contains('expanded') ? 'Thu gọn' : 'Xem thêm';
+            });
+        });
     </script>
 </body>
 </html>
-
