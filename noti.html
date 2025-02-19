@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông báo</title>
+     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -118,9 +119,47 @@
     z-index: 1;
 }
 
+
+
+
+.content {
+    max-width: 800px; /* Chiều rộng tối đa của nội dung */
+    margin: 0 auto; /* Căn giữa nội dung */
+
+    border-radius: 8px; /* Bo góc */
+
+}
+
+#welcome-message {
+    font-size: 2em; /* Kích thước chữ lớn hơn */
+    color: #333; /* Màu chữ */
+    text-align: center; /* Căn giữa chữ */
+    margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+}
+
+.content p {
+    font-size: 1.2em; /* Kích thước chữ cho đoạn văn */
+    color: #666; /* Màu chữ cho đoạn văn */
+    text-align: center; /* Căn giữa đoạn văn */
+}
+
+#ton-connect {
+    margin-top: 30px; /* Khoảng cách trên cho phần ton-connect */
+    text-align: center; /* Căn giữa */
+}
+
+
     </style>
 </head>
 <body>
+    <div class="content">
+        <h1 id="welcome-message">Welcome to BmassHD</h1>
+        <p>Explore airdrops, notifications and your personal profile.</p>
+        <div id="ton-connect"></div>
+    </div>
+
+
+
     <div class="notification">
         <div class="notification-header">
             <img src="/logo-coin/3.jpg" alt="icon">
@@ -162,6 +201,17 @@
     </div>
 
     <script>
+        // Lấy tên user từ API Telegram
+        function getTelegramUser() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('tgUsername');
+            if (username) {
+                document.getElementById('welcome-message').textContent = `Welcome ${username} to BmassHD`;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", getTelegramUser);
+
         document.querySelectorAll('.toggle-btn').forEach(button => {
             button.addEventListener('click', function() {
                 let content = this.previousElementSibling;
