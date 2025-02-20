@@ -38,7 +38,63 @@
     
 <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
+        <style>
+        /* Style cho màn hình loading */
+        #loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Style cho logo */
+        #loading-logo {
+            width: 100px; /* Kích thước logo */
+            height: 100px;
+            margin-bottom: 10px;
+            animation: spin 2s linear infinite;
+        }
+
+        /* Hiệu ứng quay logo */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Ẩn nội dung chính khi loading */
+        #main-content {
+            display: none;
+        }
+    </style>
+        <script>
+        // Đợi 3 giây rồi ẩn màn hình loading
+        setTimeout(() => {
+            document.getElementById("loading-screen").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("loading-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+            }, 500);
+        }, 3000);
+    </script>
 <body>
+
+    <!-- Màn hình loading -->
+    <div id="loading-screen">
+        <img id="loading-logo" src="https://bmasshd.click/bmlogo.jpg" alt="Logo"> <!-- Thay logo.png bằng link logo của bạn -->
+        <p>Welcome to BmassHD</p>
+    </div>
+
+
+
+
+    
 
     <header class="header">
         <div class="profile-container">
