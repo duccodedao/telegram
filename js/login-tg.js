@@ -38,3 +38,18 @@
         }
         
         document.addEventListener("DOMContentLoaded", checkLoginStatus);
+
+
+
+
+  // Link Mini App trên Telegram
+        const telegramLink = "https://t.me/bmassk3_bot/?startapp";
+
+        // Kiểm tra nếu đang dùng điện thoại
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            window.location.href = telegramLink; // Chuyển hướng trực tiếp
+        } else {
+            // Nếu là PC, hiển thị mã QR
+            document.getElementById("qr-code").style.display = "block";
+            document.getElementById("qr-img").src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(telegramLink);
+        }
