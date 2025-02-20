@@ -39,57 +39,90 @@
 <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
         <style>
-        /* Style cho màn hình loading */
-        #loading-screen {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: #1a1a1a;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
+#loading-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a1a, #444);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
 
-        /* Style cho logo */
-        #loading-logo {
-            width: 100px; /* Kích thước logo */
-            height: 100px;
-            margin-bottom: 10px;
-            animation: spin 2s linear infinite;
-        }
+#loading-logo {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+    animation: bounce 1.5s infinite;
+}
 
-        /* Hiệu ứng quay logo */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
 
-        /* Ẩn nội dung chính khi loading */
-        #main-content {
-            display: none;
-        }
+#progress-bar {
+    width: 60%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+#progress {
+    width: 0%;
+    height: 100%;
+    background: #ffcc00;
+    transition: width 0.2s ease;
+}
+
+#main-content {
+    display: none;
+}
+
     </style>
         <script>
-        // Đợi 3 giây rồi ẩn màn hình loading
+let progress = document.getElementById("progress");
+let loadTime = Math.random() * 4000 + 2000; // Giả lập tốc độ tải từ 2s - 6s
+let startTime = Date.now();
+
+function updateProgress() {
+    let elapsed = Date.now() - startTime;
+    let percentage = Math.min((elapsed / loadTime) * 100, 100);
+    progress.style.width = percentage + "%";
+
+    if (percentage < 100) {
+        requestAnimationFrame(updateProgress);
+    } else {
         setTimeout(() => {
             document.getElementById("loading-screen").style.opacity = "0";
             setTimeout(() => {
                 document.getElementById("loading-screen").style.display = "none";
                 document.getElementById("main-content").style.display = "block";
             }, 500);
-        }, 3000);
+        }, 500);
+    }
+}
+
+updateProgress();
+
     </script>
 <body>
 
-    <!-- Màn hình loading -->
-    <div id="loading-screen">
-        <img id="loading-logo" src="https://bmasshd.click/bmlogo.jpg" alt="Logo"> <!-- Thay logo.png bằng link logo của bạn -->
-        <p>Welcome to BmassHD</p>
+<!-- Màn hình loading -->
+<div id="loading-screen">
+    <img id="loading-logo" src="https://bmasshd.click/bmlogo.jpg" alt="Logo">
+    <p>Đang tải...</p>
+    <div id="progress-bar">
+        <div id="progress"></div>
     </div>
+</div>
+
 
 
 
