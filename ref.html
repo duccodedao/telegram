@@ -3,16 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mở Mini App</title>
+    <title>Mở Mini App Telegram</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
-        #qr-code {
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .qr-container {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             display: none;
             margin-top: 20px;
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff9800;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #e68900;
         }
     </style>
 </head>
@@ -21,19 +69,18 @@
     <h2>Mở Mini App trên Telegram</h2>
     <p>Nếu bạn không được tự động chuyển hướng, hãy quét mã QR bên dưới:</p>
 
-    <div id="qr-code">
+    <div class="qr-container" id="qr-code">
         <img src="" id="qr-img" alt="Quét mã QR để mở Telegram">
     </div>
 
+    <a href="https://t.me/bmassk3_bot/?startapp" class="btn">Mở Mini App ngay</a>
+
     <script>
-        // Link Mini App trên Telegram
         const telegramLink = "https://t.me/bmassk3_bot/?startapp";
 
-        // Kiểm tra nếu đang dùng điện thoại
         if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            window.location.href = telegramLink; // Chuyển hướng trực tiếp
+            window.location.href = telegramLink;
         } else {
-            // Nếu là PC, hiển thị mã QR
             document.getElementById("qr-code").style.display = "block";
             document.getElementById("qr-img").src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(telegramLink);
         }
