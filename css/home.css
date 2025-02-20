@@ -5,6 +5,10 @@
             color: white;
             text-align: center;
         }
+       #qr-code {
+            display: none;
+            margin-top: 20px;
+        }
         .header {
             position: fixed;
             top: 0;
