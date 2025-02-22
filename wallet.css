@@ -344,6 +344,7 @@ vertical-align: middle; /* Căn giữa theo chiều dọc */
     text-align: left;
     font-weight: bold;
     display: none;
+
 }
 
 #wallet-details {
@@ -353,7 +354,7 @@ vertical-align: middle; /* Căn giữa theo chiều dọc */
     background: rgba(255, 255, 255, 0.1);
     padding: 5px;
     border-radius: 25px;
-    margin-top: 5px;
+    margin-top: 85px;
 }
 
 .wallet-image {
@@ -366,7 +367,7 @@ vertical-align: middle; /* Căn giữa theo chiều dọc */
     font-weight: bold;
     font-size: 16px;
     color:#4CAF50;
-    margin-right: 10px;
+
 }
 
 
@@ -375,7 +376,7 @@ vertical-align: middle; /* Căn giữa theo chiều dọc */
 
 .back-icon {
     position: absolute;
-    top: 8px;
+    top: 85px;
     left: 15px;
     font-size: 24px;
     color: #fcfcfc;
@@ -400,4 +401,11 @@ border-radius: 50px;
 font-size: 16px;
 font-weight: bold;
 box-shadow: 0 16px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+#wallet-usdt-value {
+    font-weight: bold;
+    color: #fdfffd;
+    margin-right: 10px;
 }
