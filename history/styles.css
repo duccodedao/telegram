@@ -1,0 +1,157 @@
+/* Reset some default styles */
+body, h2, p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a light background color and font for the body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8; /* Light background */
+    color: #333; /* Dark text */
+}
+
+/* Container styling */
+.container {
+    max-width: 900px;
+    margin: 40px auto; /* Center the container */
+    padding: 30px;
+    background-color: #ffffff; /* White background for the container */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Heading styles */
+h2 {
+    margin-bottom: 20px;
+    font-size: 28px; /* Larger font size for headings */
+    color: #ff5722; /* Vibrant orange color for headings */
+    border-bottom: 2px solid #ff5722; /* Underline effect */
+    padding-bottom: 10px; /* Space below the heading */
+}
+
+/* Paragraph styles */
+p {
+    margin-bottom: 15px; /* Space between paragraphs */
+    font-size: 16px; /* Standard font size */
+}
+
+/* Wallet info styles */
+#wallet-info {
+    border: 1px solid #e0e0e0; /* Light border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Increased padding */
+    background-color: #e3f2fd; /* Light blue background for wallet info */
+    margin-bottom: 20px; /* Space below wallet info */
+}
+
+/* Transaction history styles */
+#transaction-history {
+    border: 1px solid #e0e0e0; /* Light border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Increased padding */
+    background-color: #e3f2fd; /* Light blue background for transaction history */
+}
+
+/* List styles */
+#transactions-list {
+    list-style-type: none; /* Remove default list styling */
+}
+
+/* List item styles */
+#transactions-list li {
+    padding: 15px; /* Padding for list items */
+    border-bottom: 1px solid #e0e0e0; /* Divider between transactions */
+    transition: background-color 0.3s; /* Smooth background transition */
+    border-radius: 8px; /* Rounded corners for list items */
+}
+
+#transactions-list li:hover {
+    background-color: #bbdefb; /* Highlight on hover */
+}
+
+#transactions-list li:last-child {
+    border-bottom: none; /* Remove border for the last item */
+}
+
+/* Logo styles */
+.logo {
+    width: 20px; /* Adjust size as needed */
+    height: auto;
+    margin-left: 5px;
+    border-radius: 50%;
+}
+
+/* Button styles (if you add buttons later) */
+button {
+    background-color: #ff5722; /* Vibrant orange button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px; /* Increased padding for buttons */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+    font-size: 16px; /* Font size for buttons */
+}
+
+button:hover {
+    background-color: #e64a19; /* Darker shade on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px; /* Reduce padding on smaller screens */
+    }
+
+    h2 {
+        font-size: 24px; /* Smaller heading on mobile */
+    }
+
+    p {
+        font-size: 14px; /* Smaller paragraph text on mobile */
+    }
+
+    button {
+        width: 100%; /* Full width buttons on mobile */
+    }
+}
+
+#ton-connect {
+    display: none;
+}
+
+
+/* Add focus styles for buttons */
+button:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.5); /* Add a glow effect */
+}
+
+/* Add a subtle shadow effect on button hover */
+button:hover {
+    background-color: #e64a19; /* Darker shade on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+}
+
+/* Custom scrollbar for the transaction list */
+#transactions-list {
+    max-height: 300px; /* Limit height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Style the scrollbar */
+#transactions-list::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+#transactions-list::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+#transactions-list::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Darker thumb on hover */
+}
