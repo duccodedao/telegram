@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TON Wallet</title>
+    <link rel="stylesheet" href="test.css"> <!-- Link to your CSS file -->
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>TON Wallet</h2>
+        <div id="ton-connect"></div> <!-- Button for connecting to the wallet -->
+        
+        <div id="wallet-info" style="display: none;">
+            <h3>Wallet Information</h3>
+            <p style="display: none;"><strong>Address:</strong> <span id="wallet-address"></span></p> <!-- Wallet address hidden -->
+            <p><strong>Balance:</strong> <span id="wallet-balance"></span> <img src="/logo-coin/IMG_20241103_113656_984.jpg" alt="TON Logo" class="logo"></p>
+            <p><strong>USDT Value:</strong> <span id="wallet-usdt-value"></span> <img src="/logo-coin/usdt.png" alt="USDT Logo" class="logo"></p>
+            <p><strong>BMC:</strong> <span id="token-balance"></span></p>
+        </div>
+
+        <div id="transaction-history" style="display: none;">
+            <h3>Transaction History</h3>
+            <ul id="transactions-list"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>
